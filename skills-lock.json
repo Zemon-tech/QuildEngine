@@ -1,11 +1,35 @@
 {
   "version": 1,
   "skills": {
+    "emil-design-eng": {
+      "source": "emilkowalski/skill",
+      "sourceType": "github",
+      "skillPath": "skills/emil-design-eng/SKILL.md",
+      "computedHash": "ac3fc5b4e206488ffc408a2806f829bb2e5eaf518fded09be34790685c2b3a0d"
+    },
+    "impeccable": {
+      "source": "pbakaus/impeccable",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/impeccable/SKILL.md",
+      "computedHash": "955dd3f58e96a13482ee6d93c98bb17d8036c3a7ff3ec85cd42425b5f51d499c"
+    },
+    "karpathy-guidelines": {
+      "source": "szkocot/andrej-karpathy-skills",
+      "sourceType": "github",
+      "skillPath": "skills/karpathy-guidelines/SKILL.md",
+      "computedHash": "0ec1641120accbb458780e0bd19a50a4182f2b97863e90851b91307f29802c9f"
+    },
     "rest-api-design": {
       "source": "aj-geddes/useful-ai-prompts",
       "sourceType": "github",
       "skillPath": "skills/rest-api-design/SKILL.md",
       "computedHash": "4e84e39b1a3915ee1920f504b2b08b5d1d836f100c8d389dd0b48e9c3cfc9d4c"
+    },
+    "shadcn": {
+      "source": "shadcn/ui",
+      "sourceType": "github",
+      "skillPath": "skills/shadcn/SKILL.md",
+      "computedHash": "0dc0edeeaec2ae491ae506806517866a3f9bd48d04e0458feb37e0252862891f"
     },
     "turborepo": {
       "source": "vercel/turborepo",
