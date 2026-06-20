@@ -13,6 +13,7 @@ interface NavItemProps {
   icon: LucideIcon;
   label: string;
   to: string;
+  search?: any;
   badge?: string | number;
   collapsed?: boolean;
   activeLayoutId?: string;
@@ -25,6 +26,7 @@ export function NavItem({
   icon: Icon,
   label,
   to,
+  search,
   badge,
   collapsed = false,
   activeLayoutId = "nav-pill",
@@ -35,6 +37,7 @@ export function NavItem({
   const content = (
     <Link
       to={to}
+      search={search}
       onClick={onClick}
       activeProps={{ "aria-current": "page" }}
       className={cn(

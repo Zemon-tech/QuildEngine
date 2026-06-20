@@ -26,6 +26,11 @@ import { ProfileSettings } from "#/components/profile/profile-settings";
 import { Button } from "#/components/ui/button";
 
 export const Route = createFileRoute("/_app/profile")({
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      tab: (search.tab as string) || "profile",
+    };
+  },
   component: ProfilePage,
 });
 
@@ -37,6 +42,7 @@ interface ProfileData {
     website: string;
     github: string;
     linkedin: string;
+    leetcode: string;
     email: string;
     resumeName: string | null;
   };
@@ -79,6 +85,7 @@ const DEFAULT_PROFILE_DATA: ProfileData = {
     website: "https://alexjohnson.dev",
     github: "https://github.com/alexjohnson",
     linkedin: "https://linkedin.com/in/alexjohnson",
+    leetcode: "https://leetcode.com/alexjohnson",
     email: "alex@example.com",
     resumeName: "Alex_Johnson_Resume.pdf",
   },
@@ -206,8 +213,17 @@ const DEFAULT_PROFILE_DATA: ProfileData = {
 type TabType = "profile" | "analytics" | "projects" | "skills" | "settings";
 
 function ProfilePage() {
+  const search = Route.useSearch();
+  const activeTab = (search.tab as TabType) || "profile";
+  const navigate = Route.useNavigate();
+
+  function setActiveTab(tab: TabType) {
+    navigate({
+      search: (prev) => ({ ...prev, tab }),
+    });
+  }
+
   const [profile, setProfile] = useState<ProfileData>(DEFAULT_PROFILE_DATA);
-  const [activeTab, setActiveTab] = useState<TabType>("profile");
   const [showResumePreview, setShowResumePreview] = useState(false);
 
   // Load from localStorage on mount
@@ -230,9 +246,9 @@ function ProfilePage() {
 
   const tabs: { id: TabType; label: string; icon: typeof User }[] = [
     { id: "profile", label: "Profile", icon: User },
-    { id: "analytics", label: "Analytics & Feed", icon: BarChart3 },
     { id: "projects", label: "Projects & Research", icon: FolderGit2 },
     { id: "skills", label: "Skills & Certs", icon: Hammer },
+    { id: "analytics", label: "Analytics & Feed", icon: BarChart3 },
     { id: "settings", label: "Settings", icon: Settings },
   ];
 

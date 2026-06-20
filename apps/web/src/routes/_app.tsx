@@ -9,9 +9,9 @@ export const Route = createFileRoute("/_app")({
 function AppLayout() {
   return (
     <TooltipProvider delayDuration={400} skipDelayDuration={100}>
-      <div className="flex min-h-screen">
+      <div className="flex h-screen overflow-hidden">
         <AppSidebar />
-        <main className="flex min-h-screen flex-1 flex-col overflow-auto">
+        <main className="flex flex-1 flex-col overflow-y-auto">
           <div className="page-enter flex-1 p-6">
             <Outlet />
           </div>

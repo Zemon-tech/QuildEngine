@@ -23,7 +23,6 @@ import {
   BookMarked,
   FlaskConical,
   FileSearch,
-  Trophy,
   ScrollText,
   BarChart3,
   Activity,
@@ -37,6 +36,10 @@ import {
   TestTube,
   Menu,
   LifeBuoy,
+  User,
+  FolderGit2,
+  Hammer,
+  Settings,
   GraduationCap as LearnIcon,
 } from "lucide-react";
 import { ScrollArea } from "#/components/ui/scroll-area";
@@ -59,13 +62,25 @@ const SIDEBAR_COLLAPSED_WIDTH = 60;
 function useActiveCheck() {
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
+  const currentSearch = routerState.location.search;
 
-  function isActive(path: string) {
-    return currentPath === path || currentPath.startsWith(path + "/");
+  function isActive(path: string, search?: Record<string, any>) {
+    const pathMatch = currentPath === path || currentPath.startsWith(path + "/");
+    if (!pathMatch) return false;
+    if (search) {
+      return Object.entries(search).every(([key, val]) => {
+        const currentVal = (currentSearch as any)[key];
+        if (key === "tab" && val === "profile" && !currentVal) {
+          return true;
+        }
+        return currentVal === val;
+      });
+    }
+    return true;
   }
 
   function anyActive(...paths: string[]) {
-    return paths.some((p) => isActive(p));
+    return paths.some((p) => currentPath === p || currentPath.startsWith(p + "/"));
   }
 
   return { currentPath, isActive, anyActive };
@@ -319,25 +334,51 @@ function SidebarNav({ collapsed = false }: SidebarNavProps) {
       {/* ── Profile ───────────────────────────────── */}
       <NavSection
         id="profile"
-        icon={Trophy}
+        icon={User}
         label="Profile"
         collapsed={collapsed}
         hasActiveChild={anyActive("/profile")}
         showSeparatorAbove
       >
         <NavItem
-          icon={Trophy}
-          label="Achievements"
-          to="/profile/achievements"
+          icon={User}
+          label="Profile Overview"
+          to="/profile"
+          search={{ tab: "profile" }}
           collapsed={collapsed}
-          isActive={isActive("/profile/achievements")}
+          isActive={isActive("/profile", { tab: "profile" })}
         />
         <NavItem
-          icon={ScrollText}
-          label="Certificates"
-          to="/profile/certificates"
+          icon={FolderGit2}
+          label="Projects & Research"
+          to="/profile"
+          search={{ tab: "projects" }}
           collapsed={collapsed}
-          isActive={isActive("/profile/certificates")}
+          isActive={isActive("/profile", { tab: "projects" })}
+        />
+        <NavItem
+          icon={Hammer}
+          label="Skills & Certs"
+          to="/profile"
+          search={{ tab: "skills" }}
+          collapsed={collapsed}
+          isActive={isActive("/profile", { tab: "skills" })}
+        />
+        <NavItem
+          icon={BarChart3}
+          label="Analytics & Feed"
+          to="/profile"
+          search={{ tab: "analytics" }}
+          collapsed={collapsed}
+          isActive={isActive("/profile", { tab: "analytics" })}
+        />
+        <NavItem
+          icon={Settings}
+          label="Settings"
+          to="/profile"
+          search={{ tab: "settings" }}
+          collapsed={collapsed}
+          isActive={isActive("/profile", { tab: "settings" })}
         />
       </NavSection>
 

@@ -23,6 +23,7 @@ interface ProfileHeaderProps {
     website: string;
     github: string;
     linkedin: string;
+    leetcode: string;
     email: string;
     resumeName: string | null;
   };
@@ -38,6 +39,7 @@ export function ProfileHeader({ data, onUpdate, onPreviewResume }: ProfileHeader
   const [editWebsite, setEditWebsite] = useState(data.website);
   const [editGithub, setEditGithub] = useState(data.github);
   const [editLinkedin, setEditLinkedin] = useState(data.linkedin);
+  const [editLeetcode, setEditLeetcode] = useState(data.leetcode);
 
   // Resume upload state
   const [uploading, setUploading] = useState(false);
@@ -52,6 +54,7 @@ export function ProfileHeader({ data, onUpdate, onPreviewResume }: ProfileHeader
       website: editWebsite,
       github: editGithub,
       linkedin: editLinkedin,
+      leetcode: editLeetcode,
     });
     setIsEditing(false);
   }
@@ -203,6 +206,20 @@ export function ProfileHeader({ data, onUpdate, onPreviewResume }: ProfileHeader
                     <Linkedin size={15} />
                   </a>
                 )}
+                {data.leetcode && (
+                  <a
+                    href={data.leetcode}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-2 rounded-md border hover:bg-[var(--sb-bg-hover)] text-[var(--sb-ink-muted)] hover:text-[var(--sb-ink)] transition-all"
+                    style={{ borderColor: "var(--card-border)" }}
+                    title="LeetCode Profile"
+                  >
+                    <svg viewBox="0 0 24 24" width={15} height={15} fill="currentColor">
+                      <path d="M13.483 0a1.374 1.374 0 0 0-.961.414l-9.777 9.778a1.375 1.375 0 0 0 0 1.943l1.157 1.157a1.375 1.375 0 0 0 1.943 0L14.9 4.257l.007-.007a1.35 1.35 0 0 1 1.912 0l1.354 1.354a1.343 1.343 0 0 1 0 1.911l-9.712 9.713a1.378 1.378 0 0 0-.353.597L7.02 21.61a1.35 1.35 0 0 0 1.637 1.637l3.782-1.092a1.378 1.378 0 0 0 .597-.353l9.713-9.712a1.379 1.379 0 0 0 0-1.943l-8.304-8.304A1.365 1.365 0 0 0 13.483 0z"/>
+                    </svg>
+                  </a>
+                )}
               </div>
             </div>
           ) : (
@@ -241,7 +258,7 @@ export function ProfileHeader({ data, onUpdate, onPreviewResume }: ProfileHeader
                 />
               </div>
 
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-4 gap-2">
                 <div>
                   <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)]">Website</label>
                   <input
@@ -268,6 +285,16 @@ export function ProfileHeader({ data, onUpdate, onPreviewResume }: ProfileHeader
                     type="text"
                     value={editLinkedin}
                     onChange={(e) => setEditLinkedin(e.target.value)}
+                    className="w-full text-xs px-2 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
+                    style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                  />
+                </div>
+                <div>
+                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)]">LeetCode</label>
+                  <input
+                    type="text"
+                    value={editLeetcode}
+                    onChange={(e) => setEditLeetcode(e.target.value)}
                     className="w-full text-xs px-2 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
                     style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
                   />
