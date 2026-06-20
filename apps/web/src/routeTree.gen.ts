@@ -9,38 +9,323 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppResearchRouteImport } from './routes/_app/research'
+import { Route as AppProfileRouteImport } from './routes/_app/profile'
+import { Route as AppEventsRouteImport } from './routes/_app/events'
+import { Route as AppDocumentationRouteImport } from './routes/_app/documentation'
+import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
+import { Route as AppPracticeIndexRouteImport } from './routes/_app/practice/index'
+import { Route as AppLearnIndexRouteImport } from './routes/_app/learn/index'
+import { Route as AppCoursesIndexRouteImport } from './routes/_app/courses/index'
+import { Route as AppProfileCertificatesRouteImport } from './routes/_app/profile/certificates'
+import { Route as AppProfileAchievementsRouteImport } from './routes/_app/profile/achievements'
+import { Route as AppPracticeTestCasesRouteImport } from './routes/_app/practice/test-cases'
+import { Route as AppPracticeQaRouteImport } from './routes/_app/practice/qa'
+import { Route as AppPracticeDsaRouteImport } from './routes/_app/practice/dsa'
+import { Route as AppPracticeCaseStudyRouteImport } from './routes/_app/practice/case-study'
+import { Route as AppLearnTutorialsRouteImport } from './routes/_app/learn/tutorials'
+import { Route as AppLearnRoadmapsRouteImport } from './routes/_app/learn/roadmaps'
+import { Route as AppLearnArticlesRouteImport } from './routes/_app/learn/articles'
+import { Route as AppAiResearchRouteImport } from './routes/_app/ai/research'
+import { Route as AppAiChatRouteImport } from './routes/_app/ai/chat'
+import { Route as AppCoursesCourseIdIndexRouteImport } from './routes/_app/courses/$courseId/index'
+import { Route as AppCoursesCourseIdModulesModuleIdIndexRouteImport } from './routes/_app/courses/$courseId/modules/$moduleId/index'
+import { Route as AppCoursesCourseIdModulesModuleIdLessonsLessonIdIndexRouteImport } from './routes/_app/courses/$courseId/modules/$moduleId/lessons/$lessonId/index'
 
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppResearchRoute = AppResearchRouteImport.update({
+  id: '/research',
+  path: '/research',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProfileRoute = AppProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEventsRoute = AppEventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDocumentationRoute = AppDocumentationRouteImport.update({
+  id: '/documentation',
+  path: '/documentation',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPracticeIndexRoute = AppPracticeIndexRouteImport.update({
+  id: '/practice/',
+  path: '/practice/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppLearnIndexRoute = AppLearnIndexRouteImport.update({
+  id: '/learn/',
+  path: '/learn/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCoursesIndexRoute = AppCoursesIndexRouteImport.update({
+  id: '/courses/',
+  path: '/courses/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProfileCertificatesRoute = AppProfileCertificatesRouteImport.update({
+  id: '/certificates',
+  path: '/certificates',
+  getParentRoute: () => AppProfileRoute,
+} as any)
+const AppProfileAchievementsRoute = AppProfileAchievementsRouteImport.update({
+  id: '/achievements',
+  path: '/achievements',
+  getParentRoute: () => AppProfileRoute,
+} as any)
+const AppPracticeTestCasesRoute = AppPracticeTestCasesRouteImport.update({
+  id: '/practice/test-cases',
+  path: '/practice/test-cases',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPracticeQaRoute = AppPracticeQaRouteImport.update({
+  id: '/practice/qa',
+  path: '/practice/qa',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPracticeDsaRoute = AppPracticeDsaRouteImport.update({
+  id: '/practice/dsa',
+  path: '/practice/dsa',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPracticeCaseStudyRoute = AppPracticeCaseStudyRouteImport.update({
+  id: '/practice/case-study',
+  path: '/practice/case-study',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppLearnTutorialsRoute = AppLearnTutorialsRouteImport.update({
+  id: '/learn/tutorials',
+  path: '/learn/tutorials',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppLearnRoadmapsRoute = AppLearnRoadmapsRouteImport.update({
+  id: '/learn/roadmaps',
+  path: '/learn/roadmaps',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppLearnArticlesRoute = AppLearnArticlesRouteImport.update({
+  id: '/learn/articles',
+  path: '/learn/articles',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAiResearchRoute = AppAiResearchRouteImport.update({
+  id: '/ai/research',
+  path: '/ai/research',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAiChatRoute = AppAiChatRouteImport.update({
+  id: '/ai/chat',
+  path: '/ai/chat',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCoursesCourseIdIndexRoute = AppCoursesCourseIdIndexRouteImport.update({
+  id: '/courses/$courseId/',
+  path: '/courses/$courseId/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCoursesCourseIdModulesModuleIdIndexRoute =
+  AppCoursesCourseIdModulesModuleIdIndexRouteImport.update({
+    id: '/courses/$courseId/modules/$moduleId/',
+    path: '/courses/$courseId/modules/$moduleId/',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppCoursesCourseIdModulesModuleIdLessonsLessonIdIndexRoute =
+  AppCoursesCourseIdModulesModuleIdLessonsLessonIdIndexRouteImport.update({
+    id: '/courses/$courseId/modules/$moduleId/lessons/$lessonId/',
+    path: '/courses/$courseId/modules/$moduleId/lessons/$lessonId/',
+    getParentRoute: () => AppRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/documentation': typeof AppDocumentationRoute
+  '/events': typeof AppEventsRoute
+  '/profile': typeof AppProfileRouteWithChildren
+  '/research': typeof AppResearchRoute
+  '/ai/chat': typeof AppAiChatRoute
+  '/ai/research': typeof AppAiResearchRoute
+  '/learn/articles': typeof AppLearnArticlesRoute
+  '/learn/roadmaps': typeof AppLearnRoadmapsRoute
+  '/learn/tutorials': typeof AppLearnTutorialsRoute
+  '/practice/case-study': typeof AppPracticeCaseStudyRoute
+  '/practice/dsa': typeof AppPracticeDsaRoute
+  '/practice/qa': typeof AppPracticeQaRoute
+  '/practice/test-cases': typeof AppPracticeTestCasesRoute
+  '/profile/achievements': typeof AppProfileAchievementsRoute
+  '/profile/certificates': typeof AppProfileCertificatesRoute
+  '/courses/': typeof AppCoursesIndexRoute
+  '/learn/': typeof AppLearnIndexRoute
+  '/practice/': typeof AppPracticeIndexRoute
+  '/courses/$courseId/': typeof AppCoursesCourseIdIndexRoute
+  '/courses/$courseId/modules/$moduleId/': typeof AppCoursesCourseIdModulesModuleIdIndexRoute
+  '/courses/$courseId/modules/$moduleId/lessons/$lessonId/': typeof AppCoursesCourseIdModulesModuleIdLessonsLessonIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/documentation': typeof AppDocumentationRoute
+  '/events': typeof AppEventsRoute
+  '/profile': typeof AppProfileRouteWithChildren
+  '/research': typeof AppResearchRoute
+  '/ai/chat': typeof AppAiChatRoute
+  '/ai/research': typeof AppAiResearchRoute
+  '/learn/articles': typeof AppLearnArticlesRoute
+  '/learn/roadmaps': typeof AppLearnRoadmapsRoute
+  '/learn/tutorials': typeof AppLearnTutorialsRoute
+  '/practice/case-study': typeof AppPracticeCaseStudyRoute
+  '/practice/dsa': typeof AppPracticeDsaRoute
+  '/practice/qa': typeof AppPracticeQaRoute
+  '/practice/test-cases': typeof AppPracticeTestCasesRoute
+  '/profile/achievements': typeof AppProfileAchievementsRoute
+  '/profile/certificates': typeof AppProfileCertificatesRoute
+  '/courses': typeof AppCoursesIndexRoute
+  '/learn': typeof AppLearnIndexRoute
+  '/practice': typeof AppPracticeIndexRoute
+  '/courses/$courseId': typeof AppCoursesCourseIdIndexRoute
+  '/courses/$courseId/modules/$moduleId': typeof AppCoursesCourseIdModulesModuleIdIndexRoute
+  '/courses/$courseId/modules/$moduleId/lessons/$lessonId': typeof AppCoursesCourseIdModulesModuleIdLessonsLessonIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/documentation': typeof AppDocumentationRoute
+  '/_app/events': typeof AppEventsRoute
+  '/_app/profile': typeof AppProfileRouteWithChildren
+  '/_app/research': typeof AppResearchRoute
+  '/_app/ai/chat': typeof AppAiChatRoute
+  '/_app/ai/research': typeof AppAiResearchRoute
+  '/_app/learn/articles': typeof AppLearnArticlesRoute
+  '/_app/learn/roadmaps': typeof AppLearnRoadmapsRoute
+  '/_app/learn/tutorials': typeof AppLearnTutorialsRoute
+  '/_app/practice/case-study': typeof AppPracticeCaseStudyRoute
+  '/_app/practice/dsa': typeof AppPracticeDsaRoute
+  '/_app/practice/qa': typeof AppPracticeQaRoute
+  '/_app/practice/test-cases': typeof AppPracticeTestCasesRoute
+  '/_app/profile/achievements': typeof AppProfileAchievementsRoute
+  '/_app/profile/certificates': typeof AppProfileCertificatesRoute
+  '/_app/courses/': typeof AppCoursesIndexRoute
+  '/_app/learn/': typeof AppLearnIndexRoute
+  '/_app/practice/': typeof AppPracticeIndexRoute
+  '/_app/courses/$courseId/': typeof AppCoursesCourseIdIndexRoute
+  '/_app/courses/$courseId/modules/$moduleId/': typeof AppCoursesCourseIdModulesModuleIdIndexRoute
+  '/_app/courses/$courseId/modules/$moduleId/lessons/$lessonId/': typeof AppCoursesCourseIdModulesModuleIdLessonsLessonIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/documentation'
+    | '/events'
+    | '/profile'
+    | '/research'
+    | '/ai/chat'
+    | '/ai/research'
+    | '/learn/articles'
+    | '/learn/roadmaps'
+    | '/learn/tutorials'
+    | '/practice/case-study'
+    | '/practice/dsa'
+    | '/practice/qa'
+    | '/practice/test-cases'
+    | '/profile/achievements'
+    | '/profile/certificates'
+    | '/courses/'
+    | '/learn/'
+    | '/practice/'
+    | '/courses/$courseId/'
+    | '/courses/$courseId/modules/$moduleId/'
+    | '/courses/$courseId/modules/$moduleId/lessons/$lessonId/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/documentation'
+    | '/events'
+    | '/profile'
+    | '/research'
+    | '/ai/chat'
+    | '/ai/research'
+    | '/learn/articles'
+    | '/learn/roadmaps'
+    | '/learn/tutorials'
+    | '/practice/case-study'
+    | '/practice/dsa'
+    | '/practice/qa'
+    | '/practice/test-cases'
+    | '/profile/achievements'
+    | '/profile/certificates'
+    | '/courses'
+    | '/learn'
+    | '/practice'
+    | '/courses/$courseId'
+    | '/courses/$courseId/modules/$moduleId'
+    | '/courses/$courseId/modules/$moduleId/lessons/$lessonId'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/_app/dashboard'
+    | '/_app/documentation'
+    | '/_app/events'
+    | '/_app/profile'
+    | '/_app/research'
+    | '/_app/ai/chat'
+    | '/_app/ai/research'
+    | '/_app/learn/articles'
+    | '/_app/learn/roadmaps'
+    | '/_app/learn/tutorials'
+    | '/_app/practice/case-study'
+    | '/_app/practice/dsa'
+    | '/_app/practice/qa'
+    | '/_app/practice/test-cases'
+    | '/_app/profile/achievements'
+    | '/_app/profile/certificates'
+    | '/_app/courses/'
+    | '/_app/learn/'
+    | '/_app/practice/'
+    | '/_app/courses/$courseId/'
+    | '/_app/courses/$courseId/modules/$moduleId/'
+    | '/_app/courses/$courseId/modules/$moduleId/lessons/$lessonId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +333,230 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/research': {
+      id: '/_app/research'
+      path: '/research'
+      fullPath: '/research'
+      preLoaderRoute: typeof AppResearchRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/profile': {
+      id: '/_app/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/events': {
+      id: '/_app/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof AppEventsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/documentation': {
+      id: '/_app/documentation'
+      path: '/documentation'
+      fullPath: '/documentation'
+      preLoaderRoute: typeof AppDocumentationRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard': {
+      id: '/_app/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/practice/': {
+      id: '/_app/practice/'
+      path: '/practice'
+      fullPath: '/practice/'
+      preLoaderRoute: typeof AppPracticeIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/learn/': {
+      id: '/_app/learn/'
+      path: '/learn'
+      fullPath: '/learn/'
+      preLoaderRoute: typeof AppLearnIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/courses/': {
+      id: '/_app/courses/'
+      path: '/courses'
+      fullPath: '/courses/'
+      preLoaderRoute: typeof AppCoursesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/profile/certificates': {
+      id: '/_app/profile/certificates'
+      path: '/certificates'
+      fullPath: '/profile/certificates'
+      preLoaderRoute: typeof AppProfileCertificatesRouteImport
+      parentRoute: typeof AppProfileRoute
+    }
+    '/_app/profile/achievements': {
+      id: '/_app/profile/achievements'
+      path: '/achievements'
+      fullPath: '/profile/achievements'
+      preLoaderRoute: typeof AppProfileAchievementsRouteImport
+      parentRoute: typeof AppProfileRoute
+    }
+    '/_app/practice/test-cases': {
+      id: '/_app/practice/test-cases'
+      path: '/practice/test-cases'
+      fullPath: '/practice/test-cases'
+      preLoaderRoute: typeof AppPracticeTestCasesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/practice/qa': {
+      id: '/_app/practice/qa'
+      path: '/practice/qa'
+      fullPath: '/practice/qa'
+      preLoaderRoute: typeof AppPracticeQaRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/practice/dsa': {
+      id: '/_app/practice/dsa'
+      path: '/practice/dsa'
+      fullPath: '/practice/dsa'
+      preLoaderRoute: typeof AppPracticeDsaRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/practice/case-study': {
+      id: '/_app/practice/case-study'
+      path: '/practice/case-study'
+      fullPath: '/practice/case-study'
+      preLoaderRoute: typeof AppPracticeCaseStudyRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/learn/tutorials': {
+      id: '/_app/learn/tutorials'
+      path: '/learn/tutorials'
+      fullPath: '/learn/tutorials'
+      preLoaderRoute: typeof AppLearnTutorialsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/learn/roadmaps': {
+      id: '/_app/learn/roadmaps'
+      path: '/learn/roadmaps'
+      fullPath: '/learn/roadmaps'
+      preLoaderRoute: typeof AppLearnRoadmapsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/learn/articles': {
+      id: '/_app/learn/articles'
+      path: '/learn/articles'
+      fullPath: '/learn/articles'
+      preLoaderRoute: typeof AppLearnArticlesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/ai/research': {
+      id: '/_app/ai/research'
+      path: '/ai/research'
+      fullPath: '/ai/research'
+      preLoaderRoute: typeof AppAiResearchRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/ai/chat': {
+      id: '/_app/ai/chat'
+      path: '/ai/chat'
+      fullPath: '/ai/chat'
+      preLoaderRoute: typeof AppAiChatRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/courses/$courseId/': {
+      id: '/_app/courses/$courseId/'
+      path: '/courses/$courseId'
+      fullPath: '/courses/$courseId/'
+      preLoaderRoute: typeof AppCoursesCourseIdIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/courses/$courseId/modules/$moduleId/': {
+      id: '/_app/courses/$courseId/modules/$moduleId/'
+      path: '/courses/$courseId/modules/$moduleId'
+      fullPath: '/courses/$courseId/modules/$moduleId/'
+      preLoaderRoute: typeof AppCoursesCourseIdModulesModuleIdIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/courses/$courseId/modules/$moduleId/lessons/$lessonId/': {
+      id: '/_app/courses/$courseId/modules/$moduleId/lessons/$lessonId/'
+      path: '/courses/$courseId/modules/$moduleId/lessons/$lessonId'
+      fullPath: '/courses/$courseId/modules/$moduleId/lessons/$lessonId/'
+      preLoaderRoute: typeof AppCoursesCourseIdModulesModuleIdLessonsLessonIdIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppProfileRouteChildren {
+  AppProfileAchievementsRoute: typeof AppProfileAchievementsRoute
+  AppProfileCertificatesRoute: typeof AppProfileCertificatesRoute
+}
+
+const AppProfileRouteChildren: AppProfileRouteChildren = {
+  AppProfileAchievementsRoute: AppProfileAchievementsRoute,
+  AppProfileCertificatesRoute: AppProfileCertificatesRoute,
+}
+
+const AppProfileRouteWithChildren = AppProfileRoute._addFileChildren(
+  AppProfileRouteChildren,
+)
+
+interface AppRouteChildren {
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppDocumentationRoute: typeof AppDocumentationRoute
+  AppEventsRoute: typeof AppEventsRoute
+  AppProfileRoute: typeof AppProfileRouteWithChildren
+  AppResearchRoute: typeof AppResearchRoute
+  AppAiChatRoute: typeof AppAiChatRoute
+  AppAiResearchRoute: typeof AppAiResearchRoute
+  AppLearnArticlesRoute: typeof AppLearnArticlesRoute
+  AppLearnRoadmapsRoute: typeof AppLearnRoadmapsRoute
+  AppLearnTutorialsRoute: typeof AppLearnTutorialsRoute
+  AppPracticeCaseStudyRoute: typeof AppPracticeCaseStudyRoute
+  AppPracticeDsaRoute: typeof AppPracticeDsaRoute
+  AppPracticeQaRoute: typeof AppPracticeQaRoute
+  AppPracticeTestCasesRoute: typeof AppPracticeTestCasesRoute
+  AppCoursesIndexRoute: typeof AppCoursesIndexRoute
+  AppLearnIndexRoute: typeof AppLearnIndexRoute
+  AppPracticeIndexRoute: typeof AppPracticeIndexRoute
+  AppCoursesCourseIdIndexRoute: typeof AppCoursesCourseIdIndexRoute
+  AppCoursesCourseIdModulesModuleIdIndexRoute: typeof AppCoursesCourseIdModulesModuleIdIndexRoute
+  AppCoursesCourseIdModulesModuleIdLessonsLessonIdIndexRoute: typeof AppCoursesCourseIdModulesModuleIdLessonsLessonIdIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppDashboardRoute: AppDashboardRoute,
+  AppDocumentationRoute: AppDocumentationRoute,
+  AppEventsRoute: AppEventsRoute,
+  AppProfileRoute: AppProfileRouteWithChildren,
+  AppResearchRoute: AppResearchRoute,
+  AppAiChatRoute: AppAiChatRoute,
+  AppAiResearchRoute: AppAiResearchRoute,
+  AppLearnArticlesRoute: AppLearnArticlesRoute,
+  AppLearnRoadmapsRoute: AppLearnRoadmapsRoute,
+  AppLearnTutorialsRoute: AppLearnTutorialsRoute,
+  AppPracticeCaseStudyRoute: AppPracticeCaseStudyRoute,
+  AppPracticeDsaRoute: AppPracticeDsaRoute,
+  AppPracticeQaRoute: AppPracticeQaRoute,
+  AppPracticeTestCasesRoute: AppPracticeTestCasesRoute,
+  AppCoursesIndexRoute: AppCoursesIndexRoute,
+  AppLearnIndexRoute: AppLearnIndexRoute,
+  AppPracticeIndexRoute: AppPracticeIndexRoute,
+  AppCoursesCourseIdIndexRoute: AppCoursesCourseIdIndexRoute,
+  AppCoursesCourseIdModulesModuleIdIndexRoute:
+    AppCoursesCourseIdModulesModuleIdIndexRoute,
+  AppCoursesCourseIdModulesModuleIdLessonsLessonIdIndexRoute:
+    AppCoursesCourseIdModulesModuleIdLessonsLessonIdIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

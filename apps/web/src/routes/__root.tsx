@@ -1,45 +1,48 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import appCss from "../styles.css?url";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60_000,
+      retry: 1,
+    },
+  },
+});
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "Quild — AI Learning Workspace" },
       {
-        charSet: "utf-8",
-      },
-      {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1",
-      },
-      {
-        title: "TanStack Start Starter",
+        name: "description",
+        content:
+          "Quild is an AI-first learning platform for developers. Master DSA, system design, and more.",
       },
     ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-    ],
+    links: [{ rel: "stylesheet", href: appCss }],
   }),
   shellComponent: RootDocument,
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         <HeadContent />
       </head>
-      <body>
-        {children}
+      <body style={{ background: "var(--sb-bg)", margin: 0 }}>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
         <TanStackDevtools
-          config={{
-            position: "bottom-right",
-          }}
+          config={{ position: "bottom-right" }}
           plugins={[
             {
               name: "Tanstack Router",
