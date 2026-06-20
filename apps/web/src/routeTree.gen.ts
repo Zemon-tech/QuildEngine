@@ -13,9 +13,11 @@ import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppResearchRouteImport } from './routes/_app/research'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
+import { Route as AppHelpRouteImport } from './routes/_app/help'
 import { Route as AppEventsRouteImport } from './routes/_app/events'
 import { Route as AppDocumentationRouteImport } from './routes/_app/documentation'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
+import { Route as AppCommunityRouteImport } from './routes/_app/community'
 import { Route as AppPracticeIndexRouteImport } from './routes/_app/practice/index'
 import { Route as AppLearnIndexRouteImport } from './routes/_app/learn/index'
 import { Route as AppCoursesIndexRouteImport } from './routes/_app/courses/index'
@@ -53,6 +55,11 @@ const AppProfileRoute = AppProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AppRoute,
 } as any)
+const AppHelpRoute = AppHelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppEventsRoute = AppEventsRouteImport.update({
   id: '/events',
   path: '/events',
@@ -66,6 +73,11 @@ const AppDocumentationRoute = AppDocumentationRouteImport.update({
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCommunityRoute = AppCommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
   getParentRoute: () => AppRoute,
 } as any)
 const AppPracticeIndexRoute = AppPracticeIndexRouteImport.update({
@@ -158,9 +170,11 @@ const AppCoursesCourseIdModulesModuleIdLessonsLessonIdIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/community': typeof AppCommunityRoute
   '/dashboard': typeof AppDashboardRoute
   '/documentation': typeof AppDocumentationRoute
   '/events': typeof AppEventsRoute
+  '/help': typeof AppHelpRoute
   '/profile': typeof AppProfileRouteWithChildren
   '/research': typeof AppResearchRoute
   '/ai/chat': typeof AppAiChatRoute
@@ -183,9 +197,11 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/community': typeof AppCommunityRoute
   '/dashboard': typeof AppDashboardRoute
   '/documentation': typeof AppDocumentationRoute
   '/events': typeof AppEventsRoute
+  '/help': typeof AppHelpRoute
   '/profile': typeof AppProfileRouteWithChildren
   '/research': typeof AppResearchRoute
   '/ai/chat': typeof AppAiChatRoute
@@ -210,9 +226,11 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
+  '/_app/community': typeof AppCommunityRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/documentation': typeof AppDocumentationRoute
   '/_app/events': typeof AppEventsRoute
+  '/_app/help': typeof AppHelpRoute
   '/_app/profile': typeof AppProfileRouteWithChildren
   '/_app/research': typeof AppResearchRoute
   '/_app/ai/chat': typeof AppAiChatRoute
@@ -237,9 +255,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/community'
     | '/dashboard'
     | '/documentation'
     | '/events'
+    | '/help'
     | '/profile'
     | '/research'
     | '/ai/chat'
@@ -262,9 +282,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/community'
     | '/dashboard'
     | '/documentation'
     | '/events'
+    | '/help'
     | '/profile'
     | '/research'
     | '/ai/chat'
@@ -288,9 +310,11 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_app'
+    | '/_app/community'
     | '/_app/dashboard'
     | '/_app/documentation'
     | '/_app/events'
+    | '/_app/help'
     | '/_app/profile'
     | '/_app/research'
     | '/_app/ai/chat'
@@ -347,6 +371,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProfileRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/help': {
+      id: '/_app/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof AppHelpRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/events': {
       id: '/_app/events'
       path: '/events'
@@ -366,6 +397,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/community': {
+      id: '/_app/community'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof AppCommunityRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/practice/': {
@@ -505,9 +543,11 @@ const AppProfileRouteWithChildren = AppProfileRoute._addFileChildren(
 )
 
 interface AppRouteChildren {
+  AppCommunityRoute: typeof AppCommunityRoute
   AppDashboardRoute: typeof AppDashboardRoute
   AppDocumentationRoute: typeof AppDocumentationRoute
   AppEventsRoute: typeof AppEventsRoute
+  AppHelpRoute: typeof AppHelpRoute
   AppProfileRoute: typeof AppProfileRouteWithChildren
   AppResearchRoute: typeof AppResearchRoute
   AppAiChatRoute: typeof AppAiChatRoute
@@ -528,9 +568,11 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppCommunityRoute: AppCommunityRoute,
   AppDashboardRoute: AppDashboardRoute,
   AppDocumentationRoute: AppDocumentationRoute,
   AppEventsRoute: AppEventsRoute,
+  AppHelpRoute: AppHelpRoute,
   AppProfileRoute: AppProfileRouteWithChildren,
   AppResearchRoute: AppResearchRoute,
   AppAiChatRoute: AppAiChatRoute,

@@ -36,6 +36,7 @@ import {
   Brain,
   TestTube,
   Menu,
+  LifeBuoy,
   GraduationCap as LearnIcon,
 } from "lucide-react";
 import { ScrollArea } from "#/components/ui/scroll-area";
@@ -294,7 +295,7 @@ function SidebarNav({ collapsed = false }: SidebarNavProps) {
       <NavSection
         id="knowledge"
         icon={BookMarked}
-        label="Knowledge"
+        label="Research Center"
         collapsed={collapsed}
         hasActiveChild={anyActive("/documentation", "/research")}
         showSeparatorAbove
@@ -337,6 +338,31 @@ function SidebarNav({ collapsed = false }: SidebarNavProps) {
           to="/profile/certificates"
           collapsed={collapsed}
           isActive={isActive("/profile/certificates")}
+        />
+      </NavSection>
+
+      {/* ── Community & Help ──────────────────────── */}
+      <NavSection
+        id="community-help"
+        icon={Users}
+        label="Community & Help"
+        collapsed={collapsed}
+        hasActiveChild={anyActive("/community", "/help")}
+        showSeparatorAbove
+      >
+        <NavItem
+          icon={Users}
+          label="Community"
+          to="/community"
+          collapsed={collapsed}
+          isActive={isActive("/community")}
+        />
+        <NavItem
+          icon={LifeBuoy}
+          label="Help & Support"
+          to="/help"
+          collapsed={collapsed}
+          isActive={isActive("/help")}
         />
       </NavSection>
     </nav>
