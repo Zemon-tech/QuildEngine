@@ -27,7 +27,10 @@ export const Route = createRootRoute({
           "Quild is an AI-first learning platform for developers. Master DSA, system design, and more.",
       },
     ],
-    links: [{ rel: "stylesheet", href: appCss }],
+    links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", type: "image/png", href: "/quild-logo.png" },
+    ],
   }),
   shellComponent: RootDocument,
 });
