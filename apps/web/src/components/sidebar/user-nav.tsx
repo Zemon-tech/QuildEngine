@@ -43,7 +43,7 @@ export function UserNav({ collapsed = false }: UserNavProps) {
           className="text-[11px] font-semibold"
           style={{
             background: "var(--sb-accent)",
-            color: "oklch(0.12 0.01 220)",
+            color: "var(--sb-accent-foreground)",
           }}
         >
           {user.initials}
@@ -78,7 +78,7 @@ export function UserNav({ collapsed = false }: UserNavProps) {
         sideOffset={8}
         className="w-52"
         style={{
-          background: "oklch(0.16 0.012 220)",
+          background: "var(--sb-bg)",
           border: "1px solid var(--sb-border)",
           color: "var(--sb-ink)",
         }}
@@ -119,7 +119,7 @@ export function UserNav({ collapsed = false }: UserNavProps) {
         <DropdownMenuSeparator style={{ background: "var(--sb-border)" }} />
         <DropdownMenuItem
           className="gap-2 text-[13px]"
-          style={{ color: "oklch(0.65 0.18 25)" }}
+          style={{ color: "oklch(0.65 0 0)" }}
         >
           <LogOut size={14} />
           Sign out

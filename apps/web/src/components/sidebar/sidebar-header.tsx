@@ -25,17 +25,21 @@ export function SidebarHeader({ collapsed, onToggle }: SidebarHeaderProps) {
       >
         {/* Logo mark */}
         <span
-          className="flex shrink-0 items-center justify-center rounded-[8px] text-sm font-bold"
+          className="flex shrink-0 items-center justify-center rounded-[8px]"
           style={{
             width: 28,
             height: 28,
-            background: "var(--sb-accent)",
-            color: "oklch(0.12 0.01 220)",
-            fontFamily: "'Fraunces', Georgia, serif",
-            letterSpacing: "-0.02em",
+            background: "oklch(0.92 0 0)",
           }}
         >
-          Q
+          <img
+            src="/quild-logo.png"
+            alt="Quild"
+            width={20}
+            height={20}
+            style={{ objectFit: "contain", display: "block" }}
+            draggable={false}
+          />
         </span>
 
         {/* Wordmark */}
@@ -76,7 +80,6 @@ export function SidebarHeader({ collapsed, onToggle }: SidebarHeaderProps) {
           "flex shrink-0 items-center justify-center rounded-[8px] outline-none",
           "transition-all duration-150",
           "hover:opacity-70 focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60",
-          collapsed && "mt-0",
         )}
         style={{
           width: 28,
@@ -84,6 +87,7 @@ export function SidebarHeader({ collapsed, onToggle }: SidebarHeaderProps) {
           color: "var(--sb-ink-dim)",
         }}
         title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
       >
         {collapsed ? (
           <PanelLeftOpen size={15} />

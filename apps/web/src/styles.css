@@ -168,17 +168,51 @@
   --sidebar-width-expanded: 272px;
   --sidebar-width-collapsed: 60px;
 
-  /* Sidebar dark surface (independent of light/dark mode toggle) */
-  --sb-bg: oklch(0.13 0.012 220);
-  --sb-bg-hover: oklch(0.18 0.014 220);
-  --sb-bg-active: oklch(0.20 0.018 220);
-  --sb-border: oklch(0.22 0.012 220);
-  --sb-ink: oklch(0.82 0.01 220);
-  --sb-ink-muted: oklch(0.58 0.012 220);
-  --sb-ink-dim: oklch(0.42 0.01 220);
-  --sb-accent: oklch(0.72 0.14 185);
-  --sb-accent-glow: oklch(0.72 0.14 185 / 0.15);
-  --sb-pill: oklch(0.72 0.14 185 / 0.12);
+  /* ── Sidebar tokens: LIGHT mode (default) ─────────────────── */
+  /* Linear / Notion / Stripe inspired */
+  --sb-bg:           oklch(0.99 0 0);           /* near-white sidebar */
+  --sb-bg-hover:     oklch(0.95 0 0);           /* soft grey hover */
+  --sb-bg-active:    oklch(0.92 0 0);           /* active background */
+  --sb-border:       oklch(0.88 0 0);           /* light hairline */
+  --sb-ink:          oklch(0.13 0 0);           /* near-black text */
+  --sb-ink-muted:    oklch(0.42 0 0);           /* neutral 500 */
+  --sb-ink-dim:      oklch(0.62 0 0);           /* neutral 400 */
+  --sb-accent:       oklch(0.13 0 0);           /* black accent in light */
+  --sb-accent-foreground: oklch(1 0 0);         /* pure white text on dark accent */
+  --sb-accent-glow:  oklch(0.13 0 0 / 0.08);
+  --sb-pill:         oklch(0.13 0 0 / 0.07);
+  --sb-shadow:       0 1px 3px oklch(0 0 0 / 0.08), 0 8px 24px oklch(0 0 0 / 0.06);
+
+  /* ── Page/content tokens: LIGHT mode ──────────────────────── */
+  --page-bg:         oklch(0.97 0 0);
+  --page-ink:        oklch(0.13 0 0);
+  --card-bg:         oklch(1 0 0);
+  --card-border:     oklch(0.90 0 0);
+}
+
+/* ── Sidebar tokens: DARK mode ─────────────────────────────────
+   Applied when next-themes adds class="dark" to <html>
+   Vercel / Raycast / ChatGPT / Perplexity inspired
+ ---------------------------------------------------------------- */
+.dark {
+  --sb-bg:           oklch(0.11 0 0);           /* zinc-950 */
+  --sb-bg-hover:     oklch(0.16 0 0);           /* zinc-900 hover */
+  --sb-bg-active:    oklch(0.19 0 0);           /* zinc-800 */
+  --sb-border:       oklch(0.22 0 0);           /* zinc-800 border */
+  --sb-ink:          oklch(0.96 0 0);           /* zinc-100 text */
+  --sb-ink-muted:    oklch(0.60 0 0);           /* zinc-400 */
+  --sb-ink-dim:      oklch(0.38 0 0);           /* zinc-600 */
+  --sb-accent:       oklch(1 0 0);              /* pure white accent */
+  --sb-accent-foreground: oklch(0.09 0 0);      /* near-black text on white accent */
+  --sb-accent-glow:  oklch(1 0 0 / 0.08);
+  --sb-pill:         oklch(1 0 0 / 0.08);
+  --sb-shadow:       0 1px 3px oklch(0 0 0 / 0.4), 0 8px 32px oklch(0 0 0 / 0.3);
+
+  /* ── Page/content tokens: DARK mode ───────────────────────── */
+  --page-bg:         oklch(0.09 0 0);           /* zinc-950 page */
+  --page-ink:        oklch(0.96 0 0);
+  --card-bg:         oklch(0.13 0 0);           /* zinc-900 card */
+  --card-border:     oklch(0.20 0 0);
 }
 
 /* ─── App shell layout ────────────────────────────────────────── */
@@ -260,6 +294,11 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: color 250ms ease, background-color 250ms ease;
+}
+
+aside {
+  transition: background-color 250ms ease, border-color 250ms ease;
 }
 
 body::before {

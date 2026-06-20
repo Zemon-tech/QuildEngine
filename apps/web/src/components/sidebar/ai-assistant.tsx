@@ -134,10 +134,10 @@ export function AIAssistant({ open, onClose }: AIAssistantProps) {
             style={{
               width: 380,
               height: 540,
-              background: "oklch(0.12 0.013 220)",
+              background: "var(--sb-bg)",
               border: "1px solid var(--sb-border)",
               boxShadow:
-                "0 24px 80px oklch(0 0 0 / 0.5), 0 4px 24px oklch(0 0 0 / 0.3), 0 0 0 1px oklch(1 0 0 / 0.04) inset",
+                "0 24px 80px rgba(0, 0, 0, 0.12), 0 4px 24px rgba(0, 0, 0, 0.08)",
             }}
           >
             {/* Header */}
@@ -246,7 +246,7 @@ export function AIAssistant({ open, onClose }: AIAssistantProps) {
                           msg.role === "user"
                             ? {
                                 background: "var(--sb-accent)",
-                                color: "oklch(0.12 0.01 220)",
+                                color: "var(--sb-accent-foreground)",
                                 borderBottomRightRadius: 4,
                               }
                             : {
@@ -332,7 +332,7 @@ export function AIAssistant({ open, onClose }: AIAssistantProps) {
                     width: 28,
                     height: 28,
                     background: "var(--sb-accent)",
-                    color: "oklch(0.12 0.01 220)",
+                    color: "var(--sb-accent-foreground)",
                   }}
                 >
                   <Send size={13} />

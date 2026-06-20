@@ -21,8 +21,8 @@ function StatCard({
     <div
       className="stagger-item flex flex-col gap-2 rounded-xl p-4"
       style={{
-        background: "oklch(1 0 0 / 0.04)",
-        border: "1px solid oklch(1 0 0 / 0.08)",
+        background: "var(--card-bg)",
+        border: "1px solid var(--card-border)",
       }}
     >
       <div
@@ -96,8 +96,8 @@ function Dashboard() {
         <div
           className="stagger-item mb-6 rounded-xl p-5"
           style={{
-            background: "oklch(1 0 0 / 0.04)",
-            border: "1px solid oklch(1 0 0 / 0.08)",
+            background: "var(--card-bg)",
+            border: "1px solid var(--card-border)",
           }}
         >
           <div className="mb-3 flex items-center justify-between">
@@ -123,7 +123,7 @@ function Dashboard() {
           {/* Progress bar */}
           <div
             className="h-1.5 w-full overflow-hidden rounded-full"
-            style={{ background: "oklch(1 0 0 / 0.08)" }}
+            style={{ background: "var(--page-bg)" }}
           >
             <div
               className="h-full rounded-full transition-all duration-700"
@@ -144,8 +144,8 @@ function Dashboard() {
         <div
           className="stagger-item rounded-xl p-5"
           style={{
-            background: "oklch(1 0 0 / 0.04)",
-            border: "1px solid oklch(1 0 0 / 0.08)",
+            background: "var(--card-bg)",
+            border: "1px solid var(--card-border)",
           }}
         >
           <p className="mb-3 text-xs font-medium uppercase tracking-wider" style={{ color: "var(--sb-ink-dim)" }}>
@@ -156,7 +156,7 @@ function Dashboard() {
               <div
                 key={event.id}
                 className="flex items-center gap-3 rounded-lg px-3 py-2.5"
-                style={{ background: "oklch(1 0 0 / 0.04)" }}
+                style={{ background: "var(--page-bg)" }}
               >
                 <TrendingUp size={15} style={{ color: "var(--sb-accent)" }} />
                 <div className="flex-1">
