@@ -23,15 +23,12 @@ import {
 
 import { cn } from "#/lib/utils.ts"
 import {
-  Command,
   CommandDialog,
   CommandInput,
   CommandList,
   CommandEmpty,
   CommandGroup,
   CommandItem,
-  CommandSeparator,
-  CommandShortcut,
 } from "#/components/ui/command"
 import { searchDatabase, type SearchItem } from "#/lib/search-db"
 
