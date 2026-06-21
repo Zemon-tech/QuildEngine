@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { LayoutDashboard, TrendingUp, BookOpen, Clock, Flame, Code2 } from "lucide-react";
 import { useDashboardStats, useLearningProgress, useUpcomingEvents } from "#/hooks/use-dashboard";
 
-export const Route = createFileRoute("/_app/dashboard")({
+export const Route = createFileRoute("/_app/dashboard/")({
   component: Dashboard,
 });
 
