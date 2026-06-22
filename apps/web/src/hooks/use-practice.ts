@@ -1,4 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
+import { dsaCategories } from "#/lib/dsa-db";
+import { assessmentsDb, caseStudiesDb, interviewQADb } from "#/lib/practice-db";
 
 export function useDSAProblems() {
   return useQuery({
@@ -58,6 +60,86 @@ export function useTests() {
         endsIn: "3d 14h",
       },
     }),
+    staleTime: 300_000,
+  });
+}
+
+export function useDSACategories() {
+  return useQuery({
+    queryKey: ["dsa", "categories"],
+    queryFn: async () => dsaCategories,
+    staleTime: 300_000,
+  });
+}
+
+export function useDSACategory(topicId: string) {
+  return useQuery({
+    queryKey: ["dsa", "category", topicId],
+    queryFn: async () => {
+      const cat = dsaCategories.find((c) => c.id === topicId);
+      if (!cat) throw new Error(`Category not found: ${topicId}`);
+      return cat;
+    },
+    staleTime: 300_000,
+  });
+}
+
+export function useInterviewQA() {
+  return useQuery({
+    queryKey: ["practice", "interview-qa"],
+    queryFn: async () => Object.values(interviewQADb),
+    staleTime: 300_000,
+  });
+}
+
+export function useInterviewQACategory(type: string) {
+  return useQuery({
+    queryKey: ["practice", "interview-qa", type],
+    queryFn: async () => {
+      const cat = interviewQADb[type];
+      if (!cat) throw new Error(`Interview Q&A category not found: ${type}`);
+      return cat;
+    },
+    staleTime: 300_000,
+  });
+}
+
+export function useCaseStudiesCategories() {
+  return useQuery({
+    queryKey: ["practice", "case-studies-categories"],
+    queryFn: async () => Object.values(caseStudiesDb),
+    staleTime: 300_000,
+  });
+}
+
+export function useCaseStudiesCategory(type: string) {
+  return useQuery({
+    queryKey: ["practice", "case-studies-category", type],
+    queryFn: async () => {
+      const cat = caseStudiesDb[type];
+      if (!cat) throw new Error(`Case Studies category not found: ${type}`);
+      return cat;
+    },
+    staleTime: 300_000,
+  });
+}
+
+export function useAssessmentsCategories() {
+  return useQuery({
+    queryKey: ["practice", "assessments-categories"],
+    queryFn: async () => Object.values(assessmentsDb),
+    staleTime: 300_000,
+  });
+}
+
+export function useAssessmentsCategory(type: string) {
+  return useQuery({
+    queryKey: ["practice", "assessments-category", type],
+    queryFn: async () => {
+      const cat = assessmentsDb[type];
+      if (!cat) throw new Error(`Assessments category not found: ${type}`);
+      return cat;
+    },
     staleTime: 300_000,
   });
 }

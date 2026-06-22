@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import type { LucideIcon } from "lucide-react";
 import { ChevronRight } from "lucide-react";
-import { cn } from "#/lib/utils";
-import { NavItem } from "./nav-item";
+import { useState } from "react";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "#/components/ui/tooltip";
-import type { LucideIcon } from "lucide-react";
+import { cn } from "#/lib/utils";
+import { NavItem } from "./nav-item";
 
 interface SubItem {
   icon: LucideIcon;

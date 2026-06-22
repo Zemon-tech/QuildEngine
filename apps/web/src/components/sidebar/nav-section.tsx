@@ -1,14 +1,14 @@
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import type { LucideIcon } from "lucide-react";
 import { ChevronRight } from "lucide-react";
-import { cn } from "#/lib/utils";
+import { useEffect, useRef, useState } from "react";
 import { Separator } from "#/components/ui/separator";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "#/components/ui/tooltip";
-import type { LucideIcon } from "lucide-react";
+import { cn } from "#/lib/utils";
 
 interface NavSectionProps {
   /** Section identifier — used to persist open state in sessionStorage */
@@ -95,7 +95,9 @@ export function NavSection({
       <div className="flex flex-col items-center gap-0.5 py-0.5">
         {showSeparatorAbove && (
           <div className="w-8 py-1">
-            <Separator style={{ background: "var(--sb-border)", opacity: 0.5 }} />
+            <Separator
+              style={{ background: "var(--sb-border)", opacity: 0.5 }}
+            />
           </div>
         )}
         <Tooltip delayDuration={0}>
@@ -152,7 +154,9 @@ export function NavSection({
     <div className="flex flex-col">
       {showSeparatorAbove && (
         <div className="px-3 py-1">
-          <Separator style={{ background: "var(--sb-border)", opacity: 0.45 }} />
+          <Separator
+            style={{ background: "var(--sb-border)", opacity: 0.45 }}
+          />
         </div>
       )}
 
@@ -194,7 +198,9 @@ export function NavSection({
           <Icon
             size={16}
             style={{
-              color: hasActiveChild ? "var(--sb-accent)" : "var(--sb-ink-muted)",
+              color: hasActiveChild
+                ? "var(--sb-accent)"
+                : "var(--sb-ink-muted)",
               transition: "color 150ms ease",
             }}
             className="group-hover:!text-[var(--sb-ink)]"
@@ -238,7 +244,9 @@ export function NavSection({
           <ChevronRight
             size={14}
             style={{
-              color: hasActiveChild ? "var(--sb-ink-muted)" : "var(--sb-ink-dim)",
+              color: hasActiveChild
+                ? "var(--sb-ink-muted)"
+                : "var(--sb-ink-dim)",
             }}
           />
         </motion.span>

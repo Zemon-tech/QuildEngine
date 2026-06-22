@@ -1,37 +1,30 @@
-import { useState, useEffect } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
-  LayoutDashboard,
-  BarChart3,
   Activity,
-  BookOpen,
-  GraduationCap,
-  PlayCircle,
+  BarChart3,
+  BookMarked,
   Bookmark,
-  ScrollText,
-  FileText,
-  Map,
-  StickyNote,
-  Binary,
-  Link2,
-  GitBranch,
-  Network,
-  Sigma,
-  Code2,
-  Users,
+  BookOpen,
   Brain,
   Briefcase,
-  Server,
   ClipboardList,
-  FileSearch,
-  Zap,
-  BookMarked,
+  Code2,
+  FileText,
   FlaskConical,
+  LayoutDashboard,
+  Map as MapIcon,
   PanelLeftClose,
   PanelLeftOpen,
+  ScrollText,
+  StickyNote,
 } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "#/components/ui/tooltip";
 import { cn } from "#/lib/utils";
-import { Tooltip, TooltipContent, TooltipTrigger } from "#/components/ui/tooltip";
 
 interface SubItem {
   label: string;
@@ -42,7 +35,10 @@ interface SubItem {
 
 interface SubGroup {
   label: string;
-  items: SubItem[];
+  items?: SubItem[];
+  to?: string;
+  icon?: any;
+  badge?: string | number;
 }
 
 let isAiDashboardSidebarOpen = false;
@@ -50,7 +46,9 @@ const sidebarListeners = new Set<(val: boolean) => void>();
 
 export function toggleAiDashboardSidebar() {
   isAiDashboardSidebarOpen = !isAiDashboardSidebarOpen;
-  sidebarListeners.forEach((l) => l(isAiDashboardSidebarOpen));
+  for (const listener of sidebarListeners) {
+    listener(isAiDashboardSidebarOpen);
+  }
 }
 
 export function useAiDashboardSidebarOpen() {
@@ -93,15 +91,16 @@ export function SecondarySidebar() {
         ],
       },
     ];
-  } else if (currentPath.startsWith("/learn") || currentPath.startsWith("/courses")) {
+  } else if (
+    currentPath.startsWith("/learn") ||
+    currentPath.startsWith("/courses")
+  ) {
     sectionTitle = "Learning";
     groups = [
       {
-        label: "Courses",
+        label: "Coures",
         items: [
-          { label: "All Courses", to: "/courses", icon: BookOpen },
-          { label: "My Courses", to: "/courses/my", icon: GraduationCap },
-          { label: "Continue Learning", to: "/courses/continue", icon: PlayCircle, badge: 1 },
+          { label: "Coures", to: "/courses", icon: BookOpen },
           { label: "Bookmarks", to: "/courses/bookmarks", icon: Bookmark },
         ],
       },
@@ -110,51 +109,45 @@ export function SecondarySidebar() {
         items: [
           { label: "Tutorials", to: "/learn/tutorials", icon: ScrollText },
           { label: "Articles", to: "/learn/articles", icon: FileText },
-          { label: "Roadmaps", to: "/learn/roadmaps", icon: Map },
+          { label: "Roadmaps", to: "/learn/roadmaps", icon: MapIcon },
           { label: "Notes", to: "/learn/notes", icon: StickyNote },
         ],
       },
     ];
-  } else if (currentPath.startsWith("/practice")) {
+  } else if (
+    currentPath.startsWith("/practice") ||
+    currentPath.startsWith("/dsa") ||
+    currentPath.startsWith("/interview-qa") ||
+    currentPath.startsWith("/case-studies") ||
+    currentPath.startsWith("/assessments")
+  ) {
     sectionTitle = "Practice Room";
     groups = [
       {
         label: "Algorithms & DSA",
-        items: [
-          { label: "Arrays", to: "/practice/dsa/arrays", icon: Binary },
-          { label: "Strings", to: "/practice/dsa/strings", icon: FileText },
-          { label: "Linked Lists", to: "/practice/dsa/linked-list", icon: Link2 },
-          { label: "Trees", to: "/practice/dsa/trees", icon: GitBranch },
-          { label: "Graphs", to: "/practice/dsa/graphs", icon: Network },
-          { label: "Dynamic Prog.", to: "/practice/dsa/dp", icon: Sigma },
-        ],
+        to: "/dsa",
+        icon: Code2,
       },
       {
         label: "Interview Q&A",
-        items: [
-          { label: "Technical Interview", to: "/practice/qa/technical", icon: Code2 },
-          { label: "Behavioral", to: "/practice/qa/behavioral", icon: Users },
-          { label: "AI Generated", to: "/practice/qa/ai", icon: Brain, badge: "New" },
-        ],
+        to: "/interview-qa",
+        icon: Brain,
       },
       {
         label: "Case Studies",
-        items: [
-          { label: "Product", to: "/practice/case-study/product", icon: Briefcase },
-          { label: "System Design", to: "/practice/case-study/system-design", icon: Server },
-          { label: "Business", to: "/practice/case-study/business", icon: BarChart3 },
-        ],
+        to: "/case-studies",
+        icon: Briefcase,
       },
       {
         label: "Assessments",
-        items: [
-          { label: "Mock Tests", to: "/practice/test-cases/mock", icon: ClipboardList },
-          { label: "Assessments", to: "/practice/test-cases/assessments", icon: FileSearch },
-          { label: "Weekly Challenges", to: "/practice/test-cases/weekly", icon: Zap, badge: "Live" },
-        ],
+        to: "/assessments",
+        icon: ClipboardList,
       },
     ];
-  } else if (currentPath.startsWith("/research") || currentPath.startsWith("/documentation")) {
+  } else if (
+    currentPath.startsWith("/research") ||
+    currentPath.startsWith("/documentation")
+  ) {
     sectionTitle = "Research Center";
     groups = [
       {
@@ -170,7 +163,10 @@ export function SecondarySidebar() {
     return null;
   }
 
-  const isItemActive = (to: string) => currentPath === to;
+  const isItemActive = (to: string) => {
+    if (to === "/") return currentPath === "/";
+    return currentPath === to || currentPath.startsWith(`${to}/`);
+  };
 
   return (
     <aside
@@ -220,66 +216,170 @@ export function SecondarySidebar() {
 
       {/* Group listings */}
       <div className="flex-1 overflow-y-auto py-3 px-2 space-y-4 scrollbar-none">
-        {groups.map((group) => (
-          <div key={group.label} className="space-y-1">
-            {!collapsed && (
-              <span className="px-2.5 text-[10px] font-bold tracking-wide text-zinc-400 dark:text-zinc-500 block uppercase">
-                {group.label}
-              </span>
-            )}
+        {groups.map((group) => {
+          if (group.to) {
+            // Render group itself as a navigation trigger (e.g. Algorithms & DSA)
+            const active = isItemActive(group.to);
+            const Icon = group.icon;
 
-            <div className="space-y-0.5">
-              {group.items.map((item) => {
-                const active = isItemActive(item.to);
-                const linkContent = (
-                  <Link
-                    to={item.to}
-                    className={cn(
-                      "flex items-center gap-2.5 px-2.5 py-1.5 text-xs font-medium rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.98] relative",
-                      collapsed && "justify-center px-1.5",
-                      active
-                        ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)] font-semibold"
-                        : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]"
-                    )}
-                  >
-                    <item.icon size={14} className={active ? "text-[var(--sb-accent)]" : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]"} />
-                    {!collapsed && <span className="flex-1 truncate">{item.label}</span>}
-                    {!collapsed && item.badge && (
-                      <span
-                        className="text-[9px] font-semibold px-1 py-0.2 rounded-md tracking-wide"
-                        style={{
-                          background: item.badge === "Live" ? "oklch(0.627 0.265 303.9 / 0.15)" : "var(--sb-pill)",
-                          color: item.badge === "Live" ? "oklch(0.627 0.265 303.9)" : "var(--sb-ink-dim)",
-                          border: "1px solid var(--sb-border)",
-                        }}
-                      >
-                        {item.badge}
-                      </span>
-                    )}
-                  </Link>
-                );
-
-                return collapsed ? (
-                  <Tooltip key={item.label} delayDuration={0}>
-                    <TooltipTrigger asChild>
-                      <div>{linkContent}</div>
-                    </TooltipTrigger>
-                    <TooltipContent side="right" sideOffset={8}>
-                      <span className="text-xs font-medium">{item.label}</span>
-                      {item.badge && (
-                        <span className="ml-1.5 text-[9px] font-semibold px-1 py-0.2 rounded bg-zinc-800 text-zinc-200">
-                          {item.badge}
-                        </span>
+            return collapsed ? (
+              <Tooltip key={group.label} delayDuration={0}>
+                <TooltipTrigger asChild>
+                  <div>
+                    <Link
+                      to={group.to}
+                      className={cn(
+                        "flex items-center gap-2.5 px-2.5 py-1.5 text-xs font-bold tracking-wide rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative uppercase",
+                        "justify-center px-1.5",
+                        active
+                          ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)]"
+                          : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]"
                       )}
-                    </TooltipContent>
-                  </Tooltip>
-                ) : (
-                  <div key={item.label}>{linkContent}</div>
-                );
-              })}
+                    >
+                      {Icon && (
+                        <Icon
+                          size={14}
+                          className={cn(
+                            "shrink-0",
+                            active ? "text-[var(--sb-accent)]" : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]"
+                          )}
+                        />
+                      )}
+                    </Link>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="right" sideOffset={8}>
+                  <span className="text-xs font-medium">{group.label}</span>
+                  {group.badge && (
+                    <span className="ml-1.5 text-[9px] font-semibold px-1 py-0.2 rounded bg-zinc-800 text-zinc-200">
+                      {group.badge}
+                    </span>
+                  )}
+                </TooltipContent>
+              </Tooltip>
+            ) : (
+              <div key={group.label}>
+                <Link
+                  to={group.to}
+                  className={cn(
+                    "flex items-center gap-2.5 px-2.5 py-1.5 text-xs font-bold tracking-wide rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative uppercase",
+                    active
+                      ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)]"
+                      : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]"
+                  )}
+                >
+                  {Icon && (
+                    <Icon
+                      size={14}
+                      className={cn(
+                        "shrink-0",
+                        active ? "text-[var(--sb-accent)]" : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]"
+                      )}
+                    />
+                  )}
+                  <span className="flex-1 truncate">{group.label}</span>
+                  {group.badge && (
+                    <span
+                      className="text-[9px] font-semibold px-1 py-0.2 rounded-md tracking-wide"
+                      style={{
+                        background: group.badge === "Live" ? "oklch(0.627 0.265 303.9 / 0.15)" : "var(--sb-pill)",
+                        color: group.badge === "Live" ? "oklch(0.627 0.265 303.9)" : "var(--sb-ink-dim)",
+                        border: "1px solid var(--sb-border)",
+                      }}
+                    >
+                      {group.badge}
+                    </span>
+                  )}
+                </Link>
+              </div>
+            );
+          }
+
+          // Otherwise, render standard group with nested items
+          return (
+            <div key={group.label} className="space-y-1">
+              {!collapsed && (
+                <span className="px-2.5 text-[10px] font-bold tracking-wide text-zinc-400 dark:text-zinc-500 block uppercase">
+                  {group.label}
+                </span>
+              )}
+
+              <div className="space-y-0.5">
+                {group.items?.map((item) => {
+                  const active = isItemActive(item.to);
+
+                  return collapsed ? (
+                    <Tooltip key={item.label} delayDuration={0}>
+                      <TooltipTrigger asChild>
+                        <div>
+                          <Link
+                            to={item.to}
+                            className={cn(
+                              "flex items-center gap-2.5 px-2.5 py-1.5 text-xs font-medium rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative",
+                              "justify-center px-1.5",
+                              active
+                                ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)] font-semibold"
+                                : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]"
+                            )}
+                          >
+                            <item.icon
+                              size={14}
+                              className={cn(
+                                "shrink-0",
+                                active ? "text-[var(--sb-accent)]" : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]"
+                              )}
+                            />
+                          </Link>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent side="right" sideOffset={8}>
+                        <span className="text-xs font-medium">{item.label}</span>
+                        {item.badge && (
+                          <span className="ml-1.5 text-[9px] font-semibold px-1 py-0.2 rounded bg-zinc-800 text-zinc-200">
+                            {item.badge}
+                          </span>
+                        )}
+                      </TooltipContent>
+                    </Tooltip>
+                  ) : (
+                    <div key={item.label}>
+                      <Link
+                        to={item.to}
+                        className={cn(
+                          "flex items-center gap-2.5 px-2.5 py-1.5 text-xs font-medium rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative",
+                          active
+                            ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)] font-semibold"
+                            : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]"
+                        )}
+                      >
+                        <item.icon
+                          size={14}
+                          className={cn(
+                            "shrink-0",
+                            active ? "text-[var(--sb-accent)]" : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]"
+                          )}
+                        />
+                        <span className="flex-1 truncate">{item.label}</span>
+                        {item.badge && (
+                          <span
+                            className="text-[9px] font-semibold px-1 py-0.2 rounded-md tracking-wide"
+                            style={{
+                              background: item.badge === "Live" ? "oklch(0.627 0.265 303.9 / 0.15)" : "var(--sb-pill)",
+                              color: item.badge === "Live" ? "oklch(0.627 0.265 303.9)" : "var(--sb-ink-dim)",
+                              border: "1px solid var(--sb-border)",
+                            }}
+                          >
+                            {item.badge}
+                          </span>
+                        )}
+                      </Link>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </aside>
   );

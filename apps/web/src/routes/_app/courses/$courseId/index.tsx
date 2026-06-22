@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCourse } from "#/hooks/use-courses";
 import { ChevronRight } from "lucide-react";
+import { useCourse } from "#/hooks/use-courses";
 
 export const Route = createFileRoute("/_app/courses/$courseId/")({
   component: CourseDetailPage,
@@ -15,7 +15,10 @@ function CourseDetailPage() {
       <div className="mb-8">
         <h1
           className="text-2xl font-bold tracking-tight"
-          style={{ color: "var(--sb-ink)", fontFamily: "'Fraunces', Georgia, serif" }}
+          style={{
+            color: "var(--sb-ink)",
+            fontFamily: "'Fraunces', Georgia, serif",
+          }}
         >
           {course?.title ?? courseId}
         </h1>

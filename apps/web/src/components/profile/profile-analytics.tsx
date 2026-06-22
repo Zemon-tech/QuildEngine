@@ -1,4 +1,12 @@
-import { BarChart3, Clock, Flame, BookOpen, Trophy, Zap, Code } from "lucide-react";
+import {
+  BarChart3,
+  BookOpen,
+  Clock,
+  Code,
+  Flame,
+  Trophy,
+  Zap,
+} from "lucide-react";
 
 export interface ActivityEvent {
   id: string;
@@ -25,11 +33,15 @@ interface ProfileAnalyticsProps {
   achievements: AchievementItem[];
 }
 
-export function ProfileAnalytics({ stats, activities, achievements }: ProfileAnalyticsProps) {
+export function ProfileAnalytics({
+  stats,
+  activities,
+  achievements,
+}: ProfileAnalyticsProps) {
   // Generate data for the contribution-like Learning Grid (24 weeks)
   const totalWeeks = 24;
   const daysPerWeek = 7;
-  
+
   // Custom seed values for colors to make it look realistic
   function getActivityLevel(colIndex: number, rowIndex: number): number {
     const sum = colIndex + rowIndex * 2;
@@ -41,9 +53,9 @@ export function ProfileAnalytics({ stats, activities, achievements }: ProfileAna
 
   const gridColors = [
     "bg-[var(--card-border)]/40", // 0
-    "bg-[var(--sb-accent)]/20",   // 1
-    "bg-[var(--sb-accent)]/50",   // 2
-    "bg-[var(--sb-accent)]",      // 3
+    "bg-[var(--sb-accent)]/20", // 1
+    "bg-[var(--sb-accent)]/50", // 2
+    "bg-[var(--sb-accent)]", // 3
   ];
 
   return (
@@ -53,29 +65,43 @@ export function ProfileAnalytics({ stats, activities, achievements }: ProfileAna
         {/* Courses */}
         <div
           className="flex flex-col gap-2 rounded-xl p-4 border"
-          style={{ background: "var(--card-bg)", borderColor: "var(--card-border)" }}
+          style={{
+            background: "var(--card-bg)",
+            borderColor: "var(--card-border)",
+          }}
         >
           <div className="flex size-8 items-center justify-center rounded-lg bg-[var(--sb-bg-hover)]">
             <BookOpen size={16} className="text-[var(--sb-accent)]" />
           </div>
           <div>
-            <p className="text-xl font-bold tracking-tight" style={{ color: "var(--sb-ink)" }}>
+            <p
+              className="text-xl font-bold tracking-tight"
+              style={{ color: "var(--sb-ink)" }}
+            >
               {stats.coursesCompleted}
             </p>
-            <p className="text-[11px] text-[var(--sb-ink-muted)]">Courses Completed</p>
+            <p className="text-[11px] text-[var(--sb-ink-muted)]">
+              Courses Completed
+            </p>
           </div>
         </div>
 
         {/* DSA Problems */}
         <div
           className="flex flex-col gap-2 rounded-xl p-4 border"
-          style={{ background: "var(--card-bg)", borderColor: "var(--card-border)" }}
+          style={{
+            background: "var(--card-bg)",
+            borderColor: "var(--card-border)",
+          }}
         >
           <div className="flex size-8 items-center justify-center rounded-lg bg-[var(--sb-bg-hover)]">
             <Code size={16} className="text-[var(--sb-accent)]" />
           </div>
           <div>
-            <p className="text-xl font-bold tracking-tight" style={{ color: "var(--sb-ink)" }}>
+            <p
+              className="text-xl font-bold tracking-tight"
+              style={{ color: "var(--sb-ink)" }}
+            >
               {stats.dsaSolved}
             </p>
             <p className="text-[11px] text-[var(--sb-ink-muted)]">DSA Solved</p>
@@ -85,32 +111,48 @@ export function ProfileAnalytics({ stats, activities, achievements }: ProfileAna
         {/* Hours Learned */}
         <div
           className="flex flex-col gap-2 rounded-xl p-4 border"
-          style={{ background: "var(--card-bg)", borderColor: "var(--card-border)" }}
+          style={{
+            background: "var(--card-bg)",
+            borderColor: "var(--card-border)",
+          }}
         >
           <div className="flex size-8 items-center justify-center rounded-lg bg-[var(--sb-bg-hover)]">
             <Clock size={16} className="text-[var(--sb-accent)]" />
           </div>
           <div>
-            <p className="text-xl font-bold tracking-tight" style={{ color: "var(--sb-ink)" }}>
+            <p
+              className="text-xl font-bold tracking-tight"
+              style={{ color: "var(--sb-ink)" }}
+            >
               {stats.hoursLearned}h
             </p>
-            <p className="text-[11px] text-[var(--sb-ink-muted)]">Hours Learned</p>
+            <p className="text-[11px] text-[var(--sb-ink-muted)]">
+              Hours Learned
+            </p>
           </div>
         </div>
 
         {/* Streak */}
         <div
           className="flex flex-col gap-2 rounded-xl p-4 border"
-          style={{ background: "var(--card-bg)", borderColor: "var(--card-border)" }}
+          style={{
+            background: "var(--card-bg)",
+            borderColor: "var(--card-border)",
+          }}
         >
           <div className="flex size-8 items-center justify-center rounded-lg bg-[var(--sb-bg-hover)]">
             <Flame size={16} className="text-[var(--sb-accent)]" />
           </div>
           <div>
-            <p className="text-xl font-bold tracking-tight" style={{ color: "var(--sb-ink)" }}>
+            <p
+              className="text-xl font-bold tracking-tight"
+              style={{ color: "var(--sb-ink)" }}
+            >
               {stats.streakDays}d
             </p>
-            <p className="text-[11px] text-[var(--sb-ink-muted)]">Learning Streak</p>
+            <p className="text-[11px] text-[var(--sb-ink-muted)]">
+              Learning Streak
+            </p>
           </div>
         </div>
       </div>
@@ -131,7 +173,9 @@ export function ProfileAnalytics({ stats, activities, achievements }: ProfileAna
             <Zap size={15} className="text-[var(--sb-accent)]" />
             Learning Activity Grid
           </h3>
-          <span className="text-[10px] text-[var(--sb-ink-dim)]">Last {totalWeeks} weeks of practice</span>
+          <span className="text-[10px] text-[var(--sb-ink-dim)]">
+            Last {totalWeeks} weeks of practice
+          </span>
         </div>
 
         <div className="overflow-x-auto pb-2">
@@ -174,26 +218,43 @@ export function ProfileAnalytics({ stats, activities, achievements }: ProfileAna
             borderColor: "var(--card-border)",
           }}
         >
-          <h3 className="text-sm font-semibold flex items-center gap-2" style={{ color: "var(--page-ink)" }}>
+          <h3
+            className="text-sm font-semibold flex items-center gap-2"
+            style={{ color: "var(--page-ink)" }}
+          >
             <Trophy size={15} className="text-[var(--sb-accent)]" />
             Achievements & Awards
           </h3>
 
           <div className="flex flex-col gap-3 text-[13px]">
             {achievements.length === 0 ? (
-              <p className="text-xs text-[var(--sb-ink-muted)] py-4 text-center">No achievements listed yet.</p>
+              <p className="text-xs text-[var(--sb-ink-muted)] py-4 text-center">
+                No achievements listed yet.
+              </p>
             ) : (
               achievements.map((item, index) => (
-                <div key={index} className="flex items-start gap-2.5 p-2.5 rounded-lg border bg-[var(--page-bg)]" style={{ borderColor: "var(--card-border)" }}>
-                  <Zap size={14} className="text-[var(--sb-accent)] mt-0.5 shrink-0" />
+                <div
+                  key={index}
+                  className="flex items-start gap-2.5 p-2.5 rounded-lg border bg-[var(--page-bg)]"
+                  style={{ borderColor: "var(--card-border)" }}
+                >
+                  <Zap
+                    size={14}
+                    className="text-[var(--sb-accent)] mt-0.5 shrink-0"
+                  />
                   <div>
-                    <h4 className="font-semibold text-xs" style={{ color: "var(--sb-ink)" }}>
+                    <h4
+                      className="font-semibold text-xs"
+                      style={{ color: "var(--sb-ink)" }}
+                    >
                       {item.title}
                     </h4>
                     <p className="text-[11px] text-[var(--sb-ink-muted)] mt-0.5">
                       {item.event} {item.rank && `· Rank: ${item.rank}`}
                     </p>
-                    <p className="text-[10px] text-[var(--sb-ink-dim)] mt-0.5">{item.date}</p>
+                    <p className="text-[10px] text-[var(--sb-ink-dim)] mt-0.5">
+                      {item.date}
+                    </p>
                   </div>
                 </div>
               ))
@@ -209,24 +270,38 @@ export function ProfileAnalytics({ stats, activities, achievements }: ProfileAna
             borderColor: "var(--card-border)",
           }}
         >
-          <h3 className="text-sm font-semibold flex items-center gap-2" style={{ color: "var(--page-ink)" }}>
+          <h3
+            className="text-sm font-semibold flex items-center gap-2"
+            style={{ color: "var(--page-ink)" }}
+          >
             <BarChart3 size={15} className="text-[var(--sb-accent)]" />
             Recent Activity Feed
           </h3>
 
-          <div className="flex flex-col gap-3 text-[13px] relative pl-3 border-l" style={{ borderColor: "var(--card-border)" }}>
+          <div
+            className="flex flex-col gap-3 text-[13px] relative pl-3 border-l"
+            style={{ borderColor: "var(--card-border)" }}
+          >
             {activities.length === 0 ? (
-              <p className="text-xs text-[var(--sb-ink-muted)] py-4 text-center">No recent activities.</p>
+              <p className="text-xs text-[var(--sb-ink-muted)] py-4 text-center">
+                No recent activities.
+              </p>
             ) : (
               activities.map((act) => (
                 <div key={act.id} className="relative flex flex-col gap-0.5">
                   {/* node */}
                   <div className="absolute -left-[18px] top-1.5 size-2 rounded-full bg-[var(--sb-accent)]" />
-                  
-                  <p className="font-medium text-xs" style={{ color: "var(--sb-ink)" }}>
+
+                  <p
+                    className="font-medium text-xs"
+                    style={{ color: "var(--sb-ink)" }}
+                  >
                     {act.content}
                   </p>
-                  <span className="text-[10px]" style={{ color: "var(--sb-ink-dim)" }}>
+                  <span
+                    className="text-[10px]"
+                    style={{ color: "var(--sb-ink-dim)" }}
+                  >
                     {act.date}
                   </span>
                 </div>

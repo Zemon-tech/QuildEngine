@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Monitor, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { motion, AnimatePresence } from "framer-motion";
-import { Sun, Moon, Monitor } from "lucide-react";
-import { cn } from "#/lib/utils";
+import { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,6 +13,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "#/components/ui/tooltip";
+import { cn } from "#/lib/utils";
 
 interface ThemeToggleProps {
   collapsed?: boolean;
@@ -69,7 +69,10 @@ export function ThemeToggle({ collapsed = false }: ThemeToggleProps) {
       </div>
 
       {!collapsed && (
-        <span className="flex-1 truncate text-left text-[13px] font-medium" style={{ color: "var(--sb-ink)" }}>
+        <span
+          className="flex-1 truncate text-left text-[13px] font-medium"
+          style={{ color: "var(--sb-ink)" }}
+        >
           Theme
         </span>
       )}
@@ -100,14 +103,16 @@ export function ThemeToggle({ collapsed = false }: ThemeToggleProps) {
           "flex items-center gap-2.5 px-2.5 py-2 text-[13px] rounded-md transition-colors cursor-pointer justify-between",
           theme === "light"
             ? "bg-[var(--sb-bg-active)] text-[var(--sb-accent)] font-medium"
-            : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] focus:bg-[var(--sb-bg-hover)] focus:text-[var(--sb-ink)]"
+            : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] focus:bg-[var(--sb-bg-hover)] focus:text-[var(--sb-ink)]",
         )}
       >
         <div className="flex items-center gap-2">
           <Sun size={14} />
           <span>Light</span>
         </div>
-        {theme === "light" && <div className="size-1.5 rounded-full bg-[var(--sb-accent)]" />}
+        {theme === "light" && (
+          <div className="size-1.5 rounded-full bg-[var(--sb-accent)]" />
+        )}
       </DropdownMenuItem>
 
       <DropdownMenuItem
@@ -116,14 +121,16 @@ export function ThemeToggle({ collapsed = false }: ThemeToggleProps) {
           "flex items-center gap-2.5 px-2.5 py-2 text-[13px] rounded-md transition-colors cursor-pointer justify-between",
           theme === "dark"
             ? "bg-[var(--sb-bg-active)] text-[var(--sb-accent)] font-medium"
-            : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] focus:bg-[var(--sb-bg-hover)] focus:text-[var(--sb-ink)]"
+            : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] focus:bg-[var(--sb-bg-hover)] focus:text-[var(--sb-ink)]",
         )}
       >
         <div className="flex items-center gap-2">
           <Moon size={14} />
           <span>Dark</span>
         </div>
-        {theme === "dark" && <div className="size-1.5 rounded-full bg-[var(--sb-accent)]" />}
+        {theme === "dark" && (
+          <div className="size-1.5 rounded-full bg-[var(--sb-accent)]" />
+        )}
       </DropdownMenuItem>
 
       <DropdownMenuItem
@@ -132,23 +139,23 @@ export function ThemeToggle({ collapsed = false }: ThemeToggleProps) {
           "flex items-center gap-2.5 px-2.5 py-2 text-[13px] rounded-md transition-colors cursor-pointer justify-between",
           theme === "system"
             ? "bg-[var(--sb-bg-active)] text-[var(--sb-accent)] font-medium"
-            : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] focus:bg-[var(--sb-bg-hover)] focus:text-[var(--sb-ink)]"
+            : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] focus:bg-[var(--sb-bg-hover)] focus:text-[var(--sb-ink)]",
         )}
       >
         <div className="flex items-center gap-2">
           <Monitor size={14} />
           <span>System</span>
         </div>
-        {theme === "system" && <div className="size-1.5 rounded-full bg-[var(--sb-accent)]" />}
+        {theme === "system" && (
+          <div className="size-1.5 rounded-full bg-[var(--sb-accent)]" />
+        )}
       </DropdownMenuItem>
     </DropdownMenuContent>
   );
 
   const menu = (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        {trigger}
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
       {dropdownContent}
     </DropdownMenu>
   );

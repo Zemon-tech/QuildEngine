@@ -226,6 +226,15 @@
   animation: page-enter 200ms var(--ease-out-expo) both;
 }
 
+/* Ensure all page root layout containers utilize full available width */
+.page-enter > .mx-auto,
+.page-enter > [class*="max-w-"] {
+  max-width: none !important;
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
 @keyframes page-enter {
   from {
     opacity: 0;

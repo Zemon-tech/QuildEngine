@@ -1,17 +1,17 @@
-import { useState, useRef } from "react";
 import {
-  MapPin,
-  Globe,
-  Github,
-  Linkedin,
-  Edit2,
-  Mail,
-  FileText,
-  Upload,
   Download,
+  Edit2,
   Eye,
+  FileText,
+  Github,
+  Globe,
+  Linkedin,
   Loader2,
+  Mail,
+  MapPin,
+  Upload,
 } from "lucide-react";
+import { useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "#/components/ui/avatar";
 import { Button } from "#/components/ui/button";
 
@@ -31,7 +31,11 @@ interface ProfileHeaderProps {
   onPreviewResume: () => void;
 }
 
-export function ProfileHeader({ data, onUpdate, onPreviewResume }: ProfileHeaderProps) {
+export function ProfileHeader({
+  data,
+  onUpdate,
+  onPreviewResume,
+}: ProfileHeaderProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState(data.name);
   const [editHeadline, setEditHeadline] = useState(data.headline);
@@ -84,7 +88,7 @@ export function ProfileHeader({ data, onUpdate, onPreviewResume }: ProfileHeader
 
   function handleDownloadResume() {
     if (!data.resumeName) return;
-    
+
     // Simulate resume download
     const link = document.createElement("a");
     link.href = "#";
@@ -108,16 +112,18 @@ export function ProfileHeader({ data, onUpdate, onPreviewResume }: ProfileHeader
       <div
         className="h-36 w-full relative"
         style={{
-          background: "linear-gradient(135deg, var(--sb-accent) 0%, oklch(0.25 0.05 200) 100%)",
+          background:
+            "linear-gradient(135deg, var(--sb-accent) 0%, oklch(0.25 0.05 200) 100%)",
           opacity: 0.85,
         }}
       >
         {/* Subtle grid pattern overlay */}
-        <div 
-          className="absolute inset-0 opacity-10" 
+        <div
+          className="absolute inset-0 opacity-10"
           style={{
-            backgroundImage: "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)",
-            backgroundSize: "20px 20px"
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)",
+            backgroundSize: "20px 20px",
           }}
         />
       </div>
@@ -125,11 +131,20 @@ export function ProfileHeader({ data, onUpdate, onPreviewResume }: ProfileHeader
       {/* Profile info section */}
       <div className="px-6 pb-6 pt-0 relative flex flex-col md:flex-row md:items-end md:justify-between gap-4">
         {/* Avatar overlay */}
-        <div className="relative -mt-16 z-10 size-28 rounded-full border-4 overflow-hidden shrink-0" style={{ borderColor: "var(--card-bg)" }}>
+        <div
+          className="relative -mt-16 z-10 size-28 rounded-full border-4 overflow-hidden shrink-0"
+          style={{ borderColor: "var(--card-bg)" }}
+        >
           <Avatar className="size-full">
-            <AvatarImage src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" alt={data.name} />
+            <AvatarImage
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80"
+              alt={data.name}
+            />
             <AvatarFallback className="text-xl font-bold bg-[var(--sb-accent-glow)] text-[var(--sb-accent)]">
-              {data.name.split(" ").map(n => n[0]).join("")}
+              {data.name
+                .split(" ")
+                .map((n) => n[0])
+                .join("")}
             </AvatarFallback>
           </Avatar>
         </div>
@@ -141,7 +156,10 @@ export function ProfileHeader({ data, onUpdate, onPreviewResume }: ProfileHeader
               <div className="flex items-center gap-2">
                 <h1
                   className="text-2xl font-bold tracking-tight truncate"
-                  style={{ color: "var(--page-ink)", fontFamily: "'Fraunces', Georgia, serif" }}
+                  style={{
+                    color: "var(--page-ink)",
+                    fontFamily: "'Fraunces', Georgia, serif",
+                  }}
                 >
                   {data.name}
                 </h1>
@@ -155,12 +173,18 @@ export function ProfileHeader({ data, onUpdate, onPreviewResume }: ProfileHeader
                 </button>
               </div>
 
-              <p className="text-sm font-medium mt-0.5" style={{ color: "var(--sb-ink)" }}>
+              <p
+                className="text-sm font-medium mt-0.5"
+                style={{ color: "var(--sb-ink)" }}
+              >
                 {data.headline}
               </p>
 
               {/* Badges/Details row */}
-              <div className="flex flex-wrap gap-x-4 gap-y-1.5 mt-3 text-xs" style={{ color: "var(--sb-ink-muted)" }}>
+              <div
+                className="flex flex-wrap gap-x-4 gap-y-1.5 mt-3 text-xs"
+                style={{ color: "var(--sb-ink-muted)" }}
+              >
                 <span className="flex items-center gap-1">
                   <MapPin size={13} className="text-[var(--sb-ink-dim)]" />
                   {data.location}
@@ -215,8 +239,13 @@ export function ProfileHeader({ data, onUpdate, onPreviewResume }: ProfileHeader
                     style={{ borderColor: "var(--card-border)" }}
                     title="LeetCode Profile"
                   >
-                    <svg viewBox="0 0 24 24" width={15} height={15} fill="currentColor">
-                      <path d="M13.483 0a1.374 1.374 0 0 0-.961.414l-9.777 9.778a1.375 1.375 0 0 0 0 1.943l1.157 1.157a1.375 1.375 0 0 0 1.943 0L14.9 4.257l.007-.007a1.35 1.35 0 0 1 1.912 0l1.354 1.354a1.343 1.343 0 0 1 0 1.911l-9.712 9.713a1.378 1.378 0 0 0-.353.597L7.02 21.61a1.35 1.35 0 0 0 1.637 1.637l3.782-1.092a1.378 1.378 0 0 0 .597-.353l9.713-9.712a1.379 1.379 0 0 0 0-1.943l-8.304-8.304A1.365 1.365 0 0 0 13.483 0z"/>
+                    <svg
+                      viewBox="0 0 24 24"
+                      width={15}
+                      height={15}
+                      fill="currentColor"
+                    >
+                      <path d="M13.483 0a1.374 1.374 0 0 0-.961.414l-9.777 9.778a1.375 1.375 0 0 0 0 1.943l1.157 1.157a1.375 1.375 0 0 0 1.943 0L14.9 4.257l.007-.007a1.35 1.35 0 0 1 1.912 0l1.354 1.354a1.343 1.343 0 0 1 0 1.911l-9.712 9.713a1.378 1.378 0 0 0-.353.597L7.02 21.61a1.35 1.35 0 0 0 1.637 1.637l3.782-1.092a1.378 1.378 0 0 0 .597-.353l9.713-9.712a1.379 1.379 0 0 0 0-1.943l-8.304-8.304A1.365 1.365 0 0 0 13.483 0z" />
                     </svg>
                   </a>
                 )}
@@ -226,86 +255,132 @@ export function ProfileHeader({ data, onUpdate, onPreviewResume }: ProfileHeader
             <div className="flex flex-col gap-3 max-w-xl">
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)]">Full Name</label>
+                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)]">
+                    Full Name
+                  </label>
                   <input
                     type="text"
                     value={editName}
                     onChange={(e) => setEditName(e.target.value)}
                     className="w-full text-sm px-2.5 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                    style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                    style={{
+                      borderColor: "var(--card-border)",
+                      color: "var(--page-ink)",
+                    }}
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)]">Location</label>
+                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)]">
+                    Location
+                  </label>
                   <input
                     type="text"
                     value={editLocation}
                     onChange={(e) => setEditLocation(e.target.value)}
                     className="w-full text-sm px-2.5 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                    style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                    style={{
+                      borderColor: "var(--card-border)",
+                      color: "var(--page-ink)",
+                    }}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)]">Headline</label>
+                <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)]">
+                  Headline
+                </label>
                 <input
                   type="text"
                   value={editHeadline}
                   onChange={(e) => setEditHeadline(e.target.value)}
                   className="w-full text-sm px-2.5 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                  style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                  style={{
+                    borderColor: "var(--card-border)",
+                    color: "var(--page-ink)",
+                  }}
                 />
               </div>
 
               <div className="grid grid-cols-4 gap-2">
                 <div>
-                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)]">Website</label>
+                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)]">
+                    Website
+                  </label>
                   <input
                     type="text"
                     value={editWebsite}
                     onChange={(e) => setEditWebsite(e.target.value)}
                     className="w-full text-xs px-2 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                    style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                    style={{
+                      borderColor: "var(--card-border)",
+                      color: "var(--page-ink)",
+                    }}
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)]">GitHub</label>
+                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)]">
+                    GitHub
+                  </label>
                   <input
                     type="text"
                     value={editGithub}
                     onChange={(e) => setEditGithub(e.target.value)}
                     className="w-full text-xs px-2 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                    style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                    style={{
+                      borderColor: "var(--card-border)",
+                      color: "var(--page-ink)",
+                    }}
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)]">LinkedIn</label>
+                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)]">
+                    LinkedIn
+                  </label>
                   <input
                     type="text"
                     value={editLinkedin}
                     onChange={(e) => setEditLinkedin(e.target.value)}
                     className="w-full text-xs px-2 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                    style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                    style={{
+                      borderColor: "var(--card-border)",
+                      color: "var(--page-ink)",
+                    }}
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)]">LeetCode</label>
+                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)]">
+                    LeetCode
+                  </label>
                   <input
                     type="text"
                     value={editLeetcode}
                     onChange={(e) => setEditLeetcode(e.target.value)}
                     className="w-full text-xs px-2 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                    style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                    style={{
+                      borderColor: "var(--card-border)",
+                      color: "var(--page-ink)",
+                    }}
                   />
                 </div>
               </div>
 
               <div className="flex gap-2 mt-2">
-                <Button size="xs" onClick={handleSave} style={{ background: "var(--sb-accent)", color: "var(--sb-accent-foreground)" }}>
+                <Button
+                  size="xs"
+                  onClick={handleSave}
+                  style={{
+                    background: "var(--sb-accent)",
+                    color: "var(--sb-accent-foreground)",
+                  }}
+                >
                   Save Changes
                 </Button>
-                <Button size="xs" variant="outline" onClick={() => setIsEditing(false)}>
+                <Button
+                  size="xs"
+                  variant="outline"
+                  onClick={() => setIsEditing(false)}
+                >
                   Cancel
                 </Button>
               </div>
@@ -324,23 +399,41 @@ export function ProfileHeader({ data, onUpdate, onPreviewResume }: ProfileHeader
           />
 
           {data.resumeName ? (
-            <div className="flex flex-col gap-2 p-3 rounded-xl border" style={{ borderColor: "var(--card-border)" }}>
+            <div
+              className="flex flex-col gap-2 p-3 rounded-xl border"
+              style={{ borderColor: "var(--card-border)" }}
+            >
               <div className="flex items-center gap-2">
                 <FileText size={15} className="text-[var(--sb-accent)]" />
                 <div className="min-w-0 max-w-[150px]">
-                  <p className="text-xs font-semibold truncate" style={{ color: "var(--sb-ink)" }}>
+                  <p
+                    className="text-xs font-semibold truncate"
+                    style={{ color: "var(--sb-ink)" }}
+                  >
                     {data.resumeName}
                   </p>
-                  <p className="text-[10px] text-[var(--sb-ink-dim)]">PDF document</p>
+                  <p className="text-[10px] text-[var(--sb-ink-dim)]">
+                    PDF document
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-center gap-1.5 mt-1">
-                <Button size="xs" variant="ghost" onClick={onPreviewResume} className="h-7 px-2 text-[11px]">
+                <Button
+                  size="xs"
+                  variant="ghost"
+                  onClick={onPreviewResume}
+                  className="h-7 px-2 text-[11px]"
+                >
                   <Eye size={12} className="mr-1" />
                   View
                 </Button>
-                <Button size="xs" variant="ghost" onClick={handleDownloadResume} className="h-7 px-2 text-[11px]">
+                <Button
+                  size="xs"
+                  variant="ghost"
+                  onClick={handleDownloadResume}
+                  className="h-7 px-2 text-[11px]"
+                >
                   <Download size={12} className="mr-1" />
                   Get
                 </Button>
@@ -366,7 +459,10 @@ export function ProfileHeader({ data, onUpdate, onPreviewResume }: ProfileHeader
             >
               {uploading ? (
                 <>
-                  <Loader2 size={14} className="animate-spin text-[var(--sb-accent)]" />
+                  <Loader2
+                    size={14}
+                    className="animate-spin text-[var(--sb-accent)]"
+                  />
                   <span>Uploading {uploadProgress}%</span>
                 </>
               ) : (

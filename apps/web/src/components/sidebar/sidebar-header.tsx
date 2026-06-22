@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { useState } from "react";
 import { cn } from "#/lib/utils";
 
 interface SidebarHeaderProps {

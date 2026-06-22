@@ -1,15 +1,15 @@
-import { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  X,
-  Sparkles,
-  Send,
-  Code2,
   BookOpen,
+  Code2,
   FlaskConical,
   MessageSquare,
   RotateCcw,
+  Send,
+  Sparkles,
+  X,
 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "#/lib/utils";
 
 type ChatTab = "general" | "course" | "coding" | "research";
@@ -29,10 +29,14 @@ const TAB_CONFIG: { id: ChatTab; label: string; icon: typeof MessageSquare }[] =
   ];
 
 const WELCOME_MESSAGES: Record<ChatTab, string> = {
-  general: "Hi! I'm your Quild AI assistant. Ask me anything about your learning journey, career goals, or any topic you're curious about.",
-  course: "Course assistant here. I can help explain concepts, summarize lessons, quiz you on topics, or help you navigate the course material.",
-  coding: "Coding assistant ready. Paste code, describe a problem, or ask me to explain any algorithm or data structure.",
-  research: "Research mode active. I can help you explore topics in depth, find connections between concepts, and synthesize knowledge from multiple sources.",
+  general:
+    "Hi! I'm your Quild AI assistant. Ask me anything about your learning journey, career goals, or any topic you're curious about.",
+  course:
+    "Course assistant here. I can help explain concepts, summarize lessons, quiz you on topics, or help you navigate the course material.",
+  coding:
+    "Coding assistant ready. Paste code, describe a problem, or ask me to explain any algorithm or data structure.",
+  research:
+    "Research mode active. I can help you explore topics in depth, find connections between concepts, and synthesize knowledge from multiple sources.",
 };
 
 interface AIAssistantProps {
@@ -146,10 +150,7 @@ export function AIAssistant({ open, onClose }: AIAssistantProps) {
               style={{ borderBottom: "1px solid var(--sb-border)" }}
             >
               <div className="flex items-center gap-2">
-                <Sparkles
-                  size={15}
-                  style={{ color: "var(--sb-accent)" }}
-                />
+                <Sparkles size={15} style={{ color: "var(--sb-accent)" }} />
                 <span
                   className="text-sm font-semibold"
                   style={{ color: "var(--sb-ink)" }}
@@ -195,7 +196,9 @@ export function AIAssistant({ open, onClose }: AIAssistantProps) {
                       "outline-none focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60",
                     )}
                     style={{
-                      color: isActive ? "var(--sb-accent)" : "var(--sb-ink-muted)",
+                      color: isActive
+                        ? "var(--sb-accent)"
+                        : "var(--sb-ink-muted)",
                     }}
                   >
                     {isActive && (
@@ -203,7 +206,11 @@ export function AIAssistant({ open, onClose }: AIAssistantProps) {
                         layoutId="ai-tab-pill"
                         className="absolute inset-0 rounded-[8px]"
                         style={{ background: "var(--sb-pill)" }}
-                        transition={{ type: "spring", duration: 0.3, bounce: 0.1 }}
+                        transition={{
+                          type: "spring",
+                          duration: 0.3,
+                          bounce: 0.1,
+                        }}
                       />
                     )}
                     <tab.icon size={12} className="relative z-10" />

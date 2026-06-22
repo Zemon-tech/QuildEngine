@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { LogOut, Settings, Trophy, User } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { LogOut, Settings, Trophy, User } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback } from "#/components/ui/avatar";
 import {
   DropdownMenu,

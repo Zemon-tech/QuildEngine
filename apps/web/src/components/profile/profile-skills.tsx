@@ -1,5 +1,5 @@
+import { Award, ExternalLink, Hammer, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { Hammer, Award, Plus, Trash2, ExternalLink } from "lucide-react";
 import { Button } from "#/components/ui/button";
 
 export interface CertItem {
@@ -32,7 +32,9 @@ export function ProfileSkills({
 
   // Skill form state
   const [skillName, setSkillName] = useState("");
-  const [skillCategory, setSkillCategory] = useState<"technical" | "soft" | "tooling">("technical");
+  const [skillCategory, setSkillCategory] = useState<
+    "technical" | "soft" | "tooling"
+  >("technical");
 
   // Cert form state
   const [certName, setCertName] = useState("");
@@ -57,7 +59,10 @@ export function ProfileSkills({
     setShowSkillModal(false);
   }
 
-  function handleRemoveSkill(category: "technical" | "soft" | "tooling", name: string) {
+  function handleRemoveSkill(
+    category: "technical" | "soft" | "tooling",
+    name: string,
+  ) {
     onUpdateSkills({
       ...skills,
       [category]: skills[category].filter((s) => s !== name),
@@ -102,7 +107,10 @@ export function ProfileSkills({
         <div className="flex items-center justify-between">
           <h2
             className="text-lg font-bold tracking-tight flex items-center gap-2"
-            style={{ color: "var(--page-ink)", fontFamily: "'Fraunces', Georgia, serif" }}
+            style={{
+              color: "var(--page-ink)",
+              fontFamily: "'Fraunces', Georgia, serif",
+            }}
           >
             <Hammer size={17} className="text-[var(--sb-accent)]" />
             Skills & Expertise
@@ -126,13 +134,18 @@ export function ProfileSkills({
             </h3>
             <div className="flex flex-wrap gap-1.5">
               {skills.technical.length === 0 ? (
-                <span className="text-xs text-[var(--sb-ink-muted)]">No skills listed.</span>
+                <span className="text-xs text-[var(--sb-ink-muted)]">
+                  No skills listed.
+                </span>
               ) : (
                 skills.technical.map((s) => (
                   <span
                     key={s}
                     className="group flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium rounded-full border bg-[var(--page-bg)]"
-                    style={{ borderColor: "var(--card-border)", color: "var(--sb-ink)" }}
+                    style={{
+                      borderColor: "var(--card-border)",
+                      color: "var(--sb-ink)",
+                    }}
                   >
                     {s}
                     <button
@@ -155,13 +168,18 @@ export function ProfileSkills({
             </h3>
             <div className="flex flex-wrap gap-1.5">
               {skills.soft.length === 0 ? (
-                <span className="text-xs text-[var(--sb-ink-muted)]">No skills listed.</span>
+                <span className="text-xs text-[var(--sb-ink-muted)]">
+                  No skills listed.
+                </span>
               ) : (
                 skills.soft.map((s) => (
                   <span
                     key={s}
                     className="group flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium rounded-full border bg-[var(--page-bg)]"
-                    style={{ borderColor: "var(--card-border)", color: "var(--sb-ink)" }}
+                    style={{
+                      borderColor: "var(--card-border)",
+                      color: "var(--sb-ink)",
+                    }}
                   >
                     {s}
                     <button
@@ -184,13 +202,18 @@ export function ProfileSkills({
             </h3>
             <div className="flex flex-wrap gap-1.5">
               {skills.tooling.length === 0 ? (
-                <span className="text-xs text-[var(--sb-ink-muted)]">No tools listed.</span>
+                <span className="text-xs text-[var(--sb-ink-muted)]">
+                  No tools listed.
+                </span>
               ) : (
                 skills.tooling.map((s) => (
                   <span
                     key={s}
                     className="group flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium rounded-full border bg-[var(--page-bg)]"
-                    style={{ borderColor: "var(--card-border)", color: "var(--sb-ink)" }}
+                    style={{
+                      borderColor: "var(--card-border)",
+                      color: "var(--sb-ink)",
+                    }}
                   >
                     {s}
                     <button
@@ -219,7 +242,10 @@ export function ProfileSkills({
         <div className="flex items-center justify-between">
           <h2
             className="text-lg font-bold tracking-tight flex items-center gap-2"
-            style={{ color: "var(--page-ink)", fontFamily: "'Fraunces', Georgia, serif" }}
+            style={{
+              color: "var(--page-ink)",
+              fontFamily: "'Fraunces', Georgia, serif",
+            }}
           >
             <Award size={17} className="text-[var(--sb-accent)]" />
             Certifications
@@ -236,7 +262,9 @@ export function ProfileSkills({
         </div>
 
         {certifications.length === 0 ? (
-          <p className="text-sm text-[var(--sb-ink-muted)] text-center py-4">No certifications earned yet.</p>
+          <p className="text-sm text-[var(--sb-ink-muted)] text-center py-4">
+            No certifications earned yet.
+          </p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {certifications.map((cert, index) => (
@@ -250,15 +278,24 @@ export function ProfileSkills({
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h3 className="font-semibold text-sm" style={{ color: "var(--sb-ink)" }}>
+                    <h3
+                      className="font-semibold text-sm"
+                      style={{ color: "var(--sb-ink)" }}
+                    >
                       {cert.name}
                     </h3>
-                    <p className="font-medium text-xs mt-0.5 animate-fade-in" style={{ color: "var(--sb-ink-muted)" }}>
+                    <p
+                      className="font-medium text-xs mt-0.5 animate-fade-in"
+                      style={{ color: "var(--sb-ink-muted)" }}
+                    >
                       {cert.issuer}
                     </p>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-[11px]" style={{ color: "var(--sb-ink-dim)" }}>
+                    <span
+                      className="text-[11px]"
+                      style={{ color: "var(--sb-ink-dim)" }}
+                    >
                       {cert.date}
                     </span>
                     <button
@@ -294,17 +331,28 @@ export function ProfileSkills({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4">
           <div
             className="w-full max-w-sm rounded-2xl border p-5 flex flex-col gap-4 shadow-xl"
-            style={{ background: "var(--card-bg)", borderColor: "var(--card-border)" }}
+            style={{
+              background: "var(--card-bg)",
+              borderColor: "var(--card-border)",
+            }}
           >
             <h3
               className="text-base font-bold"
-              style={{ color: "var(--page-ink)", fontFamily: "'Fraunces', Georgia, serif" }}
+              style={{
+                color: "var(--page-ink)",
+                fontFamily: "'Fraunces', Georgia, serif",
+              }}
             >
               Add Skill
             </h3>
-            <form onSubmit={handleAddSkill} className="flex flex-col gap-3.5 text-sm">
+            <form
+              onSubmit={handleAddSkill}
+              className="flex flex-col gap-3.5 text-sm"
+            >
               <div>
-                <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">Skill Name</label>
+                <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">
+                  Skill Name
+                </label>
                 <input
                   type="text"
                   required
@@ -312,17 +360,26 @@ export function ProfileSkills({
                   onChange={(e) => setSkillName(e.target.value)}
                   placeholder="e.g. TypeScript"
                   className="w-full text-xs px-2.5 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                  style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                  style={{
+                    borderColor: "var(--card-border)",
+                    color: "var(--page-ink)",
+                  }}
                 />
               </div>
 
               <div>
-                <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">Category</label>
+                <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">
+                  Category
+                </label>
                 <select
                   value={skillCategory}
                   onChange={(e) => setSkillCategory(e.target.value as any)}
                   className="w-full text-xs px-2.5 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                  style={{ borderColor: "var(--card-border)", color: "var(--page-ink)", background: "var(--card-bg)" }}
+                  style={{
+                    borderColor: "var(--card-border)",
+                    color: "var(--page-ink)",
+                    background: "var(--card-bg)",
+                  }}
                 >
                   <option value="technical">Technical & Languages</option>
                   <option value="soft">Soft Skills & Leadership</option>
@@ -331,10 +388,22 @@ export function ProfileSkills({
               </div>
 
               <div className="flex gap-2 justify-end mt-2">
-                <Button size="xs" type="submit" style={{ background: "var(--sb-accent)", color: "var(--sb-accent-foreground)" }}>
+                <Button
+                  size="xs"
+                  type="submit"
+                  style={{
+                    background: "var(--sb-accent)",
+                    color: "var(--sb-accent-foreground)",
+                  }}
+                >
                   Add Skill
                 </Button>
-                <Button size="xs" variant="outline" type="button" onClick={() => setShowSkillModal(false)}>
+                <Button
+                  size="xs"
+                  variant="outline"
+                  type="button"
+                  onClick={() => setShowSkillModal(false)}
+                >
                   Cancel
                 </Button>
               </div>
@@ -348,18 +417,29 @@ export function ProfileSkills({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4">
           <div
             className="w-full max-w-lg rounded-2xl border p-5 flex flex-col gap-4 shadow-xl"
-            style={{ background: "var(--card-bg)", borderColor: "var(--card-border)" }}
+            style={{
+              background: "var(--card-bg)",
+              borderColor: "var(--card-border)",
+            }}
           >
             <h3
               className="text-base font-bold"
-              style={{ color: "var(--page-ink)", fontFamily: "'Fraunces', Georgia, serif" }}
+              style={{
+                color: "var(--page-ink)",
+                fontFamily: "'Fraunces', Georgia, serif",
+              }}
             >
               Add Certification
             </h3>
-            <form onSubmit={handleAddCert} className="flex flex-col gap-3.5 text-sm">
+            <form
+              onSubmit={handleAddCert}
+              className="flex flex-col gap-3.5 text-sm"
+            >
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">Certificate Name</label>
+                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">
+                    Certificate Name
+                  </label>
                   <input
                     type="text"
                     required
@@ -367,11 +447,16 @@ export function ProfileSkills({
                     onChange={(e) => setCertName(e.target.value)}
                     placeholder="e.g. AWS Solutions Architect"
                     className="w-full text-xs px-2.5 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                    style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                    style={{
+                      borderColor: "var(--card-border)",
+                      color: "var(--page-ink)",
+                    }}
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">Issuing Organization</label>
+                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">
+                    Issuing Organization
+                  </label>
                   <input
                     type="text"
                     required
@@ -379,14 +464,19 @@ export function ProfileSkills({
                     onChange={(e) => setCertIssuer(e.target.value)}
                     placeholder="e.g. Amazon Web Services"
                     className="w-full text-xs px-2.5 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                    style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                    style={{
+                      borderColor: "var(--card-border)",
+                      color: "var(--page-ink)",
+                    }}
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">Issue Date</label>
+                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">
+                    Issue Date
+                  </label>
                   <input
                     type="text"
                     required
@@ -394,27 +484,47 @@ export function ProfileSkills({
                     onChange={(e) => setCertDate(e.target.value)}
                     placeholder="e.g. Nov 2025"
                     className="w-full text-xs px-2.5 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                    style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                    style={{
+                      borderColor: "var(--card-border)",
+                      color: "var(--page-ink)",
+                    }}
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">Credential URL</label>
+                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">
+                    Credential URL
+                  </label>
                   <input
                     type="url"
                     value={certUrl}
                     onChange={(e) => setCertUrl(e.target.value)}
                     placeholder="https://..."
                     className="w-full text-xs px-2.5 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                    style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                    style={{
+                      borderColor: "var(--card-border)",
+                      color: "var(--page-ink)",
+                    }}
                   />
                 </div>
               </div>
 
               <div className="flex gap-2 justify-end mt-2">
-                <Button size="xs" type="submit" style={{ background: "var(--sb-accent)", color: "var(--sb-accent-foreground)" }}>
+                <Button
+                  size="xs"
+                  type="submit"
+                  style={{
+                    background: "var(--sb-accent)",
+                    color: "var(--sb-accent-foreground)",
+                  }}
+                >
                   Add Certification
                 </Button>
-                <Button size="xs" variant="outline" type="button" onClick={() => setShowCertModal(false)}>
+                <Button
+                  size="xs"
+                  variant="outline"
+                  type="button"
+                  onClick={() => setShowCertModal(false)}
+                >
                   Cancel
                 </Button>
               </div>

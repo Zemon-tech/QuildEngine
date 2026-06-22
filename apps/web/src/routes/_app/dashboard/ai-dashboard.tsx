@@ -1,28 +1,32 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useEffect, useRef, memo, useCallback, useMemo } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
-  Mic,
-  Calendar,
   AlertTriangle,
-  MessageSquare,
+  Calendar,
+  CheckIcon,
   CheckSquare,
   ChevronDown,
   ChevronUp,
-  History,
-  SquarePen,
-  CheckIcon,
   GlobeIcon,
+  History,
+  MessageSquare,
+  Mic,
   PanelLeft,
+  SquarePen,
 } from "lucide-react";
-import { cn } from "#/lib/utils.ts";
-import { toggleAiDashboardSidebar } from "#/components/sidebar/secondary-sidebar.tsx";
-import { motion, AnimatePresence } from "framer-motion";
+import { nanoid } from "nanoid";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Attachment,
   AttachmentPreview,
   AttachmentRemove,
   Attachments,
 } from "#/components/ai-elements/attachments.tsx";
+import {
+  Message,
+  MessageContent,
+  MessageResponse,
+} from "#/components/ai-elements/message.tsx";
 import {
   ModelSelector,
   ModelSelectorContent,
@@ -46,19 +50,15 @@ import {
   PromptInputBody,
   PromptInputButton,
   PromptInputFooter,
+  type PromptInputMessage,
   PromptInputProvider,
   PromptInputSubmit,
   PromptInputTextarea,
   PromptInputTools,
   usePromptInputAttachments,
-  type PromptInputMessage,
 } from "#/components/ai-elements/prompt-input.tsx";
-import {
-  Message,
-  MessageContent,
-  MessageResponse,
-} from "#/components/ai-elements/message.tsx";
-import { nanoid } from "nanoid";
+import { toggleAiDashboardSidebar } from "#/components/sidebar/secondary-sidebar.tsx";
+import { cn } from "#/lib/utils.ts";
 
 export const Route = createFileRoute("/_app/dashboard/ai-dashboard")({
   component: AIDashboardPage,
@@ -116,12 +116,15 @@ interface AttachmentItemProps {
 const AttachmentItem = memo(({ attachment, onRemove }: AttachmentItemProps) => {
   const handleRemove = useCallback(
     () => onRemove(attachment.id),
-    [onRemove, attachment.id]
+    [onRemove, attachment.id],
   );
-  const data = useMemo(() => ({
-    ...attachment,
-    mediaType: attachment.mediaType ?? "application/octet-stream",
-  }), [attachment]);
+  const data = useMemo(
+    () => ({
+      ...attachment,
+      mediaType: attachment.mediaType ?? "application/octet-stream",
+    }),
+    [attachment],
+  );
   return (
     <Attachment data={data} key={attachment.id} onRemove={handleRemove}>
       <AttachmentPreview />
@@ -165,7 +168,7 @@ const PromptInputAttachmentsDisplay = memo(() => {
 
   const handleRemove = useCallback(
     (id: string) => attachments.remove(id),
-    [attachments]
+    [attachments],
   );
 
   if (attachments.files.length === 0) {
@@ -202,7 +205,12 @@ interface DashboardPromptInputProps {
 }
 
 const DashboardPromptInput = memo(
-  ({ onSubmit, className, status, placeholder = "How can I help you today?" }: DashboardPromptInputProps) => {
+  ({
+    onSubmit,
+    className,
+    status,
+    placeholder = "How can I help you today?",
+  }: DashboardPromptInputProps) => {
     const [model, setModel] = useState<string>(models[0].id);
     const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
 
@@ -221,7 +229,7 @@ const DashboardPromptInput = memo(
           onSubmit={onSubmit}
           className={cn(
             "w-full [&>div]:border-none! [&>div]:bg-transparent! [&>div]:shadow-none! [&>div]:ring-0! [&>div]:outline-none!",
-            className
+            className,
           )}
         >
           <PromptInputAttachmentsDisplay />
@@ -303,7 +311,7 @@ const DashboardPromptInput = memo(
         </PromptInput>
       </PromptInputProvider>
     );
-  }
+  },
 );
 
 DashboardPromptInput.displayName = "DashboardPromptInput";
@@ -311,7 +319,9 @@ DashboardPromptInput.displayName = "DashboardPromptInput";
 function AIDashboardPage() {
   const [messages, setMessages] = useState<LocalMessage[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [status, setStatus] = useState<"ready" | "submitted" | "streaming" | "error">("ready");
+  const [status, setStatus] = useState<
+    "ready" | "submitted" | "streaming" | "error"
+  >("ready");
   const [userName, setUserName] = useState("Shivang");
   const [time, setTime] = useState("");
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -368,7 +378,20 @@ function AIDashboardPage() {
   const getFormattedDate = () => {
     const d = new Date();
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
     return `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]}`;
   };
 
@@ -421,8 +444,8 @@ function AIDashboardPage() {
         currentText += (wordIndex === 0 ? "" : " ") + words[wordIndex];
         setMessages((prev) =>
           prev.map((msg) =>
-            msg.id === assistantMsgId ? { ...msg, content: currentText } : msg
-          )
+            msg.id === assistantMsgId ? { ...msg, content: currentText } : msg,
+          ),
         );
         wordIndex++;
       } else {
@@ -472,7 +495,9 @@ function AIDashboardPage() {
               <Message from={msg.role} key={msg.id}>
                 <MessageContent>
                   {msg.role === "user" ? (
-                    <span className="text-[14px] leading-relaxed">{msg.content}</span>
+                    <span className="text-[14px] leading-relaxed">
+                      {msg.content}
+                    </span>
                   ) : (
                     <MessageResponse className="text-[14px] leading-relaxed text-foreground prose dark:prose-invert max-w-none">
                       {msg.content}
@@ -486,9 +511,18 @@ function AIDashboardPage() {
               <Message from="assistant">
                 <MessageContent>
                   <div className="flex items-center gap-1.5 py-2 px-1 text-muted-foreground">
-                    <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: "0ms" }} />
-                    <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: "150ms" }} />
-                    <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: "300ms" }} />
+                    <span
+                      className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce"
+                      style={{ animationDelay: "0ms" }}
+                    />
+                    <span
+                      className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce"
+                      style={{ animationDelay: "150ms" }}
+                    />
+                    <span
+                      className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce"
+                      style={{ animationDelay: "300ms" }}
+                    />
                   </div>
                 </MessageContent>
               </Message>
@@ -597,7 +631,18 @@ function AIDashboardPage() {
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                     </span>
                     <span className="text-[13px] font-medium tracking-wide">
-                      Workspace Status: <strong className="text-foreground font-normal">0 urgent</strong> • <strong className="text-foreground font-normal">0 replies</strong> • <strong className="text-foreground font-normal">2 queued</strong>
+                      Workspace Status:{" "}
+                      <strong className="text-foreground font-normal">
+                        0 urgent
+                      </strong>{" "}
+                      •{" "}
+                      <strong className="text-foreground font-normal">
+                        0 replies
+                      </strong>{" "}
+                      •{" "}
+                      <strong className="text-foreground font-normal">
+                        2 queued
+                      </strong>
                     </span>
                   </div>
                   <button
@@ -647,7 +692,9 @@ function AIDashboardPage() {
                             <div className="text-sm font-semibold text-foreground leading-tight">
                               Test Event Sync Outbound
                             </div>
-                            <div className="text-xs text-muted-foreground">Due today • Todo</div>
+                            <div className="text-xs text-muted-foreground">
+                              Due today • Todo
+                            </div>
                           </div>
                           {/* Dotted scroll track */}
                           <div className="flex flex-col gap-1 shrink-0">

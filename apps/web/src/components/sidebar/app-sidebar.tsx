@@ -1,39 +1,43 @@
-import { useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { useTheme } from "next-themes";
 import {
-  LayoutDashboard,
   BookOpen,
   Code2,
   FlaskConical,
+  LayoutDashboard,
+  Menu,
+  Monitor,
+  Moon,
   Sparkles,
   Sun,
-  Moon,
-  Monitor,
-  Menu,
 } from "lucide-react";
-import { cn } from "#/lib/utils";
+import { useTheme } from "next-themes";
+import { useState } from "react";
+import { GlobalSearchTrigger } from "#/components/search/global-search";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "#/components/ui/dropdown-menu";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuItem,
   SidebarMenuButton,
+  SidebarMenuItem,
   useSidebar,
 } from "#/components/ui/sidebar";
-import { Tooltip, TooltipContent, TooltipTrigger } from "#/components/ui/tooltip";
 import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "#/components/ui/dropdown-menu";
-import { UserNav } from "./user-nav";
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "#/components/ui/tooltip";
+import { cn } from "#/lib/utils";
 import { AIAssistant } from "./ai-assistant";
 import { SidebarHeader as CustomSidebarHeader } from "./sidebar-header";
-import { GlobalSearchTrigger } from "#/components/search/global-search";
+import { UserNav } from "./user-nav";
 
 export function AppSidebar() {
   const { state, toggleSidebar, setOpenMobile } = useSidebar();
@@ -42,7 +46,8 @@ export function AppSidebar() {
   const currentPath = routerState.location.pathname;
   const { theme, setTheme } = useTheme();
 
-  const isActive = (path: string) => currentPath === path || currentPath.startsWith(path + "/");
+  const isActive = (path: string) =>
+    currentPath === path || currentPath.startsWith(path + "/");
 
   const navItems = [
     { label: "Dashboard", to: "/dashboard", icon: LayoutDashboard },
@@ -73,9 +78,15 @@ export function AppSidebar() {
       </button>
 
       {/* Main Sidebar */}
-      <Sidebar collapsible="icon" className="border-r border-[var(--sb-border)]">
+      <Sidebar
+        collapsible="icon"
+        className="border-r border-[var(--sb-border)]"
+      >
         <SidebarHeader className="p-0">
-          <CustomSidebarHeader collapsed={state === "collapsed"} onToggle={toggleSidebar} />
+          <CustomSidebarHeader
+            collapsed={state === "collapsed"}
+            onToggle={toggleSidebar}
+          />
         </SidebarHeader>
 
         <SidebarContent className="px-2 py-2">
@@ -95,7 +106,9 @@ export function AppSidebar() {
                     to={item.to}
                     className={cn(
                       "flex items-center gap-2.5 w-full text-sm font-medium transition-colors",
-                      isActive(item.to) ? "text-[var(--sb-accent)] font-semibold" : "text-[var(--sb-ink-muted)] hover:text-[var(--sb-ink)]"
+                      isActive(item.to)
+                        ? "text-[var(--sb-accent)] font-semibold"
+                        : "text-[var(--sb-ink-muted)] hover:text-[var(--sb-ink)]",
                     )}
                   >
                     <item.icon size={16} />
@@ -109,7 +122,12 @@ export function AppSidebar() {
 
         <SidebarFooter className="p-2 gap-2 border-t border-[var(--sb-border)]">
           {/* AI Assistant and Theme Toggle Icon buttons on top of User profile avatar */}
-          <div className={cn("flex gap-2 items-center justify-center", state === "collapsed" ? "flex-col" : "flex-row px-1")}>
+          <div
+            className={cn(
+              "flex gap-2 items-center justify-center",
+              state === "collapsed" ? "flex-col" : "flex-row px-1",
+            )}
+          >
             {/* AI Assistant button */}
             <Tooltip delayDuration={0}>
               <TooltipTrigger asChild>
@@ -119,7 +137,9 @@ export function AppSidebar() {
                   className={cn(
                     "relative flex items-center justify-center rounded-[10px] size-9 outline-none transition-all duration-150 cursor-pointer active:scale-95",
                     "hover:bg-[var(--sb-bg-hover)]",
-                    aiOpen ? "bg-[var(--sb-pill)] text-[var(--sb-accent)]" : "text-[var(--sb-ink-muted)]"
+                    aiOpen
+                      ? "bg-[var(--sb-pill)] text-[var(--sb-accent)]"
+                      : "text-[var(--sb-ink-muted)]",
                   )}
                 >
                   <Sparkles size={16} />
@@ -139,15 +159,26 @@ export function AppSidebar() {
                       type="button"
                       className={cn(
                         "relative flex items-center justify-center rounded-[10px] size-9 outline-none transition-all duration-150 cursor-pointer active:scale-95",
-                        "hover:bg-[var(--sb-bg-hover)] text-[var(--sb-ink-muted)]"
+                        "hover:bg-[var(--sb-bg-hover)] text-[var(--sb-ink-muted)]",
                       )}
                     >
-                      {theme === "light" ? <Sun size={16} /> : theme === "dark" ? <Moon size={16} /> : <Monitor size={16} />}
+                      {theme === "light" ? (
+                        <Sun size={16} />
+                      ) : theme === "dark" ? (
+                        <Moon size={16} />
+                      ) : (
+                        <Monitor size={16} />
+                      )}
                     </button>
                   </DropdownMenuTrigger>
                 </TooltipTrigger>
                 <TooltipContent side="right" sideOffset={8}>
-                  <span>Theme: {theme ? theme.charAt(0).toUpperCase() + theme.slice(1) : "System"}</span>
+                  <span>
+                    Theme:{" "}
+                    {theme
+                      ? theme.charAt(0).toUpperCase() + theme.slice(1)
+                      : "System"}
+                  </span>
                 </TooltipContent>
               </Tooltip>
               <DropdownMenuContent
@@ -161,13 +192,22 @@ export function AppSidebar() {
                   color: "var(--sb-ink)",
                 }}
               >
-                <DropdownMenuItem onClick={() => setTheme("light")} className="cursor-pointer gap-2 text-xs">
+                <DropdownMenuItem
+                  onClick={() => setTheme("light")}
+                  className="cursor-pointer gap-2 text-xs"
+                >
                   <Sun size={14} /> Light
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("dark")} className="cursor-pointer gap-2 text-xs">
+                <DropdownMenuItem
+                  onClick={() => setTheme("dark")}
+                  className="cursor-pointer gap-2 text-xs"
+                >
                   <Moon size={14} /> Dark
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("system")} className="cursor-pointer gap-2 text-xs">
+                <DropdownMenuItem
+                  onClick={() => setTheme("system")}
+                  className="cursor-pointer gap-2 text-xs"
+                >
                   <Monitor size={14} /> System
                 </DropdownMenuItem>
               </DropdownMenuContent>

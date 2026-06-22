@@ -85,8 +85,18 @@ export const fetchDashboardData = createServerFn({ method: "GET" })
     };
 
     const events: UpcomingEvent[] = [
-      { id: "1", title: "System Design Webinar", date: "2026-06-25", type: "webinar" },
-      { id: "2", title: "Frontend Hackathon", date: "2026-07-01", type: "hackathon" },
+      {
+        id: "1",
+        title: "System Design Webinar",
+        date: "2026-06-25",
+        type: "webinar",
+      },
+      {
+        id: "2",
+        title: "Frontend Hackathon",
+        date: "2026-07-01",
+        type: "hackathon",
+      },
     ];
 
     return { stats, progress, events };

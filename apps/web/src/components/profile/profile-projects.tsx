@@ -1,5 +1,13 @@
+import {
+  ExternalLink,
+  FileText,
+  FlaskConical,
+  FolderGit2,
+  Github,
+  Plus,
+  Trash2,
+} from "lucide-react";
 import { useState } from "react";
-import { FolderGit2, FlaskConical, Github, ExternalLink, Plus, Trash2, FileText } from "lucide-react";
 import { Button } from "#/components/ui/button";
 
 export interface ProjectItem {
@@ -82,7 +90,12 @@ export function ProfileProjects({
       title: resTitle,
       summary: resSummary,
       link: resLink.trim() || undefined,
-      date: resDate || new Date().toLocaleDateString(undefined, { year: "numeric", month: "short" }),
+      date:
+        resDate ||
+        new Date().toLocaleDateString(undefined, {
+          year: "numeric",
+          month: "short",
+        }),
     };
 
     onUpdateResearch([newItem, ...research]);
@@ -116,7 +129,10 @@ export function ProfileProjects({
         <div className="flex items-center justify-between">
           <h2
             className="text-lg font-bold tracking-tight flex items-center gap-2"
-            style={{ color: "var(--page-ink)", fontFamily: "'Fraunces', Georgia, serif" }}
+            style={{
+              color: "var(--page-ink)",
+              fontFamily: "'Fraunces', Georgia, serif",
+            }}
           >
             <FolderGit2 size={17} className="text-[var(--sb-accent)]" />
             Projects
@@ -133,7 +149,9 @@ export function ProfileProjects({
         </div>
 
         {projects.length === 0 ? (
-          <p className="text-sm text-[var(--sb-ink-muted)] text-center py-4">No projects added yet.</p>
+          <p className="text-sm text-[var(--sb-ink-muted)] text-center py-4">
+            No projects added yet.
+          </p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {projects.map((proj, index) => (
@@ -147,7 +165,10 @@ export function ProfileProjects({
               >
                 <div>
                   <div className="flex items-start justify-between gap-4">
-                    <h3 className="font-semibold text-sm" style={{ color: "var(--sb-ink)" }}>
+                    <h3
+                      className="font-semibold text-sm"
+                      style={{ color: "var(--sb-ink)" }}
+                    >
                       {proj.name}
                     </h3>
                     <button
@@ -159,7 +180,10 @@ export function ProfileProjects({
                       <Trash2 size={13} />
                     </button>
                   </div>
-                  <p className="mt-1.5 leading-relaxed" style={{ color: "var(--sb-ink-muted)" }}>
+                  <p
+                    className="mt-1.5 leading-relaxed"
+                    style={{ color: "var(--sb-ink-muted)" }}
+                  >
                     {proj.description}
                   </p>
                 </div>
@@ -171,7 +195,10 @@ export function ProfileProjects({
                         <span
                           key={t}
                           className="px-2 py-0.5 text-[10px] font-medium rounded-md bg-[var(--card-bg)] border"
-                          style={{ borderColor: "var(--card-border)", color: "var(--sb-ink-dim)" }}
+                          style={{
+                            borderColor: "var(--card-border)",
+                            color: "var(--sb-ink-dim)",
+                          }}
                         >
                           {t}
                         </span>
@@ -222,7 +249,10 @@ export function ProfileProjects({
         <div className="flex items-center justify-between">
           <h2
             className="text-lg font-bold tracking-tight flex items-center gap-2"
-            style={{ color: "var(--page-ink)", fontFamily: "'Fraunces', Georgia, serif" }}
+            style={{
+              color: "var(--page-ink)",
+              fontFamily: "'Fraunces', Georgia, serif",
+            }}
           >
             <FlaskConical size={17} className="text-[var(--sb-accent)]" />
             Research Portfolio
@@ -239,7 +269,9 @@ export function ProfileProjects({
         </div>
 
         {research.length === 0 ? (
-          <p className="text-sm text-[var(--sb-ink-muted)] text-center py-4">No research publications added yet.</p>
+          <p className="text-sm text-[var(--sb-ink-muted)] text-center py-4">
+            No research publications added yet.
+          </p>
         ) : (
           <div className="flex flex-col gap-4">
             {research.map((res, index) => (
@@ -253,13 +285,22 @@ export function ProfileProjects({
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-center gap-2">
-                    <FileText size={15} className="text-[var(--sb-accent)] shrink-0" />
-                    <h3 className="font-semibold text-sm" style={{ color: "var(--sb-ink)" }}>
+                    <FileText
+                      size={15}
+                      className="text-[var(--sb-accent)] shrink-0"
+                    />
+                    <h3
+                      className="font-semibold text-sm"
+                      style={{ color: "var(--sb-ink)" }}
+                    >
                       {res.title}
                     </h3>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-[11px]" style={{ color: "var(--sb-ink-dim)" }}>
+                    <span
+                      className="text-[11px]"
+                      style={{ color: "var(--sb-ink-dim)" }}
+                    >
                       {res.date}
                     </span>
                     <button
@@ -273,7 +314,10 @@ export function ProfileProjects({
                   </div>
                 </div>
 
-                <p className="leading-relaxed pl-5" style={{ color: "var(--sb-ink-muted)" }}>
+                <p
+                  className="leading-relaxed pl-5"
+                  style={{ color: "var(--sb-ink-muted)" }}
+                >
                   {res.summary}
                 </p>
 
@@ -299,17 +343,28 @@ export function ProfileProjects({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4">
           <div
             className="w-full max-w-lg rounded-2xl border p-5 flex flex-col gap-4 shadow-xl"
-            style={{ background: "var(--card-bg)", borderColor: "var(--card-border)" }}
+            style={{
+              background: "var(--card-bg)",
+              borderColor: "var(--card-border)",
+            }}
           >
             <h3
               className="text-base font-bold"
-              style={{ color: "var(--page-ink)", fontFamily: "'Fraunces', Georgia, serif" }}
+              style={{
+                color: "var(--page-ink)",
+                fontFamily: "'Fraunces', Georgia, serif",
+              }}
             >
               Add Project
             </h3>
-            <form onSubmit={handleAddProject} className="flex flex-col gap-3.5 text-sm">
+            <form
+              onSubmit={handleAddProject}
+              className="flex flex-col gap-3.5 text-sm"
+            >
               <div>
-                <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">Project Name</label>
+                <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">
+                  Project Name
+                </label>
                 <input
                   type="text"
                   required
@@ -317,12 +372,17 @@ export function ProfileProjects({
                   onChange={(e) => setProjName(e.target.value)}
                   placeholder="e.g. QuildEngine App"
                   className="w-full text-xs px-2.5 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                  style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                  style={{
+                    borderColor: "var(--card-border)",
+                    color: "var(--page-ink)",
+                  }}
                 />
               </div>
 
               <div>
-                <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">Description</label>
+                <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">
+                  Description
+                </label>
                 <textarea
                   required
                   value={projDesc}
@@ -330,52 +390,83 @@ export function ProfileProjects({
                   placeholder="What does it solve? What is the main value?"
                   rows={3}
                   className="w-full text-xs px-2.5 py-2 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)] resize-none"
-                  style={{ borderColor: "var(--card-border)", color: "var(--page-ink)", fontFamily: "inherit" }}
+                  style={{
+                    borderColor: "var(--card-border)",
+                    color: "var(--page-ink)",
+                    fontFamily: "inherit",
+                  }}
                 />
               </div>
 
               <div>
-                <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">Tech Stack (comma separated)</label>
+                <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">
+                  Tech Stack (comma separated)
+                </label>
                 <input
                   type="text"
                   value={projTechInput}
                   onChange={(e) => setProjTechInput(e.target.value)}
                   placeholder="e.g. React, Next.js, Framer Motion"
                   className="w-full text-xs px-2.5 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                  style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                  style={{
+                    borderColor: "var(--card-border)",
+                    color: "var(--page-ink)",
+                  }}
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">GitHub Repository URL</label>
+                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">
+                    GitHub Repository URL
+                  </label>
                   <input
                     type="url"
                     value={projGithub}
                     onChange={(e) => setProjGithub(e.target.value)}
                     placeholder="https://github.com/..."
                     className="w-full text-xs px-2.5 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                    style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                    style={{
+                      borderColor: "var(--card-border)",
+                      color: "var(--page-ink)",
+                    }}
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">Live Demo URL</label>
+                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">
+                    Live Demo URL
+                  </label>
                   <input
                     type="url"
                     value={projDemo}
                     onChange={(e) => setProjDemo(e.target.value)}
                     placeholder="https://..."
                     className="w-full text-xs px-2.5 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                    style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                    style={{
+                      borderColor: "var(--card-border)",
+                      color: "var(--page-ink)",
+                    }}
                   />
                 </div>
               </div>
 
               <div className="flex gap-2 justify-end mt-2">
-                <Button size="xs" type="submit" style={{ background: "var(--sb-accent)", color: "var(--sb-accent-foreground)" }}>
+                <Button
+                  size="xs"
+                  type="submit"
+                  style={{
+                    background: "var(--sb-accent)",
+                    color: "var(--sb-accent-foreground)",
+                  }}
+                >
                   Add Project
                 </Button>
-                <Button size="xs" variant="outline" type="button" onClick={() => setShowProjModal(false)}>
+                <Button
+                  size="xs"
+                  variant="outline"
+                  type="button"
+                  onClick={() => setShowProjModal(false)}
+                >
                   Cancel
                 </Button>
               </div>
@@ -389,17 +480,28 @@ export function ProfileProjects({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4">
           <div
             className="w-full max-w-lg rounded-2xl border p-5 flex flex-col gap-4 shadow-xl"
-            style={{ background: "var(--card-bg)", borderColor: "var(--card-border)" }}
+            style={{
+              background: "var(--card-bg)",
+              borderColor: "var(--card-border)",
+            }}
           >
             <h3
               className="text-base font-bold"
-              style={{ color: "var(--page-ink)", fontFamily: "'Fraunces', Georgia, serif" }}
+              style={{
+                color: "var(--page-ink)",
+                fontFamily: "'Fraunces', Georgia, serif",
+              }}
             >
               Add Research Publication
             </h3>
-            <form onSubmit={handleAddResearch} className="flex flex-col gap-3.5 text-sm">
+            <form
+              onSubmit={handleAddResearch}
+              className="flex flex-col gap-3.5 text-sm"
+            >
               <div>
-                <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">Publication / Report Title</label>
+                <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">
+                  Publication / Report Title
+                </label>
                 <input
                   type="text"
                   required
@@ -407,12 +509,17 @@ export function ProfileProjects({
                   onChange={(e) => setResTitle(e.target.value)}
                   placeholder="e.g. AI-First Learning Models in CS Curriculums"
                   className="w-full text-xs px-2.5 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                  style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                  style={{
+                    borderColor: "var(--card-border)",
+                    color: "var(--page-ink)",
+                  }}
                 />
               </div>
 
               <div>
-                <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">Summary</label>
+                <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">
+                  Summary
+                </label>
                 <textarea
                   required
                   value={resSummary}
@@ -420,40 +527,66 @@ export function ProfileProjects({
                   placeholder="Briefly summarize the findings, research methodology, or conclusions..."
                   rows={3}
                   className="w-full text-xs px-2.5 py-2 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)] resize-none"
-                  style={{ borderColor: "var(--card-border)", color: "var(--page-ink)", fontFamily: "inherit" }}
+                  style={{
+                    borderColor: "var(--card-border)",
+                    color: "var(--page-ink)",
+                    fontFamily: "inherit",
+                  }}
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">Publication Date</label>
+                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">
+                    Publication Date
+                  </label>
                   <input
                     type="text"
                     value={resDate}
                     onChange={(e) => setResDate(e.target.value)}
                     placeholder="e.g. Oct 2025"
                     className="w-full text-xs px-2.5 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                    style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                    style={{
+                      borderColor: "var(--card-border)",
+                      color: "var(--page-ink)",
+                    }}
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">Article / File Link</label>
+                  <label className="text-[11px] font-semibold text-[var(--sb-ink-muted)] mb-1 block">
+                    Article / File Link
+                  </label>
                   <input
                     type="url"
                     value={resLink}
                     onChange={(e) => setResLink(e.target.value)}
                     placeholder="https://..."
                     className="w-full text-xs px-2.5 py-1.5 rounded-lg border bg-transparent outline-none focus:border-[var(--sb-accent)]"
-                    style={{ borderColor: "var(--card-border)", color: "var(--page-ink)" }}
+                    style={{
+                      borderColor: "var(--card-border)",
+                      color: "var(--page-ink)",
+                    }}
                   />
                 </div>
               </div>
 
               <div className="flex gap-2 justify-end mt-2">
-                <Button size="xs" type="submit" style={{ background: "var(--sb-accent)", color: "var(--sb-accent-foreground)" }}>
+                <Button
+                  size="xs"
+                  type="submit"
+                  style={{
+                    background: "var(--sb-accent)",
+                    color: "var(--sb-accent-foreground)",
+                  }}
+                >
                   Add Research
                 </Button>
-                <Button size="xs" variant="outline" type="button" onClick={() => setShowResModal(false)}>
+                <Button
+                  size="xs"
+                  variant="outline"
+                  type="button"
+                  onClick={() => setShowResModal(false)}
+                >
                   Cancel
                 </Button>
               </div>

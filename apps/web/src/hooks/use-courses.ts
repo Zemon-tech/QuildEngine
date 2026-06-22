@@ -36,7 +36,8 @@ export function useCourse(courseId: string) {
     queryFn: async () => ({
       id: courseId,
       title: "DSA Fundamentals",
-      description: "Master data structures and algorithms from first principles.",
+      description:
+        "Master data structures and algorithms from first principles.",
       modules: [
         { id: "arrays-strings", title: "Arrays & Strings", lessons: 8 },
         { id: "linked-lists", title: "Linked Lists", lessons: 6 },

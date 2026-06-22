@@ -1,28 +1,37 @@
-import { useState, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
-  User,
   BarChart3,
+  Download,
+  FileText,
   FolderGit2,
   Hammer,
-  Settings,
-  X,
-  FileText,
   Printer,
-  Download,
+  Settings,
+  User,
+  X,
 } from "lucide-react";
-import { ProfileHeader } from "#/components/profile/profile-header";
+import { useEffect, useState } from "react";
 import { ProfileAbout } from "#/components/profile/profile-about";
-import { ProfileExperience } from "#/components/profile/profile-experience";
-import type { ExperienceItem, EducationItem } from "#/components/profile/profile-experience";
-import { ProfileProjects } from "#/components/profile/profile-projects";
-import type { ProjectItem, ResearchItem } from "#/components/profile/profile-projects";
-import { ProfileSkills } from "#/components/profile/profile-skills";
-import type { CertItem } from "#/components/profile/profile-skills";
+import type {
+  AchievementItem,
+  ActivityEvent,
+} from "#/components/profile/profile-analytics";
 import { ProfileAnalytics } from "#/components/profile/profile-analytics";
-import type { ActivityEvent, AchievementItem } from "#/components/profile/profile-analytics";
+import type {
+  EducationItem,
+  ExperienceItem,
+} from "#/components/profile/profile-experience";
+import { ProfileExperience } from "#/components/profile/profile-experience";
+import { ProfileHeader } from "#/components/profile/profile-header";
+import type {
+  ProjectItem,
+  ResearchItem,
+} from "#/components/profile/profile-projects";
+import { ProfileProjects } from "#/components/profile/profile-projects";
 import { ProfileSettings } from "#/components/profile/profile-settings";
+import type { CertItem } from "#/components/profile/profile-skills";
+import { ProfileSkills } from "#/components/profile/profile-skills";
 import { Button } from "#/components/ui/button";
 
 export const Route = createFileRoute("/_app/profile")({
@@ -90,9 +99,16 @@ const DEFAULT_PROFILE_DATA: ProfileData = {
     resumeName: "Alex_Johnson_Resume.pdf",
   },
   about: {
-    summary: "Passionate computer science student specializing in building AI-first platforms and developer tooling. Experienced with React, TypeScript, Python, and Large Language Model integrations. Eager to solve complex algorithmic problems and design modular systems.",
-    goals: "Seeking full-time roles in Machine Learning Systems and Full-Stack AI Product development. Aims to build interfaces that seamlessly bridge AI capabilities with developer workflows.",
-    interests: ["LLMs & RAG", "Data Structures", "System Design", "UI/UX Aesthetics"],
+    summary:
+      "Passionate computer science student specializing in building AI-first platforms and developer tooling. Experienced with React, TypeScript, Python, and Large Language Model integrations. Eager to solve complex algorithmic problems and design modular systems.",
+    goals:
+      "Seeking full-time roles in Machine Learning Systems and Full-Stack AI Product development. Aims to build interfaces that seamlessly bridge AI capabilities with developer workflows.",
+    interests: [
+      "LLMs & RAG",
+      "Data Structures",
+      "System Design",
+      "UI/UX Aesthetics",
+    ],
   },
   experience: [
     {
@@ -100,7 +116,8 @@ const DEFAULT_PROFILE_DATA: ProfileData = {
       role: "AI Engineer Intern",
       type: "Internship",
       duration: "Jun 2025 - Present",
-      description: "Designed and built an interactive AI learning assistant side-panel. Integrated custom OKLCH color token themes and built expandable DSA practice navigations using Framer Motion.",
+      description:
+        "Designed and built an interactive AI learning assistant side-panel. Integrated custom OKLCH color token themes and built expandable DSA practice navigations using Framer Motion.",
       tech: ["React", "TypeScript", "TanStack Router", "Framer Motion"],
     },
     {
@@ -108,7 +125,8 @@ const DEFAULT_PROFILE_DATA: ProfileData = {
       role: "Undergraduate Researcher",
       type: "Part-time",
       duration: "Sep 2024 - Jun 2025",
-      description: "Researched retrieval augmented generation (RAG) models. Optimized chunking size limits and search weights, reducing output hallucinations by 18%.",
+      description:
+        "Researched retrieval augmented generation (RAG) models. Optimized chunking size limits and search weights, reducing output hallucinations by 18%.",
       tech: ["Python", "PyTorch", "OpenAI API", "VectorDB"],
     },
   ],
@@ -118,20 +136,23 @@ const DEFAULT_PROFILE_DATA: ProfileData = {
       degree: "B.S. in Computer Science",
       duration: "2021 - 2025",
       gpa: "3.91 / 4.00",
-      courses: "Analysis of Algorithms, Machine Learning, Operating Systems, Distributed Systems",
+      courses:
+        "Analysis of Algorithms, Machine Learning, Operating Systems, Distributed Systems",
     },
   ],
   projects: [
     {
       name: "QuildEngine Workspace",
-      description: "An AI-first developer learning platform featuring practice modules, progress contribution grids, and theme management.",
+      description:
+        "An AI-first developer learning platform featuring practice modules, progress contribution grids, and theme management.",
       tech: ["React", "TypeScript", "next-themes", "Tailwind CSS v4"],
       github: "https://github.com/alexjohnson/quild-engine",
       demo: "http://localhost:3000",
     },
     {
       name: "RAG Evaluation Tool",
-      description: "A Python dashboard to evaluate hallucinations in LLM retrieval pipelines using cosine-similarity thresholds.",
+      description:
+        "A Python dashboard to evaluate hallucinations in LLM retrieval pipelines using cosine-similarity thresholds.",
       tech: ["Python", "Streamlit", "LangChain"],
       github: "https://github.com/alexjohnson/rag-eval",
     },
@@ -139,14 +160,20 @@ const DEFAULT_PROFILE_DATA: ProfileData = {
   research: [
     {
       title: "Context Optimization in Code Generation Models",
-      summary: "Evaluated token window limits and retrieval weights for inline code generation assistants. Published findings in Stanford CS Undergrad Journal.",
+      summary:
+        "Evaluated token window limits and retrieval weights for inline code generation assistants. Published findings in Stanford CS Undergrad Journal.",
       link: "https://arxiv.org/abs/placeholder",
       date: "May 2025",
     },
   ],
   skills: {
     technical: ["React", "TypeScript", "Python", "C++", "SQL", "Tailwind CSS"],
-    soft: ["Technical Writing", "Public Speaking", "Problem Solving", "Collaboration"],
+    soft: [
+      "Technical Writing",
+      "Public Speaking",
+      "Problem Solving",
+      "Collaboration",
+    ],
     tooling: ["Git", "Docker", "VS Code", "Vite", "Turborepo"],
   },
   certifications: [
@@ -291,21 +318,31 @@ function ProfilePage() {
             <ProfileHeader
               data={profile.header}
               onUpdate={(fields) =>
-                updateProfile({ ...profile, header: { ...profile.header, ...fields } })
+                updateProfile({
+                  ...profile,
+                  header: { ...profile.header, ...fields },
+                })
               }
               onPreviewResume={() => setShowResumePreview(true)}
             />
             <ProfileAbout
               data={profile.about}
               onUpdate={(fields) =>
-                updateProfile({ ...profile, about: { ...profile.about, ...fields } })
+                updateProfile({
+                  ...profile,
+                  about: { ...profile.about, ...fields },
+                })
               }
             />
             <ProfileExperience
               experience={profile.experience}
               education={profile.education}
-              onUpdateExperience={(exp) => updateProfile({ ...profile, experience: exp })}
-              onUpdateEducation={(edu) => updateProfile({ ...profile, education: edu })}
+              onUpdateExperience={(exp) =>
+                updateProfile({ ...profile, experience: exp })
+              }
+              onUpdateEducation={(edu) =>
+                updateProfile({ ...profile, education: edu })
+              }
             />
           </>
         )}
@@ -322,8 +359,12 @@ function ProfilePage() {
           <ProfileProjects
             projects={profile.projects}
             research={profile.research}
-            onUpdateProjects={(projs) => updateProfile({ ...profile, projects: projs })}
-            onUpdateResearch={(res) => updateProfile({ ...profile, research: res })}
+            onUpdateProjects={(projs) =>
+              updateProfile({ ...profile, projects: projs })
+            }
+            onUpdateResearch={(res) =>
+              updateProfile({ ...profile, research: res })
+            }
           />
         )}
 
@@ -341,7 +382,9 @@ function ProfilePage() {
         {activeTab === "settings" && (
           <ProfileSettings
             settings={profile.settings}
-            onUpdateSettings={(sett) => updateProfile({ ...profile, settings: sett })}
+            onUpdateSettings={(sett) =>
+              updateProfile({ ...profile, settings: sett })
+            }
           />
         )}
       </div>
@@ -351,7 +394,10 @@ function ProfilePage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4 overflow-y-auto">
           <div
             className="w-full max-w-2xl rounded-2xl border p-5 flex flex-col gap-4 shadow-2xl relative my-8 max-h-[90vh]"
-            style={{ background: "var(--card-bg)", borderColor: "var(--card-border)" }}
+            style={{
+              background: "var(--card-bg)",
+              borderColor: "var(--card-border)",
+            }}
           >
             {/* Header Actions */}
             <div className="flex items-center justify-between shrink-0">
@@ -359,7 +405,10 @@ function ProfilePage() {
                 <FileText size={16} className="text-[var(--sb-accent)]" />
                 <span
                   className="font-bold text-sm"
-                  style={{ color: "var(--page-ink)", fontFamily: "'Fraunces', Georgia, serif" }}
+                  style={{
+                    color: "var(--page-ink)",
+                    fontFamily: "'Fraunces', Georgia, serif",
+                  }}
                 >
                   Resume Document Preview
                 </span>
@@ -377,7 +426,9 @@ function ProfilePage() {
                 <Button
                   size="xs"
                   variant="outline"
-                  onClick={() => alert(`Simulating download of ${profile.header.resumeName}`)}
+                  onClick={() =>
+                    alert(`Simulating download of ${profile.header.resumeName}`)
+                  }
                   className="gap-1.5 h-7 px-2 text-[11px]"
                 >
                   <Download size={12} />
@@ -404,15 +455,22 @@ function ProfilePage() {
                 }}
               >
                 {/* Header */}
-                <div className="flex flex-col gap-1 border-b pb-4 text-center" style={{ borderColor: "var(--card-border)" }}>
-                  <h2 className="text-xl font-bold tracking-tight" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
+                <div
+                  className="flex flex-col gap-1 border-b pb-4 text-center"
+                  style={{ borderColor: "var(--card-border)" }}
+                >
+                  <h2
+                    className="text-xl font-bold tracking-tight"
+                    style={{ fontFamily: "'Fraunces', Georgia, serif" }}
+                  >
                     {profile.header.name}
                   </h2>
                   <p className="font-semibold text-xs text-[var(--sb-accent)]">
                     {profile.header.headline}
                   </p>
                   <p className="text-[10px] text-[var(--sb-ink-muted)] mt-1">
-                    {profile.header.location} · {profile.header.email} · {profile.header.website}
+                    {profile.header.location} · {profile.header.email} ·{" "}
+                    {profile.header.website}
                   </p>
                 </div>
 
@@ -421,12 +479,17 @@ function ProfilePage() {
                   <h4 className="font-bold uppercase tracking-wider text-[10px] text-[var(--sb-accent)]">
                     Professional Summary
                   </h4>
-                  <p style={{ color: "var(--sb-ink)" }}>{profile.about.summary}</p>
+                  <p style={{ color: "var(--sb-ink)" }}>
+                    {profile.about.summary}
+                  </p>
                 </div>
 
                 {/* Experience */}
                 <div className="flex flex-col gap-2">
-                  <h4 className="font-bold uppercase tracking-wider text-[10px] text-[var(--sb-accent)] border-b pb-0.5" style={{ borderColor: "var(--card-border)" }}>
+                  <h4
+                    className="font-bold uppercase tracking-wider text-[10px] text-[var(--sb-accent)] border-b pb-0.5"
+                    style={{ borderColor: "var(--card-border)" }}
+                  >
                     Professional Experience
                   </h4>
                   <div className="flex flex-col gap-4">
@@ -440,7 +503,9 @@ function ProfilePage() {
                             {item.duration}
                           </span>
                         </div>
-                        <p style={{ color: "var(--sb-ink-muted)" }}>{item.description}</p>
+                        <p style={{ color: "var(--sb-ink-muted)" }}>
+                          {item.description}
+                        </p>
                         {item.tech && item.tech.length > 0 && (
                           <p className="text-[10px] text-[var(--sb-ink-dim)] mt-0.5">
                             <b>Technologies:</b> {item.tech.join(", ")}
@@ -453,14 +518,19 @@ function ProfilePage() {
 
                 {/* Education */}
                 <div className="flex flex-col gap-2">
-                  <h4 className="font-bold uppercase tracking-wider text-[10px] text-[var(--sb-accent)] border-b pb-0.5" style={{ borderColor: "var(--card-border)" }}>
+                  <h4
+                    className="font-bold uppercase tracking-wider text-[10px] text-[var(--sb-accent)] border-b pb-0.5"
+                    style={{ borderColor: "var(--card-border)" }}
+                  >
                     Education
                   </h4>
                   <div className="flex flex-col gap-3">
                     {profile.education.map((item, index) => (
                       <div key={index} className="flex flex-col gap-1">
                         <div className="flex items-center justify-between font-semibold">
-                          <span style={{ color: "var(--sb-ink)" }}>{item.school}</span>
+                          <span style={{ color: "var(--sb-ink)" }}>
+                            {item.school}
+                          </span>
                           <span className="text-[10px] text-[var(--sb-ink-dim)]">
                             {item.duration}
                           </span>
@@ -480,12 +550,19 @@ function ProfilePage() {
 
                 {/* Skills */}
                 <div className="flex flex-col gap-2">
-                  <h4 className="font-bold uppercase tracking-wider text-[10px] text-[var(--sb-accent)] border-b pb-0.5" style={{ borderColor: "var(--card-border)" }}>
+                  <h4
+                    className="font-bold uppercase tracking-wider text-[10px] text-[var(--sb-accent)] border-b pb-0.5"
+                    style={{ borderColor: "var(--card-border)" }}
+                  >
                     Skills & Tooling
                   </h4>
-                  <div className="flex flex-col gap-1 text-[11px]" style={{ color: "var(--sb-ink)" }}>
+                  <div
+                    className="flex flex-col gap-1 text-[11px]"
+                    style={{ color: "var(--sb-ink)" }}
+                  >
                     <p>
-                      <b>Technical Skills:</b> {profile.skills.technical.join(", ")}
+                      <b>Technical Skills:</b>{" "}
+                      {profile.skills.technical.join(", ")}
                     </p>
                     <p>
                       <b>Tools & DevOps:</b> {profile.skills.tooling.join(", ")}

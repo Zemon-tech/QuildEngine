@@ -1,13 +1,13 @@
-import { motion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
-import { cn } from "#/lib/utils";
+import { motion } from "framer-motion";
+import type { LucideIcon } from "lucide-react";
+import { Badge } from "#/components/ui/badge";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "#/components/ui/tooltip";
-import { Badge } from "#/components/ui/badge";
-import type { LucideIcon } from "lucide-react";
+import { cn } from "#/lib/utils";
 
 interface NavItemProps {
   icon: LucideIcon;

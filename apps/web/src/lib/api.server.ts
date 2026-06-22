@@ -50,7 +50,12 @@ export async function backendFetch<T>(
   options: ApiRequestOptions = {},
 ): Promise<T> {
   const { BACKEND_URL } = getEnv();
-  const { method = "GET", body, headers = {}, public: isPublic = false } = options;
+  const {
+    method = "GET",
+    body,
+    headers = {},
+    public: isPublic = false,
+  } = options;
 
   const requestHeaders: Record<string, string> = {
     "Content-Type": "application/json",

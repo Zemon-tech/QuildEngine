@@ -49,18 +49,20 @@ export const authMiddleware = createMiddleware().server(async ({ next }) => {
  *
  * TODO: Update the redirect path once the login route exists.
  */
-export const protectedMiddleware = createMiddleware().server(async ({ next }) => {
-  const session = getSession();
+export const protectedMiddleware = createMiddleware().server(
+  async ({ next }) => {
+    const session = getSession();
 
-  if (!session) {
-    // When you add the login route, uncomment this:
-    // throw redirect({ to: "/login" });
+    if (!session) {
+      // When you add the login route, uncomment this:
+      // throw redirect({ to: "/login" });
 
-    // For now, throw an error that the client can handle
-    throw new Error("Unauthorized: No valid session found");
-  }
+      // For now, throw an error that the client can handle
+      throw new Error("Unauthorized: No valid session found");
+    }
 
-  return next({
-    context: { session: session satisfies Session },
-  });
-});
+    return next({
+      context: { session: session satisfies Session },
+    });
+  },
+);

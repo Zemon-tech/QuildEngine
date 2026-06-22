@@ -1,6 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { LayoutDashboard, TrendingUp, BookOpen, Clock, Flame, Code2 } from "lucide-react";
-import { useDashboardStats, useLearningProgress, useUpcomingEvents } from "#/hooks/use-dashboard";
+import {
+  BookOpen,
+  Clock,
+  Code2,
+  Flame,
+  type LayoutDashboard,
+  TrendingUp,
+} from "lucide-react";
+import {
+  useDashboardStats,
+  useLearningProgress,
+  useUpcomingEvents,
+} from "#/hooks/use-dashboard";
 
 export const Route = createFileRoute("/_app/dashboard/")({
   component: Dashboard,
@@ -32,7 +43,10 @@ function StatCard({
         <Icon size={18} style={{ color }} />
       </div>
       <div>
-        <p className="text-2xl font-bold tracking-tight" style={{ color: "var(--sb-ink)" }}>
+        <p
+          className="text-2xl font-bold tracking-tight"
+          style={{ color: "var(--sb-ink)" }}
+        >
           {value}
         </p>
         <p className="mt-0.5 text-sm" style={{ color: "var(--sb-ink-muted)" }}>
@@ -54,7 +68,10 @@ function Dashboard() {
       <div className="mb-8">
         <h1
           className="text-2xl font-bold tracking-tight"
-          style={{ color: "var(--sb-ink)", fontFamily: "'Fraunces', Georgia, serif" }}
+          style={{
+            color: "var(--sb-ink)",
+            fontFamily: "'Fraunces', Georgia, serif",
+          }}
         >
           Good morning 👋
         </h1>
@@ -102,10 +119,16 @@ function Dashboard() {
         >
           <div className="mb-3 flex items-center justify-between">
             <div>
-              <p className="text-xs font-medium uppercase tracking-wider" style={{ color: "var(--sb-ink-dim)" }}>
+              <p
+                className="text-xs font-medium uppercase tracking-wider"
+                style={{ color: "var(--sb-ink-dim)" }}
+              >
                 Continue Learning
               </p>
-              <h2 className="mt-0.5 text-base font-semibold" style={{ color: "var(--sb-ink)" }}>
+              <h2
+                className="mt-0.5 text-base font-semibold"
+                style={{ color: "var(--sb-ink)" }}
+              >
                 {progress.currentLesson}
               </h2>
               <p className="text-sm" style={{ color: "var(--sb-ink-muted)" }}>
@@ -148,7 +171,10 @@ function Dashboard() {
             border: "1px solid var(--card-border)",
           }}
         >
-          <p className="mb-3 text-xs font-medium uppercase tracking-wider" style={{ color: "var(--sb-ink-dim)" }}>
+          <p
+            className="mb-3 text-xs font-medium uppercase tracking-wider"
+            style={{ color: "var(--sb-ink-dim)" }}
+          >
             Upcoming Events
           </p>
           <div className="flex flex-col gap-2">
@@ -160,10 +186,16 @@ function Dashboard() {
               >
                 <TrendingUp size={15} style={{ color: "var(--sb-accent)" }} />
                 <div className="flex-1">
-                  <p className="text-sm font-medium" style={{ color: "var(--sb-ink)" }}>
+                  <p
+                    className="text-sm font-medium"
+                    style={{ color: "var(--sb-ink)" }}
+                  >
                     {event.title}
                   </p>
-                  <p className="text-xs capitalize" style={{ color: "var(--sb-ink-muted)" }}>
+                  <p
+                    className="text-xs capitalize"
+                    style={{ color: "var(--sb-ink-muted)" }}
+                  >
                     {event.type} · {event.date}
                   </p>
                 </div>

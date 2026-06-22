@@ -1,6 +1,6 @@
 export interface SearchItem {
-  id: string
-  title: string
+  id: string;
+  title: string;
   category:
     | "Courses"
     | "Tutorials"
@@ -13,10 +13,10 @@ export interface SearchItem {
     | "Events"
     | "Documentation"
     | "Research"
-    | "User Profiles"
-  subtitle?: string
-  path: string
-  tags?: string[]
+    | "User Profiles";
+  subtitle?: string;
+  path: string;
+  tags?: string[];
 }
 
 export const searchDatabase: SearchItem[] = [
@@ -35,7 +35,13 @@ export const searchDatabase: SearchItem[] = [
     category: "Courses",
     subtitle: "Scale applications to millions of users",
     path: "/courses/system-design",
-    tags: ["architecture", "scaling", "database", "load balancer", "microservices"],
+    tags: [
+      "architecture",
+      "scaling",
+      "database",
+      "load balancer",
+      "microservices",
+    ],
   },
   {
     id: "course-react-advanced",
@@ -79,13 +85,20 @@ export const searchDatabase: SearchItem[] = [
     category: "Lessons",
     subtitle: "Singly and doubly linked lists creation and operations",
     path: "/courses/dsa-fundamentals/modules/linked-lists/lessons/linked-lists-basics",
-    tags: ["linked list", "nodes", "pointers", "singly linked", "doubly linked"],
+    tags: [
+      "linked list",
+      "nodes",
+      "pointers",
+      "singly linked",
+      "doubly linked",
+    ],
   },
   {
     id: "lesson-graph-algo",
     title: "Graph Algorithms (BFS/DFS)",
     category: "Lessons",
-    subtitle: "Breadth-first and depth-first searches on matrices and adjacency lists",
+    subtitle:
+      "Breadth-first and depth-first searches on matrices and adjacency lists",
     path: "/courses/dsa-fundamentals/modules/trees-graphs/lessons/graph-algorithms",
     tags: ["graph", "bfs", "dfs", "adjacency list", "queue"],
   },
@@ -122,7 +135,7 @@ export const searchDatabase: SearchItem[] = [
     title: "Two Sum (Easy)",
     category: "DSA Problems",
     subtitle: "Find two numbers in an array that add up to a target",
-    path: "/practice/dsa/arrays",
+    path: "/dsa/arrays",
     tags: ["hash map", "array", "two pointers", "search"],
   },
   {
@@ -130,7 +143,7 @@ export const searchDatabase: SearchItem[] = [
     title: "Valid Parentheses (Easy)",
     category: "DSA Problems",
     subtitle: "Validate correct opening/closing ordering of braces",
-    path: "/practice/dsa/strings",
+    path: "/dsa/strings",
     tags: ["stack", "string", "parsing"],
   },
   {
@@ -138,7 +151,7 @@ export const searchDatabase: SearchItem[] = [
     title: "Reverse Linked List (Easy)",
     category: "DSA Problems",
     subtitle: "Invert the direction of a singly linked list in-place",
-    path: "/practice/dsa/linked-list",
+    path: "/dsa/linked-list",
     tags: ["linked list", "recursion", "pointers"],
   },
   {
@@ -146,7 +159,7 @@ export const searchDatabase: SearchItem[] = [
     title: "Binary Tree Maximum Path Sum (Hard)",
     category: "DSA Problems",
     subtitle: "Find the maximum path sum between any two nodes in a tree",
-    path: "/practice/dsa/trees",
+    path: "/dsa/trees",
     tags: ["binary tree", "dfs", "recursion", "dynamic programming"],
   },
   {
@@ -154,7 +167,7 @@ export const searchDatabase: SearchItem[] = [
     title: "Clone Graph (Medium)",
     category: "DSA Problems",
     subtitle: "Create a deep copy of a connected undirected graph",
-    path: "/practice/dsa/graphs",
+    path: "/dsa/graph",
     tags: ["graph", "bfs", "dfs", "hash map", "clone"],
   },
 
@@ -164,7 +177,7 @@ export const searchDatabase: SearchItem[] = [
     title: "React 19 Ref Handling and forwardRef",
     category: "Q/A",
     subtitle: "How refs behave without forwardRef in React 19",
-    path: "/practice/qa/technical",
+    path: "/interview-qa/technical",
     tags: ["react 19", "refs", "forwardref", "technical interview"],
   },
   {
@@ -172,7 +185,7 @@ export const searchDatabase: SearchItem[] = [
     title: "Dealing with Project Failure",
     category: "Q/A",
     subtitle: "Structuring responses for 'Tell me about a time you failed'",
-    path: "/practice/qa/behavioral",
+    path: "/interview-qa/behavioral",
     tags: ["behavioral", "interview prep", "failure", "star method"],
   },
   {
@@ -180,7 +193,7 @@ export const searchDatabase: SearchItem[] = [
     title: "AI Mock Interview: API Gateway Scaling",
     category: "Q/A",
     subtitle: "Practice system design scalability constraints with feedback",
-    path: "/practice/qa/ai",
+    path: "/interview-qa/ai-generated",
     tags: ["system design", "ai feedback", "scaling", "rate limiting"],
   },
 
@@ -190,7 +203,7 @@ export const searchDatabase: SearchItem[] = [
     title: "Designing a Scalable Chat Application",
     category: "Case Studies",
     subtitle: "Handling web sockets, presence detection, and message storage",
-    path: "/practice/case-study/system-design",
+    path: "/case-studies/system-design",
     tags: ["websockets", "redis", "cassandra", "presence", "pub/sub"],
   },
   {
@@ -198,7 +211,7 @@ export const searchDatabase: SearchItem[] = [
     title: "High-Throughput Payment Processing",
     category: "Case Studies",
     subtitle: "Achieving idempotency, reliability, and ledger consistency",
-    path: "/practice/case-study/product",
+    path: "/case-studies/product",
     tags: ["payments", "idempotency", "transactions", "ledger", "stripe"],
   },
   {
@@ -206,7 +219,7 @@ export const searchDatabase: SearchItem[] = [
     title: "E-Commerce Checkout Optimization",
     category: "Case Studies",
     subtitle: "Reducing bounce rates and latency in cart-to-order flow",
-    path: "/practice/case-study/business",
+    path: "/case-studies/business",
     tags: ["business case", "checkout", "conversion rate", "metrics"],
   },
 
@@ -216,7 +229,7 @@ export const searchDatabase: SearchItem[] = [
     title: "Mock Test: Frontend & React State Flow",
     category: "Test Cases",
     subtitle: "Timed simulation of standard senior frontend screening",
-    path: "/practice/test-cases/mock",
+    path: "/assessments/mock-tests",
     tags: ["mock test", "frontend", "timed assessment"],
   },
   {
@@ -224,7 +237,7 @@ export const searchDatabase: SearchItem[] = [
     title: "Assessment: JavaScript Core Specifications",
     category: "Test Cases",
     subtitle: "Detailed questions on event loop, closures, and microtasks",
-    path: "/practice/test-cases/assessments",
+    path: "/assessments/assessments",
     tags: ["javascript", "event loop", "closures", "microtasks"],
   },
   {
@@ -232,7 +245,7 @@ export const searchDatabase: SearchItem[] = [
     title: "Weekly Challenge 25: Graph Traversal Speedrun",
     category: "Test Cases",
     subtitle: "Solve 3 graph problems within 45 minutes",
-    path: "/practice/test-cases/weekly",
+    path: "/assessments/weekly-challenges",
     tags: ["weekly challenge", "graph", "speedrun", "live coding"],
   },
 
@@ -249,7 +262,8 @@ export const searchDatabase: SearchItem[] = [
     id: "event-hackathon",
     title: "Frontend Hackathon",
     category: "Events",
-    subtitle: "Collaborate and build high-performance web solutions in 48 hours",
+    subtitle:
+      "Collaborate and build high-performance web solutions in 48 hours",
     path: "/events/hackathons",
     tags: ["hackathon", "frontend", "team building", "competition"],
   },
@@ -269,7 +283,13 @@ export const searchDatabase: SearchItem[] = [
     category: "Documentation",
     subtitle: "Prefetching data and hydration matching on edge runtime",
     path: "/documentation",
-    tags: ["documentation", "react router", "ssr", "data fetching", "hydration"],
+    tags: [
+      "documentation",
+      "react router",
+      "ssr",
+      "data fetching",
+      "hydration",
+    ],
   },
   {
     id: "doc-tanstack-start",
@@ -339,4 +359,4 @@ export const searchDatabase: SearchItem[] = [
     path: "/profile?tab=skills",
     tags: ["skills", "certifications", "badges", "credentials"],
   },
-]
+];

@@ -1,40 +1,43 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { useNavigate } from "@tanstack/react-router"
+import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
+import { motion } from "framer-motion";
 import {
-  Search,
-  BookOpen,
-  ScrollText,
-  GraduationCap,
-  StickyNote,
-  Code2,
-  MessageSquare,
-  Briefcase,
-  TestTube,
-  Calendar,
   BookMarked,
-  FlaskConical,
-  User,
-  History,
+  BookOpen,
+  Briefcase,
+  Calendar,
+  Code2,
   CornerDownLeft,
+  FlaskConical,
+  GraduationCap,
+  History,
+  MessageSquare,
+  ScrollText,
+  Search,
+  StickyNote,
+  TestTube,
+  User,
   X,
-} from "lucide-react"
-
-import { cn } from "#/lib/utils.ts"
+} from "lucide-react";
+import * as React from "react";
 import {
   CommandDialog,
-  CommandInput,
-  CommandList,
   CommandEmpty,
   CommandGroup,
+  CommandInput,
   CommandItem,
-} from "#/components/ui/command"
-import { searchDatabase, type SearchItem } from "#/lib/search-db"
-import { useSidebar } from "#/components/ui/sidebar"
-import { Tooltip, TooltipTrigger, TooltipContent } from "#/components/ui/tooltip"
-import { useQuery } from "@tanstack/react-query"
-import { motion } from "framer-motion"
+  CommandList,
+} from "#/components/ui/command";
+import { useSidebar } from "#/components/ui/sidebar";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "#/components/ui/tooltip";
+import { type SearchItem, searchDatabase } from "#/lib/search-db";
+import { cn } from "#/lib/utils.ts";
 
 const categoryIcons: Record<SearchItem["category"], any> = {
   Courses: BookOpen,
@@ -49,42 +52,45 @@ const categoryIcons: Record<SearchItem["category"], any> = {
   Documentation: BookMarked,
   Research: FlaskConical,
   "User Profiles": User,
-}
+};
 
 // Custom fuzzy matching & scoring algorithm
 const getMatchScore = (item: SearchItem, query: string): number => {
-  const q = query.toLowerCase().trim()
-  if (!q) return 0
+  const q = query.toLowerCase().trim();
+  if (!q) return 0;
 
-  const title = item.title.toLowerCase()
-  const subtitle = (item.subtitle || "").toLowerCase()
-  const tags = (item.tags || []).map((t) => t.toLowerCase())
+  const title = item.title.toLowerCase();
+  const subtitle = (item.subtitle || "").toLowerCase();
+  const tags = (item.tags || []).map((t) => t.toLowerCase());
 
-  if (title === q) return 100
-  if (title.startsWith(q)) return 80
-  if (title.includes(q)) return 60
-  if (subtitle.includes(q)) return 40
-  if (tags.some((t) => t.includes(q) || q.includes(t))) return 20
+  if (title === q) return 100;
+  if (title.startsWith(q)) return 80;
+  if (title.includes(q)) return 60;
+  if (subtitle.includes(q)) return 40;
+  if (tags.some((t) => t.includes(q) || q.includes(t))) return 20;
 
   // Fallback fuzzy: check if characters appear in sequence
-  let queryIdx = 0
+  let queryIdx = 0;
   for (let i = 0; i < title.length && queryIdx < q.length; i++) {
     if (title[i] === q[queryIdx]) {
-      queryIdx++
+      queryIdx++;
     }
   }
-  if (queryIdx === q.length) return 10
+  if (queryIdx === q.length) return 10;
 
-  return 0
-}
+  return 0;
+};
 
 // Highlight matched search queries
 const highlightText = (text: string, query: string) => {
-  if (!query.trim()) return <span>{text}</span>
-  const q = query.trim()
+  if (!query.trim()) return <span>{text}</span>;
+  const q = query.trim();
 
-  const regex = new RegExp(`(${q.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&")})`, "gi")
-  const parts = text.split(regex)
+  const regex = new RegExp(
+    `(${q.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&")})`,
+    "gi",
+  );
+  const parts = text.split(regex);
 
   return (
     <span>
@@ -98,30 +104,30 @@ const highlightText = (text: string, query: string) => {
           </mark>
         ) : (
           part
-        )
+        ),
       )}
     </span>
-  )
-}
+  );
+};
 
 export function GlobalSearchTrigger() {
-  const [open, setOpen] = React.useState(false)
-  const [mounted, setMounted] = React.useState(false)
-  const [isMac, setIsMac] = React.useState(false)
-  const [query, setQuery] = React.useState("")
-  const [recentSearches, setRecentSearches] = React.useState<SearchItem[]>([])
+  const [open, setOpen] = React.useState(false);
+  const [mounted, setMounted] = React.useState(false);
+  const [isMac, setIsMac] = React.useState(false);
+  const [query, setQuery] = React.useState("");
+  const [recentSearches, setRecentSearches] = React.useState<SearchItem[]>([]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   React.useEffect(() => {
-    setMounted(true)
-    setIsMac(/Mac/.test(navigator.platform))
+    setMounted(true);
+    setIsMac(/Mac/.test(navigator.platform));
 
     // Load recent searches
-    const stored = localStorage.getItem("quild-recent-searches")
+    const stored = localStorage.getItem("quild-recent-searches");
     if (stored) {
       try {
-        setRecentSearches(JSON.parse(stored))
+        setRecentSearches(JSON.parse(stored));
       } catch (e) {
         // ignore
       }
@@ -130,96 +136,99 @@ export function GlobalSearchTrigger() {
     // Keyboard shortcut handler
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault()
-        setOpen((o) => !o)
+        e.preventDefault();
+        setOpen((o) => !o);
       }
-    }
+    };
 
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [])
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const handleSelect = (item: SearchItem) => {
     // Save to recents
-    const updated = [item, ...recentSearches.filter((x) => x.id !== item.id)].slice(0, 5)
-    setRecentSearches(updated)
-    localStorage.setItem("quild-recent-searches", JSON.stringify(updated))
+    const updated = [
+      item,
+      ...recentSearches.filter((x) => x.id !== item.id),
+    ].slice(0, 5);
+    setRecentSearches(updated);
+    localStorage.setItem("quild-recent-searches", JSON.stringify(updated));
 
     // Parse queries if any
     if (item.path.includes("?")) {
-      const [pathname, searchStr] = item.path.split("?")
-      const searchParams: Record<string, string> = {}
+      const [pathname, searchStr] = item.path.split("?");
+      const searchParams: Record<string, string> = {};
       if (searchStr) {
-        const pairs = searchStr.split("&")
+        const pairs = searchStr.split("&");
         for (const pair of pairs) {
-          const [k, v] = pair.split("=")
+          const [k, v] = pair.split("=");
           if (k && v) {
-            searchParams[k] = decodeURIComponent(v)
+            searchParams[k] = decodeURIComponent(v);
           }
         }
       }
-      navigate({ to: pathname, search: searchParams })
+      navigate({ to: pathname, search: searchParams });
     } else {
-      navigate({ to: item.path })
+      navigate({ to: item.path });
     }
 
-    setOpen(false)
-    setQuery("")
-  }
+    setOpen(false);
+    setQuery("");
+  };
 
   const clearRecent = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    setRecentSearches([])
-    localStorage.removeItem("quild-recent-searches")
-  }
+    e.stopPropagation();
+    setRecentSearches([]);
+    localStorage.removeItem("quild-recent-searches");
+  };
 
   const removeRecentItem = (e: React.MouseEvent, id: string) => {
-    e.stopPropagation()
-    const updated = recentSearches.filter((x) => x.id !== id)
-    setRecentSearches(updated)
-    localStorage.setItem("quild-recent-searches", JSON.stringify(updated))
-  }
+    e.stopPropagation();
+    const updated = recentSearches.filter((x) => x.id !== id);
+    setRecentSearches(updated);
+    localStorage.setItem("quild-recent-searches", JSON.stringify(updated));
+  };
 
-  const { state, toggleSidebar } = useSidebar()
-  const isCollapsed = state === "collapsed"
+  const { state, toggleSidebar } = useSidebar();
+  const isCollapsed = state === "collapsed";
 
   // Filter and score matching search database items using TanStack Query
   const { data: filteredItems = [] } = useQuery({
     queryKey: ["search", query],
     queryFn: () => {
-      if (!query) return []
+      if (!query) return [];
       return searchDatabase
         .map((item) => ({ item, score: getMatchScore(item, query) }))
         .filter((x) => x.score > 0)
         .sort((a, b) => b.score - a.score)
-        .map((x) => x.item)
+        .map((x) => x.item);
     },
     enabled: query.length > 0,
     staleTime: 1000 * 60 * 5, // Cache query results for 5 minutes
-  })
+  });
 
   // Grouped search results
   const groupedResults = React.useMemo(() => {
-    const groups: Record<SearchItem["category"], SearchItem[]> = {} as any
+    const groups: Record<SearchItem["category"], SearchItem[]> = {} as any;
     for (const item of filteredItems) {
       if (!groups[item.category]) {
-        groups[item.category] = []
+        groups[item.category] = [];
       }
-      groups[item.category].push(item)
+      groups[item.category].push(item);
     }
-    return groups
-  }, [filteredItems])
+    return groups;
+  }, [filteredItems]);
 
-  const categories = Object.keys(groupedResults) as SearchItem["category"][]
+  const categories = Object.keys(groupedResults) as SearchItem["category"][];
 
   const handleClick = () => {
     if (isCollapsed) {
-      toggleSidebar()
-      setOpen(true)
+      toggleSidebar();
+      setOpen(true);
     } else {
-      setOpen(true)
+      setOpen(true);
     }
-  }
+  };
 
   const triggerButton = (
     <button
@@ -229,11 +238,14 @@ export function GlobalSearchTrigger() {
         "flex items-center transition-all duration-200 outline-none cursor-pointer shadow-sm border border-[var(--sb-border)] bg-[var(--card-bg)] text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)] focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60 active:scale-95",
         isCollapsed
           ? "justify-center size-8 rounded-[10px] p-0"
-          : "w-full h-9 justify-between rounded-[10px] px-3 py-2 text-xs"
+          : "w-full h-9 justify-between rounded-[10px] px-3 py-2 text-xs",
       )}
     >
       <div className="flex items-center gap-2">
-        <Search size={14} className={cn("opacity-70 shrink-0", isCollapsed ? "mx-auto" : "")} />
+        <Search
+          size={14}
+          className={cn("opacity-70 shrink-0", isCollapsed ? "mx-auto" : "")}
+        />
         {!isCollapsed && (
           <motion.span
             initial={{ opacity: 0, width: 0 }}
@@ -257,16 +269,14 @@ export function GlobalSearchTrigger() {
         </motion.kbd>
       )}
     </button>
-  )
+  );
 
   return (
     <>
       {/* Visual Trigger */}
       {isCollapsed ? (
         <Tooltip>
-          <TooltipTrigger asChild>
-            {triggerButton}
-          </TooltipTrigger>
+          <TooltipTrigger asChild>{triggerButton}</TooltipTrigger>
           <TooltipContent side="right" sideOffset={8}>
             <div className="flex items-center gap-1.5">
               <span>Search dashboard</span>
@@ -283,7 +293,12 @@ export function GlobalSearchTrigger() {
       )}
 
       {/* Command Palette Dialog */}
-      <CommandDialog open={open} onOpenChange={setOpen} title="Global Search" description="Search dashboard routes, articles, problems, profiles, etc.">
+      <CommandDialog
+        open={open}
+        onOpenChange={setOpen}
+        title="Global Search"
+        description="Search dashboard routes, articles, problems, profiles, etc."
+      >
         <CommandInput
           placeholder="Type to search courses, events, DSA, docs..."
           value={query}
@@ -309,7 +324,7 @@ export function GlobalSearchTrigger() {
               }
             >
               {recentSearches.map((item) => {
-                const IconComp = categoryIcons[item.category] || Search
+                const IconComp = categoryIcons[item.category] || Search;
                 return (
                   <CommandItem
                     key={`recent-${item.id}`}
@@ -319,9 +334,14 @@ export function GlobalSearchTrigger() {
                   >
                     <div className="flex items-center gap-2.5">
                       <History size={14} className="text-[var(--sb-ink-dim)]" />
-                      <IconComp size={15} className="text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-accent)]" />
+                      <IconComp
+                        size={15}
+                        className="text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-accent)]"
+                      />
                       <div className="flex flex-col">
-                        <span className="font-medium text-[var(--sb-ink)]">{item.title}</span>
+                        <span className="font-medium text-[var(--sb-ink)]">
+                          {item.title}
+                        </span>
                         {item.subtitle && (
                           <span className="text-[11px] text-[var(--sb-ink-muted)] line-clamp-1">
                             {item.subtitle}
@@ -342,7 +362,7 @@ export function GlobalSearchTrigger() {
                       </button>
                     </div>
                   </CommandItem>
-                )
+                );
               })}
             </CommandGroup>
           )}
@@ -352,27 +372,54 @@ export function GlobalSearchTrigger() {
             <CommandGroup heading="SUGGESTED CHANNELS">
               <CommandItem
                 value="suggest-courses"
-                onSelect={() => handleSelect(searchDatabase.find((x) => x.id === "course-dsa")!)}
+                onSelect={() =>
+                  handleSelect(
+                    searchDatabase.find((x) => x.id === "course-dsa")!,
+                  )
+                }
                 className="group flex items-center gap-2.5 px-3 py-2 cursor-pointer rounded-lg hover:bg-[var(--sb-bg-hover)]"
               >
-                <BookOpen size={15} className="text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-accent)]" />
-                <span className="font-medium text-[var(--sb-ink)]">Browse Courses</span>
+                <BookOpen
+                  size={15}
+                  className="text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-accent)]"
+                />
+                <span className="font-medium text-[var(--sb-ink)]">
+                  Browse Courses
+                </span>
               </CommandItem>
               <CommandItem
                 value="suggest-practice"
-                onSelect={() => handleSelect(searchDatabase.find((x) => x.id === "dsa-two-sum")!)}
+                onSelect={() =>
+                  handleSelect(
+                    searchDatabase.find((x) => x.id === "dsa-two-sum")!,
+                  )
+                }
                 className="group flex items-center gap-2.5 px-3 py-2 cursor-pointer rounded-lg hover:bg-[var(--sb-bg-hover)]"
               >
-                <Code2 size={15} className="text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-accent)]" />
-                <span className="font-medium text-[var(--sb-ink)]">DSA Practice Problems</span>
+                <Code2
+                  size={15}
+                  className="text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-accent)]"
+                />
+                <span className="font-medium text-[var(--sb-ink)]">
+                  DSA Practice Problems
+                </span>
               </CommandItem>
               <CommandItem
                 value="suggest-docs"
-                onSelect={() => handleSelect(searchDatabase.find((x) => x.id === "doc-tanstack-start")!)}
+                onSelect={() =>
+                  handleSelect(
+                    searchDatabase.find((x) => x.id === "doc-tanstack-start")!,
+                  )
+                }
                 className="group flex items-center gap-2.5 px-3 py-2 cursor-pointer rounded-lg hover:bg-[var(--sb-bg-hover)]"
               >
-                <BookMarked size={15} className="text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-accent)]" />
-                <span className="font-medium text-[var(--sb-ink)]">Read Documentation</span>
+                <BookMarked
+                  size={15}
+                  className="text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-accent)]"
+                />
+                <span className="font-medium text-[var(--sb-ink)]">
+                  Read Documentation
+                </span>
               </CommandItem>
             </CommandGroup>
           )}
@@ -382,7 +429,7 @@ export function GlobalSearchTrigger() {
             categories.map((category) => (
               <CommandGroup key={category} heading={category.toUpperCase()}>
                 {groupedResults[category].map((item) => {
-                  const IconComp = categoryIcons[item.category] || Search
+                  const IconComp = categoryIcons[item.category] || Search;
                   return (
                     <CommandItem
                       key={item.id}
@@ -424,7 +471,7 @@ export function GlobalSearchTrigger() {
                         </span>
                       </div>
                     </CommandItem>
-                  )
+                  );
                 })}
               </CommandGroup>
             ))}
@@ -456,5 +503,5 @@ export function GlobalSearchTrigger() {
         </div>
       </CommandDialog>
     </>
-  )
+  );
 }

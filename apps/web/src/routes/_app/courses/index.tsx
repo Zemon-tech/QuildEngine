@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCourses } from "#/hooks/use-courses";
 import { BookOpen } from "lucide-react";
+import { useCourses } from "#/hooks/use-courses";
 
 export const Route = createFileRoute("/_app/courses/")({
   component: CoursesPage,
@@ -14,9 +14,12 @@ function CoursesPage() {
       <div className="mb-8">
         <h1
           className="text-2xl font-bold tracking-tight"
-          style={{ color: "var(--sb-ink)", fontFamily: "'Fraunces', Georgia, serif" }}
+          style={{
+            color: "var(--sb-ink)",
+            fontFamily: "'Fraunces', Georgia, serif",
+          }}
         >
-          All Courses
+          Coures
         </h1>
         <p className="mt-1 text-sm" style={{ color: "var(--sb-ink-muted)" }}>
           Browse and continue your learning paths.
@@ -43,7 +46,10 @@ function CoursesPage() {
               <h2 className="font-semibold" style={{ color: "var(--sb-ink)" }}>
                 {course.title}
               </h2>
-              <p className="mt-0.5 text-sm" style={{ color: "var(--sb-ink-muted)" }}>
+              <p
+                className="mt-0.5 text-sm"
+                style={{ color: "var(--sb-ink-muted)" }}
+              >
                 {course.completedLessons} / {course.totalLessons} lessons
               </p>
             </div>

@@ -1,8 +1,8 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { TooltipProvider } from "#/components/ui/tooltip";
 import { AppSidebar } from "#/components/sidebar/app-sidebar";
 import { SecondarySidebar } from "#/components/sidebar/secondary-sidebar";
-import { SidebarProvider, SidebarInset } from "#/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "#/components/ui/sidebar";
+import { TooltipProvider } from "#/components/ui/tooltip";
 
 export const Route = createFileRoute("/_app")({
   component: AppLayout,
