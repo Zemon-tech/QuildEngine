@@ -14,12 +14,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppResearchRouteImport } from './routes/_app/research'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
 import { Route as AppHelpRouteImport } from './routes/_app/help'
-import { Route as AppEventsRouteImport } from './routes/_app/events'
 import { Route as AppDocumentationRouteImport } from './routes/_app/documentation'
 import { Route as AppCommunityRouteImport } from './routes/_app/community'
 import { Route as AppPracticeIndexRouteImport } from './routes/_app/practice/index'
 import { Route as AppLearnIndexRouteImport } from './routes/_app/learn/index'
 import { Route as AppInterviewQaIndexRouteImport } from './routes/_app/interview-qa/index'
+import { Route as AppEventsIndexRouteImport } from './routes/_app/events/index'
 import { Route as AppDsaIndexRouteImport } from './routes/_app/dsa/index'
 import { Route as AppDashboardIndexRouteImport } from './routes/_app/dashboard/index'
 import { Route as AppCoursesIndexRouteImport } from './routes/_app/courses/index'
@@ -31,6 +31,7 @@ import { Route as AppLearnTutorialsRouteImport } from './routes/_app/learn/tutor
 import { Route as AppLearnRoadmapsRouteImport } from './routes/_app/learn/roadmaps'
 import { Route as AppLearnArticlesRouteImport } from './routes/_app/learn/articles'
 import { Route as AppInterviewQaTypeRouteImport } from './routes/_app/interview-qa/$type'
+import { Route as AppEventsTypeRouteImport } from './routes/_app/events/$type'
 import { Route as AppDsaTopicIdRouteImport } from './routes/_app/dsa/$topicId'
 import { Route as AppDashboardAiDashboardRouteImport } from './routes/_app/dashboard/ai-dashboard'
 import { Route as AppCaseStudiesTypeRouteImport } from './routes/_app/case-studies/$type'
@@ -65,11 +66,6 @@ const AppHelpRoute = AppHelpRouteImport.update({
   path: '/help',
   getParentRoute: () => AppRoute,
 } as any)
-const AppEventsRoute = AppEventsRouteImport.update({
-  id: '/events',
-  path: '/events',
-  getParentRoute: () => AppRoute,
-} as any)
 const AppDocumentationRoute = AppDocumentationRouteImport.update({
   id: '/documentation',
   path: '/documentation',
@@ -93,6 +89,11 @@ const AppLearnIndexRoute = AppLearnIndexRouteImport.update({
 const AppInterviewQaIndexRoute = AppInterviewQaIndexRouteImport.update({
   id: '/interview-qa/',
   path: '/interview-qa/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEventsIndexRoute = AppEventsIndexRouteImport.update({
+  id: '/events/',
+  path: '/events/',
   getParentRoute: () => AppRoute,
 } as any)
 const AppDsaIndexRoute = AppDsaIndexRouteImport.update({
@@ -150,6 +151,11 @@ const AppInterviewQaTypeRoute = AppInterviewQaTypeRouteImport.update({
   path: '/interview-qa/$type',
   getParentRoute: () => AppRoute,
 } as any)
+const AppEventsTypeRoute = AppEventsTypeRouteImport.update({
+  id: '/events/$type',
+  path: '/events/$type',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppDsaTopicIdRoute = AppDsaTopicIdRouteImport.update({
   id: '/dsa/$topicId',
   path: '/dsa/$topicId',
@@ -202,7 +208,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/community': typeof AppCommunityRoute
   '/documentation': typeof AppDocumentationRoute
-  '/events': typeof AppEventsRoute
   '/help': typeof AppHelpRoute
   '/profile': typeof AppProfileRouteWithChildren
   '/research': typeof AppResearchRoute
@@ -212,6 +217,7 @@ export interface FileRoutesByFullPath {
   '/case-studies/$type': typeof AppCaseStudiesTypeRoute
   '/dashboard/ai-dashboard': typeof AppDashboardAiDashboardRoute
   '/dsa/$topicId': typeof AppDsaTopicIdRoute
+  '/events/$type': typeof AppEventsTypeRoute
   '/interview-qa/$type': typeof AppInterviewQaTypeRoute
   '/learn/articles': typeof AppLearnArticlesRoute
   '/learn/roadmaps': typeof AppLearnRoadmapsRoute
@@ -223,6 +229,7 @@ export interface FileRoutesByFullPath {
   '/courses/': typeof AppCoursesIndexRoute
   '/dashboard/': typeof AppDashboardIndexRoute
   '/dsa/': typeof AppDsaIndexRoute
+  '/events/': typeof AppEventsIndexRoute
   '/interview-qa/': typeof AppInterviewQaIndexRoute
   '/learn/': typeof AppLearnIndexRoute
   '/practice/': typeof AppPracticeIndexRoute
@@ -234,7 +241,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/community': typeof AppCommunityRoute
   '/documentation': typeof AppDocumentationRoute
-  '/events': typeof AppEventsRoute
   '/help': typeof AppHelpRoute
   '/profile': typeof AppProfileRouteWithChildren
   '/research': typeof AppResearchRoute
@@ -244,6 +250,7 @@ export interface FileRoutesByTo {
   '/case-studies/$type': typeof AppCaseStudiesTypeRoute
   '/dashboard/ai-dashboard': typeof AppDashboardAiDashboardRoute
   '/dsa/$topicId': typeof AppDsaTopicIdRoute
+  '/events/$type': typeof AppEventsTypeRoute
   '/interview-qa/$type': typeof AppInterviewQaTypeRoute
   '/learn/articles': typeof AppLearnArticlesRoute
   '/learn/roadmaps': typeof AppLearnRoadmapsRoute
@@ -255,6 +262,7 @@ export interface FileRoutesByTo {
   '/courses': typeof AppCoursesIndexRoute
   '/dashboard': typeof AppDashboardIndexRoute
   '/dsa': typeof AppDsaIndexRoute
+  '/events': typeof AppEventsIndexRoute
   '/interview-qa': typeof AppInterviewQaIndexRoute
   '/learn': typeof AppLearnIndexRoute
   '/practice': typeof AppPracticeIndexRoute
@@ -268,7 +276,6 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/_app/community': typeof AppCommunityRoute
   '/_app/documentation': typeof AppDocumentationRoute
-  '/_app/events': typeof AppEventsRoute
   '/_app/help': typeof AppHelpRoute
   '/_app/profile': typeof AppProfileRouteWithChildren
   '/_app/research': typeof AppResearchRoute
@@ -278,6 +285,7 @@ export interface FileRoutesById {
   '/_app/case-studies/$type': typeof AppCaseStudiesTypeRoute
   '/_app/dashboard/ai-dashboard': typeof AppDashboardAiDashboardRoute
   '/_app/dsa/$topicId': typeof AppDsaTopicIdRoute
+  '/_app/events/$type': typeof AppEventsTypeRoute
   '/_app/interview-qa/$type': typeof AppInterviewQaTypeRoute
   '/_app/learn/articles': typeof AppLearnArticlesRoute
   '/_app/learn/roadmaps': typeof AppLearnRoadmapsRoute
@@ -289,6 +297,7 @@ export interface FileRoutesById {
   '/_app/courses/': typeof AppCoursesIndexRoute
   '/_app/dashboard/': typeof AppDashboardIndexRoute
   '/_app/dsa/': typeof AppDsaIndexRoute
+  '/_app/events/': typeof AppEventsIndexRoute
   '/_app/interview-qa/': typeof AppInterviewQaIndexRoute
   '/_app/learn/': typeof AppLearnIndexRoute
   '/_app/practice/': typeof AppPracticeIndexRoute
@@ -302,7 +311,6 @@ export interface FileRouteTypes {
     | '/'
     | '/community'
     | '/documentation'
-    | '/events'
     | '/help'
     | '/profile'
     | '/research'
@@ -312,6 +320,7 @@ export interface FileRouteTypes {
     | '/case-studies/$type'
     | '/dashboard/ai-dashboard'
     | '/dsa/$topicId'
+    | '/events/$type'
     | '/interview-qa/$type'
     | '/learn/articles'
     | '/learn/roadmaps'
@@ -323,6 +332,7 @@ export interface FileRouteTypes {
     | '/courses/'
     | '/dashboard/'
     | '/dsa/'
+    | '/events/'
     | '/interview-qa/'
     | '/learn/'
     | '/practice/'
@@ -334,7 +344,6 @@ export interface FileRouteTypes {
     | '/'
     | '/community'
     | '/documentation'
-    | '/events'
     | '/help'
     | '/profile'
     | '/research'
@@ -344,6 +353,7 @@ export interface FileRouteTypes {
     | '/case-studies/$type'
     | '/dashboard/ai-dashboard'
     | '/dsa/$topicId'
+    | '/events/$type'
     | '/interview-qa/$type'
     | '/learn/articles'
     | '/learn/roadmaps'
@@ -355,6 +365,7 @@ export interface FileRouteTypes {
     | '/courses'
     | '/dashboard'
     | '/dsa'
+    | '/events'
     | '/interview-qa'
     | '/learn'
     | '/practice'
@@ -367,7 +378,6 @@ export interface FileRouteTypes {
     | '/_app'
     | '/_app/community'
     | '/_app/documentation'
-    | '/_app/events'
     | '/_app/help'
     | '/_app/profile'
     | '/_app/research'
@@ -377,6 +387,7 @@ export interface FileRouteTypes {
     | '/_app/case-studies/$type'
     | '/_app/dashboard/ai-dashboard'
     | '/_app/dsa/$topicId'
+    | '/_app/events/$type'
     | '/_app/interview-qa/$type'
     | '/_app/learn/articles'
     | '/_app/learn/roadmaps'
@@ -388,6 +399,7 @@ export interface FileRouteTypes {
     | '/_app/courses/'
     | '/_app/dashboard/'
     | '/_app/dsa/'
+    | '/_app/events/'
     | '/_app/interview-qa/'
     | '/_app/learn/'
     | '/_app/practice/'
@@ -438,13 +450,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppHelpRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/events': {
-      id: '/_app/events'
-      path: '/events'
-      fullPath: '/events'
-      preLoaderRoute: typeof AppEventsRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/_app/documentation': {
       id: '/_app/documentation'
       path: '/documentation'
@@ -478,6 +483,13 @@ declare module '@tanstack/react-router' {
       path: '/interview-qa'
       fullPath: '/interview-qa/'
       preLoaderRoute: typeof AppInterviewQaIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/events/': {
+      id: '/_app/events/'
+      path: '/events'
+      fullPath: '/events/'
+      preLoaderRoute: typeof AppEventsIndexRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/dsa/': {
@@ -555,6 +567,13 @@ declare module '@tanstack/react-router' {
       path: '/interview-qa/$type'
       fullPath: '/interview-qa/$type'
       preLoaderRoute: typeof AppInterviewQaTypeRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/events/$type': {
+      id: '/_app/events/$type'
+      path: '/events/$type'
+      fullPath: '/events/$type'
+      preLoaderRoute: typeof AppEventsTypeRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/dsa/$topicId': {
@@ -640,7 +659,6 @@ const AppProfileRouteWithChildren = AppProfileRoute._addFileChildren(
 interface AppRouteChildren {
   AppCommunityRoute: typeof AppCommunityRoute
   AppDocumentationRoute: typeof AppDocumentationRoute
-  AppEventsRoute: typeof AppEventsRoute
   AppHelpRoute: typeof AppHelpRoute
   AppProfileRoute: typeof AppProfileRouteWithChildren
   AppResearchRoute: typeof AppResearchRoute
@@ -650,6 +668,7 @@ interface AppRouteChildren {
   AppCaseStudiesTypeRoute: typeof AppCaseStudiesTypeRoute
   AppDashboardAiDashboardRoute: typeof AppDashboardAiDashboardRoute
   AppDsaTopicIdRoute: typeof AppDsaTopicIdRoute
+  AppEventsTypeRoute: typeof AppEventsTypeRoute
   AppInterviewQaTypeRoute: typeof AppInterviewQaTypeRoute
   AppLearnArticlesRoute: typeof AppLearnArticlesRoute
   AppLearnRoadmapsRoute: typeof AppLearnRoadmapsRoute
@@ -659,6 +678,7 @@ interface AppRouteChildren {
   AppCoursesIndexRoute: typeof AppCoursesIndexRoute
   AppDashboardIndexRoute: typeof AppDashboardIndexRoute
   AppDsaIndexRoute: typeof AppDsaIndexRoute
+  AppEventsIndexRoute: typeof AppEventsIndexRoute
   AppInterviewQaIndexRoute: typeof AppInterviewQaIndexRoute
   AppLearnIndexRoute: typeof AppLearnIndexRoute
   AppPracticeIndexRoute: typeof AppPracticeIndexRoute
@@ -670,7 +690,6 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppCommunityRoute: AppCommunityRoute,
   AppDocumentationRoute: AppDocumentationRoute,
-  AppEventsRoute: AppEventsRoute,
   AppHelpRoute: AppHelpRoute,
   AppProfileRoute: AppProfileRouteWithChildren,
   AppResearchRoute: AppResearchRoute,
@@ -680,6 +699,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppCaseStudiesTypeRoute: AppCaseStudiesTypeRoute,
   AppDashboardAiDashboardRoute: AppDashboardAiDashboardRoute,
   AppDsaTopicIdRoute: AppDsaTopicIdRoute,
+  AppEventsTypeRoute: AppEventsTypeRoute,
   AppInterviewQaTypeRoute: AppInterviewQaTypeRoute,
   AppLearnArticlesRoute: AppLearnArticlesRoute,
   AppLearnRoadmapsRoute: AppLearnRoadmapsRoute,
@@ -689,6 +709,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppCoursesIndexRoute: AppCoursesIndexRoute,
   AppDashboardIndexRoute: AppDashboardIndexRoute,
   AppDsaIndexRoute: AppDsaIndexRoute,
+  AppEventsIndexRoute: AppEventsIndexRoute,
   AppInterviewQaIndexRoute: AppInterviewQaIndexRoute,
   AppLearnIndexRoute: AppLearnIndexRoute,
   AppPracticeIndexRoute: AppPracticeIndexRoute,

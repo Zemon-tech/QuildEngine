@@ -1,6 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
   BookOpen,
+  Calendar,
   Code2,
   FlaskConical,
   LayoutDashboard,
@@ -54,6 +55,7 @@ export function AppSidebar() {
     { label: "Learn", to: "/learn", icon: BookOpen },
     { label: "Practice", to: "/practice", icon: Code2 },
     { label: "Research", to: "/research", icon: FlaskConical },
+    { label: "Events", to: "/events", icon: Calendar },
   ];
 
   return (
