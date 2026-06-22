@@ -115,7 +115,7 @@ function TopicLayout() {
   }
 
   return (
-    <div className="px-6 py-6 space-y-6 w-full">
+    <div className="w-full flex-1 min-w-0 px-4 md:px-6 lg:px-8 py-6 space-y-6">
       {/* Back button & Page Title */}
       <div className="flex flex-col gap-4">
         <Link
@@ -160,7 +160,7 @@ function TopicLayout() {
 
       {/* Navigation tabs — TanStack Router <Link> based */}
       <div
-        className="flex items-center gap-1 border-b pb-1 select-none overflow-x-auto"
+        className="flex flex-wrap items-center gap-1 border-b pb-1 select-none sticky top-[-24px] z-50 bg-[var(--background)]/95 backdrop-blur-md pt-[24px] -mt-[24px]"
         style={{ borderColor: "var(--sb-border)" }}
       >
         {TABS.map((tab) => {

@@ -183,7 +183,7 @@ export function ProblemFilters({
 
   return (
     <div
-      className="flex flex-col gap-4 border-b pb-5"
+      className="flex flex-col gap-4 border-b pb-5 sticky top-[18px] z-40 bg-[var(--background)]/95 backdrop-blur-md pt-[24px] -mt-[24px]"
       style={{ borderColor: "var(--sb-border)" }}
     >
       {/* Upper row: Search and Sorting */}
