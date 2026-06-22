@@ -15,6 +15,8 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@blocknote/core": "^0.51.4",
+    "@blocknote/react": "^0.51.4",
     "@cloudflare/vite-plugin": "^1.26.0",
     "@radix-ui/react-dialog": "^1.1.17",
     "@radix-ui/react-use-controllable-state": "^1.2.3",
@@ -31,6 +33,9 @@
     "@tanstack/react-router-ssr-query": "latest",
     "@tanstack/react-start": "latest",
     "@tanstack/router-plugin": "^1.132.0",
+    "@tiptap/pm": "^3.27.1",
+    "@tiptap/react": "^3.27.1",
+    "@tiptap/starter-kit": "^3.27.1",
     "@xyflow/react": "^12.11.0",
     "ai": "^6.0.208",
     "ansi-to-react": "^6.2.6",

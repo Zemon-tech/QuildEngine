@@ -5,28 +5,35 @@
 product
 
 ## Users
-Developers, software engineers, and students who are practicing and studying data structures, algorithms (DSA), system design, and prepping for technical interviews. They need a high-performance, focused, distraction-free environment that makes learning interactive and tracks progress clearly.
+
+Anyone interested in learning core computer science and DeepTech fields deeply — including students, software engineers, and researchers.
 
 ## Product Purpose
-Quild is an AI-powered learning workspace designed to level up developers' software engineering skills. The product aims to provide interactive tutorials, a comprehensive DSA practice environment, mock interviews, and assessments with visual feedback, helping users gain confidence and master coding challenges.
+
+Quild is a platform for structured skill development, learning, and research. It exists to combine structured courses, user profiles, AI research workspaces, and community events into a single, high-fidelity developer ecosystem.
 
 ## Brand Personality
-- Precision-engineered (sleek, high-polish, dark mode by default, fast transitions)
-- Educational clarity (logical layouts, accessible status indicators, readable copy)
-- Modern and responsive (glassmorphism accents, smooth Framer Motion transitions, responsive grids)
+
+- **Expert**: Designed by and for programmers; technically precise and high-fidelity.
+- **Refined**: Balanced typography, deliberate pacing, premium OKLCH color palettes, and fluid motion.
+- **Focused**: Minimal noise, maximum readability, zero unnecessary SaaS clichés.
 
 ## Anti-references
-- SaaS clichés (flat light-gray interfaces, boring standard table layouts, tiny tracked uppercase eyebrows everywhere)
-- Cluttered layouts (excessive decoration, information overload, poor line spacing)
-- Slow, blocking actions (unnecessary loading pages, rigid step-by-step Wizards that lack back-and-forth flexibility)
+
+- Warm warm-beige/cream "AI default" backgrounds.
+- Generic numbered brows or repetitive small uppercase eyebrow overlays.
+- Cliché SaaS metric blocks (huge text numbers with tiny labels).
+- Sketchy SVG illustrations or decorative glassmorphism overrides.
 
 ## Design Principles
-1. **Interactive Feedback**: Every user interaction (toggling problem status, starring, running code) must feel instant, tactile, and visually satisfying.
-2. **Space Efficiency**: Layouts should span the full available width while maintaining clear content grouping and visual hierarchy.
-3. **Typographic Authority**: Use distinct weights, structured line heights, and elegant font pairings (e.g. Fraunces for display headings, Inter/sans-serif for interface elements) to communicate importance without clutter.
-4. **Purposeful Motion**: Avoid entrance animations just for show; use motion to guide the eye and represent state changes (e.g. status transition states, copy-link indicators, modal drawer entries).
+
+- **Deep Reading & Focus**: Typography line length capped at 65-75ch with generous line heights to minimize cognitive load.
+- **High Contrast**: Dark/Light mode integration with crisp ink contrast values.
+- **Tactile Interactions**: Micro-interactions, hover elevations, and custom easing curves (expo/spring) to make the workspace feel alive.
+- **Content First**: No placeholders. Real technical content, code snippets, and structured layout structures.
 
 ## Accessibility & Inclusion
-- Contrast ratios meeting WCAG AA standards (high-contrast body text, clear focus rings).
-- Keyboard accessibility for primary actions (such as closing modal drawer using the Esc key).
-- Respect prefers-reduced-motion media query by providing instant crossfades/transitions.
+
+- WCAG 2.1 AA compliance (ensuring proper contrast ratios).
+- Semantic HTML hierarchy.
+- Adaptive themes (next-themes dark/light system) and support for `@media (prefers-reduced-motion: reduce)`.

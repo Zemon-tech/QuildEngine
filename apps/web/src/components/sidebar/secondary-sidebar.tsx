@@ -9,13 +9,11 @@ import {
   Briefcase,
   ClipboardList,
   Code2,
-  FileText,
   FlaskConical,
   LayoutDashboard,
   Map as MapIcon,
   PanelLeftClose,
   PanelLeftOpen,
-  ScrollText,
   StickyNote,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -98,17 +96,15 @@ export function SecondarySidebar() {
     sectionTitle = "Learning";
     groups = [
       {
-        label: "Coures",
+        label: "Courses",
         items: [
-          { label: "Coures", to: "/courses", icon: BookOpen },
+          { label: "Courses", to: "/courses", icon: BookOpen },
           { label: "Bookmarks", to: "/courses/bookmarks", icon: Bookmark },
         ],
       },
       {
         label: "Resources",
         items: [
-          { label: "Tutorials", to: "/learn/tutorials", icon: ScrollText },
-          { label: "Articles", to: "/learn/articles", icon: FileText },
           { label: "Roadmaps", to: "/learn/roadmaps", icon: MapIcon },
           { label: "Notes", to: "/learn/notes", icon: StickyNote },
         ],
