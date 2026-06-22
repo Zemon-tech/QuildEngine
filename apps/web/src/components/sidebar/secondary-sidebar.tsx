@@ -118,28 +118,62 @@ export function SecondarySidebar() {
     currentPath.startsWith("/assessments")
   ) {
     sectionTitle = "Practice Room";
-    groups = [
-      {
-        label: "Algorithms & DSA",
-        to: "/dsa",
-        icon: Code2,
-      },
-      {
-        label: "Interview Q&A",
-        to: "/interview-qa",
-        icon: Brain,
-      },
-      {
-        label: "Case Studies",
-        to: "/case-studies",
-        icon: Briefcase,
-      },
-      {
-        label: "Assessments",
-        to: "/assessments",
-        icon: ClipboardList,
-      },
-    ];
+
+    // Detect if we are inside a DSA topic (for showing tab sub-nav)
+    const dsaTopicMatch = currentPath.match(
+      /^\/practice\/dsa\/([^/]+)/,
+    );
+    const currentDsaTopic = dsaTopicMatch ? dsaTopicMatch[1] : null;
+
+    if (currentDsaTopic) {
+      // Inside a DSA topic — show tab sub-items
+      groups = [
+        {
+          label: "Algorithms & DSA",
+          to: "/practice/dsa",
+          icon: Code2,
+        },
+        {
+          label: "Interview Q&A",
+          to: "/practice/interview-qa",
+          icon: Brain,
+        },
+        {
+          label: "Case Studies",
+          to: "/practice/case-studies",
+          icon: Briefcase,
+        },
+        {
+          label: "Assessments",
+          to: "/practice/assessments",
+          icon: ClipboardList,
+        },
+      ];
+    } else {
+      groups = [
+        {
+          label: "Algorithms & DSA",
+          to: "/practice/dsa",
+          icon: Code2,
+        },
+        {
+          label: "Interview Q&A",
+          to: "/practice/interview-qa",
+          icon: Brain,
+        },
+        {
+          label: "Case Studies",
+          to: "/practice/case-studies",
+          icon: Briefcase,
+        },
+        {
+          label: "Assessments",
+          to: "/practice/assessments",
+          icon: ClipboardList,
+        },
+      ];
+    }
+
   } else if (
     currentPath.startsWith("/research") ||
     currentPath.startsWith("/documentation")

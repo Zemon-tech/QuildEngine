@@ -1,10 +1,51 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { CheckCircle2, Code2 } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import {
+  Brain,
+  Briefcase,
+  CheckCircle2,
+  ClipboardList,
+  Code2,
+} from "lucide-react";
 import { useDSAProblems } from "#/hooks/use-practice";
 
 export const Route = createFileRoute("/_app/practice/")({
   component: PracticePage,
 });
+
+const SECTIONS = [
+  {
+    to: "/practice/dsa" as const,
+    label: "Algorithms & DSA",
+    description: "Master data structures and algorithm patterns.",
+    icon: Code2,
+    color: "text-blue-500",
+    bg: "from-blue-500/10 to-cyan-500/10 border-blue-500/20",
+  },
+  {
+    to: "/practice/interview-qa" as const,
+    label: "Interview Q&A",
+    description: "Technical, behavioral, and AI-generated Q&A.",
+    icon: Brain,
+    color: "text-violet-500",
+    bg: "from-violet-500/10 to-purple-500/10 border-violet-500/20",
+  },
+  {
+    to: "/practice/case-studies" as const,
+    label: "Case Studies",
+    description: "Real-world product, system-design & business cases.",
+    icon: Briefcase,
+    color: "text-amber-500",
+    bg: "from-amber-500/10 to-orange-500/10 border-amber-500/20",
+  },
+  {
+    to: "/practice/assessments" as const,
+    label: "Assessments",
+    description: "Timed mock tests and weekly coding challenges.",
+    icon: ClipboardList,
+    color: "text-emerald-500",
+    bg: "from-emerald-500/10 to-teal-500/10 border-emerald-500/20",
+  },
+] as const;
 
 function PracticePage() {
   const { data: dsa } = useDSAProblems();
@@ -24,6 +65,46 @@ function PracticePage() {
         <p className="mt-1 text-sm" style={{ color: "var(--sb-ink-muted)" }}>
           Sharpen your skills with DSA problems, Q&A, case studies, and tests.
         </p>
+      </div>
+
+      {/* Quick navigation cards using TanStack Router Link */}
+      <div className="grid gap-4 sm:grid-cols-2 mb-8">
+        {SECTIONS.map((section) => {
+          const Icon = section.icon;
+          return (
+            <Link
+              key={section.to}
+              to={section.to}
+              className="block rounded-xl border p-4 hover:shadow-sm transition-all"
+              style={{
+                background: "var(--card-bg)",
+                borderColor: "var(--card-border)",
+              }}
+            >
+              <div className="flex items-start gap-3">
+                <div
+                  className={`flex size-9 shrink-0 items-center justify-center rounded-xl border bg-gradient-to-br ${section.bg} ${section.color}`}
+                >
+                  <Icon size={16} />
+                </div>
+                <div>
+                  <p
+                    className="text-sm font-semibold"
+                    style={{ color: "var(--sb-ink)" }}
+                  >
+                    {section.label}
+                  </p>
+                  <p
+                    className="text-xs mt-0.5"
+                    style={{ color: "var(--sb-ink-muted)" }}
+                  >
+                    {section.description}
+                  </p>
+                </div>
+              </div>
+            </Link>
+          );
+        })}
       </div>
 
       {dsa && (
