@@ -140,8 +140,8 @@ function PracticeBoardTab() {
         <TopicStats problems={localProblems} currentStreak={6} />
       </div>
 
-      {/* Left Column: Subtopic Sidebar */}
-      <div className="lg:col-span-3 flex flex-col gap-4">
+      {/* Left Column: Subtopic Sidebar — sticky while scrolling */}
+      <div className="lg:col-span-3 flex flex-col gap-4 sticky top-[58px] z-30 bg-[var(--background)] pr-2 self-start">
         <div
           className="rounded-2xl border p-4 space-y-3.5"
           style={{

@@ -51,7 +51,7 @@ function PracticePage() {
   const { data: dsa } = useDSAProblems();
 
   return (
-    <div className="mx-auto max-w-4xl">
+    <div className="w-full flex-1 min-w-0 px-4 md:px-6 lg:px-8">
       <div className="mb-8">
         <h1
           className="text-2xl font-bold tracking-tight"
