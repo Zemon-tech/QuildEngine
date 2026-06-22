@@ -31,6 +31,10 @@ import {
   CommandItem,
 } from "#/components/ui/command"
 import { searchDatabase, type SearchItem } from "#/lib/search-db"
+import { useSidebar } from "#/components/ui/sidebar"
+import { Tooltip, TooltipTrigger, TooltipContent } from "#/components/ui/tooltip"
+import { useQuery } from "@tanstack/react-query"
+import { motion } from "framer-motion"
 
 const categoryIcons: Record<SearchItem["category"], any> = {
   Courses: BookOpen,
@@ -176,15 +180,23 @@ export function GlobalSearchTrigger() {
     localStorage.setItem("quild-recent-searches", JSON.stringify(updated))
   }
 
-  // Filter and score matching search database items
-  const filteredItems = React.useMemo(() => {
-    if (!query) return []
-    return searchDatabase
-      .map((item) => ({ item, score: getMatchScore(item, query) }))
-      .filter((x) => x.score > 0)
-      .sort((a, b) => b.score - a.score)
-      .map((x) => x.item)
-  }, [query])
+  const { state, toggleSidebar } = useSidebar()
+  const isCollapsed = state === "collapsed"
+
+  // Filter and score matching search database items using TanStack Query
+  const { data: filteredItems = [] } = useQuery({
+    queryKey: ["search", query],
+    queryFn: () => {
+      if (!query) return []
+      return searchDatabase
+        .map((item) => ({ item, score: getMatchScore(item, query) }))
+        .filter((x) => x.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .map((x) => x.item)
+    },
+    enabled: query.length > 0,
+    staleTime: 1000 * 60 * 5, // Cache query results for 5 minutes
+  })
 
   // Grouped search results
   const groupedResults = React.useMemo(() => {
@@ -200,28 +212,75 @@ export function GlobalSearchTrigger() {
 
   const categories = Object.keys(groupedResults) as SearchItem["category"][]
 
+  const handleClick = () => {
+    if (isCollapsed) {
+      toggleSidebar()
+      setOpen(true)
+    } else {
+      setOpen(true)
+    }
+  }
+
+  const triggerButton = (
+    <button
+      type="button"
+      onClick={handleClick}
+      className={cn(
+        "flex items-center transition-all duration-200 outline-none cursor-pointer shadow-sm border border-[var(--sb-border)] bg-[var(--card-bg)] text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)] focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60 active:scale-95",
+        isCollapsed
+          ? "justify-center size-8 rounded-[10px] p-0"
+          : "w-full h-9 justify-between rounded-[10px] px-3 py-2 text-xs"
+      )}
+    >
+      <div className="flex items-center gap-2">
+        <Search size={14} className={cn("opacity-70 shrink-0", isCollapsed ? "mx-auto" : "")} />
+        {!isCollapsed && (
+          <motion.span
+            initial={{ opacity: 0, width: 0 }}
+            animate={{ opacity: 1, width: "auto" }}
+            exit={{ opacity: 0, width: 0 }}
+            transition={{ duration: 0.15 }}
+            className="whitespace-nowrap overflow-hidden text-left font-medium"
+          >
+            Search...
+          </motion.span>
+        )}
+      </div>
+      {!isCollapsed && mounted && (
+        <motion.kbd
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.15 }}
+          className="hidden sm:inline-flex items-center gap-0.5 rounded border border-[var(--sb-border)] bg-[var(--sb-bg-active)] px-1.5 py-0.5 font-mono text-[9px] text-[var(--sb-ink-dim)] shrink-0"
+        >
+          {isMac ? "⌘" : "Ctrl "}K
+        </motion.kbd>
+      )}
+    </button>
+  )
+
   return (
     <>
-      {/* Visual Header Trigger */}
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className={cn(
-          "flex w-full items-center justify-between rounded-xl border px-3 py-1.5 text-xs transition-all shadow-sm outline-none cursor-pointer",
-          "border-[var(--sb-border)] bg-[var(--card-bg)] text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]",
-          "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60"
-        )}
-      >
-        <div className="flex items-center gap-2">
-          <Search size={14} className="opacity-70" />
-          <span>Search dashboard...</span>
-        </div>
-        {mounted && (
-          <kbd className="hidden sm:inline-flex items-center gap-0.5 rounded border border-[var(--sb-border)] bg-[var(--sb-bg-active)] px-1.5 py-0.5 font-mono text-[9px] text-[var(--sb-ink-dim)]">
-            {isMac ? "⌘" : "Ctrl "}K
-          </kbd>
-        )}
-      </button>
+      {/* Visual Trigger */}
+      {isCollapsed ? (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            {triggerButton}
+          </TooltipTrigger>
+          <TooltipContent side="right" sideOffset={8}>
+            <div className="flex items-center gap-1.5">
+              <span>Search dashboard</span>
+              {mounted && (
+                <kbd className="font-mono text-[9px] text-[var(--sb-ink-dim)] bg-[var(--sb-bg-active)] px-1 rounded border border-[var(--sb-border)]">
+                  {isMac ? "⌘" : "Ctrl "}K
+                </kbd>
+              )}
+            </div>
+          </TooltipContent>
+        </Tooltip>
+      ) : (
+        triggerButton
+      )}
 
       {/* Command Palette Dialog */}
       <CommandDialog open={open} onOpenChange={setOpen} title="Global Search" description="Search dashboard routes, articles, problems, profiles, etc.">

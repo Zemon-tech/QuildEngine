@@ -33,6 +33,7 @@ import {
 import { UserNav } from "./user-nav";
 import { AIAssistant } from "./ai-assistant";
 import { SidebarHeader as CustomSidebarHeader } from "./sidebar-header";
+import { GlobalSearchTrigger } from "#/components/search/global-search";
 
 export function AppSidebar() {
   const { state, toggleSidebar, setOpenMobile } = useSidebar();
@@ -78,6 +79,9 @@ export function AppSidebar() {
         </SidebarHeader>
 
         <SidebarContent className="px-2 py-2">
+          <div className="mb-2">
+            <GlobalSearchTrigger />
+          </div>
           <SidebarMenu>
             {navItems.map((item) => (
               <SidebarMenuItem key={item.label}>
