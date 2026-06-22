@@ -1,11 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { TopicDetailPage } from "#/components/dsa/topic-detail-page";
+import { createFileRoute, Navigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_app/dsa/$topicId")({
-  component: DSATopicPage,
+  component: RedirectToNewDSATopic,
 });
 
-function DSATopicPage() {
+function RedirectToNewDSATopic() {
   const { topicId } = Route.useParams();
-  return <TopicDetailPage topicId={topicId} />;
+  return <Navigate to="/practice/dsa/$topicId" params={{ topicId }} replace />;
 }
