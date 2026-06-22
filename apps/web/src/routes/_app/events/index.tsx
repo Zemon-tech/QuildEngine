@@ -1,22 +1,22 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   Calendar as CalendarIcon,
-  Trophy,
+  CheckCircle2,
+  Clock,
   Code2,
   GraduationCap,
-  Video,
-  Mic,
-  Users,
-  School,
   Heart,
-  Search,
-  Clock,
   MapPin,
-  CheckCircle2,
+  Mic,
+  School,
+  Search,
   Sparkles,
+  Trophy,
+  Users,
+  Video,
 } from "lucide-react";
+import { useMemo, useState } from "react";
 
 export const Route = createFileRoute("/_app/events/")({
   component: EventsHubPage,
@@ -49,16 +49,19 @@ const categories: EventCategory[] = [
   {
     id: "hackathons",
     name: "Hackathons",
-    description: "Collaborative event for developers to build innovative solutions",
+    description:
+      "Collaborative event for developers to build innovative solutions",
     count: 3,
     upcoming: true,
     icon: Trophy,
-    gradient: "from-blue-500/10 to-cyan-500/10 border-blue-500/20 text-blue-500",
+    gradient:
+      "from-blue-500/10 to-cyan-500/10 border-blue-500/20 text-blue-500",
   },
   {
     id: "coding-contests",
     name: "Coding Contests",
-    description: "Competitive programming challenges to test algorithmic skills",
+    description:
+      "Competitive programming challenges to test algorithmic skills",
     count: 5,
     upcoming: true,
     icon: Code2,
@@ -71,25 +74,30 @@ const categories: EventCategory[] = [
     count: 8,
     upcoming: true,
     icon: GraduationCap,
-    gradient: "from-emerald-500/10 to-teal-500/10 border-emerald-500/20 text-emerald-500",
+    gradient:
+      "from-emerald-500/10 to-teal-500/10 border-emerald-500/20 text-emerald-500",
   },
   {
     id: "webinars",
     name: "Webinars",
-    description: "Live virtual presentations and seminars on latest tech trends",
+    description:
+      "Live virtual presentations and seminars on latest tech trends",
     count: 12,
     upcoming: false,
     icon: Video,
-    gradient: "from-violet-500/10 to-purple-500/10 border-violet-500/20 text-violet-500",
+    gradient:
+      "from-violet-500/10 to-purple-500/10 border-violet-500/20 text-violet-500",
   },
   {
     id: "tech-talks",
     name: "Tech Talks",
-    description: "Insightful talks on engineering practices, architectures, and tools",
+    description:
+      "Insightful talks on engineering practices, architectures, and tools",
     count: 6,
     upcoming: true,
     icon: Mic,
-    gradient: "from-amber-500/10 to-yellow-500/10 border-amber-500/20 text-amber-500",
+    gradient:
+      "from-amber-500/10 to-yellow-500/10 border-amber-500/20 text-amber-500",
   },
   {
     id: "conferences",
@@ -98,7 +106,8 @@ const categories: EventCategory[] = [
     count: 2,
     upcoming: false,
     icon: Users,
-    gradient: "from-pink-500/10 to-rose-500/10 border-pink-500/20 text-pink-500",
+    gradient:
+      "from-pink-500/10 to-rose-500/10 border-pink-500/20 text-pink-500",
   },
   {
     id: "college-events",
@@ -107,7 +116,8 @@ const categories: EventCategory[] = [
     count: 4,
     upcoming: true,
     icon: School,
-    gradient: "from-indigo-500/10 to-blue-500/10 border-indigo-500/20 text-indigo-500",
+    gradient:
+      "from-indigo-500/10 to-blue-500/10 border-indigo-500/20 text-indigo-500",
   },
   {
     id: "meetups",
@@ -116,7 +126,8 @@ const categories: EventCategory[] = [
     count: 10,
     upcoming: true,
     icon: Heart,
-    gradient: "from-fuchsia-500/10 to-pink-500/10 border-fuchsia-500/20 text-fuchsia-500",
+    gradient:
+      "from-fuchsia-500/10 to-pink-500/10 border-fuchsia-500/20 text-fuchsia-500",
   },
 ];
 
@@ -129,13 +140,17 @@ const initialEvents: EventItem[] = [
     time: "09:00 AM EST",
     organizer: "Quild AI Tech Group",
     status: "Open",
-    description: "Collaborate with developers, designers, and AI engineers to build the next generation of intelligent tools using large language models.",
+    description:
+      "Collaborate with developers, designers, and AI engineers to build the next generation of intelligent tools using large language models.",
     agenda: [
       "Day 1: Kickoff & Team Formation",
       "Day 2: Hacking & Mentorship Sessions",
-      "Day 3: Project Submission & Pitch Presentations"
+      "Day 3: Project Submission & Pitch Presentations",
     ],
-    speakers: ["Dr. Sarah Chen (AI Researcher)", "David Miller (Principal Architect)"]
+    speakers: [
+      "Dr. Sarah Chen (AI Researcher)",
+      "David Miller (Principal Architect)",
+    ],
   },
   {
     id: "algo-contest",
@@ -145,13 +160,14 @@ const initialEvents: EventItem[] = [
     time: "02:00 PM UTC",
     organizer: "Competitive Programming Club",
     status: "Registered",
-    description: "Showcase your problem-solving speed and algorithmic precision in this high-intensity 3-hour competitive coding duel.",
+    description:
+      "Showcase your problem-solving speed and algorithmic precision in this high-intensity 3-hour competitive coding duel.",
     agenda: [
       "14:00 - Contest Starts & Problem Set Released",
       "17:00 - Contest Ends & Leaderboard Locked",
-      "17:15 - Live Editorial and Solution Explanations"
+      "17:15 - Live Editorial and Solution Explanations",
     ],
-    speakers: ["Alexey Volkov (Competitive Programming Grandmaster)"]
+    speakers: ["Alexey Volkov (Competitive Programming Grandmaster)"],
   },
   {
     id: "react-workshop",
@@ -161,13 +177,14 @@ const initialEvents: EventItem[] = [
     time: "10:00 AM PST",
     organizer: "Frontend Masters League",
     status: "Open",
-    description: "A hands-on workshop focused on custom hook optimization, state management architectures, and implementing micro-animations.",
+    description:
+      "A hands-on workshop focused on custom hook optimization, state management architectures, and implementing micro-animations.",
     agenda: [
       "Session 1: Custom Hook Optimization & Render Control",
       "Session 2: Framer Motion and Spring Physics in React UI",
-      "Session 3: Building Resilient SSR Applications"
+      "Session 3: Building Resilient SSR Applications",
     ],
-    speakers: ["Emil Kowalski (Design Engineer)", "Sophie Dubois (Lead Dev)"]
+    speakers: ["Emil Kowalski (Design Engineer)", "Sophie Dubois (Lead Dev)"],
   },
   {
     id: "webinar-typescript",
@@ -177,13 +194,17 @@ const initialEvents: EventItem[] = [
     time: "04:00 PM EST",
     organizer: "TypeScript Core Team Fan Club",
     status: "Registered",
-    description: "An online seminar walking through the newest features in TypeScript, compiler optimizations, and advanced type gymnastics.",
+    description:
+      "An online seminar walking through the newest features in TypeScript, compiler optimizations, and advanced type gymnastics.",
     agenda: [
       "16:00 - Introduction & Keynote",
       "16:15 - New Features & Syntax Updates",
-      "16:45 - Live Q&A Panel with Contributors"
+      "16:45 - Live Q&A Panel with Contributors",
     ],
-    speakers: ["Anders Hejlsberg (Distinguished Engineer)", "Ryan Cavanaugh (Dev Manager)"]
+    speakers: [
+      "Anders Hejlsberg (Distinguished Engineer)",
+      "Ryan Cavanaugh (Dev Manager)",
+    ],
   },
   {
     id: "talk-rust",
@@ -193,13 +214,14 @@ const initialEvents: EventItem[] = [
     time: "06:30 PM EST",
     organizer: "Systems Engineering Meetup",
     status: "Open",
-    description: "A comprehensive look at the memory safety, concurrency models, and performance improvements achieved during rewrite.",
+    description:
+      "A comprehensive look at the memory safety, concurrency models, and performance improvements achieved during rewrite.",
     agenda: [
       "18:30 - Opening remarks",
       "18:40 - Main Presentation & Performance Graphs",
-      "19:20 - Audience Q&A & Virtual Mixer"
+      "19:20 - Audience Q&A & Virtual Mixer",
     ],
-    speakers: ["Marcus Vance (VP of Systems Engineering)"]
+    speakers: ["Marcus Vance (VP of Systems Engineering)"],
   },
   {
     id: "conf-nextgen",
@@ -209,12 +231,13 @@ const initialEvents: EventItem[] = [
     time: "08:00 AM EST",
     organizer: "Web Platform Alliance",
     status: "Open",
-    description: "The premier global conference for developers exploring the future of frontend, backend edge architectures, and compiler-driven UI frameworks.",
+    description:
+      "The premier global conference for developers exploring the future of frontend, backend edge architectures, and compiler-driven UI frameworks.",
     agenda: [
       "Day 1: Keynotes, Framework Trends & Networking",
-      "Day 2: Technical Tracks, Panels & Community Meetups"
+      "Day 2: Technical Tracks, Panels & Community Meetups",
     ],
-    speakers: ["Guillermo Rauch (CEO Vercel)", "Dan Abramov (React Core Team)"]
+    speakers: ["Guillermo Rauch (CEO Vercel)", "Dan Abramov (React Core Team)"],
   },
   {
     id: "college-hack",
@@ -224,12 +247,13 @@ const initialEvents: EventItem[] = [
     time: "09:00 AM IST",
     organizer: "National Institute of Tech",
     status: "Open",
-    description: "The largest national inter-collegiate hackathon bringing together students to pitch creative engineering ideas.",
+    description:
+      "The largest national inter-collegiate hackathon bringing together students to pitch creative engineering ideas.",
     agenda: [
       "Day 1: Pitch Deck Workshop & Prototype Design",
-      "Day 2: Final Demos & Awards Ceremony"
+      "Day 2: Final Demos & Awards Ceremony",
     ],
-    speakers: ["Prof. Alan Turing Jr. (Dean of Computer Science)"]
+    speakers: ["Prof. Alan Turing Jr. (Dean of Computer Science)"],
   },
   {
     id: "meetup-design",
@@ -239,14 +263,15 @@ const initialEvents: EventItem[] = [
     time: "07:00 PM CET",
     organizer: "Design Eng Guild",
     status: "Open",
-    description: "Connect with design engineers around the globe to discuss UI craft, animation curves, and interactive prototyping tools.",
+    description:
+      "Connect with design engineers around the globe to discuss UI craft, animation curves, and interactive prototyping tools.",
     agenda: [
       "19:00 - Introduction & Virtual Meet-and-Greet",
       "19:20 - Lightning Talks on Micro-interactions",
-      "20:00 - Open Discussion & Show-and-Tell"
+      "20:00 - Open Discussion & Show-and-Tell",
     ],
-    speakers: ["Emil Kowalski (Design Engineer)"]
-  }
+    speakers: ["Emil Kowalski (Design Engineer)"],
+  },
 ];
 
 function EventsHubPage() {
@@ -272,7 +297,9 @@ function EventsHubPage() {
         return event.status === "Open" || event.status === "Registered";
       }
       if (activeFilter === "recommended") {
-        return event.category === "hackathons" || event.category === "workshops";
+        return (
+          event.category === "hackathons" || event.category === "workshops"
+        );
       }
       if (activeFilter === "past") {
         return event.status === "Closed";
@@ -292,18 +319,48 @@ function EventsHubPage() {
           };
         }
         return evt;
-      })
+      }),
     );
   };
 
   // Calendar dates mock
   const calendarDays = [
-    { day: "08", month: "Jul", event: "Why We Rewrote Our Core Engine in Rust", type: "Tech Talk" },
-    { day: "12", month: "Jul", event: "AI Innovation Hackathon 2026", type: "Hackathon" },
-    { day: "18", month: "Jul", event: "Design Engineers Virtual Meetup", type: "Meetup" },
-    { day: "20", month: "Jul", event: "Global Algorithmic Duel", type: "Contest" },
-    { day: "25", month: "Jul", event: "Inter-Collegiate HackFest 2026", type: "College Event" },
-    { day: "02", month: "Aug", event: "Advanced React & Design Patterns", type: "Workshop" },
+    {
+      day: "08",
+      month: "Jul",
+      event: "Why We Rewrote Our Core Engine in Rust",
+      type: "Tech Talk",
+    },
+    {
+      day: "12",
+      month: "Jul",
+      event: "AI Innovation Hackathon 2026",
+      type: "Hackathon",
+    },
+    {
+      day: "18",
+      month: "Jul",
+      event: "Design Engineers Virtual Meetup",
+      type: "Meetup",
+    },
+    {
+      day: "20",
+      month: "Jul",
+      event: "Global Algorithmic Duel",
+      type: "Contest",
+    },
+    {
+      day: "25",
+      month: "Jul",
+      event: "Inter-Collegiate HackFest 2026",
+      type: "College Event",
+    },
+    {
+      day: "02",
+      month: "Aug",
+      event: "Advanced React & Design Patterns",
+      type: "Workshop",
+    },
   ];
 
   return (
@@ -323,8 +380,12 @@ function EventsHubPage() {
           >
             Events Hub
           </h1>
-          <p className="mt-1.5 text-sm" style={{ color: "var(--sb-ink-muted)" }}>
-            Explore technical hackathons, workshops, webinars, and meetups to boost your engineering credentials.
+          <p
+            className="mt-1.5 text-sm"
+            style={{ color: "var(--sb-ink-muted)" }}
+          >
+            Explore technical hackathons, workshops, webinars, and meetups to
+            boost your engineering credentials.
           </p>
         </div>
 
@@ -340,14 +401,22 @@ function EventsHubPage() {
             <Sparkles size={24} />
           </div>
           <div className="flex-1 space-y-0.5">
-            <div className="text-xs font-semibold" style={{ color: "var(--sb-ink-muted)" }}>
+            <div
+              className="text-xs font-semibold"
+              style={{ color: "var(--sb-ink-muted)" }}
+            >
               Your Attendance
             </div>
-            <div className="text-lg font-bold" style={{ color: "var(--sb-ink)" }}>
-              {events.filter((e) => e.status === "Registered").length} Registered
+            <div
+              className="text-lg font-bold"
+              style={{ color: "var(--sb-ink)" }}
+            >
+              {events.filter((e) => e.status === "Registered").length}{" "}
+              Registered
             </div>
             <div className="text-xs" style={{ color: "var(--sb-ink-dim)" }}>
-              {events.filter((e) => e.status === "Open").length} Available events
+              {events.filter((e) => e.status === "Open").length} Available
+              events
             </div>
           </div>
         </div>
@@ -436,20 +505,22 @@ function EventsHubPage() {
                 borderColor: "var(--sb-border)",
               }}
             >
-              {["all", "upcoming", "registered", "recommended", "past"].map((tab) => (
-                <button
-                  key={tab}
-                  type="button"
-                  onClick={() => setActiveFilter(tab)}
-                  className={`px-3 py-1.5 text-xs font-medium rounded-lg capitalize cursor-pointer transition-all duration-150 active:scale-95 ${
-                    activeFilter === tab
-                      ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)] font-semibold"
-                      : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)]"
-                  }`}
-                >
-                  {tab}
-                </button>
-              ))}
+              {["all", "upcoming", "registered", "recommended", "past"].map(
+                (tab) => (
+                  <button
+                    key={tab}
+                    type="button"
+                    onClick={() => setActiveFilter(tab)}
+                    className={`px-3 py-1.5 text-xs font-medium rounded-lg capitalize cursor-pointer transition-all duration-150 active:scale-95 ${
+                      activeFilter === tab
+                        ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)] font-semibold"
+                        : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)]"
+                    }`}
+                  >
+                    {tab}
+                  </button>
+                ),
+              )}
             </div>
 
             {/* Search Bar */}
@@ -481,7 +552,10 @@ function EventsHubPage() {
                   className="rounded-2xl border p-8 text-center"
                   style={{ borderColor: "var(--sb-border)" }}
                 >
-                  <p className="text-sm font-medium" style={{ color: "var(--sb-ink-muted)" }}>
+                  <p
+                    className="text-sm font-medium"
+                    style={{ color: "var(--sb-ink-muted)" }}
+                  >
                     No events match your criteria.
                   </p>
                 </div>
@@ -512,13 +586,22 @@ function EventsHubPage() {
                           </span>
                         )}
                       </div>
-                      <h3 className="text-base font-bold" style={{ color: "var(--sb-ink)" }}>
+                      <h3
+                        className="text-base font-bold"
+                        style={{ color: "var(--sb-ink)" }}
+                      >
                         {evt.name}
                       </h3>
-                      <p className="text-xs" style={{ color: "var(--sb-ink-muted)" }}>
+                      <p
+                        className="text-xs"
+                        style={{ color: "var(--sb-ink-muted)" }}
+                      >
                         {evt.description}
                       </p>
-                      <div className="flex flex-wrap items-center gap-4 text-xs" style={{ color: "var(--sb-ink-dim)" }}>
+                      <div
+                        className="flex flex-wrap items-center gap-4 text-xs"
+                        style={{ color: "var(--sb-ink-dim)" }}
+                      >
                         <span className="flex items-center gap-1">
                           <Clock size={12} />
                           {evt.date} at {evt.time}
@@ -553,7 +636,9 @@ function EventsHubPage() {
                             : "bg-[var(--sb-accent)] text-white hover:opacity-90 shadow-xs"
                         }`}
                       >
-                        {evt.status === "Registered" ? "Cancel RSVP" : "Register"}
+                        {evt.status === "Registered"
+                          ? "Cancel RSVP"
+                          : "Register"}
                       </button>
                     </div>
                   </motion.div>
@@ -572,13 +657,20 @@ function EventsHubPage() {
               borderColor: "var(--card-border)",
             }}
           >
-            <h3 className="text-sm font-bold uppercase tracking-wider" style={{ color: "var(--sb-ink)" }}>
+            <h3
+              className="text-sm font-bold uppercase tracking-wider"
+              style={{ color: "var(--sb-ink)" }}
+            >
               Schedule Calendar
             </h3>
 
             <div className="space-y-3.5">
               {calendarDays.map((item) => (
-                <div key={item.day} className="flex gap-4 items-start border-b pb-3.5 last:border-b-0 last:pb-0" style={{ borderColor: "var(--sb-border)" }}>
+                <div
+                  key={item.day}
+                  className="flex gap-4 items-start border-b pb-3.5 last:border-b-0 last:pb-0"
+                  style={{ borderColor: "var(--sb-border)" }}
+                >
                   <div
                     className="flex flex-col items-center justify-center size-11 shrink-0 rounded-xl border"
                     style={{
@@ -598,7 +690,10 @@ function EventsHubPage() {
                     <span className="inline-block text-[9px] uppercase font-bold tracking-wide px-1.5 py-0.2 rounded bg-blue-500/10 text-blue-600">
                       {item.type}
                     </span>
-                    <h4 className="text-xs font-bold leading-tight line-clamp-1" style={{ color: "var(--sb-ink)" }}>
+                    <h4
+                      className="text-xs font-bold leading-tight line-clamp-1"
+                      style={{ color: "var(--sb-ink)" }}
+                    >
                       {item.event}
                     </h4>
                   </div>

@@ -233,7 +233,7 @@ export function SecondarySidebar() {
                         "justify-center px-1.5",
                         active
                           ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)]"
-                          : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]"
+                          : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]",
                       )}
                     >
                       {Icon && (
@@ -241,7 +241,9 @@ export function SecondarySidebar() {
                           size={14}
                           className={cn(
                             "shrink-0",
-                            active ? "text-[var(--sb-accent)]" : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]"
+                            active
+                              ? "text-[var(--sb-accent)]"
+                              : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]",
                           )}
                         />
                       )}
@@ -265,7 +267,7 @@ export function SecondarySidebar() {
                     "flex items-center gap-2.5 px-2.5 py-1.5 text-xs font-bold tracking-wide rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative uppercase",
                     active
                       ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)]"
-                      : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]"
+                      : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]",
                   )}
                 >
                   {Icon && (
@@ -273,7 +275,9 @@ export function SecondarySidebar() {
                       size={14}
                       className={cn(
                         "shrink-0",
-                        active ? "text-[var(--sb-accent)]" : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]"
+                        active
+                          ? "text-[var(--sb-accent)]"
+                          : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]",
                       )}
                     />
                   )}
@@ -282,8 +286,14 @@ export function SecondarySidebar() {
                     <span
                       className="text-[9px] font-semibold px-1 py-0.2 rounded-md tracking-wide"
                       style={{
-                        background: group.badge === "Live" ? "oklch(0.627 0.265 303.9 / 0.15)" : "var(--sb-pill)",
-                        color: group.badge === "Live" ? "oklch(0.627 0.265 303.9)" : "var(--sb-ink-dim)",
+                        background:
+                          group.badge === "Live"
+                            ? "oklch(0.627 0.265 303.9 / 0.15)"
+                            : "var(--sb-pill)",
+                        color:
+                          group.badge === "Live"
+                            ? "oklch(0.627 0.265 303.9)"
+                            : "var(--sb-ink-dim)",
                         border: "1px solid var(--sb-border)",
                       }}
                     >
@@ -319,21 +329,25 @@ export function SecondarySidebar() {
                               "justify-center px-1.5",
                               active
                                 ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)] font-semibold"
-                                : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]"
+                                : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]",
                             )}
                           >
                             <item.icon
                               size={14}
                               className={cn(
                                 "shrink-0",
-                                active ? "text-[var(--sb-accent)]" : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]"
+                                active
+                                  ? "text-[var(--sb-accent)]"
+                                  : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]",
                               )}
                             />
                           </Link>
                         </div>
                       </TooltipTrigger>
                       <TooltipContent side="right" sideOffset={8}>
-                        <span className="text-xs font-medium">{item.label}</span>
+                        <span className="text-xs font-medium">
+                          {item.label}
+                        </span>
                         {item.badge && (
                           <span className="ml-1.5 text-[9px] font-semibold px-1 py-0.2 rounded bg-zinc-800 text-zinc-200">
                             {item.badge}
@@ -349,14 +363,16 @@ export function SecondarySidebar() {
                           "flex items-center gap-2.5 px-2.5 py-1.5 text-xs font-medium rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative",
                           active
                             ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)] font-semibold"
-                            : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]"
+                            : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]",
                         )}
                       >
                         <item.icon
                           size={14}
                           className={cn(
                             "shrink-0",
-                            active ? "text-[var(--sb-accent)]" : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]"
+                            active
+                              ? "text-[var(--sb-accent)]"
+                              : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]",
                           )}
                         />
                         <span className="flex-1 truncate">{item.label}</span>
@@ -364,8 +380,14 @@ export function SecondarySidebar() {
                           <span
                             className="text-[9px] font-semibold px-1 py-0.2 rounded-md tracking-wide"
                             style={{
-                              background: item.badge === "Live" ? "oklch(0.627 0.265 303.9 / 0.15)" : "var(--sb-pill)",
-                              color: item.badge === "Live" ? "oklch(0.627 0.265 303.9)" : "var(--sb-ink-dim)",
+                              background:
+                                item.badge === "Live"
+                                  ? "oklch(0.627 0.265 303.9 / 0.15)"
+                                  : "var(--sb-pill)",
+                              color:
+                                item.badge === "Live"
+                                  ? "oklch(0.627 0.265 303.9)"
+                                  : "var(--sb-ink-dim)",
                               border: "1px solid var(--sb-border)",
                             }}
                           >

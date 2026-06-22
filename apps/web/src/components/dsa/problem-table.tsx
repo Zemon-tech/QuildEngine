@@ -1,0 +1,277 @@
+import { CheckCircle2, Circle, Clock, ExternalLink, Star } from "lucide-react";
+import type { DSAProblem } from "#/lib/dsa-problems-db";
+
+interface ProblemTableProps {
+  problems: DSAProblem[];
+  onToggleStatus: (id: string) => void;
+  onToggleBookmark: (id: string) => void;
+  onSelectProblem: (problem: DSAProblem) => void;
+}
+
+export function ProblemTable({
+  problems,
+  onToggleStatus,
+  onToggleBookmark,
+  onSelectProblem,
+}: ProblemTableProps) {
+  return (
+    <div
+      className="w-full overflow-hidden rounded-2xl border"
+      style={{
+        background: "var(--card-bg)",
+        borderColor: "var(--card-border)",
+      }}
+    >
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse text-left text-xs">
+          <thead>
+            <tr
+              className="border-b font-semibold uppercase tracking-wider"
+              style={{
+                borderColor: "var(--sb-border)",
+                color: "var(--sb-ink-dim)",
+                background: "oklch(1 0 0 / 0.02)",
+              }}
+            >
+              <th className="py-3.5 pl-4 pr-2 text-center w-12">Status</th>
+              <th className="py-3.5 px-4 font-bold">Problem Name</th>
+              <th className="py-3.5 px-4 w-24">Difficulty</th>
+              <th className="py-3.5 px-4 w-24">Acceptance</th>
+              <th className="py-3.5 px-4 hidden lg:table-cell w-36">
+                Companies
+              </th>
+              <th className="py-3.5 px-4 hidden md:table-cell">Tags</th>
+              <th className="py-3.5 pr-4 pl-2 text-center w-12">Book</th>
+            </tr>
+          </thead>
+          <tbody
+            className="divide-y"
+            style={{ borderColor: "var(--sb-border)" }}
+          >
+            {problems.length === 0 ? (
+              <tr>
+                <td colSpan={7} className="py-12 text-center">
+                  <p
+                    className="text-sm font-medium"
+                    style={{ color: "var(--sb-ink-dim)" }}
+                  >
+                    No problems found matching the selected criteria.
+                  </p>
+                </td>
+              </tr>
+            ) : (
+              problems.map((prob) => (
+                <tr
+                  key={prob.id}
+                  className="hover:bg-zinc-50/50 dark:hover:bg-zinc-800/20 transition-colors group cursor-pointer"
+                  onClick={() => onSelectProblem(prob)}
+                >
+                  {/* Status Toggle Column */}
+                  <td className="py-3 pl-4 pr-2 text-center">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation(); // Avoid triggering row click details
+                        onToggleStatus(prob.id);
+                      }}
+                      className="inline-flex size-6 items-center justify-center rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+                      title="Click to toggle status (Solved -> Attempted -> Unsolved)"
+                    >
+                      {prob.status === "completed" ? (
+                        <CheckCircle2 size={16} className="text-emerald-500" />
+                      ) : prob.status === "in_progress" ? (
+                        <Clock size={16} className="text-amber-500" />
+                      ) : (
+                        <Circle
+                          size={16}
+                          className="text-zinc-300 dark:text-zinc-600 group-hover:text-zinc-400"
+                        />
+                      )}
+                    </button>
+                  </td>
+
+                  {/* Problem Name & Subcategory Column */}
+                  <td className="py-3 px-4">
+                    <div className="flex flex-col gap-0.5">
+                      <div
+                        className="flex items-center gap-1.5 font-semibold text-[13px] group-hover:text-[var(--sb-accent)] transition-colors"
+                        style={{ color: "var(--sb-ink)" }}
+                      >
+                        <span>{prob.name}</span>
+                        <ExternalLink
+                          size={11}
+                          className="opacity-0 group-hover:opacity-100 transition-opacity text-[var(--sb-accent)]"
+                        />
+                      </div>
+                      <span
+                        className="text-[10px]"
+                        style={{ color: "var(--sb-ink-dim)" }}
+                      >
+                        {prob.subCategory}
+                      </span>
+                    </div>
+                  </td>
+
+                  {/* Difficulty Badge Column */}
+                  <td className="py-3 px-4">
+                    <span
+                      className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold border`}
+                      style={{
+                        backgroundColor:
+                          prob.difficulty === "Easy"
+                            ? "oklch(0.85 0.15 145 / 0.15)"
+                            : prob.difficulty === "Medium"
+                              ? "oklch(0.85 0.15 75 / 0.15)"
+                              : "oklch(0.85 0.15 30 / 0.15)",
+                        color:
+                          prob.difficulty === "Easy"
+                            ? "oklch(0.65 0.18 145)"
+                            : prob.difficulty === "Medium"
+                              ? "oklch(0.65 0.18 75)"
+                              : "oklch(0.65 0.18 30)",
+                        borderColor:
+                          prob.difficulty === "Easy"
+                            ? "oklch(0.65 0.18 145 / 0.25)"
+                            : prob.difficulty === "Medium"
+                              ? "oklch(0.65 0.18 75 / 0.25)"
+                              : "oklch(0.65 0.18 30 / 0.25)",
+                      }}
+                    >
+                      {prob.difficulty}
+                    </span>
+                  </td>
+
+                  {/* Acceptance Rate Column */}
+                  <td
+                    className="py-3 px-4 font-medium"
+                    style={{ color: "var(--sb-ink-muted)" }}
+                  >
+                    {prob.acceptance}%
+                  </td>
+
+                  {/* Companies Column */}
+                  <td className="py-3 px-4 hidden lg:table-cell">
+                    <div className="flex flex-wrap gap-1">
+                      {prob.companies?.slice(0, 3).map((comp) => {
+                        const colors: Record<
+                          string,
+                          { bg: string; text: string; border: string }
+                        > = {
+                          Google: {
+                            bg: "oklch(0.9 0.05 240 / 0.1)",
+                            text: "oklch(0.65 0.15 240)",
+                            border: "oklch(0.65 0.15 240 / 0.2)",
+                          },
+                          Amazon: {
+                            bg: "oklch(0.9 0.05 70 / 0.1)",
+                            text: "oklch(0.65 0.15 70)",
+                            border: "oklch(0.65 0.15 70 / 0.2)",
+                          },
+                          Meta: {
+                            bg: "oklch(0.9 0.05 250 / 0.1)",
+                            text: "oklch(0.65 0.15 250)",
+                            border: "oklch(0.65 0.15 250 / 0.2)",
+                          },
+                          Microsoft: {
+                            bg: "oklch(0.9 0.05 180 / 0.1)",
+                            text: "oklch(0.65 0.15 180)",
+                            border: "oklch(0.65 0.15 180 / 0.2)",
+                          },
+                          Uber: {
+                            bg: "oklch(0.9 0 0 / 0.1)",
+                            text: "oklch(0.7 0 0)",
+                            border: "oklch(0.7 0 0 / 0.2)",
+                          },
+                          Atlassian: {
+                            bg: "oklch(0.9 0.05 220 / 0.1)",
+                            text: "oklch(0.65 0.15 220)",
+                            border: "oklch(0.65 0.15 220 / 0.2)",
+                          },
+                        };
+                        const style = colors[comp] || {
+                          bg: "oklch(1 0 0 / 0.04)",
+                          text: "var(--sb-ink-dim)",
+                          border: "oklch(1 0 0 / 0.08)",
+                        };
+                        return (
+                          <span
+                            key={comp}
+                            className="rounded px-1.5 py-0.5 text-[10px] font-semibold border"
+                            style={{
+                              backgroundColor: style.bg,
+                              color: style.text,
+                              borderColor: style.border,
+                            }}
+                          >
+                            {comp}
+                          </span>
+                        );
+                      })}
+                      {prob.companies && prob.companies.length > 3 && (
+                        <span
+                          className="text-[9px] self-center"
+                          style={{ color: "var(--sb-ink-dim)" }}
+                        >
+                          +{prob.companies.length - 3}
+                        </span>
+                      )}
+                    </div>
+                  </td>
+
+                  {/* Tags Badges Column (Hidden on mobile) */}
+                  <td className="py-3 px-4 hidden md:table-cell">
+                    <div className="flex flex-wrap gap-1">
+                      {prob.tags.slice(0, 3).map((t) => (
+                        <span
+                          key={t}
+                          className="rounded px-1.5 py-0.5 text-[9px] font-medium"
+                          style={{
+                            background: "oklch(1 0 0 / 0.04)",
+                            border: "1px solid oklch(1 0 0 / 0.08)",
+                            color: "var(--sb-ink-dim)",
+                          }}
+                        >
+                          {t}
+                        </span>
+                      ))}
+                      {prob.tags.length > 3 && (
+                        <span
+                          className="text-[9px]"
+                          style={{ color: "var(--sb-ink-dim)" }}
+                        >
+                          +{prob.tags.length - 3} more
+                        </span>
+                      )}
+                    </div>
+                  </td>
+
+                  {/* Bookmark Toggle Column */}
+                  <td className="py-3 pr-4 pl-2 text-center">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation(); // Avoid triggering row click details
+                        onToggleBookmark(prob.id);
+                      }}
+                      className="inline-flex size-6 items-center justify-center rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+                      title="Click to bookmark/star problem"
+                    >
+                      <Star
+                        size={14}
+                        className={
+                          prob.bookmarked
+                            ? "fill-amber-400 stroke-amber-500"
+                            : "text-zinc-300 dark:text-zinc-600 hover:text-amber-400 transition-colors"
+                        }
+                      />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}

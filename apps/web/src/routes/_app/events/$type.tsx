@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
 import {
+  AlertCircle,
   Calendar as CalendarIcon,
+  CheckCircle2,
+  ChevronLeft,
   Clock,
   MapPin,
-  ChevronLeft,
-  CheckCircle2,
-  AlertCircle,
 } from "lucide-react";
+import { useMemo, useState } from "react";
 
 export const Route = createFileRoute("/_app/events/$type")({
   component: EventCategoryPage,
@@ -35,13 +35,17 @@ const initialEvents: EventItem[] = [
     time: "09:00 AM EST",
     organizer: "Quild AI Tech Group",
     status: "Open",
-    description: "Collaborate with developers, designers, and AI engineers to build the next generation of intelligent tools using large language models.",
+    description:
+      "Collaborate with developers, designers, and AI engineers to build the next generation of intelligent tools using large language models.",
     agenda: [
       "Day 1: Kickoff & Team Formation",
       "Day 2: Hacking & Mentorship Sessions",
-      "Day 3: Project Submission & Pitch Presentations"
+      "Day 3: Project Submission & Pitch Presentations",
     ],
-    speakers: ["Dr. Sarah Chen (AI Researcher)", "David Miller (Principal Architect)"]
+    speakers: [
+      "Dr. Sarah Chen (AI Researcher)",
+      "David Miller (Principal Architect)",
+    ],
   },
   {
     id: "algo-contest",
@@ -51,13 +55,14 @@ const initialEvents: EventItem[] = [
     time: "02:00 PM UTC",
     organizer: "Competitive Programming Club",
     status: "Registered",
-    description: "Showcase your problem-solving speed and algorithmic precision in this high-intensity 3-hour competitive coding duel.",
+    description:
+      "Showcase your problem-solving speed and algorithmic precision in this high-intensity 3-hour competitive coding duel.",
     agenda: [
       "14:00 - Contest Starts & Problem Set Released",
       "17:00 - Contest Ends & Leaderboard Locked",
-      "17:15 - Live Editorial and Solution Explanations"
+      "17:15 - Live Editorial and Solution Explanations",
     ],
-    speakers: ["Alexey Volkov (Competitive Programming Grandmaster)"]
+    speakers: ["Alexey Volkov (Competitive Programming Grandmaster)"],
   },
   {
     id: "react-workshop",
@@ -67,13 +72,14 @@ const initialEvents: EventItem[] = [
     time: "10:00 AM PST",
     organizer: "Frontend Masters League",
     status: "Open",
-    description: "A hands-on workshop focused on custom hook optimization, state management architectures, and implementing micro-animations.",
+    description:
+      "A hands-on workshop focused on custom hook optimization, state management architectures, and implementing micro-animations.",
     agenda: [
       "Session 1: Custom Hook Optimization & Render Control",
       "Session 2: Framer Motion and Spring Physics in React UI",
-      "Session 3: Building Resilient SSR Applications"
+      "Session 3: Building Resilient SSR Applications",
     ],
-    speakers: ["Emil Kowalski (Design Engineer)", "Sophie Dubois (Lead Dev)"]
+    speakers: ["Emil Kowalski (Design Engineer)", "Sophie Dubois (Lead Dev)"],
   },
   {
     id: "webinar-typescript",
@@ -83,13 +89,17 @@ const initialEvents: EventItem[] = [
     time: "04:00 PM EST",
     organizer: "TypeScript Core Team Fan Club",
     status: "Registered",
-    description: "An online seminar walking through the newest features in TypeScript, compiler optimizations, and advanced type gymnastics.",
+    description:
+      "An online seminar walking through the newest features in TypeScript, compiler optimizations, and advanced type gymnastics.",
     agenda: [
       "16:00 - Introduction & Keynote",
       "16:15 - New Features & Syntax Updates",
-      "16:45 - Live Q&A Panel with Contributors"
+      "16:45 - Live Q&A Panel with Contributors",
     ],
-    speakers: ["Anders Hejlsberg (Distinguished Engineer)", "Ryan Cavanaugh (Dev Manager)"]
+    speakers: [
+      "Anders Hejlsberg (Distinguished Engineer)",
+      "Ryan Cavanaugh (Dev Manager)",
+    ],
   },
   {
     id: "talk-rust",
@@ -99,13 +109,14 @@ const initialEvents: EventItem[] = [
     time: "06:30 PM EST",
     organizer: "Systems Engineering Meetup",
     status: "Open",
-    description: "A comprehensive look at the memory safety, concurrency models, and performance improvements achieved during rewrite.",
+    description:
+      "A comprehensive look at the memory safety, concurrency models, and performance improvements achieved during rewrite.",
     agenda: [
       "18:30 - Opening remarks",
       "18:40 - Main Presentation & Performance Graphs",
-      "19:20 - Audience Q&A & Virtual Mixer"
+      "19:20 - Audience Q&A & Virtual Mixer",
     ],
-    speakers: ["Marcus Vance (VP of Systems Engineering)"]
+    speakers: ["Marcus Vance (VP of Systems Engineering)"],
   },
   {
     id: "conf-nextgen",
@@ -115,12 +126,13 @@ const initialEvents: EventItem[] = [
     time: "08:00 AM EST",
     organizer: "Web Platform Alliance",
     status: "Open",
-    description: "The premier global conference for developers exploring the future of frontend, edge architectures, and compiler-driven UI frameworks.",
+    description:
+      "The premier global conference for developers exploring the future of frontend, edge architectures, and compiler-driven UI frameworks.",
     agenda: [
       "Day 1: Keynotes, Framework Trends & Networking",
-      "Day 2: Technical Tracks, Panels & Community Meetups"
+      "Day 2: Technical Tracks, Panels & Community Meetups",
     ],
-    speakers: ["Guillermo Rauch (CEO Vercel)", "Dan Abramov (React Core Team)"]
+    speakers: ["Guillermo Rauch (CEO Vercel)", "Dan Abramov (React Core Team)"],
   },
   {
     id: "college-hack",
@@ -130,12 +142,13 @@ const initialEvents: EventItem[] = [
     time: "09:00 AM IST",
     organizer: "National Institute of Tech",
     status: "Open",
-    description: "The largest national inter-collegiate hackathon bringing together students to pitch creative engineering ideas.",
+    description:
+      "The largest national inter-collegiate hackathon bringing together students to pitch creative engineering ideas.",
     agenda: [
       "Day 1: Pitch Deck Workshop & Prototype Design",
-      "Day 2: Final Demos & Awards Ceremony"
+      "Day 2: Final Demos & Awards Ceremony",
     ],
-    speakers: ["Prof. Alan Turing Jr. (Dean of Computer Science)"]
+    speakers: ["Prof. Alan Turing Jr. (Dean of Computer Science)"],
   },
   {
     id: "meetup-design",
@@ -145,14 +158,15 @@ const initialEvents: EventItem[] = [
     time: "07:00 PM CET",
     organizer: "Design Eng Guild",
     status: "Open",
-    description: "Connect with design engineers around the globe to discuss UI craft, animation curves, and interactive prototyping tools.",
+    description:
+      "Connect with design engineers around the globe to discuss UI craft, animation curves, and interactive prototyping tools.",
     agenda: [
       "19:00 - Introduction & Virtual Meet-and-Greet",
       "19:20 - Lightning Talks on Micro-interactions",
-      "20:00 - Open Discussion & Show-and-Tell"
+      "20:00 - Open Discussion & Show-and-Tell",
     ],
-    speakers: ["Emil Kowalski (Design Engineer)"]
-  }
+    speakers: ["Emil Kowalski (Design Engineer)"],
+  },
 ];
 
 const categoryNames: Record<string, string> = {
@@ -175,11 +189,15 @@ function EventCategoryPage() {
   }, [events, type]);
 
   const [selectedEventId, setSelectedEventId] = useState<string | null>(
-    categoryEvents[0]?.id || null
+    categoryEvents[0]?.id || null,
   );
 
   const activeEvent = useMemo(() => {
-    return categoryEvents.find((e) => e.id === selectedEventId) || categoryEvents[0] || null;
+    return (
+      categoryEvents.find((e) => e.id === selectedEventId) ||
+      categoryEvents[0] ||
+      null
+    );
   }, [categoryEvents, selectedEventId]);
 
   const toggleRegistration = (id: string) => {
@@ -192,7 +210,7 @@ function EventCategoryPage() {
           };
         }
         return evt;
-      })
+      }),
     );
   };
 
@@ -226,7 +244,10 @@ function EventCategoryPage() {
           className="rounded-2xl border p-12 text-center"
           style={{ borderColor: "var(--sb-border)" }}
         >
-          <p className="text-sm font-medium" style={{ color: "var(--sb-ink-muted)" }}>
+          <p
+            className="text-sm font-medium"
+            style={{ color: "var(--sb-ink-muted)" }}
+          >
             No upcoming events found under this category.
           </p>
         </div>
@@ -234,7 +255,10 @@ function EventCategoryPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           {/* Left: Events List */}
           <div className="space-y-3">
-            <h2 className="text-xs uppercase font-bold tracking-wider" style={{ color: "var(--sb-ink-dim)" }}>
+            <h2
+              className="text-xs uppercase font-bold tracking-wider"
+              style={{ color: "var(--sb-ink-dim)" }}
+            >
               Select Event
             </h2>
             <div className="space-y-2.5">
@@ -254,16 +278,24 @@ function EventCategoryPage() {
                     <div className="flex items-center justify-between gap-2 mb-1.5">
                       <h3
                         className={`text-sm font-bold line-clamp-1 ${
-                          isSelected ? "text-[var(--sb-accent)]" : "text-[var(--sb-ink)]"
+                          isSelected
+                            ? "text-[var(--sb-accent)]"
+                            : "text-[var(--sb-ink)]"
                         }`}
                       >
                         {evt.name}
                       </h3>
                       {evt.status === "Registered" && (
-                        <span className="size-2 rounded-full bg-emerald-500 shrink-0" title="Registered" />
+                        <span
+                          className="size-2 rounded-full bg-emerald-500 shrink-0"
+                          title="Registered"
+                        />
                       )}
                     </div>
-                    <div className="flex items-center gap-3 text-xs" style={{ color: "var(--sb-ink-dim)" }}>
+                    <div
+                      className="flex items-center gap-3 text-xs"
+                      style={{ color: "var(--sb-ink-dim)" }}
+                    >
                       <span className="flex items-center gap-1">
                         <Clock size={11} />
                         {evt.date.split(",")[0]}
@@ -289,16 +321,25 @@ function EventCategoryPage() {
               }}
             >
               {/* Heading Section */}
-              <div className="border-b pb-4 flex flex-col sm:flex-row sm:items-start justify-between gap-4" style={{ borderColor: "var(--sb-border)" }}>
+              <div
+                className="border-b pb-4 flex flex-col sm:flex-row sm:items-start justify-between gap-4"
+                style={{ borderColor: "var(--sb-border)" }}
+              >
                 <div className="space-y-1">
                   <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border bg-[var(--sb-pill)] text-[var(--sb-ink-dim)] border-[var(--sb-border)]">
                     {activeEvent.category.replace("-", " ")}
                   </span>
-                  <h2 className="text-xl font-bold" style={{ color: "var(--sb-ink)" }}>
+                  <h2
+                    className="text-xl font-bold"
+                    style={{ color: "var(--sb-ink)" }}
+                  >
                     {activeEvent.name}
                   </h2>
                   <p className="text-xs" style={{ color: "var(--sb-ink-dim)" }}>
-                    Hosted by <span className="font-semibold">{activeEvent.organizer}</span>
+                    Hosted by{" "}
+                    <span className="font-semibold">
+                      {activeEvent.organizer}
+                    </span>
                   </p>
                 </div>
 
@@ -323,41 +364,95 @@ function EventCategoryPage() {
 
               {/* Event Metadata (Schedule, Map) */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex gap-3 items-center p-3 rounded-xl border" style={{ borderColor: "var(--sb-border)", background: "var(--sb-bg-hover)" }}>
-                  <CalendarIcon className="text-[var(--sb-accent)] shrink-0" size={18} />
+                <div
+                  className="flex gap-3 items-center p-3 rounded-xl border"
+                  style={{
+                    borderColor: "var(--sb-border)",
+                    background: "var(--sb-bg-hover)",
+                  }}
+                >
+                  <CalendarIcon
+                    className="text-[var(--sb-accent)] shrink-0"
+                    size={18}
+                  />
                   <div>
-                    <p className="text-[10px] uppercase font-bold text-[var(--sb-ink-dim)]">Date & Time</p>
-                    <p className="text-xs font-bold" style={{ color: "var(--sb-ink)" }}>{activeEvent.date}</p>
-                    <p className="text-[10px]" style={{ color: "var(--sb-ink-muted)" }}>{activeEvent.time}</p>
+                    <p className="text-[10px] uppercase font-bold text-[var(--sb-ink-dim)]">
+                      Date & Time
+                    </p>
+                    <p
+                      className="text-xs font-bold"
+                      style={{ color: "var(--sb-ink)" }}
+                    >
+                      {activeEvent.date}
+                    </p>
+                    <p
+                      className="text-[10px]"
+                      style={{ color: "var(--sb-ink-muted)" }}
+                    >
+                      {activeEvent.time}
+                    </p>
                   </div>
                 </div>
 
-                <div className="flex gap-3 items-center p-3 rounded-xl border" style={{ borderColor: "var(--sb-border)", background: "var(--sb-bg-hover)" }}>
-                  <MapPin className="text-[var(--sb-accent)] shrink-0" size={18} />
+                <div
+                  className="flex gap-3 items-center p-3 rounded-xl border"
+                  style={{
+                    borderColor: "var(--sb-border)",
+                    background: "var(--sb-bg-hover)",
+                  }}
+                >
+                  <MapPin
+                    className="text-[var(--sb-accent)] shrink-0"
+                    size={18}
+                  />
                   <div>
-                    <p className="text-[10px] uppercase font-bold text-[var(--sb-ink-dim)]">Location</p>
-                    <p className="text-xs font-bold" style={{ color: "var(--sb-ink)" }}>Virtual / Online</p>
-                    <p className="text-[10px]" style={{ color: "var(--sb-ink-muted)" }}>RSVP to access links</p>
+                    <p className="text-[10px] uppercase font-bold text-[var(--sb-ink-dim)]">
+                      Location
+                    </p>
+                    <p
+                      className="text-xs font-bold"
+                      style={{ color: "var(--sb-ink)" }}
+                    >
+                      Virtual / Online
+                    </p>
+                    <p
+                      className="text-[10px]"
+                      style={{ color: "var(--sb-ink-muted)" }}
+                    >
+                      RSVP to access links
+                    </p>
                   </div>
                 </div>
               </div>
 
               {/* Description */}
               <div className="space-y-2">
-                <h3 className="text-xs uppercase font-bold tracking-wider" style={{ color: "var(--sb-ink-dim)" }}>
+                <h3
+                  className="text-xs uppercase font-bold tracking-wider"
+                  style={{ color: "var(--sb-ink-dim)" }}
+                >
                   About the Event
                 </h3>
-                <p className="text-sm leading-relaxed" style={{ color: "var(--sb-ink-muted)" }}>
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: "var(--sb-ink-muted)" }}
+                >
                   {activeEvent.description}
                 </p>
               </div>
 
               {/* Agenda (Timeline) */}
               <div className="space-y-4">
-                <h3 className="text-xs uppercase font-bold tracking-wider" style={{ color: "var(--sb-ink-dim)" }}>
+                <h3
+                  className="text-xs uppercase font-bold tracking-wider"
+                  style={{ color: "var(--sb-ink-dim)" }}
+                >
                   Agenda
                 </h3>
-                <div className="space-y-3.5 pl-2 relative border-l" style={{ borderColor: "var(--sb-border)" }}>
+                <div
+                  className="space-y-3.5 pl-2 relative border-l"
+                  style={{ borderColor: "var(--sb-border)" }}
+                >
                   {activeEvent.agenda.map((item) => (
                     <div key={item} className="relative pl-4">
                       {/* Timeline dot */}
@@ -368,7 +463,12 @@ function EventCategoryPage() {
                           borderColor: "var(--sb-accent)",
                         }}
                       />
-                      <p className="text-xs font-bold" style={{ color: "var(--sb-ink)" }}>{item}</p>
+                      <p
+                        className="text-xs font-bold"
+                        style={{ color: "var(--sb-ink)" }}
+                      >
+                        {item}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -377,18 +477,35 @@ function EventCategoryPage() {
               {/* Speakers */}
               {activeEvent.speakers && activeEvent.speakers.length > 0 && (
                 <div className="space-y-3">
-                  <h3 className="text-xs uppercase font-bold tracking-wider" style={{ color: "var(--sb-ink-dim)" }}>
+                  <h3
+                    className="text-xs uppercase font-bold tracking-wider"
+                    style={{ color: "var(--sb-ink-dim)" }}
+                  >
                     Speakers & Hosts
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {activeEvent.speakers.map((speaker) => (
-                      <div key={speaker} className="flex items-center gap-3 p-3 rounded-xl border" style={{ borderColor: "var(--sb-border)" }}>
+                      <div
+                        key={speaker}
+                        className="flex items-center gap-3 p-3 rounded-xl border"
+                        style={{ borderColor: "var(--sb-border)" }}
+                      >
                         <div className="flex size-9 items-center justify-center rounded-full bg-[var(--sb-pill)] text-[var(--sb-accent)] shrink-0 font-bold text-sm">
                           {speaker.charAt(0)}
                         </div>
                         <div>
-                          <p className="text-xs font-bold" style={{ color: "var(--sb-ink)" }}>{speaker}</p>
-                          <p className="text-[10px]" style={{ color: "var(--sb-ink-dim)" }}>Featured Guest</p>
+                          <p
+                            className="text-xs font-bold"
+                            style={{ color: "var(--sb-ink)" }}
+                          >
+                            {speaker}
+                          </p>
+                          <p
+                            className="text-[10px]"
+                            style={{ color: "var(--sb-ink-dim)" }}
+                          >
+                            Featured Guest
+                          </p>
                         </div>
                       </div>
                     ))}
@@ -397,7 +514,10 @@ function EventCategoryPage() {
               )}
 
               {/* CTA Registration Button */}
-              <div className="border-t pt-5 flex items-center justify-end gap-3" style={{ borderColor: "var(--sb-border)" }}>
+              <div
+                className="border-t pt-5 flex items-center justify-end gap-3"
+                style={{ borderColor: "var(--sb-border)" }}
+              >
                 <button
                   type="button"
                   onClick={() => toggleRegistration(activeEvent.id)}
@@ -407,7 +527,9 @@ function EventCategoryPage() {
                       : "bg-[var(--sb-accent)] text-white hover:opacity-90"
                   }`}
                 >
-                  {activeEvent.status === "Registered" ? "Cancel RSVP" : "Register For Event"}
+                  {activeEvent.status === "Registered"
+                    ? "Cancel RSVP"
+                    : "Register For Event"}
                 </button>
               </div>
             </div>

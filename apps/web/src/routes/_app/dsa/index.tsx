@@ -22,14 +22,19 @@ import {
   Trophy,
   Type,
 } from "lucide-react";
+import type React from "react";
 import { useDSACategories } from "#/hooks/use-practice";
 
 export const Route = createFileRoute("/_app/dsa/")({
   component: DSALandingPage,
 });
 
-const iconMap: Record<string, any> = {
+const iconMap: Record<
+  string,
+  React.ComponentType<{ size?: number; className?: string }>
+> = {
   arrays: Hash,
+
   strings: Type,
   "linked-list": Link2,
   stack: Layers,
