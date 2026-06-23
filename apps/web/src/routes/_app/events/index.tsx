@@ -17,6 +17,17 @@ import {
   Video,
 } from "lucide-react";
 import { useMemo, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "#/components/ui/dialog";
+import { Input } from "#/components/ui/input";
+import { Textarea } from "#/components/ui/textarea";
+import { Button } from "#/components/ui/button";
 
 export const Route = createFileRoute("/_app/events/")({
   component: EventsHubPage,
@@ -278,6 +289,33 @@ function EventsHubPage() {
   const [search, setSearch] = useState("");
   const [activeFilter, setActiveFilter] = useState("all"); // all, upcoming, registered, recommended, past
   const [events, setEvents] = useState<EventItem[]>(initialEvents);
+
+  const [selectedEventForModal, setSelectedEventForModal] = useState<EventItem | null>(null);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    socialUrl: "",
+    experience: "Intermediate",
+    motivation: "",
+  });
+
+  const handleOpenRegisterModal = (evt: EventItem) => {
+    setSelectedEventForModal(evt);
+    setFormData({
+      fullName: "",
+      email: "",
+      socialUrl: "",
+      experience: "Intermediate",
+      motivation: "",
+    });
+  };
+
+  const handleRegisterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedEventForModal) return;
+    toggleRegistration(selectedEventForModal.id);
+    setSelectedEventForModal(null);
+  };
 
   const filteredEvents = useMemo(() => {
     return events.filter((event) => {
@@ -629,7 +667,13 @@ function EventsHubPage() {
 
                       <button
                         type="button"
-                        onClick={() => toggleRegistration(evt.id)}
+                        onClick={() => {
+                          if (evt.status === "Registered") {
+                            toggleRegistration(evt.id);
+                          } else {
+                            handleOpenRegisterModal(evt);
+                          }
+                        }}
                         className={`px-4 py-2 text-xs font-semibold rounded-xl cursor-pointer active:scale-95 transition-all ${
                           evt.status === "Registered"
                             ? "bg-rose-500/10 text-rose-600 border border-rose-500/20 hover:bg-rose-500/20"
@@ -703,6 +747,114 @@ function EventsHubPage() {
           </div>
         </div>
       </div>
+
+      {/* Event Registration Dialog */}
+      <Dialog open={selectedEventForModal !== null} onOpenChange={(open) => !open && setSelectedEventForModal(null)}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Sparkles className="text-[var(--sb-accent)]" size={18} />
+              Register for Event
+            </DialogTitle>
+            <DialogDescription className="text-xs">
+              Confirm your registration for <span className="font-semibold text-[var(--sb-ink)]">{selectedEventForModal?.name}</span>. Please provide your details below.
+            </DialogDescription>
+          </DialogHeader>
+
+          <form onSubmit={handleRegisterSubmit} className="space-y-4 py-2">
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-[var(--sb-ink)]">
+                Full Name
+              </label>
+              <Input
+                type="text"
+                required
+                placeholder="John Doe"
+                value={formData.fullName}
+                onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
+                className="h-9 focus-visible:ring-[var(--sb-accent)]/20"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-[var(--sb-ink)]">
+                Email Address
+              </label>
+              <Input
+                type="email"
+                required
+                placeholder="john@example.com"
+                value={formData.email}
+                onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                className="h-9 focus-visible:ring-[var(--sb-accent)]/20"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-[var(--sb-ink)]">
+                GitHub / LinkedIn URL (Optional)
+              </label>
+              <Input
+                type="url"
+                placeholder="https://github.com/username"
+                value={formData.socialUrl}
+                onChange={(e) => setFormData(prev => ({ ...prev, socialUrl: e.target.value }))}
+                className="h-9 focus-visible:ring-[var(--sb-accent)]/20"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-[var(--sb-ink)] block mb-1">
+                Experience Level
+              </label>
+              <div className="grid grid-cols-3 gap-2">
+                {["Beginner", "Intermediate", "Advanced"].map((level) => (
+                  <button
+                    key={level}
+                    type="button"
+                    onClick={() => setFormData(prev => ({ ...prev, experience: level }))}
+                    className={`px-3 py-2 text-xs font-medium rounded-lg border text-center transition-all cursor-pointer ${
+                      formData.experience === level
+                        ? "border-[var(--sb-accent)] bg-[var(--sb-accent)]/5 text-[var(--sb-accent)] font-semibold"
+                        : "border-[var(--sb-border)] text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)]"
+                    }`}
+                  >
+                    {level}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-[var(--sb-ink)]">
+                Why do you want to attend?
+              </label>
+              <Textarea
+                placeholder="Tell us about your interests and what you hope to learn..."
+                value={formData.motivation}
+                onChange={(e) => setFormData(prev => ({ ...prev, motivation: e.target.value }))}
+                className="focus-visible:ring-[var(--sb-accent)]/20"
+              />
+            </div>
+
+            <DialogFooter className="pt-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setSelectedEventForModal(null)}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                className="bg-[var(--sb-accent)] text-white hover:opacity-90 border-0"
+              >
+                Complete RSVP
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

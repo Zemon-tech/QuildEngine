@@ -17,7 +17,7 @@ function AppLayout() {
           <SecondarySidebar />
           <SidebarInset className="flex flex-1 flex-col overflow-hidden bg-transparent border-0 outline-none">
             {/* Scrollable Main Content */}
-            <div className="flex-1 overflow-y-auto page-enter p-6 pt-16 md:pt-6">
+            <div className="flex-1 overflow-y-auto page-enter px-3 py-6 md:px-4 pt-16 md:pt-6">
               <Outlet />
             </div>
           </SidebarInset>
