@@ -14,10 +14,7 @@ function AppLayout() {
   const currentPath = routerState.location.pathname;
 
   const parts = currentPath.split("/").filter(Boolean);
-  const isThirdLevelPracticeRoute =
-    parts[0] === "practice" &&
-    parts.length >= 3 &&
-    ["dsa", "interview", "interview-qa", "case-studies", "assessments"].includes(parts[1]);
+  const isThirdLevelRoute = parts.length >= 3;
 
   // Read initial sidebar state from cookies or default to true
   const [open, setOpen] = useState(() => {
@@ -32,19 +29,16 @@ function AppLayout() {
 
   useEffect(() => {
     const prevParts = prevPath.split("/").filter(Boolean);
-    const wasThirdLevel =
-      prevParts[0] === "practice" &&
-      prevParts.length >= 3 &&
-      ["dsa", "interview", "interview-qa", "case-studies", "assessments"].includes(prevParts[1]);
+    const wasThirdLevel = prevParts.length >= 3;
 
-    if (isThirdLevelPracticeRoute && !wasThirdLevel) {
+    if (isThirdLevelRoute && !wasThirdLevel) {
       setOpen(false);
-    } else if (!isThirdLevelPracticeRoute && wasThirdLevel) {
+    } else if (!isThirdLevelRoute && wasThirdLevel) {
       setOpen(true);
     }
 
     setPrevPath(currentPath);
-  }, [currentPath, isThirdLevelPracticeRoute, prevPath]);
+  }, [currentPath, isThirdLevelRoute, prevPath]);
 
   return (
     <SidebarProvider open={open} onOpenChange={setOpen}>
