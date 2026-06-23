@@ -1,4 +1,5 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { createFileRoute, Outlet, useRouterState } from "@tanstack/react-router";
 import { AppSidebar } from "#/components/sidebar/app-sidebar";
 import { SecondarySidebar } from "#/components/sidebar/secondary-sidebar";
 import { SidebarInset, SidebarProvider } from "#/components/ui/sidebar";
@@ -9,8 +10,44 @@ export const Route = createFileRoute("/_app")({
 });
 
 function AppLayout() {
+  const routerState = useRouterState();
+  const currentPath = routerState.location.pathname;
+
+  const parts = currentPath.split("/").filter(Boolean);
+  const isThirdLevelPracticeRoute =
+    parts[0] === "practice" &&
+    parts.length >= 3 &&
+    ["dsa", "interview", "interview-qa", "case-studies", "assessments"].includes(parts[1]);
+
+  // Read initial sidebar state from cookies or default to true
+  const [open, setOpen] = useState(() => {
+    if (typeof window !== "undefined") {
+      const match = document.cookie.match(new RegExp('(^| )sidebar_state=([^;]+)'));
+      return match ? match[2] === "true" : true;
+    }
+    return true;
+  });
+
+  const [prevPath, setPrevPath] = useState(currentPath);
+
+  useEffect(() => {
+    const prevParts = prevPath.split("/").filter(Boolean);
+    const wasThirdLevel =
+      prevParts[0] === "practice" &&
+      prevParts.length >= 3 &&
+      ["dsa", "interview", "interview-qa", "case-studies", "assessments"].includes(prevParts[1]);
+
+    if (isThirdLevelPracticeRoute && !wasThirdLevel) {
+      setOpen(false);
+    } else if (!isThirdLevelPracticeRoute && wasThirdLevel) {
+      setOpen(true);
+    }
+
+    setPrevPath(currentPath);
+  }, [currentPath, isThirdLevelPracticeRoute, prevPath]);
+
   return (
-    <SidebarProvider defaultOpen={true}>
+    <SidebarProvider open={open} onOpenChange={setOpen}>
       <TooltipProvider delayDuration={400} skipDelayDuration={100}>
         <div className="flex h-screen w-screen overflow-hidden">
           <AppSidebar />
