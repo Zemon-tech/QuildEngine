@@ -2,15 +2,17 @@ import type { BeforeMount, OnMount } from "@monaco-editor/react";
 import Editor from "@monaco-editor/react";
 import {
   Check,
+  Clock,
   Copy,
   Loader2,
   Maximize2,
   MoreHorizontal,
-  PlaySquare,
+  Pause,
+  Play,
   RotateCcw,
-  Send,
   Settings,
   Sparkles,
+  Upload,
 } from "lucide-react";
 import type { editor } from "monaco-editor";
 import { useEffect, useRef, useState } from "react";
@@ -22,6 +24,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "#/components/ui/dropdown-menu";
+import { Button } from "#/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -29,6 +32,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "#/components/ui/select";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "#/components/ui/tooltip";
 import type { DSAProblem } from "#/lib/dsa-problems-db";
 import { dsaProblems } from "#/lib/dsa-problems-db";
 import { useWorkspaceStore } from "#/store/use-workspace-store";
@@ -208,6 +217,8 @@ export function EditorPanel({ problemId }: EditorPanelProps) {
     setCodeDraft,
     isRunning,
     isSubmitting,
+    timerState,
+    setTimerState,
   } = useWorkspaceStore();
   const problem = Object.values(dsaProblems)
     .flat()
@@ -330,6 +341,24 @@ export function EditorPanel({ problemId }: EditorPanelProps) {
     editorRef.current?.trigger("keyboard", "redo", null);
   };
 
+  const formatElapsedTime = (totalSeconds: number) => {
+    const hrs = Math.floor(totalSeconds / 3600);
+    const mins = Math.floor((totalSeconds % 3600) / 60);
+    const secs = totalSeconds % 60;
+
+    return [hrs, mins, secs]
+      .map((part) => String(part).padStart(2, "0"))
+      .join(":");
+  };
+
+  const handleToggleTimer = () => {
+    setTimerState({ isRunning: !timerState.isRunning });
+  };
+
+  const handleResetTimer = () => {
+    setTimerState({ isRunning: false, seconds: 0 });
+  };
+
   const handleCodeChange = (val: string | undefined) => {
     setCodeDraft(problemId, val || "");
     setSaveStatus("saving");
@@ -352,11 +381,12 @@ export function EditorPanel({ problemId }: EditorPanelProps) {
   const code = codeDrafts[draftKey] || getDefaultCodeTemplate(problem, language);
 
   return (
-    <div className="flex h-full flex-col bg-[#111111] text-[#FAFAFA] select-none">
+    <TooltipProvider>
+      <div className="flex h-full flex-col bg-[#111111] text-[#FAFAFA] select-none">
       {/* ── Toolbar ── */}
-      <div className="flex h-10 shrink-0 items-center justify-between border-b border-[#1A1A1A] bg-[#111111] px-3">
+      <div className="flex h-10 shrink-0 items-center border-b border-[#1A1A1A] bg-[#111111] px-3">
         {/* Left: Language picker + save status */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-1 min-w-0">
           <Select value={language} onValueChange={setLanguage}>
             <SelectTrigger className="w-[110px] h-7 bg-transparent border-none text-[#FAFAFA] text-[12px] focus:ring-0 hover:bg-[#1A1A1A] transition-colors cursor-pointer rounded-md px-2">
               <SelectValue placeholder="Language" />
@@ -381,7 +411,7 @@ export function EditorPanel({ problemId }: EditorPanelProps) {
             {saveStatus === "saving" ? (
               <>
                 <Loader2 className="h-3 w-3 animate-spin text-emerald-500" />
-                <span className="text-[#737373]">Saving…</span>
+                <span className="text-[#737373]">Saving...</span>
               </>
             ) : (
               <>
@@ -394,8 +424,81 @@ export function EditorPanel({ problemId }: EditorPanelProps) {
           </div>
         </div>
 
+        {/* Center: Timer, Run, Submit */}
+        <div className="flex items-center gap-3 justify-center">
+          <div className="flex h-9 items-center gap-2 rounded-[8px] border border-white/5 bg-[#1C1C1F] px-3 text-[#F8F8FA] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+            <Clock className="h-3.5 w-3.5 text-[#D7D7DF]" />
+            <span className="min-w-[64px] font-mono text-xs font-semibold tabular-nums tracking-[0.01em] text-white">
+              {formatElapsedTime(timerState.seconds)}
+            </span>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  type="button"
+                  onClick={handleToggleTimer}
+                  className="flex size-6 items-center justify-center rounded-md text-[#F2F2F5] transition-colors hover:bg-white/10 active:scale-[0.94]"
+                  aria-label={timerState.isRunning ? "Pause timer" : "Start timer"}
+                >
+                  {timerState.isRunning ? (
+                    <Pause className="h-3 w-3" />
+                  ) : (
+                    <Play className="h-3 w-3" />
+                  )}
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" sideOffset={4}>
+                {timerState.isRunning ? "Pause timer" : "Start timer"}
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  type="button"
+                  onClick={handleResetTimer}
+                  className="flex size-6 items-center justify-center rounded-md text-[#8E8E98] transition-colors hover:bg-white/10 hover:text-white active:scale-[0.94]"
+                  aria-label="Reset timer"
+                >
+                  <RotateCcw className="h-3 w-3" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" sideOffset={4}>Reset timer</TooltipContent>
+            </Tooltip>
+          </div>
+
+          <Button
+            type="button"
+            disabled={isRunning || isSubmitting}
+            onClick={() => document.getElementById("quild-run-button")?.click()}
+            className="h-8 rounded-[8px] border border-white/5 bg-[#1C1C1F] px-3 text-xs font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] hover:bg-[#24242A] hover:text-white active:scale-[0.98] disabled:cursor-not-allowed"
+            title="Run (Ctrl+Enter)"
+            variant="ghost"
+          >
+            {isRunning ? (
+              <Loader2 data-icon="inline-start" className="animate-spin h-3 w-3" />
+            ) : (
+              <Play data-icon="inline-start" className="h-3 w-3" />
+            )}
+            Run
+          </Button>
+
+          <Button
+            type="button"
+            disabled={isRunning || isSubmitting}
+            onClick={() => document.getElementById("quild-submit-button")?.click()}
+            className="h-8 rounded-[8px] bg-[#7969E8] px-3 text-xs font-semibold text-white shadow-[0_4px_12px_rgba(121,105,232,0.18)] hover:bg-[#8A78F0] active:scale-[0.98] disabled:cursor-not-allowed"
+            title="Submit (Ctrl+Shift+Enter)"
+          >
+            {isSubmitting ? (
+              <Loader2 data-icon="inline-start" className="animate-spin h-3 w-3" />
+            ) : (
+              <Upload data-icon="inline-start" className="h-3 w-3" />
+            )}
+            Submit
+          </Button>
+        </div>
+
         {/* Right: icon actions */}
-        <div className="flex items-center gap-0.5">
+        <div className="flex items-center gap-0.5 flex-1 justify-end min-w-0">
           <button
             type="button"
             onClick={handleFormat}
@@ -472,38 +575,6 @@ export function EditorPanel({ problemId }: EditorPanelProps) {
             <Maximize2 className="h-3.5 w-3.5" />
           </button>
 
-          {/* ─ Run / Submit ─ */}
-          <span className="h-4 w-px bg-[#222] shrink-0 mx-1.5" />
-
-          <button
-            type="button"
-            disabled={isRunning || isSubmitting}
-            onClick={() => document.getElementById("quild-run-button")?.click()}
-            title="Run (Ctrl+Enter)"
-            className="flex items-center gap-1.5 h-7 px-3 rounded-md bg-[#1A1A1A] border border-[#2A2A2A] text-[11px] font-medium text-[#A3A3A3] hover:text-[#FAFAFA] hover:bg-[#222] hover:border-[#333] active:scale-[0.96] transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-          >
-            {isRunning ? (
-              <Loader2 className="h-3 w-3 animate-spin" />
-            ) : (
-              <PlaySquare className="h-3 w-3" />
-            )}
-            Run
-          </button>
-
-          <button
-            type="button"
-            disabled={isRunning || isSubmitting}
-            onClick={() => document.getElementById("quild-submit-button")?.click()}
-            title="Submit (Ctrl+Shift+Enter)"
-            className="flex items-center gap-1.5 h-7 px-3 rounded-md bg-emerald-600 hover:bg-emerald-500 text-[11px] font-semibold text-white active:scale-[0.96] transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-          >
-            {isSubmitting ? (
-              <Loader2 className="h-3 w-3 animate-spin" />
-            ) : (
-              <Send className="h-3 w-3" />
-            )}
-            Submit
-          </button>
         </div>
       </div>
 
@@ -534,44 +605,7 @@ export function EditorPanel({ problemId }: EditorPanelProps) {
         />
       </div>
 
-      {/* ── Bottom Action Bar ── */}
-      <div className="flex h-10 shrink-0 items-center justify-end gap-2 border-t border-[#1A1A1A] bg-[#0D0D0D] px-3 select-none">
-        <span className="text-[10px] text-[#333] font-mono mr-auto hidden sm:block tracking-wide">
-          ⌘↵ Run&nbsp;&nbsp;·&nbsp;&nbsp;⌘⇧↵ Submit
-        </span>
-
-        {/* Run */}
-        <button
-          type="button"
-          id="quild-run-btn-editor"
-          disabled={isRunning || isSubmitting}
-          onClick={() => document.getElementById("quild-run-button")?.click()}
-          className="flex items-center gap-1.5 h-7 px-3 rounded-md bg-[#1A1A1A] border border-[#2A2A2A] text-[11px] font-medium text-[#A3A3A3] hover:text-[#FAFAFA] hover:bg-[#222] hover:border-[#333] active:scale-[0.96] transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-        >
-          {isRunning ? (
-            <Loader2 className="h-3 w-3 animate-spin" />
-          ) : (
-            <PlaySquare className="h-3 w-3" />
-          )}
-          Run
-        </button>
-
-        {/* Submit */}
-        <button
-          type="button"
-          id="quild-submit-btn-editor"
-          disabled={isRunning || isSubmitting}
-          onClick={() => document.getElementById("quild-submit-button")?.click()}
-          className="flex items-center gap-1.5 h-7 px-3 rounded-md bg-emerald-600 hover:bg-emerald-500 text-[11px] font-semibold text-white active:scale-[0.96] transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-        >
-          {isSubmitting ? (
-            <Loader2 className="h-3 w-3 animate-spin" />
-          ) : (
-            <Send className="h-3 w-3" />
-          )}
-          Submit
-        </button>
       </div>
-    </div>
+    </TooltipProvider>
   );
 }

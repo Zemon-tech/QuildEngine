@@ -1,5 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
-import { ChevronLeft, Pause, Play, PlaySquare, Send, Loader2 } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { useEffect } from "react";
 import { dsaProblems } from "#/lib/dsa-problems-db";
 import { useWorkspaceStore } from "#/store/use-workspace-store";
@@ -74,23 +74,6 @@ export function WorkspaceHeader({ problemId }: WorkspaceHeaderProps) {
     };
   }, [timerState.isRunning, timerState.seconds, setTimerState]);
 
-  const formatTime = (totalSeconds: number) => {
-    const hrs = Math.floor(totalSeconds / 3600);
-    const mins = Math.floor((totalSeconds % 3600) / 60);
-    const secs = totalSeconds % 60;
-    return [
-      hrs > 0 ? String(hrs).padStart(2, "0") : null,
-      String(mins).padStart(2, "0"),
-      String(secs).padStart(2, "0"),
-    ]
-      .filter(Boolean)
-      .join(":");
-  };
-
-  const toggleTimer = () => {
-    setTimerState({ isRunning: !timerState.isRunning });
-  };
-
   const navigate = useNavigate();
 
   const problem = Object.values(dsaProblems)
@@ -113,7 +96,7 @@ export function WorkspaceHeader({ problemId }: WorkspaceHeaderProps) {
   const handleRun = async () => {
     if (isRunning || isSubmitting) return;
     setIsRunning(true);
-    setOutputActiveTab("console");
+    setOutputActiveTab("results");
     
     await new Promise((resolve) => setTimeout(resolve, 1000));
     
@@ -217,7 +200,7 @@ export function WorkspaceHeader({ problemId }: WorkspaceHeaderProps) {
   const handleSubmit = async () => {
     if (isRunning || isSubmitting) return;
     setIsSubmitting(true);
-    setOutputActiveTab("console");
+    setOutputActiveTab("results");
     
     await new Promise((resolve) => setTimeout(resolve, 1500));
     
@@ -338,58 +321,21 @@ export function WorkspaceHeader({ problemId }: WorkspaceHeaderProps) {
         </span>
       </div>
 
-      {/* Right: Timer + actions */}
-      <div className="flex items-center gap-3">
-        {/* Timer */}
-        <div className="flex items-center gap-2 text-xs font-mono">
-          <span className="text-[#737373] tabular-nums tracking-wider">
-            {formatTime(timerState.seconds)}
-          </span>
-          <button
-            type="button"
-            onClick={toggleTimer}
-            className="text-[#555] hover:text-[#FAFAFA] transition-colors focus:outline-none cursor-pointer"
-            aria-label={timerState.isRunning ? "Pause timer" : "Start timer"}
-          >
-            {timerState.isRunning ? (
-              <Pause className="h-3 w-3" />
-            ) : (
-              <Play className="h-3 w-3" />
-            )}
-          </button>
-        </div>
-
-        <span className="h-4 w-px bg-[#222] shrink-0" />
-
-        {/* Run */}
+      <div className="hidden">
         <button
           id="quild-run-button"
           type="button"
           onClick={handleRun}
           disabled={isRunning || isSubmitting}
-          className="flex items-center gap-1.5 h-7 px-3 rounded-md bg-[#1A1A1A] border border-[#2A2A2A] text-[11px] font-medium text-[#A3A3A3] hover:text-[#FAFAFA] hover:bg-[#222] hover:border-[#333] active:scale-[0.96] transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
         >
-          {isRunning ? (
-            <Loader2 className="h-3 w-3 animate-spin" />
-          ) : (
-            <PlaySquare className="h-3 w-3" />
-          )}
           Run
         </button>
-
-        {/* Submit */}
         <button
           id="quild-submit-button"
           type="button"
           onClick={handleSubmit}
           disabled={isRunning || isSubmitting}
-          className="flex items-center gap-1.5 h-7 px-3 rounded-md bg-emerald-600 hover:bg-emerald-500 text-[11px] font-semibold text-white active:scale-[0.96] transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
         >
-          {isSubmitting ? (
-            <Loader2 className="h-3 w-3 animate-spin" />
-          ) : (
-            <Send className="h-3 w-3" />
-          )}
           Submit
         </button>
       </div>
