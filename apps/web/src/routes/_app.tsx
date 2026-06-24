@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { createFileRoute, Outlet, useRouterState } from "@tanstack/react-router";
 import { AppSidebar } from "#/components/sidebar/app-sidebar";
 import { SecondarySidebar } from "#/components/sidebar/secondary-sidebar";
@@ -26,15 +26,42 @@ function AppLayout() {
   });
 
   const [prevPath, setPrevPath] = useState(currentPath);
+  const prevSidebarStateRef = useRef<boolean | null>(null);
+
+  const isProblemWorkspace =
+    currentPath.includes("/practice/problem/") ||
+    currentPath.includes("/practice/problems/");
 
   useEffect(() => {
-    const prevParts = prevPath.split("/").filter(Boolean);
-    const wasThirdLevel = prevParts.length >= 3;
+    const isProblemRoute =
+      currentPath.includes("/practice/problem/") ||
+      currentPath.includes("/practice/problems/");
+    const wasProblemRoute =
+      prevPath.includes("/practice/problem/") ||
+      prevPath.includes("/practice/problems/");
 
-    if (isThirdLevelRoute && !wasThirdLevel) {
+    if (isProblemRoute && !wasProblemRoute) {
+      // Store previous sidebar state and collapse
+      prevSidebarStateRef.current = open;
       setOpen(false);
-    } else if (!isThirdLevelRoute && wasThirdLevel) {
-      setOpen(true);
+    } else if (!isProblemRoute && wasProblemRoute) {
+      // Restore previous sidebar state
+      if (prevSidebarStateRef.current !== null) {
+        setOpen(prevSidebarStateRef.current);
+        prevSidebarStateRef.current = null;
+      } else {
+        setOpen(true);
+      }
+    } else if (!isProblemRoute) {
+      // Normal third level collapsing logic for non-problem routes
+      const prevParts = prevPath.split("/").filter(Boolean);
+      const wasThirdLevel = prevParts.length >= 3;
+
+      if (isThirdLevelRoute && !wasThirdLevel) {
+        setOpen(false);
+      } else if (!isThirdLevelRoute && wasThirdLevel) {
+        setOpen(true);
+      }
     }
 
     setPrevPath(currentPath);
@@ -47,8 +74,14 @@ function AppLayout() {
           <AppSidebar />
           <SecondarySidebar />
           <SidebarInset className="flex flex-1 flex-col overflow-hidden bg-transparent border-0 outline-none">
-            {/* Scrollable Main Content */}
-            <div className="flex-1 overflow-y-auto page-enter px-3 py-6 md:px-4 pt-16 md:pt-6">
+            {/* Scrollable Main Content or Full-Screen Workspace */}
+            <div
+              className={`flex-1 ${
+                isProblemWorkspace
+                  ? "flex flex-col h-screen"
+                  : "overflow-y-auto page-enter px-3 py-6 md:px-4 pt-16 md:pt-6"
+              }`}
+            >
               <Outlet />
             </div>
           </SidebarInset>
