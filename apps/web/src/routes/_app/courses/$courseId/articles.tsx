@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, Clock, Sparkles, X } from "lucide-react";
 import { useState } from "react";
+import { ArrowLeft, Clock, X, Sparkles } from "lucide-react";
 import { useCourse } from "#/hooks/use-courses";
 
 export const Route = createFileRoute("/_app/courses/$courseId/articles")({
@@ -24,8 +24,7 @@ const courseArticlesDb: Record<string, CourseArticle[]> = {
     {
       id: "amortized-analysis",
       title: "Amortized Cost Analysis in Dynamic Vectors",
-      description:
-        "Understand the mathematical proof of amortized O(1) performance during capacity expansion in dynamic arrays like vector or ArrayList.",
+      description: "Understand the mathematical proof of amortized O(1) performance during capacity expansion in dynamic arrays like vector or ArrayList.",
       readTime: "8 min read",
       publishedAt: "June 20, 2026",
       author: "Shivansh Kumar",
@@ -50,13 +49,12 @@ For N elements, the number of copies is:
 
 Total cost for N insertions = N (insertions) + N - 1 (copies) ≈ 2N.
 Amortized cost per insertion = 2N / N = O(1) constant time!
-`,
+`
     },
     {
       id: "hash-collision-strategies",
       title: "Advanced Collision Resolution in Hash Tables",
-      description:
-        "Inspect linear probing, quadratic probing, and robin hood hashing. Analyze memory caches and cache-line lookups.",
+      description: "Inspect linear probing, quadratic probing, and robin hood hashing. Analyze memory caches and cache-line lookups.",
       readTime: "11 min read",
       publishedAt: "June 12, 2026",
       author: "Shivansh Kumar",
@@ -72,15 +70,14 @@ Every bucket contains a linked list of entries. Easy to implement, but poor CPU 
 Store all entries directly in the table array.
 - **Linear Probing**: If bucket is occupied, check the next bucket sequentially. Excellent CPU cache locality, but suffers from primary clustering.
 - **Robin Hood Hashing**: A variation of linear probing where rich keys (keys close to their home bucket) yield their spot to poor keys (keys far from home). Reduces variance in probe lengths.
-`,
-    },
+`
+    }
   ],
   "system-design": [
     {
       id: "distributed-caching-scalability",
       title: "Distributed Caching: Consistent Hashing & Eviction Policies",
-      description:
-        "How to scale your distributed caching clusters using consistent hashing rings. Mitigate cache stampedes and hotspotting.",
+      description: "How to scale your distributed caching clusters using consistent hashing rings. Mitigate cache stampedes and hotspotting.",
       readTime: "14 min read",
       publishedAt: "June 18, 2026",
       author: "Shivansh Kumar",
@@ -96,17 +93,16 @@ In a standard modulo caching cluster (\`hash(key) % N\`), adding or removing a n
 
 ### Preventing Hotspots with Virtual Nodes
 If servers are not evenly distributed, some carry double the load. Consistent hashing mitigates this by mapping multiple virtual nodes per physical server to achieve uniform load distributions.
-`,
-    },
-  ],
+`
+    }
+  ]
 };
 
 const defaultArticles: CourseArticle[] = [
   {
     id: "v8-compiler-optimizations",
     title: "V8 Compiler Optimization Loops",
-    description:
-      "Deep dive into JIT compilation, inlining, and inline cache mechanisms in Javascript runtimes.",
+    description: "Deep dive into JIT compilation, inlining, and inline cache mechanisms in Javascript runtimes.",
     readTime: "9 min read",
     publishedAt: "June 08, 2026",
     author: "Shivansh Kumar",
@@ -117,16 +113,14 @@ Google's V8 JIT compiler optimizes code dynamically. When code is identified as 
 
 ### Inline Caching
 Inline caching remembers the shapes of objects passed to a function. If the shape doesn't change, V8 skips the slow lookup of property locations in memory.
-`,
-  },
+`
+  }
 ];
 
 function CourseArticlesPage() {
   const { courseId } = Route.useParams();
   const { data: course } = useCourse(courseId);
-  const [selectedArticle, setSelectedArticle] = useState<CourseArticle | null>(
-    null,
-  );
+  const [selectedArticle, setSelectedArticle] = useState<CourseArticle | null>(null);
 
   const articles = courseArticlesDb[courseId] || defaultArticles;
 
@@ -144,7 +138,7 @@ function CourseArticlesPage() {
       {/* Reader Overlay */}
       {selectedArticle && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div
+          <div 
             className="w-full max-w-2xl h-[80vh] rounded-2xl border flex flex-col overflow-hidden bg-[var(--sb-bg)] shadow-2xl"
             style={{ borderColor: "var(--sb-border)" }}
           >
@@ -166,18 +160,11 @@ function CourseArticlesPage() {
                   {selectedArticle.title}
                 </h2>
                 <div className="flex items-center gap-4 text-[10px] text-[var(--sb-ink-dim)]">
-                  <span>
-                    Written by{" "}
-                    <strong className="text-[var(--sb-ink)]">
-                      {selectedArticle.author}
-                    </strong>
-                  </span>
+                  <span>Written by <strong className="text-[var(--sb-ink)]">{selectedArticle.author}</strong></span>
                   <span>·</span>
                   <span>{selectedArticle.publishedAt}</span>
                   <span>·</span>
-                  <span className="flex items-center gap-1">
-                    <Clock size={11} /> {selectedArticle.readTime}
-                  </span>
+                  <span className="flex items-center gap-1"><Clock size={11} /> {selectedArticle.readTime}</span>
                 </div>
               </div>
 
@@ -185,31 +172,14 @@ function CourseArticlesPage() {
                 <div className="whitespace-pre-wrap font-sans space-y-4">
                   {selectedArticle.content.split("\n\n").map((para, k) => {
                     if (para.startsWith("## ")) {
-                      return (
-                        <h3
-                          key={k}
-                          className="text-base font-bold display-title mt-4 border-b border-[var(--sb-border)] pb-1"
-                        >
-                          {para.replace("## ", "")}
-                        </h3>
-                      );
+                      return <h3 key={k} className="text-base font-bold display-title mt-4 border-b border-[var(--sb-border)] pb-1">{para.replace("## ", "")}</h3>;
                     }
                     if (para.startsWith("### ")) {
-                      return (
-                        <h4
-                          key={k}
-                          className="text-sm font-bold display-title mt-3"
-                        >
-                          {para.replace("### ", "")}
-                        </h4>
-                      );
+                      return <h4 key={k} className="text-sm font-bold display-title mt-3">{para.replace("### ", "")}</h4>;
                     }
                     if (para.startsWith("1. ")) {
                       return (
-                        <ol
-                          key={k}
-                          className="list-decimal pl-5 space-y-1 my-2"
-                        >
+                        <ol key={k} className="list-decimal pl-5 space-y-1 my-2">
                           {para.split("\n").map((li, idx) => (
                             <li key={idx}>{li.replace(/^\d+\.\s+/, "")}</li>
                           ))}
@@ -222,13 +192,8 @@ function CourseArticlesPage() {
               </div>
             </div>
 
-            <div
-              className="p-4 border-t border-[var(--sb-border)] flex items-center justify-between text-[10px]"
-              style={{ color: "var(--sb-ink-dim)" }}
-            >
-              <span className="flex items-center gap-1">
-                ❤️ {selectedArticle.likes} Likes
-              </span>
+            <div className="p-4 border-t border-[var(--sb-border)] flex items-center justify-between text-[10px]" style={{ color: "var(--sb-ink-dim)" }}>
+              <span className="flex items-center gap-1">❤️ {selectedArticle.likes} Likes</span>
               <span>Click close or press ESC to exit</span>
             </div>
           </div>
@@ -241,8 +206,7 @@ function CourseArticlesPage() {
           Topic Articles: {course?.title ?? "Course topics"}
         </h1>
         <p className="mt-1 text-sm text-[var(--sb-ink-muted)]">
-          Read engineering logs and math-heavy concept sheets written by the
-          instructor **Shivansh Kumar**.
+          Read engineering logs and math-heavy concept sheets written by the instructor **Shivansh Kumar**.
         </p>
       </div>
 
@@ -254,10 +218,9 @@ function CourseArticlesPage() {
             onClick={() => setSelectedArticle(article)}
             className="stagger-item flex flex-col gap-4 rounded-xl p-5 border cursor-pointer transition-all duration-200 hover:translate-y-[-2px] hover:border-[var(--sb-accent)]/40"
             style={{
-              background:
-                "linear-gradient(165deg, var(--surface-strong), var(--surface))",
+              background: "linear-gradient(165deg, var(--surface-strong), var(--surface))",
               borderColor: "var(--line)",
-              boxShadow: "0 1px 0 var(--inset-glint) inset",
+              boxShadow: "0 1px 0 var(--inset-glint) inset"
             }}
           >
             <div className="space-y-1">
@@ -274,9 +237,7 @@ function CourseArticlesPage() {
             </p>
 
             <div className="mt-auto pt-3 border-t border-[var(--sb-border)] flex items-center justify-between text-[10px] text-[var(--sb-ink-dim)]">
-              <span className="flex items-center gap-1">
-                <Clock size={11} /> {article.readTime}
-              </span>
+              <span className="flex items-center gap-1"><Clock size={11} /> {article.readTime}</span>
               <span>❤️ {article.likes} Likes</span>
             </div>
           </div>

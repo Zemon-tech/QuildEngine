@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
 import { TopicRoadmap } from "#/components/dsa/topic-roadmap";
 import { type DSAProblem, dsaProblems } from "#/lib/dsa-problems-db";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/_app/practice/dsa/$topicId/roadmap")({
   component: RoadmapTab,
@@ -22,9 +22,9 @@ function RoadmapTab() {
   const handleSelectSubtopic = (_sub: string) => {
     // Navigate back to practice board when a subtopic is selected from roadmap
     navigate({
-      to: "/practice/dsa/$topicId",
-      params: { topicId },
-    } as any);
+      to: "/practice/dsa/$topicId" as any,
+      params: { topicId } as any,
+    });
   };
 
   return (

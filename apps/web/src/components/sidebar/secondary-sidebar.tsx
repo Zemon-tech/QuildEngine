@@ -132,7 +132,9 @@ export function SecondarySidebar() {
     sectionTitle = "Practice Room";
 
     // Detect if we are inside a DSA topic (for showing tab sub-nav)
-    const dsaTopicMatch = currentPath.match(/^\/practice\/dsa\/([^/]+)/);
+    const dsaTopicMatch = currentPath.match(
+      /^\/practice\/dsa\/([^/]+)/,
+    );
     const currentDsaTopic = dsaTopicMatch ? dsaTopicMatch[1] : null;
 
     if (currentDsaTopic) {
@@ -183,6 +185,7 @@ export function SecondarySidebar() {
         },
       ];
     }
+
   } else if (
     currentPath.startsWith("/research") ||
     currentPath.startsWith("/documentation")

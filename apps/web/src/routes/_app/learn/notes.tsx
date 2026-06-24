@@ -193,7 +193,7 @@ function NotesPage() {
     }
   };
 
-  const activeNote = notes.find((n) => n.id === activeNoteId);
+  const activeNote = notes.find(n => n.id === activeNoteId);
 
   const handleCreateNote = () => {
     const newNote: Note = {
@@ -213,7 +213,7 @@ function NotesPage() {
   };
 
   const handleDeleteNote = (id: string) => {
-    const updated = notes.filter((n) => n.id !== id);
+    const updated = notes.filter(n => n.id !== id);
     saveNotes(updated);
     if (activeNoteId === id) {
       setActiveNoteId(updated.length > 0 ? updated[0].id : null);
@@ -222,7 +222,7 @@ function NotesPage() {
 
   const handleUpdateActiveNote = (fields: Partial<Note>) => {
     if (!activeNoteId) return;
-    const updated = notes.map((n) => {
+    const updated = notes.map(n => {
       if (n.id === activeNoteId) {
         return { ...n, ...fields, updatedAt: new Date().toLocaleDateString() };
       }
@@ -231,16 +231,12 @@ function NotesPage() {
     saveNotes(updated);
   };
 
-  const filteredNotes = notes.filter((n) =>
-    n.title.toLowerCase().includes(searchQuery.toLowerCase()),
+  const filteredNotes = notes.filter(n => 
+    n.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   if (!mounted) {
-    return (
-      <div className="p-12 text-center text-sm text-[var(--sb-ink-dim)]">
-        Loading workspace...
-      </div>
-    );
+    return <div className="p-12 text-center text-sm text-[var(--sb-ink-dim)]">Loading workspace...</div>;
   }
 
   return (
@@ -248,10 +244,7 @@ function NotesPage() {
       {/* Left Pane: Notes List */}
       <div className="w-80 border-r border-[var(--sb-border)] flex flex-col bg-[var(--sb-bg)] shrink-0">
         <div className="p-4 border-b border-[var(--sb-border)] flex items-center justify-between gap-2">
-          <h2
-            className="font-bold text-sm display-title flex items-center gap-1.5"
-            style={{ color: "var(--sb-ink)" }}
-          >
+          <h2 className="font-bold text-sm display-title flex items-center gap-1.5" style={{ color: "var(--sb-ink)" }}>
             <StickyNote size={16} className="text-[var(--sb-accent)]" /> Notes
           </h2>
           <button
@@ -277,24 +270,20 @@ function NotesPage() {
         {/* Note List Scroll */}
         <div className="flex-1 overflow-y-auto divide-y divide-[var(--sb-border)] scrollbar-none">
           {filteredNotes.length === 0 ? (
-            <p className="text-center text-xs text-[var(--sb-ink-dim)] py-8">
-              No notes found.
-            </p>
+            <p className="text-center text-xs text-[var(--sb-ink-dim)] py-8">No notes found.</p>
           ) : (
             filteredNotes.map((note) => (
               <div
                 key={note.id}
                 onClick={() => setActiveNoteId(note.id)}
                 className={`p-4 cursor-pointer text-xs transition-colors flex flex-col gap-1.5 group ${
-                  activeNoteId === note.id
-                    ? "bg-[var(--sb-pill)] font-semibold"
+                  activeNoteId === note.id 
+                    ? "bg-[var(--sb-pill)] font-semibold" 
                     : "hover:bg-[var(--sb-bg-hover)]/40"
                 }`}
               >
                 <div className="flex justify-between items-center">
-                  <span className="font-bold truncate text-[var(--sb-ink)] max-w-[80%]">
-                    {note.title}
-                  </span>
+                  <span className="font-bold truncate text-[var(--sb-ink)] max-w-[80%]">{note.title}</span>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();

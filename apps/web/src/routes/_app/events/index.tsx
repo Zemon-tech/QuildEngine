@@ -17,7 +17,6 @@ import {
   Video,
 } from "lucide-react";
 import { useMemo, useState } from "react";
-import { Button } from "#/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -28,6 +27,7 @@ import {
 } from "#/components/ui/dialog";
 import { Input } from "#/components/ui/input";
 import { Textarea } from "#/components/ui/textarea";
+import { Button } from "#/components/ui/button";
 
 export const Route = createFileRoute("/_app/events/")({
   component: EventsHubPage,
@@ -290,8 +290,7 @@ function EventsHubPage() {
   const [activeFilter, setActiveFilter] = useState("all"); // all, upcoming, registered, recommended, past
   const [events, setEvents] = useState<EventItem[]>(initialEvents);
 
-  const [selectedEventForModal, setSelectedEventForModal] =
-    useState<EventItem | null>(null);
+  const [selectedEventForModal, setSelectedEventForModal] = useState<EventItem | null>(null);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -750,10 +749,7 @@ function EventsHubPage() {
       </div>
 
       {/* Event Registration Dialog */}
-      <Dialog
-        open={selectedEventForModal !== null}
-        onOpenChange={(open) => !open && setSelectedEventForModal(null)}
-      >
+      <Dialog open={selectedEventForModal !== null} onOpenChange={(open) => !open && setSelectedEventForModal(null)}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
@@ -761,11 +757,7 @@ function EventsHubPage() {
               Register for Event
             </DialogTitle>
             <DialogDescription className="text-xs">
-              Confirm your registration for{" "}
-              <span className="font-semibold text-[var(--sb-ink)]">
-                {selectedEventForModal?.name}
-              </span>
-              . Please provide your details below.
+              Confirm your registration for <span className="font-semibold text-[var(--sb-ink)]">{selectedEventForModal?.name}</span>. Please provide your details below.
             </DialogDescription>
           </DialogHeader>
 
@@ -779,9 +771,7 @@ function EventsHubPage() {
                 required
                 placeholder="John Doe"
                 value={formData.fullName}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, fullName: e.target.value }))
-                }
+                onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
                 className="h-9 focus-visible:ring-[var(--sb-accent)]/20"
               />
             </div>
@@ -795,9 +785,7 @@ function EventsHubPage() {
                 required
                 placeholder="john@example.com"
                 value={formData.email}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, email: e.target.value }))
-                }
+                onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                 className="h-9 focus-visible:ring-[var(--sb-accent)]/20"
               />
             </div>
@@ -810,12 +798,7 @@ function EventsHubPage() {
                 type="url"
                 placeholder="https://github.com/username"
                 value={formData.socialUrl}
-                onChange={(e) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    socialUrl: e.target.value,
-                  }))
-                }
+                onChange={(e) => setFormData(prev => ({ ...prev, socialUrl: e.target.value }))}
                 className="h-9 focus-visible:ring-[var(--sb-accent)]/20"
               />
             </div>
@@ -829,9 +812,7 @@ function EventsHubPage() {
                   <button
                     key={level}
                     type="button"
-                    onClick={() =>
-                      setFormData((prev) => ({ ...prev, experience: level }))
-                    }
+                    onClick={() => setFormData(prev => ({ ...prev, experience: level }))}
                     className={`px-3 py-2 text-xs font-medium rounded-lg border text-center transition-all cursor-pointer ${
                       formData.experience === level
                         ? "border-[var(--sb-accent)] bg-[var(--sb-accent)]/5 text-[var(--sb-accent)] font-semibold"
@@ -851,12 +832,7 @@ function EventsHubPage() {
               <Textarea
                 placeholder="Tell us about your interests and what you hope to learn..."
                 value={formData.motivation}
-                onChange={(e) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    motivation: e.target.value,
-                  }))
-                }
+                onChange={(e) => setFormData(prev => ({ ...prev, motivation: e.target.value }))}
                 className="focus-visible:ring-[var(--sb-accent)]/20"
               />
             </div>

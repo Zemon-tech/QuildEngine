@@ -33,7 +33,7 @@ const STORAGE_KEY = "quild-sidebar-open-sections";
 
 function getPersistedSections(): Record<string, boolean> {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = sessionStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : {};
   } catch {
     return {};
@@ -43,7 +43,7 @@ function getPersistedSections(): Record<string, boolean> {
 function persistSection(id: string, open: boolean) {
   try {
     const current = getPersistedSections();
-    localStorage.setItem(
+    sessionStorage.setItem(
       STORAGE_KEY,
       JSON.stringify({ ...current, [id]: open }),
     );

@@ -17,29 +17,6 @@ interface SubItem {
   badge?: string | number;
 }
 
-const ACCORDION_STORAGE_KEY = "quild-sidebar-open-accordions";
-
-function getPersistedAccordions(): Record<string, boolean> {
-  try {
-    const raw = localStorage.getItem(ACCORDION_STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch {
-    return {};
-  }
-}
-
-function persistAccordion(label: string, open: boolean) {
-  try {
-    const current = getPersistedAccordions();
-    localStorage.setItem(
-      ACCORDION_STORAGE_KEY,
-      JSON.stringify({ ...current, [label]: open }),
-    );
-  } catch {
-    // ignore
-  }
-}
-
 interface NavAccordionProps {
   icon: LucideIcon;
   label: string;
@@ -57,21 +34,12 @@ export function NavAccordion({
   defaultOpen = false,
   activeLayoutId = "nav-pill",
 }: NavAccordionProps) {
-  const [open, setOpen] = useState(() => {
-    const persisted = getPersistedAccordions();
-    return persisted[label] ?? defaultOpen;
-  });
-
-  const toggleOpen = () => {
-    const next = !open;
-    setOpen(next);
-    persistAccordion(label, next);
-  };
+  const [open, setOpen] = useState(defaultOpen);
 
   const trigger = (
     <button
       type="button"
-      onClick={toggleOpen}
+      onClick={() => setOpen((o) => !o)}
       className={cn(
         "group relative flex w-full items-center gap-2.5 rounded-[10px] px-2.5 py-[7px] text-sm font-medium outline-none",
         "transition-colors duration-150",

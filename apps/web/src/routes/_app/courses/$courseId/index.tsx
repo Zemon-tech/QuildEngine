@@ -1,23 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import {
-  ArrowLeft,
-  Bookmark,
-  BookOpen,
-  CheckCircle2,
-  ChevronRight,
-  Circle,
-  Clock,
-  Play,
-  Star,
-} from "lucide-react";
+import { ChevronRight, Play, BookOpen, Clock, Star, ArrowLeft, CheckCircle2, Circle, Bookmark } from "lucide-react";
+import { useCourse, useEnrollInCourse, useToggleLessonCompletion, useBookmarks, useToggleLessonBookmark } from "#/hooks/use-courses";
 import { useState } from "react";
-import {
-  useBookmarks,
-  useCourse,
-  useEnrollInCourse,
-  useToggleLessonBookmark,
-  useToggleLessonCompletion,
-} from "#/hooks/use-courses";
 
 export const Route = createFileRoute("/_app/courses/$courseId/")({
   component: CourseDetailPage,
@@ -32,9 +16,7 @@ function CourseDetailPage() {
   const toggleLessonBookmark = useToggleLessonBookmark();
   const navigate = useNavigate();
 
-  const [expandedModules, setExpandedModules] = useState<
-    Record<string, boolean>
-  >({
+  const [expandedModules, setExpandedModules] = useState<Record<string, boolean>>({
     "arrays-strings": true,
     "load-balancers": true,
     "react-fiber": true,
@@ -42,23 +24,14 @@ function CourseDetailPage() {
   });
 
   if (isLoading) {
-    return (
-      <div className="mx-auto max-w-4xl p-12 text-center animate-pulse">
-        Loading course details...
-      </div>
-    );
+    return <div className="mx-auto max-w-4xl p-12 text-center animate-pulse">Loading course details...</div>;
   }
 
   if (error || !course) {
     return (
       <div className="mx-auto max-w-4xl p-12 text-center">
         <h2 className="text-xl font-bold text-red-500">Error loading course</h2>
-        <Link
-          to="/courses"
-          className="mt-4 inline-block text-xs font-bold underline"
-        >
-          Back to Catalog
-        </Link>
+        <Link to="/courses" className="mt-4 inline-block text-xs font-bold underline">Back to Catalog</Link>
       </div>
     );
   }
@@ -68,12 +41,8 @@ function CourseDetailPage() {
   };
 
   // Find first uncompleted lesson
-  const allLessons = course.modules.flatMap((m) =>
-    m.lessons.map((l) => ({ ...l, moduleId: m.id })),
-  );
-  const firstUncompleted =
-    allLessons.find((l) => !course.completedLessonIds.includes(l.id)) ||
-    allLessons[0];
+  const allLessons = course.modules.flatMap(m => m.lessons.map(l => ({ ...l, moduleId: m.id })));
+  const firstUncompleted = allLessons.find(l => !course.completedLessonIds.includes(l.id)) || allLessons[0];
 
   const handleStartResume = () => {
     if (!course.enrolled) {
@@ -84,7 +53,7 @@ function CourseDetailPage() {
               to: `/courses/${course.id}/modules/${firstUncompleted.moduleId}/lessons/${firstUncompleted.id}`,
             });
           }
-        },
+        }
       });
     } else if (firstUncompleted) {
       navigate({
@@ -107,11 +76,9 @@ function CourseDetailPage() {
       <div
         className="stagger-item rounded-2xl p-6 md:p-8 border relative overflow-hidden"
         style={{
-          background:
-            "linear-gradient(135deg, var(--surface-strong), var(--surface))",
+          background: "linear-gradient(135deg, var(--surface-strong), var(--surface))",
           borderColor: "var(--line)",
-          boxShadow:
-            "0 1px 0 var(--inset-glint) inset, 0 10px 30px rgba(0,0,0,0.02)",
+          boxShadow: "0 1px 0 var(--inset-glint) inset, 0 10px 30px rgba(0,0,0,0.02)"
         }}
       >
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -125,17 +92,11 @@ function CourseDetailPage() {
             >
               {course.title}
             </h1>
-            <p
-              className="text-sm max-w-xl leading-relaxed"
-              style={{ color: "var(--sb-ink-muted)" }}
-            >
+            <p className="text-sm max-w-xl leading-relaxed" style={{ color: "var(--sb-ink-muted)" }}>
               {course.description}
             </p>
 
-            <div
-              className="flex flex-wrap items-center gap-4 text-xs pt-2"
-              style={{ color: "var(--sb-ink-dim)" }}
-            >
+            <div className="flex flex-wrap items-center gap-4 text-xs pt-2" style={{ color: "var(--sb-ink-dim)" }}>
               <span className="flex items-center gap-1">
                 <Clock size={14} />
                 {course.totalHours}
@@ -149,12 +110,7 @@ function CourseDetailPage() {
                 {course.rating} Rating
               </span>
               <span className="flex items-center gap-2">
-                <span>
-                  Instructed by{" "}
-                  <strong className="text-[var(--sb-ink)]">
-                    {course.author}
-                  </strong>
-                </span>
+                <span>Instructed by <strong className="text-[var(--sb-ink)]">{course.author}</strong></span>
                 <Link
                   to="/courses/$courseId/articles"
                   params={{ courseId: course.id }}
@@ -171,27 +127,21 @@ function CourseDetailPage() {
             {course.enrolled ? (
               <div className="space-y-2">
                 <div className="flex justify-between text-xs">
-                  <span className="font-semibold text-[var(--sb-ink-muted)]">
-                    Progress
-                  </span>
-                  <span className="font-bold text-[var(--sb-accent)]">
-                    {course.progress}%
-                  </span>
+                  <span className="font-semibold text-[var(--sb-ink-muted)]">Progress</span>
+                  <span className="font-bold text-[var(--sb-accent)]">{course.progress}%</span>
                 </div>
                 <div className="h-2 w-full bg-[var(--sb-bg)] rounded-full overflow-hidden border border-[var(--sb-border)]">
                   <div
                     className="h-full rounded-full"
                     style={{
                       width: `${course.progress}%`,
-                      background: "var(--sb-accent)",
+                      background: "var(--sb-accent)"
                     }}
                   />
                 </div>
               </div>
             ) : (
-              <p className="text-xs text-[var(--sb-ink-muted)]">
-                Get full lifetime access to curriculum resources and lessons.
-              </p>
+              <p className="text-xs text-[var(--sb-ink-muted)]">Get full lifetime access to curriculum resources and lessons.</p>
             )}
 
             <button
@@ -199,17 +149,13 @@ function CourseDetailPage() {
               className="w-full py-2.5 text-xs font-bold rounded-lg cursor-pointer transition-opacity flex items-center justify-center gap-2 text-white"
               style={{
                 background: "var(--sb-accent)",
-                color: "var(--sb-accent-foreground)",
+                color: "var(--sb-accent-foreground)"
               }}
             >
               <Play size={14} className="fill-current" />
-              {course.enrolled
-                ? course.progress === 0
-                  ? "Start Learning"
-                  : "Resume Learning"
-                : enrollMutation.isPending
-                  ? "Enrolling..."
-                  : "Enroll & Start"}
+              {course.enrolled 
+                ? (course.progress === 0 ? "Start Learning" : "Resume Learning") 
+                : (enrollMutation.isPending ? "Enrolling..." : "Enroll & Start")}
             </button>
           </div>
         </div>
@@ -217,10 +163,7 @@ function CourseDetailPage() {
 
       {/* Curriculum Syllabus Section */}
       <div className="space-y-4">
-        <h2
-          className="text-xl font-bold display-title"
-          style={{ color: "var(--sb-ink)" }}
-        >
+        <h2 className="text-xl font-bold display-title" style={{ color: "var(--sb-ink)" }}>
           Course Syllabus
         </h2>
 
@@ -248,22 +191,16 @@ function CourseDetailPage() {
                       style={{
                         background: "var(--sb-bg)",
                         color: "var(--sb-accent)",
-                        border: "1px solid var(--sb-border)",
+                        border: "1px solid var(--sb-border)"
                       }}
                     >
                       {i + 1}
                     </div>
                     <div>
-                      <h3
-                        className="font-bold text-sm"
-                        style={{ color: "var(--sb-ink)" }}
-                      >
+                      <h3 className="font-bold text-sm" style={{ color: "var(--sb-ink)" }}>
                         {module.title}
                       </h3>
-                      <p
-                        className="text-[10px]"
-                        style={{ color: "var(--sb-ink-dim)" }}
-                      >
+                      <p className="text-[10px]" style={{ color: "var(--sb-ink-dim)" }}>
                         {module.lessons.length} lessons
                       </p>
                     </div>
@@ -279,17 +216,12 @@ function CourseDetailPage() {
                 {isExpanded && (
                   <div className="divide-y divide-[var(--sb-border)]">
                     {module.lessons.map((lesson) => {
-                      const isCompleted = course.completedLessonIds.includes(
-                        lesson.id,
-                      );
+                      const isCompleted = course.completedLessonIds.includes(lesson.id);
 
                       const handleCheckboxClick = (e: React.MouseEvent) => {
                         e.stopPropagation();
                         if (!course.enrolled) return;
-                        toggleLessonMutation.mutate({
-                          courseId: course.id,
-                          lessonId: lesson.id,
-                        });
+                        toggleLessonMutation.mutate({ courseId: course.id, lessonId: lesson.id });
                       };
 
                       return (
@@ -302,9 +234,7 @@ function CourseDetailPage() {
                             });
                           }}
                           className={`flex items-center justify-between p-4 text-xs transition-colors ${
-                            course.enrolled
-                              ? "hover:bg-[var(--sb-bg-hover)] cursor-pointer"
-                              : "opacity-60 cursor-not-allowed"
+                            course.enrolled ? "hover:bg-[var(--sb-bg-hover)] cursor-pointer" : "opacity-60 cursor-not-allowed"
                           }`}
                         >
                           <div className="flex items-center gap-3">
@@ -314,21 +244,12 @@ function CourseDetailPage() {
                               disabled={!course.enrolled}
                             >
                               {isCompleted ? (
-                                <CheckCircle2
-                                  size={16}
-                                  className="fill-[var(--sb-accent)] text-[var(--sb-bg)]"
-                                />
+                                <CheckCircle2 size={16} className="fill-[var(--sb-accent)] text-[var(--sb-bg)]" />
                               ) : (
-                                <Circle
-                                  size={16}
-                                  className="text-[var(--sb-ink-dim)]"
-                                />
+                                <Circle size={16} className="text-[var(--sb-ink-dim)]" />
                               )}
                             </button>
-                            <span
-                              className="font-medium"
-                              style={{ color: "var(--sb-ink)" }}
-                            >
+                            <span className="font-medium" style={{ color: "var(--sb-ink)" }}>
                               {lesson.title}
                             </span>
                           </div>
@@ -348,16 +269,7 @@ function CourseDetailPage() {
                                 }}
                                 className="p-1 rounded hover:bg-[var(--sb-bg-active)] hover:text-[var(--sb-accent)] transition-colors cursor-pointer text-[var(--sb-ink-dim)]"
                               >
-                                <Bookmark
-                                  size={13}
-                                  className={
-                                    bookmarks?.lessons.some(
-                                      (l) => l.lessonId === lesson.id,
-                                    )
-                                      ? "fill-[var(--sb-accent)] text-[var(--sb-accent)]"
-                                      : ""
-                                  }
-                                />
+                                <Bookmark size={13} className={bookmarks?.lessons.some(l => l.lessonId === lesson.id) ? "fill-[var(--sb-accent)] text-[var(--sb-accent)]" : ""} />
                               </button>
                             )}
                             <div className="flex items-center gap-1">

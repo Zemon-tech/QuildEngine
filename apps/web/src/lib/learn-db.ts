@@ -79,8 +79,7 @@ export const mockCourses: Course[] = [
   {
     id: "dsa-fundamentals",
     title: "DSA Fundamentals",
-    description:
-      "Master essential data structures and algorithms from absolute first principles. Highly visual and practice-driven.",
+    description: "Master essential data structures and algorithms from absolute first principles. Highly visual and practice-driven.",
     thumbnail: "from-blue-500/20 to-indigo-600/20 border-indigo-500/30",
     difficulty: "Beginner",
     rating: 4.9,
@@ -99,8 +98,7 @@ export const mockCourses: Course[] = [
             duration: "12:15",
             type: "video",
             videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-            content:
-              "Learn how arrays are represented in RAM with contiguous memory blocks, base address calculations, and offset arithmetic.",
+            content: "Learn how arrays are represented in RAM with contiguous memory blocks, base address calculations, and offset arithmetic."
           },
           {
             id: "dynamic-arrays",
@@ -108,8 +106,7 @@ export const mockCourses: Course[] = [
             duration: "18:40",
             type: "video",
             videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-            content:
-              "Explore the internals of dynamic arrays (vector in C++, ArrayList in Java) and understand amortized constant time execution.",
+            content: "Explore the internals of dynamic arrays (vector in C++, ArrayList in Java) and understand amortized constant time execution."
           },
           {
             id: "two-pointers",
@@ -117,8 +114,7 @@ export const mockCourses: Course[] = [
             duration: "22:10",
             type: "video",
             videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-            content:
-              "Master the two-pointer technique for array manipulation and linear scanning.",
+            content: "Master the two-pointer technique for array manipulation and linear scanning."
           },
           {
             id: "sliding-window",
@@ -126,10 +122,9 @@ export const mockCourses: Course[] = [
             duration: "25:30",
             type: "video",
             videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-            content:
-              "Understand fixed and variable size sliding windows for solving sub-array problems optimally.",
-          },
-        ],
+            content: "Understand fixed and variable size sliding windows for solving sub-array problems optimally."
+          }
+        ]
       },
       {
         id: "linked-lists",
@@ -141,8 +136,7 @@ export const mockCourses: Course[] = [
             duration: "15:45",
             type: "video",
             videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-            content:
-              "Nodes, pointers, structural layout in memory, and fundamental operations like traversal and insertion.",
+            content: "Nodes, pointers, structural layout in memory, and fundamental operations like traversal and insertion."
           },
           {
             id: "detect-loop",
@@ -150,10 +144,9 @@ export const mockCourses: Course[] = [
             duration: "20:15",
             type: "video",
             videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-            content:
-              "Visual proof of Floyd's tortoise and hare algorithm for detecting cycles in linked lists.",
-          },
-        ],
+            content: "Visual proof of Floyd's tortoise and hare algorithm for detecting cycles in linked lists."
+          }
+        ]
       },
       {
         id: "trees-graphs",
@@ -165,8 +158,7 @@ export const mockCourses: Course[] = [
             duration: "24:50",
             type: "video",
             videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-            content:
-              "Understand the BST invariant, searching, insertion, and deletion algorithms.",
+            content: "Understand the BST invariant, searching, insertion, and deletion algorithms."
           },
           {
             id: "graph-traversals",
@@ -174,18 +166,16 @@ export const mockCourses: Course[] = [
             duration: "30:00",
             type: "video",
             videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-            content:
-              "Deep dive into BFS and DFS implementations using queues, stacks, and recursion on adjacency lists.",
-          },
-        ],
-      },
-    ],
+            content: "Deep dive into BFS and DFS implementations using queues, stacks, and recursion on adjacency lists."
+          }
+        ]
+      }
+    ]
   },
   {
     id: "system-design",
     title: "System Design & Scaling",
-    description:
-      "Learn how to architect high-throughput, fault-tolerant distributed systems. Covers CDN, load balancers, caching, and sharding.",
+    description: "Learn how to architect high-throughput, fault-tolerant distributed systems. Covers CDN, load balancers, caching, and sharding.",
     thumbnail: "from-amber-500/20 to-orange-600/20 border-orange-500/30",
     difficulty: "Advanced",
     rating: 4.8,
@@ -204,8 +194,7 @@ export const mockCourses: Course[] = [
             duration: "14:20",
             type: "video",
             videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-            content:
-              "Understanding architectural limitations of scaling vertically and how to design application servers to scale out horizontally.",
+            content: "Understanding architectural limitations of scaling vertically and how to design application servers to scale out horizontally."
           },
           {
             id: "load-balancer-algos",
@@ -213,10 +202,9 @@ export const mockCourses: Course[] = [
             duration: "26:15",
             type: "video",
             videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-            content:
-              "Round-robin, least connections, consistent hashing, and Layer 4 vs Layer 7 routing systems.",
-          },
-        ],
+            content: "Round-robin, least connections, consistent hashing, and Layer 4 vs Layer 7 routing systems."
+          }
+        ]
       },
       {
         id: "caching-layer",
@@ -228,8 +216,7 @@ export const mockCourses: Course[] = [
             duration: "18:30",
             type: "video",
             videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-            content:
-              "Implementing eviction strategies and designing a high-efficiency caching layer in memory.",
+            content: "Implementing eviction strategies and designing a high-efficiency caching layer in memory."
           },
           {
             id: "cache-patterns",
@@ -237,18 +224,16 @@ export const mockCourses: Course[] = [
             duration: "21:40",
             type: "video",
             videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-            content:
-              "Mastering cache invalidation patterns, database synchronization, and caching consistency levels.",
-          },
-        ],
-      },
-    ],
+            content: "Mastering cache invalidation patterns, database synchronization, and caching consistency levels."
+          }
+        ]
+      }
+    ]
   },
   {
     id: "react-advanced",
     title: "React Advanced Patterns",
-    description:
-      "Deep dive into React core internals. Learn fiber reconciliation, custom hook architecture, and state management optimization.",
+    description: "Deep dive into React core internals. Learn fiber reconciliation, custom hook architecture, and state management optimization.",
     thumbnail: "from-teal-500/20 to-cyan-600/20 border-cyan-500/30",
     difficulty: "Intermediate",
     rating: 4.7,
@@ -267,8 +252,7 @@ export const mockCourses: Course[] = [
             duration: "28:10",
             type: "video",
             videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-            content:
-              "Learn how the virtual DOM reconciles updates with fiber node trees, concurrent scheduling, and rendering phases.",
+            content: "Learn how the virtual DOM reconciles updates with fiber node trees, concurrent scheduling, and rendering phases."
           },
           {
             id: "concurrent-features",
@@ -276,18 +260,16 @@ export const mockCourses: Course[] = [
             duration: "22:45",
             type: "video",
             videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-            content:
-              "Using useTransition, useDeferredValue, and suspense to optimize UI responsiveness.",
-          },
-        ],
-      },
-    ],
+            content: "Using useTransition, useDeferredValue, and suspense to optimize UI responsiveness."
+          }
+        ]
+      }
+    ]
   },
   {
     id: "operating-systems",
     title: "Operating Systems from Scratch",
-    description:
-      "Explore the internal architecture of operating systems. Build a basic kernel, understand processes, virtual memory, and file systems.",
+    description: "Explore the internal architecture of operating systems. Build a basic kernel, understand processes, virtual memory, and file systems.",
     thumbnail: "from-purple-500/20 to-pink-600/20 border-pink-500/30",
     difficulty: "Advanced",
     rating: 4.9,
@@ -306,8 +288,7 @@ export const mockCourses: Course[] = [
             duration: "18:20",
             type: "video",
             videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-            content:
-              "Understanding real mode vs protected mode, x86 assembly booting, and GRUB integration.",
+            content: "Understanding real mode vs protected mode, x86 assembly booting, and GRUB integration."
           },
           {
             id: "kernel-entry",
@@ -315,10 +296,9 @@ export const mockCourses: Course[] = [
             duration: "25:40",
             type: "video",
             videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-            content:
-              "Setup the stack, disable interrupts, and transition control flow to a bare-metal C main function.",
-          },
-        ],
+            content: "Setup the stack, disable interrupts, and transition control flow to a bare-metal C main function."
+          }
+        ]
       },
       {
         id: "process-mgmt",
@@ -330,21 +310,19 @@ export const mockCourses: Course[] = [
             duration: "22:15",
             type: "video",
             videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-            content:
-              "Saving registers, Process Control Block (PCB) structures, and thread scheduler implementations.",
-          },
-        ],
-      },
-    ],
-  },
+            content: "Saving registers, Process Control Block (PCB) structures, and thread scheduler implementations."
+          }
+        ]
+      }
+    ]
+  }
 ];
 
 export const mockArticles: Article[] = [
   {
     id: "v8-engine-internals",
     title: "JavaScript Engine Deep Dive: V8 Compilation & Memory Management",
-    description:
-      "An in-depth look into how Google's V8 engine compiles JS to machine code via Ignition and Fanfare, and how it manages the heap and garbage collector.",
+    description: "An in-depth look into how Google's V8 engine compiles JS to machine code via Ignition and Fanfare, and how it manages the heap and garbage collector.",
     category: "Systems",
     readTime: "12 min read",
     publishedAt: "June 15, 2026",
@@ -413,13 +391,12 @@ V8 divides its memory heap into several spaces:
 - **Large Object Space**: Allocations exceeding size limits of other spaces.
 
 The garbage collector, **Orinoco**, operates concurrently and incrementally to avoid UI/thread blocks, ensuring modern web applications achieve fluid, responsive performance.
-`,
+`
   },
   {
     id: "scaling-websockets",
     title: "Scaling WebSockets to 10 Million Concurrent Connections",
-    description:
-      "Discover the system architecture patterns, Linux kernel tweaks, and protocol hacks needed to scale real-time WebSocket servers under heavy memory constraints.",
+    description: "Discover the system architecture patterns, Linux kernel tweaks, and protocol hacks needed to scale real-time WebSocket servers under heavy memory constraints.",
     category: "Architecture",
     readTime: "15 min read",
     publishedAt: "May 28, 2026",
@@ -469,16 +446,15 @@ Client Sockets  --->  Load Balancer (SSL Termination)  --->  WebSocket App Nodes
 \`\`\`
 
 Because load-balanced clients land on different app instances, you must synchronize messages using a fast pub/sub message broker (like Redis or NATS) to forward events across nodes.
-`,
-  },
+`
+  }
 ];
 
 export const mockTutorials: Tutorial[] = [
   {
     id: "custom-http-server-c",
     title: "Build a Custom HTTP Server in C from Scratch",
-    description:
-      "Write raw socket boilerplate, parse HTTP headers, manage connection lifecycles, and handle concurrent client requests with select/poll.",
+    description: "Write raw socket boilerplate, parse HTTP headers, manage connection lifecycles, and handle concurrent client requests with select/poll.",
     category: "Systems",
     difficulty: "Hard",
     estimatedTime: "2 hours",
@@ -486,8 +462,7 @@ export const mockTutorials: Tutorial[] = [
     steps: [
       {
         title: "Step 1: Socket Creation & Binding",
-        description:
-          "Start by creating an IPv4 TCP socket and binding it to a local port. We use standard POSIX syscalls.",
+        description: "Start by creating an IPv4 TCP socket and binding it to a local port. We use standard POSIX syscalls.",
         codeSnippet: `#include <stdio.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -505,12 +480,11 @@ int main() {
     printf("Server listening on port 8080\\n");
     return 0;
 }`,
-        language: "c",
+        language: "c"
       },
       {
         title: "Step 2: Accepting Connections & Parsing Headers",
-        description:
-          "Add an event loop to accept incoming client connections, read client bytes, and print the raw HTTP request header.",
+        description: "Add an event loop to accept incoming client connections, read client bytes, and print the raw HTTP request header.",
         codeSnippet: `int addrlen = sizeof(address);
 while(1) {
     int client_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen);
@@ -522,15 +496,14 @@ while(1) {
     write(client_socket, response, strlen(response));
     close(client_socket);
 }`,
-        language: "c",
-      },
-    ],
+        language: "c"
+      }
+    ]
   },
   {
     id: "secure-jwt-auth-express",
     title: "Secure JWT Authentication with HttpOnly Cookies",
-    description:
-      "Learn how to build a production-ready authentication flow in Express.js. Mitigate XSS and CSRF using signed HttpOnly cookies.",
+    description: "Learn how to build a production-ready authentication flow in Express.js. Mitigate XSS and CSRF using signed HttpOnly cookies.",
     category: "Backend",
     difficulty: "Medium",
     estimatedTime: "45 mins",
@@ -538,8 +511,7 @@ while(1) {
     steps: [
       {
         title: "Step 1: Express Server & Cookie Setup",
-        description:
-          "Initialize an Express app and configure cookie-parser. Configure cookie flags such as httpOnly, secure, and sameSite.",
+        description: "Initialize an Express app and configure cookie-parser. Configure cookie flags such as httpOnly, secure, and sameSite.",
         codeSnippet: `const express = require('express');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
@@ -558,57 +530,49 @@ app.post('/api/login', (req, res) => {
   });
   res.json({ success: true, message: 'Logged in successfully' });
 });`,
-        language: "javascript",
-      },
-    ],
-  },
+        language: "javascript"
+      }
+    ]
+  }
 ];
 
 export const mockRoadmaps: Roadmap[] = [
   {
     id: "backend-developer",
     title: "Backend Engineer Learning Path",
-    description:
-      "From programming fundamentals, database designs, networks, up to scaling distributed systems.",
+    description: "From programming fundamentals, database designs, networks, up to scaling distributed systems.",
     nodes: [
       {
         id: "programming-lang",
         label: "1. Core Language",
-        description:
-          "Master a structured backend programming language like Go, Rust, C++, or TypeScript.",
+        description: "Master a structured backend programming language like Go, Rust, C++, or TypeScript.",
         status: "completed",
         resources: [
           { label: "Go Tour", to: "https://go.dev/tour/" },
-          { label: "Rust Book", to: "https://doc.rust-lang.org/book/" },
-        ],
+          { label: "Rust Book", to: "https://doc.rust-lang.org/book/" }
+        ]
       },
       {
         id: "networking-basics",
         label: "2. Networking Protocols",
-        description:
-          "Understand TCP/IP sockets, DNS resolution, HTTP/1.1, HTTP/2, TLS handshake, and gRPC endpoints.",
+        description: "Understand TCP/IP sockets, DNS resolution, HTTP/1.1, HTTP/2, TLS handshake, and gRPC endpoints.",
         status: "in-progress",
         resources: [
-          {
-            label: "Build HTTP Server in C",
-            to: "/learn/tutorials?id=custom-http-server-c",
-          },
-        ],
+          { label: "Build HTTP Server in C", to: "/learn/tutorials?id=custom-http-server-c" }
+        ]
       },
       {
         id: "relational-databases",
         label: "3. Databases & Indexing",
-        description:
-          "SQL schemas, relational modeling, index implementation (B-Trees vs LSM), ACID guarantees, and transactions.",
-        status: "locked",
+        description: "SQL schemas, relational modeling, index implementation (B-Trees vs LSM), ACID guarantees, and transactions.",
+        status: "locked"
       },
       {
         id: "caching-scaling",
         label: "4. Distributed Caching",
-        description:
-          "Scale read-heavy workloads using Redis or Memcached clusters. Design invalidation protocols.",
-        status: "locked",
-      },
-    ],
-  },
+        description: "Scale read-heavy workloads using Redis or Memcached clusters. Design invalidation protocols.",
+        status: "locked"
+      }
+    ]
+  }
 ];

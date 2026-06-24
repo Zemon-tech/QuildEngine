@@ -1,65 +1,46 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { mockCourses } from "#/lib/learn-db";
 
 function getLocalStorageState() {
   if (typeof window === "undefined") {
-    return {
-      enrolled: mockCourses.filter((c) => c.enrolled).map((c) => c.id),
-      progress: {},
-    };
+    return { enrolled: mockCourses.filter(c => c.enrolled).map(c => c.id), progress: {} };
   }
 
   let enrolled = localStorage.getItem("quild_enrolled_courses");
   let progress = localStorage.getItem("quild_course_progress");
 
   if (!enrolled) {
-    const initialEnrolled = mockCourses
-      .filter((c) => c.enrolled)
-      .map((c) => c.id);
-    localStorage.setItem(
-      "quild_enrolled_courses",
-      JSON.stringify(initialEnrolled),
-    );
+    const initialEnrolled = mockCourses.filter(c => c.enrolled).map(c => c.id);
+    localStorage.setItem("quild_enrolled_courses", JSON.stringify(initialEnrolled));
     enrolled = JSON.stringify(initialEnrolled);
   }
 
   if (!progress) {
-    const initialProgress: Record<
-      string,
-      { completedLessons: string[]; progressPercent: number }
-    > = {};
+    const initialProgress: Record<string, { completedLessons: string[]; progressPercent: number }> = {};
     for (const course of mockCourses) {
       if (course.enrolled) {
         // Find some completed lessons to match initial progress percent
-        const allLessons = course.modules.flatMap((m) => m.lessons);
-        const countToComplete = Math.round(
-          (course.progress / 100) * allLessons.length,
-        );
-        const completed = allLessons.slice(0, countToComplete).map((l) => l.id);
+        const allLessons = course.modules.flatMap(m => m.lessons);
+        const countToComplete = Math.round((course.progress / 100) * allLessons.length);
+        const completed = allLessons.slice(0, countToComplete).map(l => l.id);
         initialProgress[course.id] = {
           completedLessons: completed,
-          progressPercent: course.progress,
+          progressPercent: course.progress
         };
       } else {
         initialProgress[course.id] = {
           completedLessons: [],
-          progressPercent: 0,
+          progressPercent: 0
         };
       }
     }
-    localStorage.setItem(
-      "quild_course_progress",
-      JSON.stringify(initialProgress),
-    );
+    localStorage.setItem("quild_course_progress", JSON.stringify(initialProgress));
     progress = JSON.stringify(initialProgress);
   }
 
   return {
     enrolled: JSON.parse(enrolled) as string[],
-    progress: JSON.parse(progress) as Record<
-      string,
-      { completedLessons: string[]; progressPercent: number }
-    >,
+    progress: JSON.parse(progress) as Record<string, { completedLessons: string[]; progressPercent: number }>
   };
 }
 
@@ -70,15 +51,11 @@ export function useCourses() {
       const state = getLocalStorageState();
       return mockCourses.map((course) => {
         const isEnrolled = state.enrolled.includes(course.id);
-        const progressData = state.progress[course.id] || {
-          completedLessons: [],
-          progressPercent: 0,
-        };
-        const allLessons = course.modules.flatMap((m) => m.lessons);
+        const progressData = state.progress[course.id] || { completedLessons: [], progressPercent: 0 };
+        const allLessons = course.modules.flatMap(m => m.lessons);
         const total = allLessons.length;
         const completed = progressData.completedLessons.length;
-        const calculatedPercent =
-          total > 0 ? Math.round((completed / total) * 100) : 0;
+        const calculatedPercent = total > 0 ? Math.round((completed / total) * 100) : 0;
 
         return {
           ...course,
@@ -102,16 +79,12 @@ export function useCourse(courseId: string) {
 
       const state = getLocalStorageState();
       const isEnrolled = state.enrolled.includes(course.id);
-      const progressData = state.progress[course.id] || {
-        completedLessons: [],
-        progressPercent: 0,
-      };
-
-      const allLessons = course.modules.flatMap((m) => m.lessons);
+      const progressData = state.progress[course.id] || { completedLessons: [], progressPercent: 0 };
+      
+      const allLessons = course.modules.flatMap(m => m.lessons);
       const total = allLessons.length;
       const completed = progressData.completedLessons.length;
-      const calculatedPercent =
-        total > 0 ? Math.round((completed / total) * 100) : 0;
+      const calculatedPercent = total > 0 ? Math.round((completed / total) * 100) : 0;
 
       return {
         ...course,
@@ -135,26 +108,20 @@ export function useEnrollInCourse() {
       const state = getLocalStorageState();
       if (!state.enrolled.includes(courseId)) {
         state.enrolled.push(courseId);
-        localStorage.setItem(
-          "quild_enrolled_courses",
-          JSON.stringify(state.enrolled),
-        );
+        localStorage.setItem("quild_enrolled_courses", JSON.stringify(state.enrolled));
 
         state.progress[courseId] = {
           completedLessons: [],
-          progressPercent: 0,
+          progressPercent: 0
         };
-        localStorage.setItem(
-          "quild_course_progress",
-          JSON.stringify(state.progress),
-        );
+        localStorage.setItem("quild_course_progress", JSON.stringify(state.progress));
       }
       return courseId;
     },
     onSuccess: (courseId) => {
       queryClient.invalidateQueries({ queryKey: ["courses"] });
       queryClient.invalidateQueries({ queryKey: ["courses", courseId] });
-    },
+    }
   });
 }
 
@@ -162,15 +129,9 @@ export function useToggleLessonCompletion() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({
-      courseId,
-      lessonId,
-    }: {
-      courseId: string;
-      lessonId: string;
-    }) => {
+    mutationFn: async ({ courseId, lessonId }: { courseId: string; lessonId: string }) => {
       const state = getLocalStorageState();
-      const course = mockCourses.find((c) => c.id === courseId);
+      const course = mockCourses.find(c => c.id === courseId);
       if (!course) throw new Error("Course not found");
 
       if (!state.progress[courseId]) {
@@ -186,26 +147,22 @@ export function useToggleLessonCompletion() {
         completed.push(lessonId);
       }
 
-      const allLessons = course.modules.flatMap((m) => m.lessons);
+      const allLessons = course.modules.flatMap(m => m.lessons);
       const total = allLessons.length;
-      const progressPercent =
-        total > 0 ? Math.round((completed.length / total) * 100) : 0;
+      const progressPercent = total > 0 ? Math.round((completed.length / total) * 100) : 0;
 
       state.progress[courseId] = {
         completedLessons: completed,
-        progressPercent,
+        progressPercent
       };
 
-      localStorage.setItem(
-        "quild_course_progress",
-        JSON.stringify(state.progress),
-      );
+      localStorage.setItem("quild_course_progress", JSON.stringify(state.progress));
       return { courseId, lessonId, completed };
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["courses"] });
       queryClient.invalidateQueries({ queryKey: ["courses", data.courseId] });
-    },
+    }
   });
 }
 
@@ -224,8 +181,8 @@ export function getLocalStorageBookmarks() {
     return { courses: [] as string[], lessons: [] as BookmarkedLesson[] };
   }
 
-  const courses = localStorage.getItem("quild_bookmarked_courses");
-  const lessons = localStorage.getItem("quild_bookmarked_lessons");
+  let courses = localStorage.getItem("quild_bookmarked_courses");
+  let lessons = localStorage.getItem("quild_bookmarked_lessons");
 
   return {
     courses: courses ? (JSON.parse(courses) as string[]) : [],
@@ -257,16 +214,13 @@ export function useToggleCourseBookmark() {
         state.courses.push(courseId);
       }
 
-      localStorage.setItem(
-        "quild_bookmarked_courses",
-        JSON.stringify(state.courses),
-      );
+      localStorage.setItem("quild_bookmarked_courses", JSON.stringify(state.courses));
       return state;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["bookmarks"] });
       queryClient.invalidateQueries({ queryKey: ["courses"] });
-    },
+    }
   });
 }
 
@@ -276,9 +230,7 @@ export function useToggleLessonBookmark() {
   return useMutation({
     mutationFn: async (lesson: BookmarkedLesson) => {
       const state = getLocalStorageBookmarks();
-      const idx = state.lessons.findIndex(
-        (l) => l.lessonId === lesson.lessonId,
-      );
+      const idx = state.lessons.findIndex(l => l.lessonId === lesson.lessonId);
 
       if (idx > -1) {
         state.lessons.splice(idx, 1);
@@ -286,15 +238,13 @@ export function useToggleLessonBookmark() {
         state.lessons.push(lesson);
       }
 
-      localStorage.setItem(
-        "quild_bookmarked_lessons",
-        JSON.stringify(state.lessons),
-      );
+      localStorage.setItem("quild_bookmarked_lessons", JSON.stringify(state.lessons));
       return state;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["bookmarks"] });
       queryClient.invalidateQueries({ queryKey: ["courses"] });
-    },
+    }
   });
 }
+
