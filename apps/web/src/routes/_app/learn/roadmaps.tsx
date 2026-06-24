@@ -1,215 +1,299 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { CheckCircle2, Circle, Lock, ExternalLink, Sparkles, BookOpen, ChevronRight } from "lucide-react";
-import { mockRoadmaps, type Roadmap } from "#/lib/learn-db";
+import { createFileRoute } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
+import { useRoadmaps, useRoadmapDetail } from "#/hooks/use-roadmaps";
+import { SearchBar } from "#/components/roadmaps/search-bar";
+import { FilterPanel, type FilterState } from "#/components/roadmaps/filter-panel";
+import { FeaturedRoadmapCard } from "#/components/roadmaps/roadmap-card";
+import { CategoryCard } from "#/components/roadmaps/category-card";
+import { StatsCard } from "#/components/roadmaps/stats-card";
+import { AchievementCard } from "#/components/roadmaps/achievement-card";
+import { Breadcrumbs } from "#/components/roadmaps/breadcrumbs";
+import { LoadingSkeleton, CanvasSkeleton } from "#/components/roadmaps/loading-skeleton";
+import { RoadmapCanvas } from "#/components/roadmaps/roadmap-canvas";
+import { ProgressSidebar } from "#/components/roadmaps/progress-sidebar";
+import { ResourcePanel } from "#/components/roadmaps/resource-panel";
+import { Badge } from "#/components/ui/badge";
+import * as Icons from "lucide-react";
+import type { RoadmapCategory, Achievement, RoadmapNode } from "#/types/roadmaps";
+
+// Define search query parameters
+interface RoadmapSearch {
+  id?: string;
+  node?: string;
+}
 
 export const Route = createFileRoute("/_app/learn/roadmaps")({
+  validateSearch: (search: Record<string, unknown>): RoadmapSearch => {
+    return {
+      id: search.id as string | undefined,
+      node: search.node as string | undefined,
+    };
+  },
   component: RoadmapsPage,
 });
 
 function RoadmapsPage() {
-  const [selectedRoadmap, setSelectedRoadmap] = useState<Roadmap>(mockRoadmaps[0]);
-  const [activeNode, setActiveNode] = useState<string | null>("programming-lang");
+  const { id: activeRoadmapId, node: activeNodeSearch } = Route.useSearch();
+  const navigate = Route.useNavigate();
 
+  const {
+    isLoading,
+    isError,
+    categories,
+    achievements,
+    progress,
+    toggleNodeCompletion,
+    toggleNodeBookmark,
+    toggleRoadmapFavorite,
+  } = useRoadmaps();
+
+  const { data: activeRoadmap, isLoading: isRoadmapLoading } = useRoadmapDetail(activeRoadmapId);
+
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
+
+  // Synchronize deep-linked node search param with local selection state
+  useEffect(() => {
+    if (activeNodeSearch) {
+      setSelectedNodeId(activeNodeSearch);
+    } else {
+      setSelectedNodeId(null);
+    }
+  }, [activeNodeSearch]);
+
+  // Filters State
+  const [filters, setFilters] = useState<FilterState>({
+    difficulty: [],
+    status: [],
+    duration: [],
+  });
+
+  const handleSelectNode = (nodeId: string) => {
+    setSelectedNodeId(nodeId);
+    navigate({
+      search: (prev) => ({ ...prev, node: nodeId }),
+    });
+  };
+
+  const handleClosePanel = () => {
+    setSelectedNodeId(null);
+    navigate({
+      search: (prev) => ({ id: prev.id }), // strip node query parameter
+    });
+  };
+
+  // Filter Categories
+  const filteredCategories = categories.filter((cat: RoadmapCategory) => {
+    // 1. Difficulty filter
+    if (filters.difficulty.length > 0 && !filters.difficulty.includes(cat.difficulty)) {
+      return false;
+    }
+
+    // 2. Duration filter
+    if (filters.duration.length > 0 && !filters.duration.includes(cat.duration)) {
+      return false;
+    }
+
+    // 3. Status filter
+    if (filters.status.length > 0) {
+      const isCompleted = cat.progress === 100;
+      const isInProgress = cat.progress > 0 && cat.progress < 100;
+      const isNotStarted = cat.progress === 0;
+
+      const hasMatch = filters.status.some((s: string) => {
+        if (s === "completed" && isCompleted) return true;
+        if (s === "in_progress" && isInProgress) return true;
+        if (s === "not_started" && isNotStarted) return true;
+        return false;
+      });
+
+      if (!hasMatch) return false;
+    }
+
+    return true;
+  });
+
+  // Separate featured paths (Frontend, Backend, AI/ML)
+  const featuredIds = ["frontend", "backend", "ai-ml"];
+  const featuredCategories = categories.filter((cat: RoadmapCategory) => featuredIds.includes(cat.id));
+
+  // Error boundary fallback
+  if (isError) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 text-center px-4">
+        <Icons.AlertTriangle className="size-12 text-rose-500 mb-4 animate-bounce" />
+        <h2 className="text-lg font-bold text-[var(--sb-ink)]">Failed to load Learning Roadmaps</h2>
+        <p className="text-sm text-[var(--sb-ink-dim)] mt-2 max-w-md">
+          There was an error communicating with the server functions. Please check your network and try again.
+        </p>
+        <button
+          onClick={() => window.location.reload()}
+          className="mt-6 px-4 py-2 bg-[var(--sb-accent)] hover:opacity-90 text-white rounded-lg text-xs font-semibold cursor-pointer active:scale-95 transition-all"
+        >
+          Reload Page
+        </button>
+      </div>
+    );
+  }
+
+  // Loading indicator states
+  if (isLoading || (activeRoadmapId && isRoadmapLoading)) {
+    return activeRoadmapId ? <CanvasSkeleton /> : <LoadingSkeleton />;
+  }
+
+  // Render Detailed Active Roadmap View (React Flow Canvas)
+  if (activeRoadmapId && activeRoadmap) {
+    return (
+      <div className="flex flex-col h-[calc(100vh-100px)] min-h-[550px] overflow-hidden page-enter px-1">
+        {/* Navigation Breadcrumbs */}
+        <Breadcrumbs
+          roadmapTitle={activeRoadmap.title}
+          topicTitle={selectedNodeId ? activeRoadmap.nodes.find((n: RoadmapNode) => n.id === selectedNodeId)?.data.title : undefined}
+          onExit={() => navigate({ search: {} })}
+        />
+
+        {/* Content Shell */}
+        <div className="flex-1 flex flex-col md:flex-row gap-6 overflow-hidden min-h-0">
+          {/* Main Flow Canvas */}
+          <div className="flex-1 h-full min-h-0">
+            <RoadmapCanvas
+              roadmap={activeRoadmap}
+              progress={progress}
+              onSelectNode={handleSelectNode}
+            />
+          </div>
+
+          {/* Sticky Progress sidebar */}
+          <div className="shrink-0 h-full overflow-y-auto hidden md:block">
+            <ProgressSidebar
+              roadmap={activeRoadmap}
+              progress={progress}
+              onSelectNode={handleSelectNode}
+            />
+          </div>
+        </div>
+
+        {/* Right drawer slide-out resources panel */}
+        {selectedNodeId && (
+          <ResourcePanel
+            roadmap={activeRoadmap}
+            nodeId={selectedNodeId}
+            progress={progress}
+            onClose={handleClosePanel}
+            onToggleCompletion={toggleNodeCompletion}
+            onToggleBookmark={toggleNodeBookmark}
+            onSelectNode={handleSelectNode}
+          />
+        )}
+      </div>
+    );
+  }
+
+  // Render Main Hub Dashboard (Categories list, search, metrics, achievements)
   return (
-    <div className="mx-auto max-w-6xl space-y-6">
-      {/* Page Header */}
-      <div className="mb-6">
+    <div className="mx-auto max-w-6xl px-4 py-4 space-y-10 page-enter select-none">
+      {/* 1. Hero Title & Subtitle */}
+      <div className="text-center max-w-2xl mx-auto space-y-4">
         <h1
-          className="text-2xl font-bold tracking-tight display-title"
+          className="text-3xl sm:text-4xl font-extrabold tracking-tight"
           style={{
             color: "var(--sb-ink)",
+            fontFamily: "'Fraunces', Georgia, serif",
           }}
         >
           Learning Roadmaps
         </h1>
-        <p className="mt-1 text-sm" style={{ color: "var(--sb-ink-muted)" }}>
-          Structured milestones to guide your transition from developer core fundamentals to expert systems engineer.
+        <p className="text-sm md:text-base leading-relaxed text-[var(--sb-ink-muted)]">
+          Follow guided, step-by-step learning paths to master key engineering domains.
+          Track your progress, earn XP points, and unlock achievements.
         </p>
       </div>
 
-      {/* Main Roadmap Hub Split Screen */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
-        {/* Left Column: Roadmap selector & Timeline Tree */}
-        <div className="lg:col-span-8 space-y-6">
-          
-          {/* Select Roadmaps Selector Bar */}
-          <div className="flex bg-[var(--sb-pill)] p-1 rounded-lg border border-[var(--sb-border)] self-start max-w-sm">
-            {mockRoadmaps.map((r) => (
-              <button
-                key={r.id}
-                onClick={() => {
-                  setSelectedRoadmap(r);
-                  setActiveNode(r.nodes[0]?.id || null);
-                }}
-                className={`flex-1 px-4 py-1.5 text-xs font-bold rounded-md transition-all cursor-pointer ${
-                  selectedRoadmap.id === r.id
-                    ? "bg-[var(--sb-bg)] text-[var(--sb-accent)] shadow-sm"
-                    : "text-[var(--sb-ink-dim)] hover:text-[var(--sb-ink)]"
-                }`}
-              >
-                {r.title.replace(" Learning Path", "")}
-              </button>
+      {/* 2. Global Search bar */}
+      <div className="max-w-xl mx-auto">
+        <SearchBar onSelectCategory={(id: string) => navigate({ search: { id } })} />
+      </div>
+
+      {/* 3. Progress Metrics statistics cards */}
+      <StatsCard progress={progress} />
+
+      {/* 4. Category filter pills panel */}
+      <FilterPanel filters={filters} onChange={setFilters} />
+
+      {/* 5. Featured Roadmap Cards List */}
+      {filteredCategories.length > 0 && (
+        <div className="space-y-4 max-w-4xl mx-auto">
+          <h2
+            className="text-xs uppercase font-extrabold tracking-widest"
+            style={{ color: "var(--sb-ink-dim)" }}
+          >
+            Signature Paths
+          </h2>
+          <div className="flex flex-col gap-4">
+            {featuredCategories
+              .filter((cat: RoadmapCategory) => filteredCategories.some((fc: RoadmapCategory) => fc.id === cat.id))
+              .map((cat: RoadmapCategory) => (
+                <FeaturedRoadmapCard
+                  key={cat.id}
+                  category={cat}
+                  isFavorite={progress.favorites?.includes(cat.id) ?? false}
+                  onToggleFavorite={() => toggleRoadmapFavorite(cat.id)}
+                />
+              ))}
+          </div>
+        </div>
+      )}
+
+      {/* 6. Remaining Categories Grid */}
+      <div className="space-y-4">
+        <h2
+          className="text-xs uppercase font-extrabold tracking-widest"
+          style={{ color: "var(--sb-ink-dim)" }}
+        >
+          Explore All Categories
+        </h2>
+        {filteredCategories.length === 0 ? (
+          <div className="text-center py-16 border border-dashed border-[var(--card-border)] rounded-2xl p-6">
+            <Icons.Layers3 size={32} className="text-[var(--sb-ink-dim)] mx-auto mb-3" />
+            <p className="text-sm font-bold text-[var(--sb-ink-muted)]">No matching paths found</p>
+            <p className="text-xs text-[var(--sb-ink-dim)] mt-1">
+              Try adjusting your difficulty or duration filters.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+            {filteredCategories.map((cat: RoadmapCategory) => (
+              <CategoryCard
+                key={cat.id}
+                category={cat}
+                isFavorite={progress.favorites?.includes(cat.id) ?? false}
+                onToggleFavorite={() => toggleRoadmapFavorite(cat.id)}
+                onClick={() => navigate({ search: { id: cat.id } })}
+              />
             ))}
           </div>
+        )}
+      </div>
 
-          {/* Interactive Timeline Tree */}
-          <div 
-            className="rounded-2xl p-6 border relative space-y-8"
-            style={{
-              background: "linear-gradient(165deg, var(--surface-strong), var(--surface))",
-              borderColor: "var(--line)",
-              boxShadow: "0 1px 0 var(--inset-glint) inset"
-            }}
+      {/* 7. Achievements section */}
+      <div className="space-y-4 border-t border-[var(--card-border)]/50 pt-8">
+        <div className="flex items-center gap-2">
+          <h2
+            className="text-xs uppercase font-extrabold tracking-widest"
+            style={{ color: "var(--sb-ink-dim)" }}
           >
-            {/* Connecting Vertical line */}
-            <div className="absolute left-[39px] top-8 bottom-8 w-[2px] bg-[var(--sb-border)]" />
-
-            {selectedRoadmap.nodes.map((node) => {
-              const isActive = activeNode === node.id;
-              const isCompleted = node.status === "completed";
-              const isInProgress = node.status === "in-progress";
-              const isLocked = node.status === "locked";
-
-              return (
-                <div 
-                  key={node.id}
-                  onClick={() => !isLocked && setActiveNode(node.id)}
-                  className={`relative flex gap-6 items-start transition-all ${
-                    isLocked ? "opacity-60 cursor-not-allowed" : "cursor-pointer"
-                  }`}
-                >
-                  {/* Status Indicator Icon wrapper */}
-                  <div className="relative z-10 flex size-8 items-center justify-center rounded-full border bg-[var(--sb-bg)] shrink-0 transition-transform hover:scale-105"
-                    style={{
-                      borderColor: isActive 
-                        ? "var(--sb-accent)" 
-                        : (isCompleted ? "rgb(13, 148, 136)" : "var(--sb-border)")
-                    }}
-                  >
-                    {isCompleted && (
-                      <CheckCircle2 size={16} className="text-teal-600 fill-teal-600/10" />
-                    )}
-                    {isInProgress && (
-                      <div className="size-2 rounded-full bg-[var(--sb-accent)] animate-ping" />
-                    )}
-                    {isLocked && (
-                      <Lock size={12} className="text-[var(--sb-ink-dim)]" />
-                    )}
-                    {!isCompleted && !isInProgress && !isLocked && (
-                      <Circle size={12} className="text-[var(--sb-ink-dim)]" />
-                    )}
-                  </div>
-
-                  {/* Node text card details */}
-                  <div 
-                    className={`flex-1 p-4 rounded-xl border transition-all ${
-                      isActive 
-                        ? "border-[var(--sb-accent)] bg-[var(--sb-pill)]"
-                        : "border-[var(--line)] bg-transparent hover:border-[var(--sb-border)]"
-                    }`}
-                  >
-                    <h3 className="font-bold text-sm" style={{ color: "var(--sb-ink)" }}>
-                      {node.label}
-                    </h3>
-                    <p className="text-xs mt-1 leading-relaxed" style={{ color: "var(--sb-ink-muted)" }}>
-                      {node.description}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+            My Learning Achievements
+          </h2>
+          <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 hover:bg-emerald-500/15 border-0 text-[10px] rounded-full">
+            {achievements.filter((a: Achievement) => a.status === "unlocked").length} Unlocked
+          </Badge>
         </div>
-
-        {/* Right Column: Node details & resources panel */}
-        <div className="lg:col-span-4 space-y-4">
-          <div 
-            className="rounded-2xl p-5 border flex flex-col gap-4"
-            style={{ 
-              background: "var(--surface)", 
-              borderColor: "var(--line)" 
-            }}
-          >
-            <h3 className="font-bold text-xs uppercase tracking-wider text-[var(--sb-ink-dim)] pb-2 border-b border-[var(--sb-border)] flex items-center gap-1.5">
-              <Sparkles size={14} className="text-[var(--sb-accent)]" /> Roadmap Details
-            </h3>
-
-            {(() => {
-              const activeNodeObj = selectedRoadmap.nodes.find(n => n.id === activeNode);
-              if (!activeNodeObj) {
-                return (
-                  <p className="text-xs text-[var(--sb-ink-dim)] text-center py-8">
-                    Select any unlocked roadmap milestone to view resources.
-                  </p>
-                );
-              }
-
-              return (
-                <div className="space-y-4 text-xs">
-                  <div className="space-y-1">
-                    <h4 className="font-bold text-sm" style={{ color: "var(--sb-ink)" }}>{activeNodeObj.label}</h4>
-                    <span className={`inline-block text-[9px] font-bold px-2 py-0.5 rounded uppercase ${
-                      activeNodeObj.status === "completed" 
-                        ? "bg-teal-500/10 text-teal-600" 
-                        : "bg-amber-500/10 text-amber-600"
-                    }`}>
-                      {activeNodeObj.status}
-                    </span>
-                  </div>
-
-                  <p className="leading-relaxed text-[var(--sb-ink-muted)]">
-                    To master this phase, deep dive into recommended articles, guides, and projects listed below. Verify your understanding by writing compiler inputs or systems design diagrams.
-                  </p>
-
-                  {/* Resources Links checklist */}
-                  {activeNodeObj.resources && activeNodeObj.resources.length > 0 ? (
-                    <div className="space-y-2 pt-2 border-t border-[var(--sb-border)]">
-                      <p className="font-bold text-[var(--sb-ink-dim)] uppercase tracking-wider text-[9px] flex items-center gap-1">
-                        <BookOpen size={10} /> Recommended Resources
-                      </p>
-                      
-                      <div className="flex flex-col gap-1.5">
-                        {activeNodeObj.resources.map((res, j) => {
-                          const isExternal = res.to.startsWith("http");
-
-                          return isExternal ? (
-                            <a
-                              key={j}
-                              href={res.to}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="flex items-center justify-between p-2.5 rounded-lg border border-[var(--sb-border)] hover:bg-[var(--sb-bg-hover)] text-[var(--sb-accent)] font-semibold transition-colors"
-                            >
-                              <span>{res.label}</span>
-                              <ExternalLink size={12} />
-                            </a>
-                          ) : (
-                            <Link
-                              key={j}
-                              to={res.to}
-                              className="flex items-center justify-between p-2.5 rounded-lg border border-[var(--sb-border)] hover:bg-[var(--sb-bg-hover)] text-[var(--sb-accent)] font-semibold transition-colors"
-                            >
-                              <span>{res.label}</span>
-                              <ChevronRight size={12} />
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  ) : (
-                    <p className="text-[10px] text-[var(--sb-ink-dim)] italic border-t border-[var(--sb-border)] pt-3">
-                      Recommended resources will be unlocked when you reach this step.
-                    </p>
-                  )}
-                </div>
-              );
-            })()}
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          {achievements.map((ach: Achievement) => (
+            <AchievementCard key={ach.id} achievement={ach} />
+          ))}
         </div>
-
       </div>
     </div>
   );
 }
+export default RoadmapsPage;

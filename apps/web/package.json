@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@blocknote/core": "^0.51.4",
+    "@blocknote/mantine": "^0.51.4",
     "@blocknote/react": "^0.51.4",
     "@cloudflare/vite-plugin": "^1.26.0",
     "@radix-ui/react-dialog": "^1.1.17",
@@ -44,6 +45,7 @@
     "cmdk": "^1.1.1",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.40.0",
+    "immer": "^11.1.8",
     "lucide-react": "^0.577.0",
     "media-chrome": "^4.19.2",
     "motion": "^12.40.0",
