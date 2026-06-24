@@ -65,6 +65,18 @@ export function SecondarySidebar() {
   const currentPath = routerState.location.pathname;
   const [collapsed, setCollapsed] = useState(false);
 
+  const isProblemWorkspace =
+    currentPath.includes("/practice/problem/") ||
+    currentPath.includes("/practice/problems/");
+
+  useEffect(() => {
+    if (isProblemWorkspace) {
+      setCollapsed(true);
+    } else {
+      setCollapsed(false);
+    }
+  }, [isProblemWorkspace]);
+
   const isAiDashboard = currentPath === "/dashboard/ai-dashboard";
   const isAiSidebarOpen = useAiDashboardSidebarOpen();
 

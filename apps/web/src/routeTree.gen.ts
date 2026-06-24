@@ -44,6 +44,7 @@ import { Route as AppPracticeDsaIndexRouteImport } from './routes/_app/practice/
 import { Route as AppPracticeCaseStudiesIndexRouteImport } from './routes/_app/practice/case-studies/index'
 import { Route as AppPracticeAssessmentsIndexRouteImport } from './routes/_app/practice/assessments/index'
 import { Route as AppCoursesCourseIdIndexRouteImport } from './routes/_app/courses/$courseId/index'
+import { Route as AppPracticeProblemProblemIdRouteImport } from './routes/_app/practice/problem/$problemId'
 import { Route as AppPracticeInterviewQaTypeRouteImport } from './routes/_app/practice/interview-qa/$type'
 import { Route as AppPracticeDsaTopicIdRouteImport } from './routes/_app/practice/dsa/$topicId'
 import { Route as AppPracticeCaseStudiesTypeRouteImport } from './routes/_app/practice/case-studies/$type'
@@ -235,6 +236,12 @@ const AppCoursesCourseIdIndexRoute = AppCoursesCourseIdIndexRouteImport.update({
   path: '/courses/$courseId/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppPracticeProblemProblemIdRoute =
+  AppPracticeProblemProblemIdRouteImport.update({
+    id: '/problem/$problemId',
+    path: '/problem/$problemId',
+    getParentRoute: () => AppPracticeRoute,
+  } as any)
 const AppPracticeInterviewQaTypeRoute =
   AppPracticeInterviewQaTypeRouteImport.update({
     id: '/interview-qa/$type',
@@ -348,6 +355,7 @@ export interface FileRoutesByFullPath {
   '/practice/case-studies/$type': typeof AppPracticeCaseStudiesTypeRoute
   '/practice/dsa/$topicId': typeof AppPracticeDsaTopicIdRouteWithChildren
   '/practice/interview-qa/$type': typeof AppPracticeInterviewQaTypeRoute
+  '/practice/problem/$problemId': typeof AppPracticeProblemProblemIdRoute
   '/courses/$courseId/': typeof AppCoursesCourseIdIndexRoute
   '/practice/assessments/': typeof AppPracticeAssessmentsIndexRoute
   '/practice/case-studies/': typeof AppPracticeCaseStudiesIndexRoute
@@ -395,6 +403,7 @@ export interface FileRoutesByTo {
   '/practice/assessments/$type': typeof AppPracticeAssessmentsTypeRoute
   '/practice/case-studies/$type': typeof AppPracticeCaseStudiesTypeRoute
   '/practice/interview-qa/$type': typeof AppPracticeInterviewQaTypeRoute
+  '/practice/problem/$problemId': typeof AppPracticeProblemProblemIdRoute
   '/courses/$courseId': typeof AppCoursesCourseIdIndexRoute
   '/practice/assessments': typeof AppPracticeAssessmentsIndexRoute
   '/practice/case-studies': typeof AppPracticeCaseStudiesIndexRoute
@@ -446,6 +455,7 @@ export interface FileRoutesById {
   '/_app/practice/case-studies/$type': typeof AppPracticeCaseStudiesTypeRoute
   '/_app/practice/dsa/$topicId': typeof AppPracticeDsaTopicIdRouteWithChildren
   '/_app/practice/interview-qa/$type': typeof AppPracticeInterviewQaTypeRoute
+  '/_app/practice/problem/$problemId': typeof AppPracticeProblemProblemIdRoute
   '/_app/courses/$courseId/': typeof AppCoursesCourseIdIndexRoute
   '/_app/practice/assessments/': typeof AppPracticeAssessmentsIndexRoute
   '/_app/practice/case-studies/': typeof AppPracticeCaseStudiesIndexRoute
@@ -497,6 +507,7 @@ export interface FileRouteTypes {
     | '/practice/case-studies/$type'
     | '/practice/dsa/$topicId'
     | '/practice/interview-qa/$type'
+    | '/practice/problem/$problemId'
     | '/courses/$courseId/'
     | '/practice/assessments/'
     | '/practice/case-studies/'
@@ -544,6 +555,7 @@ export interface FileRouteTypes {
     | '/practice/assessments/$type'
     | '/practice/case-studies/$type'
     | '/practice/interview-qa/$type'
+    | '/practice/problem/$problemId'
     | '/courses/$courseId'
     | '/practice/assessments'
     | '/practice/case-studies'
@@ -594,6 +606,7 @@ export interface FileRouteTypes {
     | '/_app/practice/case-studies/$type'
     | '/_app/practice/dsa/$topicId'
     | '/_app/practice/interview-qa/$type'
+    | '/_app/practice/problem/$problemId'
     | '/_app/courses/$courseId/'
     | '/_app/practice/assessments/'
     | '/_app/practice/case-studies/'
@@ -861,6 +874,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppCoursesCourseIdIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/practice/problem/$problemId': {
+      id: '/_app/practice/problem/$problemId'
+      path: '/problem/$problemId'
+      fullPath: '/practice/problem/$problemId'
+      preLoaderRoute: typeof AppPracticeProblemProblemIdRouteImport
+      parentRoute: typeof AppPracticeRoute
+    }
     '/_app/practice/interview-qa/$type': {
       id: '/_app/practice/interview-qa/$type'
       path: '/interview-qa/$type'
@@ -984,6 +1004,7 @@ interface AppPracticeRouteChildren {
   AppPracticeCaseStudiesTypeRoute: typeof AppPracticeCaseStudiesTypeRoute
   AppPracticeDsaTopicIdRoute: typeof AppPracticeDsaTopicIdRouteWithChildren
   AppPracticeInterviewQaTypeRoute: typeof AppPracticeInterviewQaTypeRoute
+  AppPracticeProblemProblemIdRoute: typeof AppPracticeProblemProblemIdRoute
   AppPracticeAssessmentsIndexRoute: typeof AppPracticeAssessmentsIndexRoute
   AppPracticeCaseStudiesIndexRoute: typeof AppPracticeCaseStudiesIndexRoute
   AppPracticeDsaIndexRoute: typeof AppPracticeDsaIndexRoute
@@ -996,6 +1017,7 @@ const AppPracticeRouteChildren: AppPracticeRouteChildren = {
   AppPracticeCaseStudiesTypeRoute: AppPracticeCaseStudiesTypeRoute,
   AppPracticeDsaTopicIdRoute: AppPracticeDsaTopicIdRouteWithChildren,
   AppPracticeInterviewQaTypeRoute: AppPracticeInterviewQaTypeRoute,
+  AppPracticeProblemProblemIdRoute: AppPracticeProblemProblemIdRoute,
   AppPracticeAssessmentsIndexRoute: AppPracticeAssessmentsIndexRoute,
   AppPracticeCaseStudiesIndexRoute: AppPracticeCaseStudiesIndexRoute,
   AppPracticeDsaIndexRoute: AppPracticeDsaIndexRoute,
