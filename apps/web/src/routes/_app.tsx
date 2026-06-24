@@ -1,5 +1,9 @@
-import { useEffect, useState, useRef } from "react";
-import { createFileRoute, Outlet, useRouterState } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Outlet,
+  useRouterState,
+} from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { AppSidebar } from "#/components/sidebar/app-sidebar";
 import { SecondarySidebar } from "#/components/sidebar/secondary-sidebar";
 import { SidebarInset, SidebarProvider } from "#/components/ui/sidebar";
@@ -16,59 +20,60 @@ function AppLayout() {
   const parts = currentPath.split("/").filter(Boolean);
   const isThirdLevelRoute = parts.length >= 3;
 
-  // Read initial sidebar state from cookies or default to true
+  // Read initial sidebar state from cookies/localStorage or default to true
   const [open, setOpen] = useState(() => {
     if (typeof window !== "undefined") {
-      const match = document.cookie.match(new RegExp('(^| )sidebar_state=([^;]+)'));
+      const isProblem =
+        window.location.pathname.includes("/practice/problem/") ||
+        window.location.pathname.includes("/practice/problems/");
+      const pathParts = window.location.pathname.split("/").filter(Boolean);
+      const is3rd = pathParts.length >= 3 && !isProblem;
+
+      if (isProblem || is3rd) {
+        return false;
+      }
+
+      const preferred = localStorage.getItem("quild_sidebar_preferred_state");
+      if (preferred !== null) {
+        return preferred === "true";
+      }
+
+      const match = document.cookie.match(/(^| )sidebar_state=([^;]+)/);
       return match ? match[2] === "true" : true;
     }
     return true;
   });
 
-  const [prevPath, setPrevPath] = useState(currentPath);
-  const prevSidebarStateRef = useRef<boolean | null>(null);
-
   const isProblemWorkspace =
     currentPath.includes("/practice/problem/") ||
     currentPath.includes("/practice/problems/");
 
+  // Sync sidebar state on path changes
   useEffect(() => {
-    const isProblemRoute =
-      currentPath.includes("/practice/problem/") ||
-      currentPath.includes("/practice/problems/");
-    const wasProblemRoute =
-      prevPath.includes("/practice/problem/") ||
-      prevPath.includes("/practice/problems/");
-
-    if (isProblemRoute && !wasProblemRoute) {
-      // Store previous sidebar state and collapse
-      prevSidebarStateRef.current = open;
+    if (isProblemWorkspace || isThirdLevelRoute) {
       setOpen(false);
-    } else if (!isProblemRoute && wasProblemRoute) {
-      // Restore previous sidebar state
-      if (prevSidebarStateRef.current !== null) {
-        setOpen(prevSidebarStateRef.current);
-        prevSidebarStateRef.current = null;
+    } else {
+      const preferred = localStorage.getItem("quild_sidebar_preferred_state");
+      if (preferred !== null) {
+        setOpen(preferred === "true");
       } else {
-        setOpen(true);
-      }
-    } else if (!isProblemRoute) {
-      // Normal third level collapsing logic for non-problem routes
-      const prevParts = prevPath.split("/").filter(Boolean);
-      const wasThirdLevel = prevParts.length >= 3;
-
-      if (isThirdLevelRoute && !wasThirdLevel) {
-        setOpen(false);
-      } else if (!isThirdLevelRoute && wasThirdLevel) {
-        setOpen(true);
+        const match = document.cookie.match(/(^| )sidebar_state=([^;]+)/);
+        setOpen(match ? match[2] === "true" : true);
       }
     }
+  }, [currentPath, isProblemWorkspace, isThirdLevelRoute]);
 
-    setPrevPath(currentPath);
-  }, [currentPath, isThirdLevelRoute, prevPath]);
+  // Intercept open change to save preference
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+    if (!isProblemWorkspace && !isThirdLevelRoute) {
+      localStorage.setItem("quild_sidebar_preferred_state", String(newOpen));
+      document.cookie = `sidebar_state=${newOpen}; path=/; max-age=${60 * 60 * 24 * 7}; path=/`;
+    }
+  };
 
   return (
-    <SidebarProvider open={open} onOpenChange={setOpen}>
+    <SidebarProvider open={open} onOpenChange={handleOpenChange}>
       <TooltipProvider delayDuration={400} skipDelayDuration={100}>
         <div className="flex h-screen w-screen overflow-hidden">
           <AppSidebar />

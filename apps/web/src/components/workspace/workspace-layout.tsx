@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "#/components/ui/resizable";
-import { ProblemPanel } from "./problem-panel";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "#/components/ui/resizable";
+import { useWorkspaceStore } from "#/store/use-workspace-store";
 import { EditorPanel } from "./editor-panel";
 import { OutputPanel } from "./output-panel";
+import { ProblemPanel } from "./problem-panel";
 import { WorkspaceHeader } from "./workspace-header";
-import { useWorkspaceStore } from "#/store/use-workspace-store";
 
 interface WorkspaceLayoutProps {
   problemId: string;
@@ -12,7 +16,8 @@ interface WorkspaceLayoutProps {
 
 export function WorkspaceLayout({ problemId }: WorkspaceLayoutProps) {
   const [isClient, setIsClient] = useState(false);
-  const { editorWidth, setEditorWidth, outputHeight, setOutputHeight } = useWorkspaceStore();
+  const { editorWidth, setEditorWidth, outputHeight, setOutputHeight } =
+    useWorkspaceStore();
 
   useEffect(() => {
     setIsClient(true);
@@ -30,9 +35,9 @@ export function WorkspaceLayout({ problemId }: WorkspaceLayoutProps) {
         <ResizablePanelGroup
           orientation="horizontal"
           className="h-full w-full rounded-none"
-          onLayoutChange={(layout) => {
-            if (layout["editor-pane"] !== undefined) {
-              setEditorWidth(layout["editor-pane"]);
+          onLayoutChange={(sizes) => {
+            if (sizes[1] !== undefined) {
+              setEditorWidth(sizes[1]);
             }
           }}
         >
@@ -62,9 +67,9 @@ export function WorkspaceLayout({ problemId }: WorkspaceLayoutProps) {
             <ResizablePanelGroup
               orientation="vertical"
               className="h-full"
-              onLayoutChange={(layout) => {
-                if (layout["output-pane"] !== undefined) {
-                  setOutputHeight(layout["output-pane"]);
+              onLayoutChange={(sizes) => {
+                if (sizes[1] !== undefined) {
+                  setOutputHeight(sizes[1]);
                 }
               }}
             >
@@ -73,7 +78,7 @@ export function WorkspaceLayout({ problemId }: WorkspaceLayoutProps) {
                 id="monaco-pane"
                 defaultSize={100 - outputHeight}
                 minSize={20}
-                className="h-full flex flex-col bg-[#111111]"
+                className="flex flex-col overflow-hidden bg-[#111111]"
               >
                 <EditorPanel problemId={problemId} />
               </ResizablePanel>

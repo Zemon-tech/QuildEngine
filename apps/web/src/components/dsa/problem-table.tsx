@@ -33,15 +33,27 @@ export function ProblemTable({
                 background: "var(--card-bg)",
               }}
             >
-              <th className="py-3.5 pl-4 pr-2 text-center w-14 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">Status</th>
-              <th className="py-3.5 px-4 font-bold w-[35%] min-w-[200px] md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">Problem Name</th>
-              <th className="py-3.5 px-4 w-24 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">Difficulty</th>
-              <th className="py-3.5 px-4 w-24 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">Acceptance</th>
+              <th className="py-3.5 pl-4 pr-2 text-center w-14 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">
+                Status
+              </th>
+              <th className="py-3.5 px-4 font-bold w-[35%] min-w-[200px] md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">
+                Problem Name
+              </th>
+              <th className="py-3.5 px-4 w-24 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">
+                Difficulty
+              </th>
+              <th className="py-3.5 px-4 w-24 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">
+                Acceptance
+              </th>
               <th className="py-3.5 px-4 hidden lg:table-cell w-40 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">
                 Companies
               </th>
-              <th className="py-3.5 px-4 hidden md:table-cell w-48 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">Tags</th>
-              <th className="py-3.5 pr-4 pl-2 text-center w-14 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">Book</th>
+              <th className="py-3.5 px-4 hidden md:table-cell w-48 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">
+                Tags
+              </th>
+              <th className="py-3.5 pr-4 pl-2 text-center w-14 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">
+                Book
+              </th>
             </tr>
           </thead>
           <tbody
