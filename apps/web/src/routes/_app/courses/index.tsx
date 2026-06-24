@@ -1,7 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Bookmark, BookOpen, Clock, Filter, Search, Star } from "lucide-react";
 import { useState } from "react";
-import { Search, BookOpen, Star, Clock, Filter, Bookmark } from "lucide-react";
-import { useCourses, useEnrollInCourse, useBookmarks, useToggleCourseBookmark } from "#/hooks/use-courses";
+import {
+  useBookmarks,
+  useCourses,
+  useEnrollInCourse,
+  useToggleCourseBookmark,
+} from "#/hooks/use-courses";
 
 export const Route = createFileRoute("/_app/courses/")({
   component: CoursesPage,
@@ -18,22 +23,23 @@ function CoursesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>("all");
 
-  const filteredCourses = courses?.filter((course) => {
-    // Filter by tab
-    if (activeTab === "learning" && !course.enrolled) return false;
+  const filteredCourses =
+    courses?.filter((course) => {
+      // Filter by tab
+      if (activeTab === "learning" && !course.enrolled) return false;
 
-    // Filter by search query
-    const matchesSearch = 
-      course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      course.description.toLowerCase().includes(searchQuery.toLowerCase());
+      // Filter by search query
+      const matchesSearch =
+        course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        course.description.toLowerCase().includes(searchQuery.toLowerCase());
 
-    // Filter by difficulty
-    const matchesDifficulty = 
-      selectedDifficulty === "all" || 
-      course.difficulty.toLowerCase() === selectedDifficulty.toLowerCase();
+      // Filter by difficulty
+      const matchesDifficulty =
+        selectedDifficulty === "all" ||
+        course.difficulty.toLowerCase() === selectedDifficulty.toLowerCase();
 
-    return matchesSearch && matchesDifficulty;
-  }) || [];
+      return matchesSearch && matchesDifficulty;
+    }) || [];
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
@@ -48,7 +54,8 @@ function CoursesPage() {
           Courses Catalog
         </h1>
         <p className="mt-1 text-sm" style={{ color: "var(--sb-ink-muted)" }}>
-          Expand your knowledge by browsing all available courses or checking your active learning streams.
+          Expand your knowledge by browsing all available courses or checking
+          your active learning streams.
         </p>
       </div>
 
@@ -98,10 +105,30 @@ function CoursesPage() {
               onChange={(e) => setSelectedDifficulty(e.target.value)}
               className="bg-transparent text-xs font-semibold focus:outline-none cursor-pointer text-[var(--sb-ink)]"
             >
-              <option value="all" className="bg-[var(--sb-bg)] text-[var(--sb-ink)]">All Difficulties</option>
-              <option value="beginner" className="bg-[var(--sb-bg)] text-[var(--sb-ink)]">Beginner</option>
-              <option value="intermediate" className="bg-[var(--sb-bg)] text-[var(--sb-ink)]">Intermediate</option>
-              <option value="advanced" className="bg-[var(--sb-bg)] text-[var(--sb-ink)]">Advanced</option>
+              <option
+                value="all"
+                className="bg-[var(--sb-bg)] text-[var(--sb-ink)]"
+              >
+                All Difficulties
+              </option>
+              <option
+                value="beginner"
+                className="bg-[var(--sb-bg)] text-[var(--sb-ink)]"
+              >
+                Beginner
+              </option>
+              <option
+                value="intermediate"
+                className="bg-[var(--sb-bg)] text-[var(--sb-ink)]"
+              >
+                Intermediate
+              </option>
+              <option
+                value="advanced"
+                className="bg-[var(--sb-bg)] text-[var(--sb-ink)]"
+              >
+                Advanced
+              </option>
             </select>
           </div>
         </div>
@@ -111,12 +138,18 @@ function CoursesPage() {
       {isLoading ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-64 rounded-xl animate-pulse bg-[var(--sb-pill)] border border-[var(--sb-border)]" />
+            <div
+              key={i}
+              className="h-64 rounded-xl animate-pulse bg-[var(--sb-pill)] border border-[var(--sb-border)]"
+            />
           ))}
         </div>
       ) : filteredCourses.length === 0 ? (
         <div className="text-center py-16 border border-dashed border-[var(--sb-border)] rounded-xl bg-[var(--sb-bg-hover)]/30">
-          <p className="text-sm font-medium" style={{ color: "var(--sb-ink-muted)" }}>
+          <p
+            className="text-sm font-medium"
+            style={{ color: "var(--sb-ink-muted)" }}
+          >
             {activeTab === "learning"
               ? "You haven't enrolled in any courses yet. Browse 'All Courses' to find one!"
               : "No courses match your filter criteria."}
@@ -129,24 +162,31 @@ function CoursesPage() {
               key={course.id}
               className="stagger-item flex flex-col gap-4 rounded-xl p-5 border transition-all duration-200 hover:translate-y-[-2px]"
               style={{
-                background: "linear-gradient(165deg, var(--surface-strong), var(--surface))",
+                background:
+                  "linear-gradient(165deg, var(--surface-strong), var(--surface))",
                 borderColor: "var(--line)",
-                boxShadow: "0 1px 0 var(--inset-glint) inset, 0 4px 12px rgba(0, 0, 0, 0.03)"
+                boxShadow:
+                  "0 1px 0 var(--inset-glint) inset, 0 4px 12px rgba(0, 0, 0, 0.03)",
               }}
             >
               {/* Card Top */}
               <div className="flex items-start justify-between gap-4">
                 <div className="space-y-1">
-                  <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full uppercase ${
-                    course.difficulty === "Advanced"
-                      ? "bg-red-500/10 text-red-600 dark:text-red-400"
-                      : course.difficulty === "Intermediate"
-                      ? "bg-amber-500/10 text-amber-600 dark:text-amber-400"
-                      : "bg-teal-500/10 text-teal-600 dark:text-teal-400"
-                  }`}>
+                  <span
+                    className={`text-[9px] font-bold px-2 py-0.5 rounded-full uppercase ${
+                      course.difficulty === "Advanced"
+                        ? "bg-red-500/10 text-red-600 dark:text-red-400"
+                        : course.difficulty === "Intermediate"
+                          ? "bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                          : "bg-teal-500/10 text-teal-600 dark:text-teal-400"
+                    }`}
+                  >
                     {course.difficulty}
                   </span>
-                  <h3 className="font-bold text-base leading-tight mt-1" style={{ color: "var(--sb-ink)" }}>
+                  <h3
+                    className="font-bold text-base leading-tight mt-1"
+                    style={{ color: "var(--sb-ink)" }}
+                  >
                     {course.title}
                   </h3>
                 </div>
@@ -158,22 +198,37 @@ function CoursesPage() {
                     }}
                     className="p-1.5 rounded-lg border border-[var(--sb-border)] hover:bg-[var(--sb-bg-hover)] text-[var(--sb-ink-muted)] hover:text-[var(--sb-accent)] transition-colors cursor-pointer"
                   >
-                    <Bookmark size={14} className={bookmarks?.courses.includes(course.id) ? "fill-[var(--sb-accent)] text-[var(--sb-accent)]" : ""} />
+                    <Bookmark
+                      size={14}
+                      className={
+                        bookmarks?.courses.includes(course.id)
+                          ? "fill-[var(--sb-accent)] text-[var(--sb-accent)]"
+                          : ""
+                      }
+                    />
                   </button>
-                  <div className={`size-10 rounded-xl bg-gradient-to-br ${course.thumbnail} border flex items-center justify-center font-bold text-lg text-[var(--sb-accent)]`}>
+                  <div
+                    className={`size-10 rounded-xl bg-gradient-to-br ${course.thumbnail} border flex items-center justify-center font-bold text-lg text-[var(--sb-accent)]`}
+                  >
                     {course.title.slice(0, 2)}
                   </div>
                 </div>
               </div>
 
               {/* Description */}
-              <p className="text-xs line-clamp-3 leading-relaxed" style={{ color: "var(--sb-ink-muted)" }}>
+              <p
+                className="text-xs line-clamp-3 leading-relaxed"
+                style={{ color: "var(--sb-ink-muted)" }}
+              >
                 {course.description}
               </p>
 
               {/* Metadata */}
               <div className="mt-auto space-y-4">
-                <div className="flex items-center justify-between text-xs border-t border-[var(--sb-border)] pt-3" style={{ color: "var(--sb-ink-dim)" }}>
+                <div
+                  className="flex items-center justify-between text-xs border-t border-[var(--sb-border)] pt-3"
+                  style={{ color: "var(--sb-ink-dim)" }}
+                >
                   <span className="flex items-center gap-1">
                     <Clock size={12} />
                     {course.totalHours}
@@ -192,15 +247,18 @@ function CoursesPage() {
                 {course.enrolled ? (
                   <div className="space-y-2">
                     <div className="flex justify-between text-[10px] font-semibold text-[var(--sb-ink-dim)]">
-                      <span>Completed {course.completedLessons} / {course.totalLessons}</span>
+                      <span>
+                        Completed {course.completedLessons} /{" "}
+                        {course.totalLessons}
+                      </span>
                       <span>{course.progress}%</span>
                     </div>
                     <div className="h-1.5 w-full bg-[var(--sb-pill)] rounded-full overflow-hidden">
-                      <div 
-                        className="h-full rounded-full" 
-                        style={{ 
-                          width: `${course.progress}%`, 
-                          background: "var(--sb-accent)" 
+                      <div
+                        className="h-full rounded-full"
+                        style={{
+                          width: `${course.progress}%`,
+                          background: "var(--sb-accent)",
                         }}
                       />
                     </div>
@@ -218,7 +276,7 @@ function CoursesPage() {
                     className="w-full py-2 text-xs font-bold rounded-lg cursor-pointer text-white transition-opacity flex items-center justify-center gap-1.5"
                     style={{
                       background: "var(--sb-accent)",
-                      color: "var(--sb-accent-foreground)"
+                      color: "var(--sb-accent-foreground)",
                     }}
                   >
                     {enrollMutation.isPending ? "Enrolling..." : "Enroll Now"}

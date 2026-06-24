@@ -2,26 +2,36 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   BookOpen,
   Calendar,
+  CheckCircle2,
   Code2,
   FlaskConical,
   LayoutDashboard,
+  Mail,
   Menu,
   Monitor,
   Moon,
   Sparkles,
   Sun,
-  Mail,
-  CheckCircle2,
 } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { GlobalSearchTrigger } from "#/components/search/global-search";
+import { Button } from "#/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "#/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "#/components/ui/dropdown-menu";
+import { Input } from "#/components/ui/input";
 import {
   Sidebar,
   SidebarContent,
@@ -41,16 +51,6 @@ import { cn } from "#/lib/utils";
 import { AIAssistant } from "./ai-assistant";
 import { SidebarHeader as CustomSidebarHeader } from "./sidebar-header";
 import { UserNav } from "./user-nav";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "#/components/ui/dialog";
-import { Input } from "#/components/ui/input";
-import { Button } from "#/components/ui/button";
 
 export function AppSidebar() {
   const { state, toggleSidebar, setOpenMobile } = useSidebar();
@@ -65,7 +65,8 @@ export function AppSidebar() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const isSubscribed = localStorage.getItem("quild_newsletter_subscribed") === "true";
+      const isSubscribed =
+        localStorage.getItem("quild_newsletter_subscribed") === "true";
       setSubscribed(isSubscribed);
     }
   }, []);
@@ -173,7 +174,11 @@ export function AppSidebar() {
                       )}
                     </TooltipTrigger>
                     <TooltipContent side="right" sideOffset={8}>
-                      <span>{subscribed ? "Subscribed to Newsletter" : "Subscribe to Newsletter"}</span>
+                      <span>
+                        {subscribed
+                          ? "Subscribed to Newsletter"
+                          : "Subscribe to Newsletter"}
+                      </span>
                     </TooltipContent>
                   </Tooltip>
                 </SidebarMenuItem>
@@ -196,7 +201,9 @@ export function AppSidebar() {
               {subscribed ? (
                 <div className="flex items-center gap-2 p-2 rounded-lg bg-emerald-500/5 border border-emerald-500/10 text-emerald-600 dark:text-emerald-500 text-xs">
                   <CheckCircle2 size={14} className="shrink-0" />
-                  <span className="truncate font-medium">Subscribed to Quild</span>
+                  <span className="truncate font-medium">
+                    Subscribed to Quild
+                  </span>
                 </div>
               ) : (
                 <form onSubmit={handleSubscribe} className="space-y-2">
@@ -325,7 +332,10 @@ export function AppSidebar() {
       <AIAssistant open={aiOpen} onClose={() => setAiOpen(false)} />
 
       {/* Newsletter Subscription Dialog for collapsed state */}
-      <Dialog open={newsletterDialogOpen} onOpenChange={setNewsletterDialogOpen}>
+      <Dialog
+        open={newsletterDialogOpen}
+        onOpenChange={setNewsletterDialogOpen}
+      >
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
@@ -333,7 +343,8 @@ export function AppSidebar() {
               Subscribe to Quild Newsletter
             </DialogTitle>
             <DialogDescription>
-              Get the latest deep tech tutorials, roadmaps, and event notifications delivered directly to your inbox.
+              Get the latest deep tech tutorials, roadmaps, and event
+              notifications delivered directly to your inbox.
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleSubscribe} className="space-y-4 py-2">

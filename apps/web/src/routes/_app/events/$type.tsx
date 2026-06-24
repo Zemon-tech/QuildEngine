@@ -9,6 +9,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { Button } from "#/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -19,7 +20,6 @@ import {
 } from "#/components/ui/dialog";
 import { Input } from "#/components/ui/input";
 import { Textarea } from "#/components/ui/textarea";
-import { Button } from "#/components/ui/button";
 
 export const Route = createFileRoute("/_app/events/$type")({
   component: EventCategoryPage,
@@ -583,7 +583,10 @@ function EventCategoryPage() {
       )}
 
       {/* Event Registration Dialog */}
-      <Dialog open={isRegisterDialogOpen} onOpenChange={setIsRegisterDialogOpen}>
+      <Dialog
+        open={isRegisterDialogOpen}
+        onOpenChange={setIsRegisterDialogOpen}
+      >
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
@@ -591,7 +594,11 @@ function EventCategoryPage() {
               Register for Event
             </DialogTitle>
             <DialogDescription className="text-xs">
-              Confirm your registration for <span className="font-semibold text-[var(--sb-ink)]">{activeEvent?.name}</span>. Please provide your details below.
+              Confirm your registration for{" "}
+              <span className="font-semibold text-[var(--sb-ink)]">
+                {activeEvent?.name}
+              </span>
+              . Please provide your details below.
             </DialogDescription>
           </DialogHeader>
 
@@ -605,7 +612,9 @@ function EventCategoryPage() {
                 required
                 placeholder="John Doe"
                 value={formData.fullName}
-                onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, fullName: e.target.value }))
+                }
                 className="h-9 focus-visible:ring-[var(--sb-accent)]/20"
               />
             </div>
@@ -619,7 +628,9 @@ function EventCategoryPage() {
                 required
                 placeholder="john@example.com"
                 value={formData.email}
-                onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, email: e.target.value }))
+                }
                 className="h-9 focus-visible:ring-[var(--sb-accent)]/20"
               />
             </div>
@@ -632,7 +643,12 @@ function EventCategoryPage() {
                 type="url"
                 placeholder="https://github.com/username"
                 value={formData.socialUrl}
-                onChange={(e) => setFormData(prev => ({ ...prev, socialUrl: e.target.value }))}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    socialUrl: e.target.value,
+                  }))
+                }
                 className="h-9 focus-visible:ring-[var(--sb-accent)]/20"
               />
             </div>
@@ -646,7 +662,9 @@ function EventCategoryPage() {
                   <button
                     key={level}
                     type="button"
-                    onClick={() => setFormData(prev => ({ ...prev, experience: level }))}
+                    onClick={() =>
+                      setFormData((prev) => ({ ...prev, experience: level }))
+                    }
                     className={`px-3 py-2 text-xs font-medium rounded-lg border text-center transition-all cursor-pointer ${
                       formData.experience === level
                         ? "border-[var(--sb-accent)] bg-[var(--sb-accent)]/5 text-[var(--sb-accent)] font-semibold"
@@ -666,7 +684,12 @@ function EventCategoryPage() {
               <Textarea
                 placeholder="Tell us about your interests and what you hope to learn..."
                 value={formData.motivation}
-                onChange={(e) => setFormData(prev => ({ ...prev, motivation: e.target.value }))}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    motivation: e.target.value,
+                  }))
+                }
                 className="focus-visible:ring-[var(--sb-accent)]/20"
               />
             </div>

@@ -1,14 +1,14 @@
 import {
+  createFileRoute,
   Link,
   Outlet,
-  createFileRoute,
   useRouterState,
 } from "@tanstack/react-router";
 import {
   Award,
   Binary,
-  Bot,
   BookOpen,
+  Bot,
   Code2,
   Coins,
   Compass,
@@ -67,11 +67,36 @@ const iconMap: Record<
  */
 const TABS = [
   { id: "practice", label: "Practice Board", icon: Code2, suffix: "" },
-  { id: "roadmap", label: "Learning Roadmap", icon: GitBranch, suffix: "/roadmap" },
-  { id: "resources", label: "Study Resources", icon: BookOpen, suffix: "/resources" },
-  { id: "interview", label: "Interview Arena", icon: Award, suffix: "/interview" },
-  { id: "ai_copilot", label: "AI Study Copilot", icon: Bot, suffix: "/copilot" },
-  { id: "revision", label: "Revision Sheet", icon: FileText, suffix: "/revision" },
+  {
+    id: "roadmap",
+    label: "Learning Roadmap",
+    icon: GitBranch,
+    suffix: "/roadmap",
+  },
+  {
+    id: "resources",
+    label: "Study Resources",
+    icon: BookOpen,
+    suffix: "/resources",
+  },
+  {
+    id: "interview",
+    label: "Interview Arena",
+    icon: Award,
+    suffix: "/interview",
+  },
+  {
+    id: "ai_copilot",
+    label: "AI Study Copilot",
+    icon: Bot,
+    suffix: "/copilot",
+  },
+  {
+    id: "revision",
+    label: "Revision Sheet",
+    icon: FileText,
+    suffix: "/revision",
+  },
 ] as const;
 
 /**
@@ -95,10 +120,7 @@ function TopicLayout() {
     const basePath = `/practice/dsa/${topicId}`;
     if (suffix === "") {
       // Practice Board is active when on the exact base path or with search params only
-      return (
-        currentPath === basePath ||
-        currentPath === `${basePath}/`
-      );
+      return currentPath === basePath || currentPath === `${basePath}/`;
     }
     return (
       currentPath === `${basePath}${suffix}` ||
@@ -169,7 +191,9 @@ function TopicLayout() {
           return (
             <Link
               key={tab.id}
-              to={`/practice/dsa/$topicId${tab.suffix === "" ? "/" : tab.suffix}` as any}
+              to={
+                `/practice/dsa/$topicId${tab.suffix === "" ? "/" : tab.suffix}` as any
+              }
               params={tab.suffix === "" ? { topicId } : ({ topicId } as any)}
               className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold border-b-2 -mb-[6px] transition-all relative cursor-pointer select-none ${
                 isActive
