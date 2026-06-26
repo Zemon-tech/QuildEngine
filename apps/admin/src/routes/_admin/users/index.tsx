@@ -233,7 +233,7 @@ function UsersPage() {
   }, [rowSelection]);
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="p-6 w-full">
       <PageHeader
         title="Users"
         description={`${users.length} total users on the platform`}

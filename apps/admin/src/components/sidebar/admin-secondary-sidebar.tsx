@@ -237,7 +237,7 @@ export function AdminSecondarySidebar() {
                     <Link
                       to={group.to}
                       className={cn(
-                        "flex items-center gap-2 px-2 py-1.5 text-xs font-bold tracking-wide rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative uppercase",
+                        "group/sec-nav flex items-center gap-2 px-2 py-1.5 text-xs font-bold tracking-wide rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative uppercase",
                         "justify-center px-1.5",
                         active
                           ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)]"
@@ -251,7 +251,7 @@ export function AdminSecondarySidebar() {
                             "shrink-0",
                             active
                               ? "text-[var(--sb-accent)]"
-                              : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]",
+                              : "text-[var(--sb-ink-muted)] group-hover/sec-nav:text-[var(--sb-ink)]",
                           )}
                         />
                       )}
@@ -267,7 +267,7 @@ export function AdminSecondarySidebar() {
                 <Link
                   to={group.to}
                   className={cn(
-                    "flex items-center gap-2 px-2 py-1.5 text-xs font-bold tracking-wide rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative uppercase",
+                    "group/sec-nav flex items-center gap-2 px-2 py-1.5 text-xs font-bold tracking-wide rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative uppercase",
                     active
                       ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)]"
                       : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]",
@@ -280,7 +280,7 @@ export function AdminSecondarySidebar() {
                         "shrink-0",
                         active
                           ? "text-[var(--sb-accent)]"
-                          : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]",
+                          : "text-[var(--sb-ink-muted)] group-hover/sec-nav:text-[var(--sb-ink)]",
                       )}
                     />
                   )}
@@ -310,7 +310,7 @@ export function AdminSecondarySidebar() {
                           <Link
                             to={item.to}
                             className={cn(
-                              "flex items-center gap-2 px-2 py-1.5 text-xs font-medium rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative",
+                              "group/sec-nav flex items-center gap-2 px-2 py-1.5 text-xs font-medium rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative",
                               "justify-center px-1.5",
                               active
                                 ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)] font-semibold"
@@ -323,7 +323,7 @@ export function AdminSecondarySidebar() {
                                 "shrink-0",
                                 active
                                   ? "text-[var(--sb-accent)]"
-                                  : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]",
+                                  : "text-[var(--sb-ink-muted)] group-hover/sec-nav:text-[var(--sb-ink)]",
                               )}
                             />
                           </Link>
@@ -340,7 +340,7 @@ export function AdminSecondarySidebar() {
                       <Link
                         to={item.to}
                         className={cn(
-                          "flex items-center gap-2 px-2 py-1.5 text-xs font-medium rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative",
+                          "group/sec-nav flex items-center gap-2 px-2 py-1.5 text-xs font-medium rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative",
                           active
                             ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)] font-semibold"
                             : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]",
@@ -352,7 +352,7 @@ export function AdminSecondarySidebar() {
                             "shrink-0",
                             active
                               ? "text-[var(--sb-accent)]"
-                              : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]",
+                              : "text-[var(--sb-ink-muted)] group-hover/sec-nav:text-[var(--sb-ink)]",
                           )}
                         />
                         <span className="flex-1 truncate">{item.label}</span>

@@ -42,37 +42,6 @@ export function PageHeader({
       )}
       style={{ borderColor: "var(--sb-border)" }}
     >
-      {/* Breadcrumbs */}
-      {breadcrumbs && breadcrumbs.length > 0 && (
-        <nav className="flex items-center gap-1 mb-2">
-          {breadcrumbs.map((crumb, i) => (
-            <span key={crumb.label} className="flex items-center gap-1">
-              {i > 0 && (
-                <ChevronRight
-                  size={12}
-                  style={{ color: "var(--sb-ink-dim)" }}
-                />
-              )}
-              {crumb.to ? (
-                <Link
-                  to={crumb.to}
-                  className="text-xs font-medium transition-colors duration-100 hover:underline"
-                  style={{ color: "var(--sb-ink-muted)" }}
-                >
-                  {crumb.label}
-                </Link>
-              ) : (
-                <span
-                  className="text-xs font-medium"
-                  style={{ color: "var(--sb-ink-dim)" }}
-                >
-                  {crumb.label}
-                </span>
-              )}
-            </span>
-          ))}
-        </nav>
-      )}
 
       {/* Title row */}
       <div className="flex items-start justify-between gap-4">

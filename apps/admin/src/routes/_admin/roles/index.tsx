@@ -95,7 +95,7 @@ function RolesPage() {
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto pb-16">
+    <div className="p-6 w-full pb-16">
       <PageHeader
         title="Roles & Permissions"
         description="Configure granular access controls and role-based policies."

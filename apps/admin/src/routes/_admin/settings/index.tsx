@@ -53,7 +53,7 @@ function SettingsPage() {
   ];
 
   return (
-    <div className="p-6 max-w-5xl mx-auto pb-16">
+    <div className="p-6 w-full pb-16">
       <PageHeader
         title="Settings"
         description="Configure system preferences, security, API integrations, and notification channels."

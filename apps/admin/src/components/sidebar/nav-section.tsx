@@ -108,7 +108,7 @@ export function NavSection({
               aria-expanded={open}
               aria-label={label}
               className={cn(
-                "group relative flex size-9 items-center justify-center rounded-[10px] outline-none",
+                "group/nav-section relative flex size-9 items-center justify-center rounded-[10px] outline-none",
                 "transition-colors duration-150",
                 "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60",
                 hasActiveChild && "text-[var(--sb-accent)]",
@@ -117,7 +117,7 @@ export function NavSection({
             >
               {/* Hover bg */}
               <span
-                className="pointer-events-none absolute inset-0 rounded-[10px] opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+                className="pointer-events-none absolute inset-0 rounded-[10px] opacity-0 transition-opacity duration-150 group-hover/nav-section:opacity-100"
                 style={{ background: "var(--sb-bg-hover)" }}
               />
               {/* Active indicator dot */}
@@ -166,7 +166,7 @@ export function NavSection({
         onClick={toggle}
         aria-expanded={open}
         className={cn(
-          "group relative flex w-full items-center gap-2.5 rounded-[10px] px-2.5 py-[7px] text-sm font-medium outline-none",
+          "group/nav-section relative flex w-full items-center gap-2.5 rounded-[10px] px-2.5 py-[7px] text-sm font-medium outline-none",
           "transition-colors duration-150",
           "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60",
         )}
@@ -188,7 +188,7 @@ export function NavSection({
         <span
           className={cn(
             "pointer-events-none absolute inset-0 rounded-[10px] opacity-0 transition-opacity duration-150",
-            "group-hover:opacity-100",
+            "group-hover/nav-section:opacity-100",
           )}
           style={{ background: "var(--sb-bg-hover)" }}
         />
@@ -203,7 +203,7 @@ export function NavSection({
                 : "var(--sb-ink-muted)",
               transition: "color 150ms ease",
             }}
-            className="group-hover:!text-[var(--sb-ink)]"
+            className="group-hover/nav-section:!text-[var(--sb-ink)]"
           />
         </span>
 

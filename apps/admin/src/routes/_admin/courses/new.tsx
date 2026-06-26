@@ -42,7 +42,7 @@ function NewCoursePage() {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto pb-16">
+    <div className="p-6 w-full pb-16">
       <PageHeader
         title="Create Course"
         description="Design a new learning curriculum and add it to the platform."

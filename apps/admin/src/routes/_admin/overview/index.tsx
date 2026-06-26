@@ -53,7 +53,7 @@ function OverviewPage() {
   const { stats, recentActivity } = Route.useLoaderData();
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="p-6 w-full">
       <PageHeader
         title="Overview"
         description="Platform health and quick actions at a glance"

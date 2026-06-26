@@ -224,7 +224,7 @@ function CoursesPage() {
   });
 
   return (
-    <div className="p-6 max-w-7xl mx-auto pb-16">
+    <div className="p-6 w-full pb-16">
       <PageHeader
         title="Courses"
         description={`${courses.length} learning courses available.`}

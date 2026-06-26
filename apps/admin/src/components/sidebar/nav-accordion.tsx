@@ -41,7 +41,7 @@ export function NavAccordion({
       type="button"
       onClick={() => setOpen((o) => !o)}
       className={cn(
-        "group relative flex w-full items-center gap-2.5 rounded-[10px] px-2.5 py-[7px] text-sm font-medium outline-none",
+        "group/nav-accordion relative flex w-full items-center gap-2.5 rounded-[10px] px-2.5 py-[7px] text-sm font-medium outline-none",
         "transition-colors duration-150",
         "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60",
         collapsed && "justify-center px-2",
@@ -52,7 +52,7 @@ export function NavAccordion({
       <span
         className={cn(
           "pointer-events-none absolute inset-0 rounded-[10px] opacity-0 transition-opacity duration-150",
-          "group-hover:opacity-100",
+          "group-hover/nav-accordion:opacity-100",
           open && "opacity-100",
         )}
         style={{ background: "var(--sb-bg-hover)" }}
@@ -66,7 +66,7 @@ export function NavAccordion({
             color: open ? "var(--sb-ink)" : "var(--sb-ink-muted)",
             transition: "color 150ms ease",
           }}
-          className="group-hover:!text-[var(--sb-ink)]"
+          className="group-hover/nav-accordion:!text-[var(--sb-ink)]"
         />
       </span>
 
