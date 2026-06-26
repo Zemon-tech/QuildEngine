@@ -144,23 +144,13 @@ export function ResearchWorkspacePreview() {
   const activeDoc = mockDocs.find((doc) => doc.id === selectedDocId) || mockDocs[0];
 
   return (
-    <section className="relative w-full max-w-7xl mx-auto px-6 py-12 md:py-16">
-      {/* Eyebrow & Headline */}
-      <div className="text-center max-w-3xl mx-auto mb-12">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-[var(--sb-ink)] tracking-tight mb-4 display-title">
-          Visual Workspace Preview
-        </h2>
-        <p className="text-[var(--sb-ink-muted)] text-sm md:text-base">
-          Experience our AI research interface. Click through documents in the sidebar to simulate source analysis and extraction in real-time.
-        </p>
-      </div>
-
+    <div className="relative w-full rounded-xl overflow-hidden">
       {/* Main Interactive Screen */}
       <SpotlightEffect glowColor="rgba(99,102,241,0.08)" glowSize={600}>
-        <GlassCard className="flex flex-col lg:flex-row h-[650px] overflow-hidden border-[var(--sb-border)]/60 dark:border-white/[0.08]">
+        <GlassCard className="flex flex-col lg:flex-row h-[650px] overflow-hidden border-[var(--sb-border)]/60 dark:border-white/[0.08] min-w-[960px]">
           
           {/* Left Sidebar: Sources */}
-          <div className="w-full lg:w-64 border-b lg:border-b-0 lg:border-r border-[var(--sb-border)]/40 dark:border-white/5 bg-[color-mix(in_oklab,var(--sb-bg)_30%,transparent)] p-4 flex flex-col justify-between">
+          <div className="w-full lg:w-64 shrink-0 border-b lg:border-b-0 lg:border-r border-[var(--sb-border)]/40 dark:border-white/5 bg-[color-mix(in_oklab,var(--sb-bg)_30%,transparent)] p-4 flex flex-col justify-between">
             <div>
               {/* Header */}
               <div className="flex items-center gap-2 mb-4 px-2">
@@ -293,7 +283,7 @@ export function ResearchWorkspacePreview() {
           </div>
 
           {/* Right Sidebar: AI Analysis */}
-          <div className="w-full lg:w-72 border-t lg:border-t-0 lg:border-l border-[var(--sb-border)]/40 dark:border-white/5 bg-[color-mix(in_oklab,var(--sb-bg)_30%,transparent)] p-4 overflow-y-auto space-y-6">
+          <div className="w-full lg:w-72 shrink-0 border-t lg:border-t-0 lg:border-l border-[var(--sb-border)]/40 dark:border-white/5 bg-[color-mix(in_oklab,var(--sb-bg)_30%,transparent)] p-4 overflow-y-auto space-y-6">
             {/* Summary */}
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-xs font-semibold text-[var(--sb-ink)]">
@@ -396,6 +386,6 @@ export function ResearchWorkspacePreview() {
           </div>
         </GlassCard>
       </SpotlightEffect>
-    </section>
+    </div>
   );
 }
