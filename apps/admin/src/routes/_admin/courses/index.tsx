@@ -196,7 +196,7 @@ function CoursesPage() {
           return (
             <span
               className={cn(
-                "px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide capitalize",
+                "px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide capitalize",
                 diff === "Beginner" && "bg-green-500/10 text-green-500",
                 diff === "Intermediate" && "bg-amber-500/10 text-amber-500",
                 diff === "Advanced" && "bg-red-500/10 text-red-500",
@@ -429,7 +429,7 @@ function CoursesPage() {
                   {headerGroup.headers.map((header) => (
                     <th
                       key={header.id}
-                      className="px-4 py-3 text-left font-semibold uppercase tracking-wider"
+                      className="px-4 py-3 text-left font-semibold"
                       style={{ color: "var(--sb-ink-dim)" }}
                     >
                       {header.isPlaceholder

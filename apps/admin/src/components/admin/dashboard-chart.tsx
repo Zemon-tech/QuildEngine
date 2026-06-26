@@ -301,7 +301,7 @@ export function DashboardChart({
             transform: "translate(-50%, -100%)",
           }}
         >
-          <div className="font-semibold text-[10px] text-muted-foreground uppercase tracking-wider mb-0.5">
+          <div className="font-semibold text-[10px] text-muted-foreground mb-0.5">
             {points[hoveredIndex].label}
           </div>
           <div className="font-bold flex items-center gap-1.5 text-xs tabular-nums">

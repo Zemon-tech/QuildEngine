@@ -700,7 +700,7 @@ function DsaPage() {
                                   ? "inactive"
                                   : "pending"
                             }
-                            className="text-[9px] uppercase font-bold"
+                            className="text-[9px] font-bold"
                           />
                         </td>
                         <td className="p-4 text-right">

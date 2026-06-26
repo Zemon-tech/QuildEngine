@@ -1,5 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
+  Activity,
   BarChart3,
   Binary,
   BookOpen,
@@ -30,6 +31,7 @@ import {
   Rocket,
   Settings,
   Shield,
+  Sparkles,
   Terminal,
   Users,
 } from "lucide-react";
@@ -250,6 +252,12 @@ export function AdminSecondarySidebar() {
             search: { tab: "chat" },
             icon: MessageSquare,
           },
+          {
+            label: "AI Overview",
+            to: "/ai",
+            search: { tab: "overview" },
+            icon: Sparkles,
+          },
         ],
       },
       {
@@ -290,6 +298,12 @@ export function AdminSecondarySidebar() {
             to: "/ai",
             search: { tab: "analytics" },
             icon: LineChart,
+          },
+          {
+            label: "AI Usage",
+            to: "/ai",
+            search: { tab: "usage" },
+            icon: Activity,
           },
           {
             label: "Token Usage",
@@ -385,7 +399,7 @@ export function AdminSecondarySidebar() {
       >
         {!collapsed && (
           <span
-            className="text-[10px] font-bold tracking-wider uppercase truncate"
+            className="text-[10px] font-bold truncate"
             style={{
               color: "var(--sb-ink-dim)",
             }}
@@ -426,10 +440,10 @@ export function AdminSecondarySidebar() {
                       to={group.to}
                       search={group.search}
                       className={cn(
-                        "group/sec-nav flex items-center gap-2 px-2 py-1.5 text-xs font-bold tracking-wide rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative uppercase",
+                        "group/sec-nav flex items-center gap-2 px-2 py-1.5 text-xs font-bold tracking-wide rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative",
                         "justify-center px-1.5",
                         active
-                          ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)]"
+                          ? "bg-[color-mix(in_oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)]"
                           : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]",
                       )}
                     >
@@ -457,9 +471,9 @@ export function AdminSecondarySidebar() {
                   to={group.to}
                   search={group.search}
                   className={cn(
-                    "group/sec-nav flex items-center gap-2 px-2 py-1.5 text-xs font-bold tracking-wide rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative uppercase",
+                    "group/sec-nav flex items-center gap-2 px-2 py-1.5 text-xs font-bold tracking-wide rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative",
                     active
-                      ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)]"
+                      ? "bg-[color-mix(in_oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)]"
                       : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]",
                   )}
                 >
@@ -484,7 +498,7 @@ export function AdminSecondarySidebar() {
           return (
             <div key={group.label} className="space-y-1">
               {!collapsed && (
-                <span className="px-2 text-[9px] font-bold tracking-wide text-zinc-400 dark:text-zinc-500 block uppercase">
+                <span className="px-2 text-[9px] font-bold tracking-wide text-zinc-400 dark:text-zinc-500 block">
                   {group.label}
                 </span>
               )}
