@@ -555,7 +555,7 @@ function DashboardTab({
         {/* Header toolbar */}
         <div className="flex h-14 shrink-0 items-center justify-between border-b border-[var(--sb-border)] px-6 select-none bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)]">
           <div className="flex items-center gap-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)]">
+            <span className="text-xs font-bold tracking-wider text-[var(--sb-ink-dim)]">
               AI Workspace Chat
             </span>
           </div>
@@ -654,7 +654,6 @@ function DashboardTab({
         <div className="w-full flex flex-col items-center text-center mb-2">
           <h1
             className="text-white text-3xl md:text-4xl font-medium tracking-tight mb-3 drop-shadow-md select-none"
-            style={{ fontFamily: "'Fraunces', Georgia, serif" }}
           >
             {getGreeting()}, {userName}
           </h1>
@@ -923,7 +922,7 @@ function ChatTab({
       {/* Header toolbar */}
       <div className="flex h-14 shrink-0 items-center justify-between border-b border-[var(--sb-border)] px-6 select-none bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)]">
         <div className="flex items-center gap-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)]">
+          <span className="text-xs font-bold tracking-wider text-[var(--sb-ink-dim)]">
             Direct AI Agent Chat
           </span>
         </div>
@@ -1290,7 +1289,7 @@ function OverviewTab() {
         <div className="island-shell rounded-xl p-5 flex flex-col">
           <div className="flex items-center justify-between mb-4">
             <h2
-              className="text-xs font-bold uppercase tracking-wider"
+              className="text-xs font-bold tracking-wider"
               style={{ color: "var(--sb-ink-dim)" }}
             >
               Active AI Agents
@@ -1352,7 +1351,7 @@ function OverviewTab() {
         {/* Model breakdown progress bars */}
         <div className="island-shell rounded-xl p-5 flex flex-col">
           <h2
-            className="text-xs font-bold uppercase tracking-wider mb-4"
+            className="text-xs font-bold tracking-wider mb-4"
             style={{ color: "var(--sb-ink-dim)" }}
           >
             Provider & Model Routing Share
@@ -1452,7 +1451,7 @@ function AnalyticsTab() {
         {/* Latency card */}
         <div className="flex flex-col border border-[var(--sb-border)] p-4 rounded-lg">
           <span
-            className="text-xs font-semibold mb-3 uppercase tracking-wider"
+            className="text-xs font-semibold mb-3 tracking-wider"
             style={{ color: "var(--sb-ink-muted)" }}
           >
             Average Latency by LLM
@@ -1497,7 +1496,7 @@ function AnalyticsTab() {
         {/* Errors card */}
         <div className="flex flex-col border border-[var(--sb-border)] p-4 rounded-lg">
           <span
-            className="text-xs font-semibold mb-3 uppercase tracking-wider"
+            className="text-xs font-semibold mb-3 tracking-wider"
             style={{ color: "var(--sb-ink-muted)" }}
           >
             Error Rates (Last 24h)
@@ -1546,7 +1545,7 @@ function AnalyticsTab() {
         <div className="flex flex-col border border-[var(--sb-border)] p-4 rounded-lg justify-between">
           <div>
             <span
-              className="text-xs font-semibold mb-1 block uppercase tracking-wider"
+              className="text-xs font-semibold mb-1 block tracking-wider"
               style={{ color: "var(--sb-ink-muted)" }}
             >
               Response Cache Hit Rate
@@ -1855,7 +1854,7 @@ function ModelsTab() {
       {/* Active Model Configurations */}
       <div className="island-shell rounded-xl p-5 flex flex-col">
         <h2
-          className="text-xs font-bold uppercase tracking-wider mb-4"
+          className="text-xs font-bold tracking-wider mb-4"
           style={{ color: "var(--sb-ink-dim)" }}
         >
           Active Completion Models
@@ -1907,7 +1906,7 @@ function ModelsTab() {
       {/* Model Router Rules */}
       <div className="island-shell rounded-xl p-5 flex flex-col gap-4">
         <h2
-          className="text-xs font-bold uppercase tracking-wider"
+          className="text-xs font-bold tracking-wider"
           style={{ color: "var(--sb-ink-dim)" }}
         >
           Global Model Router Policy

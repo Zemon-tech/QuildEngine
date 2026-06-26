@@ -375,7 +375,7 @@ function CaseStudiesPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="island-shell rounded-xl p-4 flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-bold text-muted-foreground uppercase">
+                <span className="text-[10px] font-bold text-muted-foreground">
                   Total Case Studies
                 </span>
                 <h4
@@ -389,7 +389,7 @@ function CaseStudiesPage() {
             </div>
             <div className="island-shell rounded-xl p-4 flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-bold text-muted-foreground uppercase">
+                <span className="text-[10px] font-bold text-muted-foreground">
                   Published Live
                 </span>
                 <h4 className="text-xl font-bold mt-1 text-emerald-500">
@@ -400,7 +400,7 @@ function CaseStudiesPage() {
             </div>
             <div className="island-shell rounded-xl p-4 flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-bold text-muted-foreground uppercase">
+                <span className="text-[10px] font-bold text-muted-foreground">
                   Drafts CMS
                 </span>
                 <h4 className="text-xl font-bold mt-1 text-amber-500">
@@ -411,7 +411,7 @@ function CaseStudiesPage() {
             </div>
             <div className="island-shell rounded-xl p-4 flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-bold text-muted-foreground uppercase">
+                <span className="text-[10px] font-bold text-muted-foreground">
                   Revision Versions
                 </span>
                 <h4
@@ -646,7 +646,7 @@ function CaseStudiesPage() {
                 <ArrowLeft size={14} className="text-muted-foreground" />
               </button>
               <div>
-                <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">
+                <span className="text-[10px] text-muted-foreground font-bold tracking-wider">
                   {selectedStudy
                     ? `Edit Case Study (v${formVersions.length > 0 ? formVersions[formVersions.length - 1].version : 1})`
                     : "Create New Case Study"}
@@ -662,7 +662,7 @@ function CaseStudiesPage() {
 
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1.5">
-                <span className="text-[10px] font-bold text-muted-foreground uppercase">
+                <span className="text-[10px] font-bold text-muted-foreground">
                   Status:
                 </span>
                 <select
@@ -695,7 +695,7 @@ function CaseStudiesPage() {
           {/* Form Settings and Tags Panel */}
           <div className="island-shell rounded-xl p-5 grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="space-y-1.5 text-left">
-              <label className="text-[10px] font-bold text-muted-foreground uppercase block">
+              <label className="text-[10px] font-bold text-muted-foreground block">
                 <span>Document Title</span>
                 <input
                   type="text"
@@ -713,7 +713,7 @@ function CaseStudiesPage() {
             </div>
 
             <div className="space-y-1.5 text-left">
-              <label className="text-[10px] font-bold text-muted-foreground uppercase block">
+              <label className="text-[10px] font-bold text-muted-foreground block">
                 <span>Category</span>
                 <select
                   value={formCategory}
@@ -741,7 +741,7 @@ function CaseStudiesPage() {
             </div>
 
             <div className="space-y-1.5 text-left">
-              <label className="text-[10px] font-bold text-muted-foreground uppercase block">
+              <label className="text-[10px] font-bold text-muted-foreground block">
                 <span>Search Tags (Comma separated)</span>
                 <input
                   type="text"
@@ -759,7 +759,7 @@ function CaseStudiesPage() {
             </div>
 
             <div className="space-y-1.5 text-left">
-              <label className="text-[10px] font-bold text-muted-foreground uppercase block">
+              <label className="text-[10px] font-bold text-muted-foreground block">
                 <span>Resources & References (Line separated)</span>
                 <textarea
                   value={formResources}
@@ -814,7 +814,7 @@ function CaseStudiesPage() {
             {/* Left Workspace Panel: Markdown Editor */}
             <div className="island-shell rounded-xl p-5 flex flex-col space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-extrabold text-muted-foreground uppercase tracking-wider flex items-center gap-1">
+                <span className="text-[10px] font-extrabold text-muted-foreground tracking-wider flex items-center gap-1">
                   <FileText size={12} className="text-indigo-500" />
                   Markdown Editor ({activeSection})
                 </span>
@@ -898,11 +898,11 @@ function CaseStudiesPage() {
             {/* Right Workspace Panel: Live Preview */}
             <div className="island-shell rounded-xl p-5 flex flex-col space-y-3 bg-neutral-950/40">
               <div className="flex items-center justify-between border-b border-[var(--sb-border)] pb-2">
-                <span className="text-[10px] font-extrabold text-muted-foreground uppercase tracking-wider flex items-center gap-1">
+                <span className="text-[10px] font-extrabold text-muted-foreground tracking-wider flex items-center gap-1">
                   <Eye size={12} className="text-emerald-500" />
                   Live Preview
                 </span>
-                <span className="bg-emerald-500/10 text-emerald-500 px-1.5 py-0.5 rounded text-[8px] font-bold uppercase">
+                <span className="bg-emerald-500/10 text-emerald-500 px-1.5 py-0.5 rounded text-[8px] font-bold">
                   Rendered Layout
                 </span>
               </div>
@@ -934,7 +934,7 @@ function CaseStudiesPage() {
 
               <div className="space-y-3 text-xs">
                 <div className="space-y-1 text-left">
-                  <label className="text-[9px] font-bold text-muted-foreground uppercase block">
+                  <label className="text-[9px] font-bold text-muted-foreground block">
                     <span>Revision Author</span>
                     <input
                       type="text"
@@ -952,7 +952,7 @@ function CaseStudiesPage() {
                 </div>
 
                 <div className="space-y-1 text-left">
-                  <label className="text-[9px] font-bold text-muted-foreground uppercase block">
+                  <label className="text-[9px] font-bold text-muted-foreground block">
                     <span>Change Log Description</span>
                     <textarea
                       value={newVersionChanges}
@@ -981,7 +981,7 @@ function CaseStudiesPage() {
 
             {/* Version log items list */}
             <div className="md:col-span-2 space-y-3">
-              <span className="text-[10px] font-bold text-muted-foreground uppercase block">
+              <span className="text-[10px] font-bold text-muted-foreground block">
                 Version Audit History Log ({formVersions.length})
               </span>
 

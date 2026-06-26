@@ -1011,7 +1011,7 @@ function DsaPage() {
 
               {/* Sub-form: Test cases */}
               <div className="border border-[var(--sb-border)] rounded-lg p-4 space-y-3">
-                <h4 className="font-bold text-[11px] uppercase tracking-wider text-muted-foreground">
+                <h4 className="font-bold text-[11px] tracking-wider text-muted-foreground">
                   Test Case Management
                 </h4>
                 <div className="flex gap-2 items-end">
@@ -1095,7 +1095,7 @@ function DsaPage() {
 
               {/* Sub-form: Solution Editorials */}
               <div className="border border-[var(--sb-border)] rounded-lg p-4 space-y-3">
-                <h4 className="font-bold text-[11px] uppercase tracking-wider text-muted-foreground">
+                <h4 className="font-bold text-[11px] tracking-wider text-muted-foreground">
                   Solution Codes & Editorials
                 </h4>
                 <div className="flex gap-2 items-end">

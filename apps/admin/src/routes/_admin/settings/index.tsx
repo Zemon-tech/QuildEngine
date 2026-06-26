@@ -116,7 +116,7 @@ function SettingsPage() {
             {activeTab === "general" && (
               <div className="flex flex-col gap-4">
                 <h3
-                  className="text-xs font-bold uppercase tracking-wider mb-2"
+                  className="text-xs font-bold tracking-wider mb-2"
                   style={{ color: "var(--sb-ink-dim)" }}
                 >
                   General System Preferences
@@ -212,7 +212,7 @@ function SettingsPage() {
             {activeTab === "security" && (
               <div className="flex flex-col gap-4">
                 <h3
-                  className="text-xs font-bold uppercase tracking-wider mb-2"
+                  className="text-xs font-bold tracking-wider mb-2"
                   style={{ color: "var(--sb-ink-dim)" }}
                 >
                   Security & Authentication Policies
@@ -315,7 +315,7 @@ function SettingsPage() {
             {activeTab === "ai" && (
               <div className="flex flex-col gap-4">
                 <h3
-                  className="text-xs font-bold uppercase tracking-wider mb-2"
+                  className="text-xs font-bold tracking-wider mb-2"
                   style={{ color: "var(--sb-ink-dim)" }}
                 >
                   Platform AI Models & Parameters
@@ -418,7 +418,7 @@ function SettingsPage() {
             {activeTab === "notifications" && (
               <div className="flex flex-col gap-4">
                 <h3
-                  className="text-xs font-bold uppercase tracking-wider mb-2"
+                  className="text-xs font-bold tracking-wider mb-2"
                   style={{ color: "var(--sb-ink-dim)" }}
                 >
                   Notification & Alarm Webhooks

@@ -355,7 +355,7 @@ function QaPage() {
                         <StatusBadge status={statusTheme}>
                           {q.status}
                         </StatusBadge>
-                        <span className="text-muted-foreground font-medium uppercase tracking-wider">
+                        <span className="text-muted-foreground font-medium tracking-wider">
                           {q.category}
                         </span>
                       </div>
@@ -414,7 +414,7 @@ function QaPage() {
                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                   <div>
                     <div className="flex items-center gap-2 text-[11px]">
-                      <span className="text-muted-foreground font-semibold uppercase tracking-wider">
+                      <span className="text-muted-foreground font-semibold tracking-wider">
                         Category: {selectedQuestion.category}
                       </span>
                       <span>•</span>
@@ -586,7 +586,7 @@ function QaPage() {
                   <div className="space-y-3.5 border-t border-[var(--sb-border)] pt-3.5 stagger-item">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-[10px]">
                       <div className="bg-muted/50 p-2.5 rounded-lg border border-[var(--sb-border)]">
-                        <span className="text-muted-foreground font-semibold uppercase block">
+                        <span className="text-muted-foreground font-semibold block">
                           Semantic Summary
                         </span>
                         <span
@@ -597,7 +597,7 @@ function QaPage() {
                         </span>
                       </div>
                       <div className="bg-muted/50 p-2.5 rounded-lg border border-[var(--sb-border)]">
-                        <span className="text-muted-foreground font-semibold uppercase block">
+                        <span className="text-muted-foreground font-semibold block">
                           Duplicate Scanner
                         </span>
                         <span className="block mt-1 text-amber-500 font-bold">
@@ -611,7 +611,7 @@ function QaPage() {
 
                     <div className="bg-indigo-500/[0.04] p-3 rounded-lg border border-indigo-500/20 text-xs">
                       <div className="flex items-center justify-between">
-                        <span className="text-indigo-500 font-extrabold uppercase text-[10px] flex items-center gap-1">
+                        <span className="text-indigo-500 font-extrabold text-[10px] flex items-center gap-1">
                           <Bot size={11} /> Suggested Resolution Answer
                         </span>
                         <button
@@ -761,7 +761,7 @@ function QaPage() {
                   className="space-y-3 pt-3 border-t border-[var(--sb-border)] mt-auto"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-[10px] font-bold text-muted-foreground uppercase">
+                     <span className="text-[10px] font-bold text-muted-foreground">
                       Write Answer as:
                     </span>
                     <input

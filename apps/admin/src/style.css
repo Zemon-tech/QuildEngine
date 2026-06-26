@@ -183,7 +183,7 @@
   --sb-shadow:       0 1px 3px oklch(0 0 0 / 0.08), 0 8px 24px oklch(0 0 0 / 0.06);
 
   /* ── Page/content tokens: LIGHT mode ──────────────────────── */
-  --page-bg:         oklch(0.97 0 0);
+  --page-bg:         oklch(1 0 0);
   --page-ink:        oklch(0.13 0 0);
   --card-bg:         oklch(1 0 0);
   --card-border:     oklch(0.90 0 0);
@@ -303,7 +303,7 @@ aside {
 }
 
 .display-title {
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: var(--font-sans);
 }
 
 .island-shell {

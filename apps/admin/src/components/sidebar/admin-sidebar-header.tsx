@@ -46,7 +46,6 @@ export function AdminSidebarHeader({
                 height: 28,
                 background: "oklch(0.92 0 0)",
                 color: "oklch(0.13 0 0)",
-                fontFamily: "'Fraunces', Georgia, serif",
               }}
             >
               Q
@@ -64,7 +63,6 @@ export function AdminSidebarHeader({
                 height: 28,
                 background: "oklch(0.92 0 0)",
                 color: "oklch(0.13 0 0)",
-                fontFamily: "'Fraunces', Georgia, serif",
               }}
             >
               Q
@@ -82,7 +80,6 @@ export function AdminSidebarHeader({
                   className="text-sm font-semibold tracking-[-0.02em]"
                   style={{
                     color: "var(--sb-ink)",
-                    fontFamily: "'Fraunces', Georgia, serif",
                   }}
                 >
                   Quild

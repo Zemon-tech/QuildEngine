@@ -70,7 +70,7 @@ function NewCoursePage() {
         <div className="lg:col-span-2 flex flex-col gap-5">
           <div className="island-shell rounded-xl p-6 flex flex-col gap-4">
             <h2
-              className="text-xs font-bold uppercase tracking-wider mb-2"
+              className="text-xs font-bold tracking-wider mb-2"
               style={{ color: "var(--sb-ink-dim)" }}
             >
               Course Details
@@ -206,7 +206,7 @@ function NewCoursePage() {
         <div className="flex flex-col gap-5">
           <div className="island-shell rounded-xl p-5 flex flex-col gap-4">
             <h2
-              className="text-xs font-bold uppercase tracking-wider mb-1"
+              className="text-xs font-bold tracking-wider mb-1"
               style={{ color: "var(--sb-ink-dim)" }}
             >
               Publishing Options
