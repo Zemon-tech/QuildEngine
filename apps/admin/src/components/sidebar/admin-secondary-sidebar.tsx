@@ -1,5 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
+  Award,
   BarChart3,
   Binary,
   BookOpen,
@@ -14,6 +15,7 @@ import {
   Database,
   FileText,
   FlaskConical,
+  GraduationCap,
   History,
   Image,
   Key,
@@ -30,8 +32,10 @@ import {
   Rocket,
   Settings,
   Shield,
+  Tag,
   Terminal,
   Users,
+  Video,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
@@ -99,14 +103,52 @@ export function AdminSecondarySidebar() {
         ],
       },
     ];
-  } else if (currentPath.startsWith("/courses")) {
+  } else if (
+    currentPath.startsWith("/learning") ||
+    currentPath.startsWith("/courses")
+  ) {
     sectionTitle = "Learning LMS";
     groups = [
       {
-        label: "Content Curation",
+        label: "Overview",
         items: [
-          { label: "All Courses", to: "/courses", icon: BookOpen },
-          { label: "Create Course", to: "/courses/new", icon: Plus },
+          { label: "Dashboard", to: "/learning/dashboard", icon: LayoutDashboard },
+        ],
+      },
+      {
+        label: "Content",
+        items: [
+          { label: "Courses", to: "/learning/courses", icon: BookOpen },
+          { label: "Tutorials", to: "/learning/tutorials", icon: FileText },
+          { label: "Modules", to: "/learning/modules", icon: Layers },
+          { label: "Lessons", to: "/learning/lessons", icon: Video },
+          { label: "Topics", to: "/learning/topics", icon: Code2 },
+        ],
+      },
+      {
+        label: "Assessment",
+        items: [
+          { label: "Assignments", to: "/learning/assignments", icon: ClipboardList },
+          { label: "Quizzes", to: "/learning/quizzes", icon: BrainCircuit },
+          { label: "Certificates", to: "/learning/certificates", icon: Award },
+        ],
+      },
+      {
+        label: "People",
+        items: [
+          { label: "Instructors", to: "/learning/instructors", icon: GraduationCap },
+        ],
+      },
+      {
+        label: "Metadata",
+        items: [
+          { label: "Categories & Tags", to: "/learning/categories", icon: Tag },
+        ],
+      },
+      {
+        label: "Insights",
+        items: [
+          { label: "Analytics", to: "/learning/analytics", icon: BarChart3 },
         ],
       },
     ];
@@ -249,6 +291,18 @@ export function AdminSecondarySidebar() {
             to: "/ai",
             search: { tab: "chat" },
             icon: MessageSquare,
+          },
+          {
+            label: "Global Assistant",
+            to: "/ai",
+            search: { tab: "assistant" },
+            icon: Sparkles,
+          },
+          {
+            label: "Research AI",
+            to: "/ai",
+            search: { tab: "research" },
+            icon: FlaskConical,
           },
         ],
       },

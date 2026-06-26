@@ -17,12 +17,14 @@ import {
   ChevronUp,
   Clock,
   Code2,
+  Copy,
   Cpu,
   Database,
   DatabaseZap,
   Edit2,
   ExternalLink,
   FileText,
+  FlaskConical,
   Globe,
   Globe as GlobeIcon,
   History,
@@ -43,6 +45,7 @@ import {
   Search,
   Send,
   Settings,
+  Share2,
   Sliders,
   SlidersHorizontal,
   Sparkles,
@@ -92,6 +95,7 @@ import {
   PromptInputBody,
   PromptInputButton,
   PromptInputFooter,
+  type PromptInputMessage,
   PromptInputProvider,
   PromptInputSubmit,
   PromptInputTextarea,
@@ -112,6 +116,8 @@ const aiSearchSchema = z.object({
     .enum([
       "dashboard",
       "chat",
+      "assistant",
+      "research",
       "overview",
       "analytics",
       "usage",
@@ -135,9 +141,11 @@ export const Route = createFileRoute("/_admin/ai/")({
   component: AIDashboardPage,
 });
 
-type TabId =
+export type TabId =
   | "dashboard"
   | "chat"
+  | "assistant"
+  | "research"
   | "overview"
   | "analytics"
   | "usage"
@@ -461,7 +469,9 @@ function DashboardTab({
 
   // Scroll to bottom
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messages || status) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages, status]);
 
   const getGreeting = () => {
@@ -859,7 +869,9 @@ function ChatTab({
   }, []);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messages || status) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages, status]);
 
   const handleNewChat = () => {
@@ -1037,6 +1049,18 @@ function AIDashboardPage() {
       color: "text-blue-500 bg-blue-500/10",
     },
     {
+      id: "assistant" as const,
+      label: "Global Assistant",
+      icon: Sparkles,
+      color: "text-amber-600 bg-amber-600/10",
+    },
+    {
+      id: "research" as const,
+      label: "Research AI",
+      icon: FlaskConical,
+      color: "text-rose-600 bg-rose-600/10",
+    },
+    {
       id: "overview" as const,
       label: "AI Overview",
       icon: Sparkles,
@@ -1186,6 +1210,8 @@ function AIDashboardPage() {
               setStatus={setStatus}
             />
           )}
+          {activeTab === "assistant" && <AssistantTab />}
+          {activeTab === "research" && <ResearchTab />}
           {activeTab === "overview" && <OverviewTab />}
           {activeTab === "analytics" && <AnalyticsTab />}
           {activeTab === "usage" && <UsageTab />}
@@ -2046,7 +2072,7 @@ function AgentsTab() {
   };
 
   useEffect(() => {
-    if (logContainerRef.current) {
+    if (logs && logContainerRef.current) {
       logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
     }
   }, [logs]);
@@ -3190,6 +3216,774 @@ function SettingsTab() {
           </Button>
         </div>
       </form>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 14. GLOBAL ASSISTANT TAB
+// ─────────────────────────────────────────────────────────────────────────────
+function AssistantTab() {
+  const [enabled, setEnabled] = useState(true);
+  const [voiceEnabled, setVoiceEnabled] = useState(false);
+  const [sysPrompt, setSysPrompt] = useState(
+    "You are Quild Admin Copilot. You help administrators navigate, audit courses, review DSA problems, and analyze platform metrics. Keep your responses actionable and clear.",
+  );
+  const [success, setSuccess] = useState(false);
+  const [testInput, setTestInput] = useState("");
+  const [testOutput, setTestOutput] = useState("");
+  const [testing, setTesting] = useState(false);
+
+  const handleSave = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSuccess(true);
+    setTimeout(() => setSuccess(false), 2000);
+  };
+
+  const handleTestRule = async () => {
+    if (!testInput.trim()) return;
+    setTesting(true);
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    setTestOutput(
+      `[Rules Applied: Quild Admin Copilot Prompt]\n\nBased on your active view, I recommend opening the LMS Course Manager (under Learning → Courses) to review course statuses, or navigating to the API Monitoring tab to check token exhaustion limits. Let me know if you would like me to redirect you.`,
+    );
+    setTesting(false);
+  };
+
+  const topActions = [
+    {
+      name: "Global Navigation Redirection",
+      count: "4,821 redirects",
+      success: "99.8%",
+    },
+    { name: "Course Outline Synthesis", count: "3,212 runs", success: "100%" },
+    {
+      name: "DSA Practice Generator",
+      count: "2,109 generated",
+      success: "99.1%",
+    },
+    {
+      name: "RAG Semantic Search Q&A",
+      count: "1,510 queries",
+      success: "99.7%",
+    },
+  ];
+
+  return (
+    <div className="flex flex-col gap-6 animate-in fade-in duration-200">
+      {/* Stat Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <StatCard
+          title="Total Copilot Queries"
+          value="11,652"
+          delta="+18% vs last week"
+          deltaDirection="up"
+          icon={MessageSquare}
+        />
+        <StatCard
+          title="Avg. Copilot Latency"
+          value="268 ms"
+          delta="Fast"
+          deltaDirection="up"
+          icon={Clock}
+        />
+        <StatCard
+          title="Action Success Rate"
+          value="99.78%"
+          delta="Nominal"
+          deltaDirection="up"
+          icon={CheckCircle}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        {/* Left Col: Config Panel */}
+        <div className="island-shell rounded-xl p-5 flex flex-col gap-5">
+          <div className="flex flex-col border-b pb-3 border-[var(--sb-border)]">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)]">
+              Copilot System Settings
+            </h2>
+            <span className="text-[10px] text-[var(--sb-ink-muted)]">
+              Manage how the global floating assistant behaves on the admin
+              panel.
+            </span>
+          </div>
+
+          <form onSubmit={handleSave} className="flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+              <div className="flex flex-col">
+                <span className="text-xs font-semibold text-[var(--sb-ink)]">
+                  Enable Assistant Copilot
+                </span>
+                <span className="text-[10px] text-[var(--sb-ink-dim)]">
+                  Show the floating chat bubble on all routes
+                </span>
+              </div>
+              <input
+                type="checkbox"
+                checked={enabled}
+                onChange={(e) => setEnabled(e.target.checked)}
+                className="size-4 rounded accent-[var(--sb-accent)] bg-zinc-900 border-[var(--sb-border)]"
+              />
+            </div>
+
+            <div className="flex items-center justify-between border-t pt-3 border-[var(--sb-border)]">
+              <div className="flex flex-col">
+                <span className="text-xs font-semibold text-[var(--sb-ink)]">
+                  Enable Voice Command Input
+                </span>
+                <span className="text-[10px] text-[var(--sb-ink-dim)]">
+                  Allow dictation & natural language navigation triggers
+                </span>
+              </div>
+              <input
+                type="checkbox"
+                checked={voiceEnabled}
+                onChange={(e) => setVoiceEnabled(e.target.checked)}
+                className="size-4 rounded accent-[var(--sb-accent)] bg-zinc-900 border-[var(--sb-border)]"
+              />
+            </div>
+
+            <div className="flex flex-col gap-1.5 border-t pt-3 border-[var(--sb-border)]">
+              <label
+                htmlFor="sysPrompt"
+                className="text-xs font-bold text-[var(--sb-ink-muted)]"
+              >
+                Copilot System Prompt Instruction
+              </label>
+              <textarea
+                id="sysPrompt"
+                rows={4}
+                value={sysPrompt}
+                onChange={(e) => setSysPrompt(e.target.value)}
+                className="w-full rounded-[10px] p-2 text-xs outline-none focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30 resize-none"
+                style={{
+                  background:
+                    "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
+                  border: "1px solid var(--sb-border)",
+                  color: "var(--sb-ink)",
+                }}
+              />
+            </div>
+
+            <div className="flex items-center justify-end gap-3 mt-1 border-t pt-3 border-[var(--sb-border)]">
+              {success && (
+                <span className="text-xs text-emerald-500 font-semibold animate-in fade-in">
+                  Assistant configurations saved
+                </span>
+              )}
+              <Button
+                type="submit"
+                size="xs"
+                className="w-28 active:scale-[0.97] transition-all"
+              >
+                Save Settings
+              </Button>
+            </div>
+          </form>
+        </div>
+
+        {/* Right Col: Top Actions & Testing */}
+        <div className="flex flex-col gap-6">
+          <div className="island-shell rounded-xl p-5 flex flex-col">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)] mb-4">
+              Top Executed Actions
+            </h2>
+            <div className="flex flex-col gap-3">
+              {topActions.map((action) => (
+                <div
+                  key={action.name}
+                  className="flex items-center justify-between p-3 rounded-lg border border-[var(--sb-border)] bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)]"
+                >
+                  <div className="flex flex-col">
+                    <span className="text-xs font-semibold text-[var(--sb-ink)]">
+                      {action.name}
+                    </span>
+                    <span className="text-[10px] text-[var(--sb-ink-dim)]">
+                      {action.count}
+                    </span>
+                  </div>
+                  <Badge className="bg-emerald-500/10 text-emerald-500 border-none font-bold py-0.5 text-[9px]">
+                    {action.success} success
+                  </Badge>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="island-shell rounded-xl p-5 flex flex-col gap-3">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)] border-b pb-2 border-[var(--sb-border)]">
+              System Rules Playground
+            </h2>
+            <div className="flex flex-col gap-2">
+              <span className="text-[10px] text-[var(--sb-ink-muted)]">
+                Verify prompt instructions in real-time.
+              </span>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder="Ask a test question (e.g. 'How can I fix DSA problems?')"
+                  value={testInput}
+                  onChange={(e) => setTestInput(e.target.value)}
+                  className="flex-1 rounded-[10px] px-3 py-2 text-xs outline-none"
+                  style={{
+                    background:
+                      "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
+                    border: "1px solid var(--sb-border)",
+                    color: "var(--sb-ink)",
+                  }}
+                />
+                <Button
+                  onClick={handleTestRule}
+                  size="xs"
+                  disabled={testing}
+                  className="active:scale-[0.97] transition-all"
+                >
+                  {testing ? "Testing..." : "Test"}
+                </Button>
+              </div>
+              {testOutput && (
+                <div
+                  className="rounded-lg p-3 text-xs border border-[var(--sb-border)] whitespace-pre-wrap leading-relaxed mt-2"
+                  style={{
+                    background:
+                      "color-mix(in oklab, var(--sb-ink) 2%, transparent)",
+                    color: "var(--sb-ink-muted)",
+                  }}
+                >
+                  {testOutput}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 15. RESEARCH AI TAB
+// ─────────────────────────────────────────────────────────────────────────────
+function ResearchTab() {
+  const [references, setReferences] = useState([
+    {
+      id: "ref-1",
+      title: "Attention Is All You Need",
+      author: "Vaswani et al.",
+      year: 2017,
+      journal: "NIPS 2017",
+      selected: true,
+      summary:
+        "This seminal paper introduced the Transformer architecture, replacing recurrent layers with multi-head self-attention mechanisms for sequence transduction tasks, paving the way for modern LLMs.",
+      findings: [
+        "Eliminates recurrence, enabling parallelized training.",
+        "Introduces Multi-Head Self-Attention for learning global dependencies.",
+        "Achieves state-of-the-art results on translation tasks in 12 hours of training.",
+      ],
+    },
+    {
+      id: "ref-2",
+      title: "Deep Residual Learning for Image Recognition",
+      author: "He et al.",
+      year: 2015,
+      journal: "CVPR 2016",
+      selected: false,
+      summary:
+        "Introduces residual connections (ResNet) to train extremely deep neural networks (up to 152 layers) by addressing the vanishing gradient problem, achieving first place in ILSVRC 2015.",
+      findings: [
+        "Addresses degradation problem in very deep architectures.",
+        "Uses identity shortcut connections to perform residual mapping.",
+        "Significantly easier to optimize and gains accuracy from increased depth.",
+      ],
+    },
+    {
+      id: "ref-3",
+      title: "BERT: Pre-training of Deep Bidirectional Transformers",
+      author: "Devlin et al.",
+      year: 2018,
+      journal: "NAACL 2019",
+      selected: false,
+      summary:
+        "Introduced BERT, a bidirectional representation learning model that pre-trains on unlabeled text by masking tokens and predicting next sentences, setting a new standard for 11 NLP tasks.",
+      findings: [
+        "Pre-trains deep bidirectional representations from unlabeled text.",
+        "Uses Masked Language Modeling (MLM) and Next Sentence Prediction (NSP).",
+        "Fine-tunes with just one additional output layer for diverse NLP tasks.",
+      ],
+    },
+  ]);
+
+  const [citationStyle, setCitationStyle] = useState<
+    "apa" | "mla" | "chicago" | "bibtex"
+  >("apa");
+  const [copied, setCopied] = useState(false);
+  const [messages, setMessages] = useState<LocalMessage[]>([]);
+  const [status, setStatus] = useState<
+    "ready" | "submitted" | "streaming" | "error"
+  >("ready");
+  const [uploading, setUploading] = useState(false);
+  const [discoveryList, setDiscoveryList] = useState<string[]>([]);
+  const [discovering, setDiscovering] = useState(false);
+
+  const selectedRef = references.find((r) => r.selected) || references[0];
+
+  const handleSelectRef = (id: string) => {
+    setReferences((prev) => prev.map((r) => ({ ...r, selected: r.id === id })));
+  };
+
+  const getFormattedCitation = () => {
+    if (citationStyle === "apa") {
+      return `${selectedRef.author} (${selectedRef.year}). ${selectedRef.title}. ${selectedRef.journal}.`;
+    }
+    if (citationStyle === "mla") {
+      return `${selectedRef.author}. "${selectedRef.title}." ${selectedRef.journal}, ${selectedRef.year}.`;
+    }
+    if (citationStyle === "chicago") {
+      return `${selectedRef.author}. ${selectedRef.year}. "${selectedRef.title}." ${selectedRef.journal}.`;
+    }
+    // BibTeX
+    const citeKey = `${selectedRef.author.split(" ")[0].toLowerCase()}${selectedRef.year}`;
+    return `@article{${citeKey},\n  author = {${selectedRef.author}},\n  title = {${selectedRef.title}},\n  journal = {${selectedRef.journal}},\n  year = {${selectedRef.year}}\n}`;
+  };
+
+  const handleCopyCitation = () => {
+    navigator.clipboard.writeText(getFormattedCitation());
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleSimulateUpload = () => {
+    setUploading(true);
+    setTimeout(() => {
+      const newRef = {
+        id: `ref-${Date.now()}`,
+        title: "Language Models are Few-Shot Learners (GPT-3)",
+        author: "Brown et al.",
+        year: 2020,
+        journal: "NeurIPS 2020",
+        selected: true,
+        summary:
+          "Presents GPT-3, an autoregressive language model with 175 billion parameters, demonstrating that scaling language models achieves strong performance on few-shot learning NLP tasks without task-specific fine-tuning.",
+        findings: [
+          "Scales autoregressive language models to 175 billion parameters.",
+          "Demonstrates strong performance on few-shot, one-shot, and zero-shot NLP tasks.",
+          "Shows that scaling parameter counts yields predictable performance improvements.",
+        ],
+      };
+      setReferences((prev) =>
+        prev.map((r) => ({ ...r, selected: false })).concat(newRef),
+      );
+      setUploading(false);
+    }, 1200);
+  };
+
+  const handleDiscoverRelated = () => {
+    setDiscovering(true);
+    setTimeout(() => {
+      setDiscoveryList([
+        "Scaling Laws for Neural Language Models (Kaplan et al., 2020) - 94% match",
+        "Training Compute-Optimal Large Language Models (Chinchilla) (Hoffmann et al., 2022) - 89% match",
+      ]);
+      setDiscovering(false);
+    }, 1000);
+  };
+
+  const handleSendPrompt = async (message: PromptInputMessage) => {
+    const prompt = message.text.trim();
+    if (!prompt) return;
+
+    const userMsg: LocalMessage = {
+      id: nanoid(),
+      role: "user",
+      content: prompt,
+      createdAt: new Date(),
+    };
+    setMessages((prev) => [...prev, userMsg]);
+    setStatus("submitted");
+
+    await new Promise((resolve) => setTimeout(resolve, 800));
+
+    const responseText = `I have analyzed "${selectedRef.title}" regarding your question "${prompt}".\n\nBased on Section 3, ${selectedRef.author} highlights: \n- ${selectedRef.findings[0]}\n- ${selectedRef.findings[1]}\n\nThis confirms the core concept described in the summary: "${selectedRef.summary}"`;
+
+    const assistantMsgId = nanoid();
+    const assistantMsg: LocalMessage = {
+      id: assistantMsgId,
+      role: "assistant",
+      content: "",
+      createdAt: new Date(),
+    };
+
+    setMessages((prev) => [...prev, assistantMsg]);
+    setStatus("streaming");
+
+    let currentText = "";
+    const words = responseText.split(" ");
+    let wordIndex = 0;
+
+    const streamInterval = setInterval(() => {
+      if (wordIndex < words.length) {
+        currentText += (wordIndex === 0 ? "" : " ") + words[wordIndex];
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === assistantMsgId ? { ...msg, content: currentText } : msg,
+          ),
+        );
+        wordIndex++;
+      } else {
+        clearInterval(streamInterval);
+        setStatus("ready");
+      }
+    }, 40);
+  };
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 animate-in fade-in duration-200">
+      {/* Left Panel: References and Upload (2 Columns) */}
+      <div className="lg:col-span-2 flex flex-col gap-6">
+        <div className="island-shell rounded-xl p-5 flex flex-col gap-4">
+          <div className="flex flex-col border-b pb-3 border-[var(--sb-border)]">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)]">
+              Research Source Documents
+            </h2>
+            <span className="text-[10px] text-[var(--sb-ink-muted)]">
+              Upload literature papers and manage academic reference citations.
+            </span>
+          </div>
+
+          {/* Simulated Uploader */}
+          <button
+            type="button"
+            onClick={handleSimulateUpload}
+            disabled={uploading}
+            className="flex flex-col items-center justify-center border-2 border-dashed border-[var(--sb-border)] rounded-xl py-6 hover:bg-secondary/20 transition-all cursor-pointer active:scale-[0.98] group"
+          >
+            <FlaskConical className="size-6 text-muted-foreground/60 group-hover:text-[var(--sb-accent)] transition-colors mb-2" />
+            <span className="text-xs font-semibold text-[var(--sb-ink)]">
+              {uploading
+                ? "Analyzing document structure..."
+                : "Upload Paper (PDF, DOCX, MD)"}
+            </span>
+            <span className="text-[9px] text-[var(--sb-ink-dim)] mt-0.5">
+              Drag file here or click to simulate upload
+            </span>
+          </button>
+
+          {/* Reference List */}
+          <div className="flex flex-col gap-2 max-h-[250px] overflow-y-auto scrollbar-none pr-1">
+            {references.map((ref) => (
+              <button
+                key={ref.id}
+                type="button"
+                onClick={() => handleSelectRef(ref.id)}
+                className={cn(
+                  "w-full text-left p-3 rounded-lg border transition-all cursor-pointer text-xs flex flex-col gap-1",
+                  ref.selected
+                    ? "border-[var(--sb-accent)] bg-[var(--sb-accent)]/5 text-[var(--sb-ink)] font-semibold"
+                    : "border-[var(--sb-border)] hover:bg-secondary/40 text-[var(--sb-ink-muted)]",
+                )}
+              >
+                <div className="flex justify-between w-full">
+                  <span className="truncate pr-2 font-bold">{ref.title}</span>
+                  <span className="text-[10px] text-[var(--sb-ink-dim)] shrink-0">
+                    {ref.year}
+                  </span>
+                </div>
+                <span className="text-[10px] text-[var(--sb-ink-dim)]">
+                  {ref.author} • {ref.journal}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Citation Generator Widget */}
+        <div className="island-shell rounded-xl p-5 flex flex-col gap-4">
+          <div className="flex flex-col border-b pb-2 border-[var(--sb-border)]">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)]">
+              Citation Generator
+            </h2>
+            <span className="text-[10px] text-[var(--sb-ink-muted)]">
+              Generate formatted citations instantly for the selected resource.
+            </span>
+          </div>
+
+          <div className="flex gap-2">
+            {(["apa", "mla", "chicago", "bibtex"] as const).map((style) => (
+              <button
+                key={style}
+                type="button"
+                onClick={() => setCitationStyle(style)}
+                className={cn(
+                  "flex-1 py-1 rounded text-[10px] font-bold uppercase border transition-all cursor-pointer",
+                  citationStyle === style
+                    ? "bg-[var(--sb-accent)] text-white border-transparent"
+                    : "border-[var(--sb-border)] hover:bg-secondary/40 text-[var(--sb-ink-muted)]",
+                )}
+              >
+                {style}
+              </button>
+            ))}
+          </div>
+
+          <div
+            className="p-3 rounded-lg border border-[var(--sb-border)] font-mono text-[10px] leading-relaxed break-words whitespace-pre-wrap select-text"
+            style={{
+              background: "color-mix(in oklab, var(--sb-ink) 2%, transparent)",
+              color: "var(--sb-ink)",
+            }}
+          >
+            {getFormattedCitation()}
+          </div>
+
+          <div className="flex justify-end gap-3 mt-1">
+            {copied && (
+              <span className="text-[10px] text-emerald-500 font-semibold flex items-center">
+                Copied to clipboard!
+              </span>
+            )}
+            <Button
+              onClick={handleCopyCitation}
+              size="xs"
+              variant="outline"
+              className="active:scale-[0.97] transition-all text-xs"
+            >
+              Copy Citation
+            </Button>
+          </div>
+        </div>
+
+        {/* Discover Related Research */}
+        <div className="island-shell rounded-xl p-5 flex flex-col gap-3">
+          <div className="flex items-center justify-between border-b pb-2 border-[var(--sb-border)]">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)]">
+              Cross-Reference Discovery
+            </h2>
+            <Button
+              onClick={handleDiscoverRelated}
+              disabled={discovering}
+              size="xs"
+              variant="outline"
+              className="text-[10px] h-6 px-2"
+            >
+              {discovering ? "Searching index..." : "Discover Related"}
+            </Button>
+          </div>
+
+          {discoveryList.length > 0 ? (
+            <div className="flex flex-col gap-2 mt-1">
+              {discoveryList.map((disc, idx) => (
+                <div
+                  key={idx}
+                  className="p-2.5 rounded-lg border border-[var(--sb-border)] text-[10px] bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)] leading-relaxed"
+                  style={{ color: "var(--sb-ink-muted)" }}
+                >
+                  {disc}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <span className="text-[10px] text-[var(--sb-ink-dim)]">
+              Query our research repository to find mathematically matching
+              literature.
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Right Panel: Chat & Knowledge Graph (3 Columns) */}
+      <div className="lg:col-span-3 flex flex-col gap-6">
+        {/* Research Helper Chat Workspace */}
+        <div className="relative border border-[var(--sb-border)] rounded-xl flex flex-col bg-background text-foreground h-[420px] overflow-hidden shadow-sm">
+          <div className="flex h-12 shrink-0 items-center justify-between border-b border-[var(--sb-border)] px-4 bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)]">
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--sb-ink-dim)]">
+                Literature AI Helper
+              </span>
+              <span className="text-[9px] px-1.5 py-0.2 rounded border border-[var(--sb-accent)]/20 bg-[var(--sb-accent)]/10 text-[var(--sb-accent)] font-semibold truncate max-w-[200px]">
+                {selectedRef.title}
+              </span>
+            </div>
+            <button
+              onClick={() => setMessages([])}
+              className="p-1 rounded text-muted-foreground hover:text-foreground hover:bg-secondary cursor-pointer"
+              title="Reset helper chat"
+            >
+              <RefreshCw size={12} />
+            </button>
+          </div>
+
+          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 scrollbar-none">
+            {messages.length === 0 ? (
+              <div className="h-full flex flex-col items-center justify-center text-center p-6 text-muted-foreground select-none">
+                <BrainCircuit
+                  size={28}
+                  className="text-muted-foreground/30 mb-2 animate-pulse"
+                />
+                <span className="text-xs font-semibold text-[var(--sb-ink)] mb-1">
+                  Analyze Selected Literature
+                </span>
+                <span className="text-[10px] max-w-[280px]">
+                  Ask questions about theoretical frameworks, methodology, or
+                  results of the selected paper.
+                </span>
+              </div>
+            ) : (
+              <div className="space-y-4 flex flex-col">
+                {messages.map((msg) => (
+                  <Message from={msg.role} key={msg.id}>
+                    <MessageContent>
+                      <span className="text-xs leading-relaxed">
+                        {msg.content}
+                      </span>
+                    </MessageContent>
+                  </Message>
+                ))}
+                {status === "submitted" && (
+                  <Message from="assistant">
+                    <MessageContent>
+                      <div className="flex items-center gap-1 py-1 px-1">
+                        <span className="h-1 w-1 rounded-full bg-muted-foreground animate-bounce delay-0" />
+                        <span className="h-1 w-1 rounded-full bg-muted-foreground animate-bounce delay-150" />
+                        <span className="h-1 w-1 rounded-full bg-muted-foreground animate-bounce delay-300" />
+                      </div>
+                    </MessageContent>
+                  </Message>
+                )}
+              </div>
+            )}
+          </div>
+
+          <div className="shrink-0 border-t border-[var(--sb-border)] bg-background pt-3 pb-3 px-3">
+            <DashboardPromptInput
+              onSubmit={handleSendPrompt}
+              status={status}
+              placeholder="Ask research helper about this paper..."
+              className="w-full rounded-xl border border-[var(--sb-border)] bg-card px-2.5 pt-1.5 pb-1.5 [&_[data-slot=input-group]]:border-none [&_[data-slot=input-group]]:bg-transparent [&_[data-slot=input-group]]:shadow-none"
+            />
+          </div>
+        </div>
+
+        {/* Paper Insights (Key Findings & Visual Knowledge Graph) */}
+        <div className="island-shell rounded-xl p-5 flex flex-col gap-4">
+          <div className="flex flex-col border-b pb-2 border-[var(--sb-border)]">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)]">
+              Document Insights & Knowledge Graph
+            </h2>
+            <span className="text-[10px] text-[var(--sb-ink-muted)]">
+              Synthesized theoretical findings and reference citations mapped
+              visually.
+            </span>
+          </div>
+
+          {/* Key Findings list */}
+          <div className="flex flex-col gap-2">
+            <span className="text-[10px] font-bold text-[var(--sb-ink-muted)]">
+              Key Extracted Findings:
+            </span>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {selectedRef.findings.map((f, idx) => (
+                <div
+                  key={idx}
+                  className="p-3 rounded-lg border border-[var(--sb-border)] bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)] text-[10px] leading-relaxed flex flex-col justify-between"
+                  style={{ color: "var(--sb-ink-muted)" }}
+                >
+                  <span className="font-semibold text-[var(--sb-accent)] block mb-1">
+                    Finding #{idx + 1}
+                  </span>
+                  <span>{f}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Interactive Knowledge Graph */}
+          <div className="flex flex-col gap-2 mt-2">
+            <span className="text-[10px] font-bold text-[var(--sb-ink-muted)]">
+              Theoretical Map (References & Influence):
+            </span>
+            <div className="relative w-full h-[180px] rounded-xl border border-[var(--sb-border)] overflow-hidden flex items-center justify-center p-4 bg-zinc-950/20">
+              {/* Decorative SVG connection lines */}
+              <svg
+                className="absolute inset-0 w-full h-full pointer-events-none z-0"
+                role="img"
+                aria-label="Decorative connection lines"
+              >
+                <line
+                  x1="20%"
+                  y1="50%"
+                  x2="50%"
+                  y2="50%"
+                  stroke="var(--sb-border)"
+                  strokeWidth="1.5"
+                  strokeDasharray="4 4"
+                />
+                <line
+                  x1="80%"
+                  y1="50%"
+                  x2="50%"
+                  y2="50%"
+                  stroke="var(--sb-border)"
+                  strokeWidth="1.5"
+                  strokeDasharray="4 4"
+                />
+                <line
+                  x1="50%"
+                  y1="50%"
+                  x2="50%"
+                  y2="20%"
+                  stroke="var(--sb-border)"
+                  strokeWidth="1.5"
+                  strokeDasharray="4 4"
+                />
+              </svg>
+
+              {/* Node 1: Pre-requisite node */}
+              <div className="absolute left-[5%] top-[40%] z-10 w-[28%] p-2 rounded-lg border border-dashed border-[var(--sb-border)] bg-zinc-900/60 text-[9px] text-center shadow-sm">
+                <span className="text-zinc-500 font-medium block">
+                  Precedent
+                </span>
+                <span className="text-white font-bold block truncate">
+                  Attention (Bahdanau '14)
+                </span>
+              </div>
+
+              {/* Node 2: Selected Paper Center Node */}
+              <div className="absolute left-[38%] top-[35%] z-10 w-[24%] p-3 rounded-xl border border-[var(--sb-accent)] bg-zinc-900/90 text-[10px] text-center shadow-lg animate-pulse">
+                <span className="text-[var(--sb-accent)] font-extrabold uppercase tracking-wide block text-[8px]">
+                  Active
+                </span>
+                <span className="text-white font-bold block truncate mt-0.5">
+                  {selectedRef.author}
+                </span>
+                <span className="text-zinc-400 block text-[9px] truncate mt-0.5">
+                  ({selectedRef.year})
+                </span>
+              </div>
+
+              {/* Node 3: Influence child node 1 */}
+              <div className="absolute right-[5%] top-[20%] z-10 w-[28%] p-2 rounded-lg border border-[var(--sb-border)] bg-zinc-900/60 text-[9px] text-center shadow-sm">
+                <span className="text-emerald-500 font-medium block">
+                  Influence (98%)
+                </span>
+                <span className="text-white font-bold block truncate">
+                  GPT-1 (Radford '18)
+                </span>
+              </div>
+
+              {/* Node 4: Influence child node 2 */}
+              <div className="absolute right-[5%] top-[60%] z-10 w-[28%] p-2 rounded-lg border border-[var(--sb-border)] bg-zinc-900/60 text-[9px] text-center shadow-sm">
+                <span className="text-emerald-500 font-medium block">
+                  Influence (94%)
+                </span>
+                <span className="text-white font-bold block truncate">
+                  BERT (Devlin '18)
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

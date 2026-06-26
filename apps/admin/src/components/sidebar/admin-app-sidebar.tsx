@@ -109,9 +109,9 @@ export function AdminAppSidebar() {
               },
               {
                 label: "Learning",
-                to: "/courses",
+                to: "/learning/dashboard",
                 icon: BookOpen,
-                prefixes: ["/courses"],
+                prefixes: ["/learning", "/courses"],
               },
               {
                 label: "Practice",

@@ -20,6 +20,7 @@ import { Route as AdminRoadmapsIndexRouteImport } from './routes/_admin/roadmaps
 import { Route as AdminResearchIndexRouteImport } from './routes/_admin/research/index'
 import { Route as AdminOverviewIndexRouteImport } from './routes/_admin/overview/index'
 import { Route as AdminMediaIndexRouteImport } from './routes/_admin/media/index'
+import { Route as AdminLearningIndexRouteImport } from './routes/_admin/learning/index'
 import { Route as AdminInvitesIndexRouteImport } from './routes/_admin/invites/index'
 import { Route as AdminCoursesIndexRouteImport } from './routes/_admin/courses/index'
 import { Route as AdminAuditIndexRouteImport } from './routes/_admin/audit/index'
@@ -30,6 +31,18 @@ import { Route as AdminPracticeInterviewQaIndexRouteImport } from './routes/_adm
 import { Route as AdminPracticeDsaIndexRouteImport } from './routes/_admin/practice/dsa/index'
 import { Route as AdminPracticeCaseStudiesIndexRouteImport } from './routes/_admin/practice/case-studies/index'
 import { Route as AdminPracticeAssessmentsIndexRouteImport } from './routes/_admin/practice/assessments/index'
+import { Route as AdminLearningTutorialsIndexRouteImport } from './routes/_admin/learning/tutorials/index'
+import { Route as AdminLearningTopicsIndexRouteImport } from './routes/_admin/learning/topics/index'
+import { Route as AdminLearningQuizzesIndexRouteImport } from './routes/_admin/learning/quizzes/index'
+import { Route as AdminLearningModulesIndexRouteImport } from './routes/_admin/learning/modules/index'
+import { Route as AdminLearningLessonsIndexRouteImport } from './routes/_admin/learning/lessons/index'
+import { Route as AdminLearningInstructorsIndexRouteImport } from './routes/_admin/learning/instructors/index'
+import { Route as AdminLearningDashboardIndexRouteImport } from './routes/_admin/learning/dashboard/index'
+import { Route as AdminLearningCoursesIndexRouteImport } from './routes/_admin/learning/courses/index'
+import { Route as AdminLearningCertificatesIndexRouteImport } from './routes/_admin/learning/certificates/index'
+import { Route as AdminLearningCategoriesIndexRouteImport } from './routes/_admin/learning/categories/index'
+import { Route as AdminLearningAssignmentsIndexRouteImport } from './routes/_admin/learning/assignments/index'
+import { Route as AdminLearningAnalyticsIndexRouteImport } from './routes/_admin/learning/analytics/index'
 import { Route as AdminCmsNewsletterIndexRouteImport } from './routes/_admin/cms/newsletter/index'
 import { Route as AdminCmsEventsIndexRouteImport } from './routes/_admin/cms/events/index'
 import { Route as AdminCmsBlogIndexRouteImport } from './routes/_admin/cms/blog/index'
@@ -87,6 +100,11 @@ const AdminMediaIndexRoute = AdminMediaIndexRouteImport.update({
   path: '/media/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminLearningIndexRoute = AdminLearningIndexRouteImport.update({
+  id: '/learning/',
+  path: '/learning/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminInvitesIndexRoute = AdminInvitesIndexRouteImport.update({
   id: '/invites/',
   path: '/invites/',
@@ -140,6 +158,78 @@ const AdminPracticeAssessmentsIndexRoute =
     path: '/practice/assessments/',
     getParentRoute: () => AdminRoute,
   } as any)
+const AdminLearningTutorialsIndexRoute =
+  AdminLearningTutorialsIndexRouteImport.update({
+    id: '/learning/tutorials/',
+    path: '/learning/tutorials/',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminLearningTopicsIndexRoute =
+  AdminLearningTopicsIndexRouteImport.update({
+    id: '/learning/topics/',
+    path: '/learning/topics/',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminLearningQuizzesIndexRoute =
+  AdminLearningQuizzesIndexRouteImport.update({
+    id: '/learning/quizzes/',
+    path: '/learning/quizzes/',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminLearningModulesIndexRoute =
+  AdminLearningModulesIndexRouteImport.update({
+    id: '/learning/modules/',
+    path: '/learning/modules/',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminLearningLessonsIndexRoute =
+  AdminLearningLessonsIndexRouteImport.update({
+    id: '/learning/lessons/',
+    path: '/learning/lessons/',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminLearningInstructorsIndexRoute =
+  AdminLearningInstructorsIndexRouteImport.update({
+    id: '/learning/instructors/',
+    path: '/learning/instructors/',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminLearningDashboardIndexRoute =
+  AdminLearningDashboardIndexRouteImport.update({
+    id: '/learning/dashboard/',
+    path: '/learning/dashboard/',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminLearningCoursesIndexRoute =
+  AdminLearningCoursesIndexRouteImport.update({
+    id: '/learning/courses/',
+    path: '/learning/courses/',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminLearningCertificatesIndexRoute =
+  AdminLearningCertificatesIndexRouteImport.update({
+    id: '/learning/certificates/',
+    path: '/learning/certificates/',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminLearningCategoriesIndexRoute =
+  AdminLearningCategoriesIndexRouteImport.update({
+    id: '/learning/categories/',
+    path: '/learning/categories/',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminLearningAssignmentsIndexRoute =
+  AdminLearningAssignmentsIndexRouteImport.update({
+    id: '/learning/assignments/',
+    path: '/learning/assignments/',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminLearningAnalyticsIndexRoute =
+  AdminLearningAnalyticsIndexRouteImport.update({
+    id: '/learning/analytics/',
+    path: '/learning/analytics/',
+    getParentRoute: () => AdminRoute,
+  } as any)
 const AdminCmsNewsletterIndexRoute = AdminCmsNewsletterIndexRouteImport.update({
   id: '/cms/newsletter/',
   path: '/cms/newsletter/',
@@ -165,6 +255,7 @@ export interface FileRoutesByFullPath {
   '/audit/': typeof AdminAuditIndexRoute
   '/courses/': typeof AdminCoursesIndexRoute
   '/invites/': typeof AdminInvitesIndexRoute
+  '/learning/': typeof AdminLearningIndexRoute
   '/media/': typeof AdminMediaIndexRoute
   '/overview/': typeof AdminOverviewIndexRoute
   '/research/': typeof AdminResearchIndexRoute
@@ -175,6 +266,18 @@ export interface FileRoutesByFullPath {
   '/cms/blog/': typeof AdminCmsBlogIndexRoute
   '/cms/events/': typeof AdminCmsEventsIndexRoute
   '/cms/newsletter/': typeof AdminCmsNewsletterIndexRoute
+  '/learning/analytics/': typeof AdminLearningAnalyticsIndexRoute
+  '/learning/assignments/': typeof AdminLearningAssignmentsIndexRoute
+  '/learning/categories/': typeof AdminLearningCategoriesIndexRoute
+  '/learning/certificates/': typeof AdminLearningCertificatesIndexRoute
+  '/learning/courses/': typeof AdminLearningCoursesIndexRoute
+  '/learning/dashboard/': typeof AdminLearningDashboardIndexRoute
+  '/learning/instructors/': typeof AdminLearningInstructorsIndexRoute
+  '/learning/lessons/': typeof AdminLearningLessonsIndexRoute
+  '/learning/modules/': typeof AdminLearningModulesIndexRoute
+  '/learning/quizzes/': typeof AdminLearningQuizzesIndexRoute
+  '/learning/topics/': typeof AdminLearningTopicsIndexRoute
+  '/learning/tutorials/': typeof AdminLearningTutorialsIndexRoute
   '/practice/assessments/': typeof AdminPracticeAssessmentsIndexRoute
   '/practice/case-studies/': typeof AdminPracticeCaseStudiesIndexRoute
   '/practice/dsa/': typeof AdminPracticeDsaIndexRoute
@@ -189,6 +292,7 @@ export interface FileRoutesByTo {
   '/audit': typeof AdminAuditIndexRoute
   '/courses': typeof AdminCoursesIndexRoute
   '/invites': typeof AdminInvitesIndexRoute
+  '/learning': typeof AdminLearningIndexRoute
   '/media': typeof AdminMediaIndexRoute
   '/overview': typeof AdminOverviewIndexRoute
   '/research': typeof AdminResearchIndexRoute
@@ -199,6 +303,18 @@ export interface FileRoutesByTo {
   '/cms/blog': typeof AdminCmsBlogIndexRoute
   '/cms/events': typeof AdminCmsEventsIndexRoute
   '/cms/newsletter': typeof AdminCmsNewsletterIndexRoute
+  '/learning/analytics': typeof AdminLearningAnalyticsIndexRoute
+  '/learning/assignments': typeof AdminLearningAssignmentsIndexRoute
+  '/learning/categories': typeof AdminLearningCategoriesIndexRoute
+  '/learning/certificates': typeof AdminLearningCertificatesIndexRoute
+  '/learning/courses': typeof AdminLearningCoursesIndexRoute
+  '/learning/dashboard': typeof AdminLearningDashboardIndexRoute
+  '/learning/instructors': typeof AdminLearningInstructorsIndexRoute
+  '/learning/lessons': typeof AdminLearningLessonsIndexRoute
+  '/learning/modules': typeof AdminLearningModulesIndexRoute
+  '/learning/quizzes': typeof AdminLearningQuizzesIndexRoute
+  '/learning/topics': typeof AdminLearningTopicsIndexRoute
+  '/learning/tutorials': typeof AdminLearningTutorialsIndexRoute
   '/practice/assessments': typeof AdminPracticeAssessmentsIndexRoute
   '/practice/case-studies': typeof AdminPracticeCaseStudiesIndexRoute
   '/practice/dsa': typeof AdminPracticeDsaIndexRoute
@@ -216,6 +332,7 @@ export interface FileRoutesById {
   '/_admin/audit/': typeof AdminAuditIndexRoute
   '/_admin/courses/': typeof AdminCoursesIndexRoute
   '/_admin/invites/': typeof AdminInvitesIndexRoute
+  '/_admin/learning/': typeof AdminLearningIndexRoute
   '/_admin/media/': typeof AdminMediaIndexRoute
   '/_admin/overview/': typeof AdminOverviewIndexRoute
   '/_admin/research/': typeof AdminResearchIndexRoute
@@ -226,6 +343,18 @@ export interface FileRoutesById {
   '/_admin/cms/blog/': typeof AdminCmsBlogIndexRoute
   '/_admin/cms/events/': typeof AdminCmsEventsIndexRoute
   '/_admin/cms/newsletter/': typeof AdminCmsNewsletterIndexRoute
+  '/_admin/learning/analytics/': typeof AdminLearningAnalyticsIndexRoute
+  '/_admin/learning/assignments/': typeof AdminLearningAssignmentsIndexRoute
+  '/_admin/learning/categories/': typeof AdminLearningCategoriesIndexRoute
+  '/_admin/learning/certificates/': typeof AdminLearningCertificatesIndexRoute
+  '/_admin/learning/courses/': typeof AdminLearningCoursesIndexRoute
+  '/_admin/learning/dashboard/': typeof AdminLearningDashboardIndexRoute
+  '/_admin/learning/instructors/': typeof AdminLearningInstructorsIndexRoute
+  '/_admin/learning/lessons/': typeof AdminLearningLessonsIndexRoute
+  '/_admin/learning/modules/': typeof AdminLearningModulesIndexRoute
+  '/_admin/learning/quizzes/': typeof AdminLearningQuizzesIndexRoute
+  '/_admin/learning/topics/': typeof AdminLearningTopicsIndexRoute
+  '/_admin/learning/tutorials/': typeof AdminLearningTutorialsIndexRoute
   '/_admin/practice/assessments/': typeof AdminPracticeAssessmentsIndexRoute
   '/_admin/practice/case-studies/': typeof AdminPracticeCaseStudiesIndexRoute
   '/_admin/practice/dsa/': typeof AdminPracticeDsaIndexRoute
@@ -242,6 +371,7 @@ export interface FileRouteTypes {
     | '/audit/'
     | '/courses/'
     | '/invites/'
+    | '/learning/'
     | '/media/'
     | '/overview/'
     | '/research/'
@@ -252,6 +382,18 @@ export interface FileRouteTypes {
     | '/cms/blog/'
     | '/cms/events/'
     | '/cms/newsletter/'
+    | '/learning/analytics/'
+    | '/learning/assignments/'
+    | '/learning/categories/'
+    | '/learning/certificates/'
+    | '/learning/courses/'
+    | '/learning/dashboard/'
+    | '/learning/instructors/'
+    | '/learning/lessons/'
+    | '/learning/modules/'
+    | '/learning/quizzes/'
+    | '/learning/topics/'
+    | '/learning/tutorials/'
     | '/practice/assessments/'
     | '/practice/case-studies/'
     | '/practice/dsa/'
@@ -266,6 +408,7 @@ export interface FileRouteTypes {
     | '/audit'
     | '/courses'
     | '/invites'
+    | '/learning'
     | '/media'
     | '/overview'
     | '/research'
@@ -276,6 +419,18 @@ export interface FileRouteTypes {
     | '/cms/blog'
     | '/cms/events'
     | '/cms/newsletter'
+    | '/learning/analytics'
+    | '/learning/assignments'
+    | '/learning/categories'
+    | '/learning/certificates'
+    | '/learning/courses'
+    | '/learning/dashboard'
+    | '/learning/instructors'
+    | '/learning/lessons'
+    | '/learning/modules'
+    | '/learning/quizzes'
+    | '/learning/topics'
+    | '/learning/tutorials'
     | '/practice/assessments'
     | '/practice/case-studies'
     | '/practice/dsa'
@@ -292,6 +447,7 @@ export interface FileRouteTypes {
     | '/_admin/audit/'
     | '/_admin/courses/'
     | '/_admin/invites/'
+    | '/_admin/learning/'
     | '/_admin/media/'
     | '/_admin/overview/'
     | '/_admin/research/'
@@ -302,6 +458,18 @@ export interface FileRouteTypes {
     | '/_admin/cms/blog/'
     | '/_admin/cms/events/'
     | '/_admin/cms/newsletter/'
+    | '/_admin/learning/analytics/'
+    | '/_admin/learning/assignments/'
+    | '/_admin/learning/categories/'
+    | '/_admin/learning/certificates/'
+    | '/_admin/learning/courses/'
+    | '/_admin/learning/dashboard/'
+    | '/_admin/learning/instructors/'
+    | '/_admin/learning/lessons/'
+    | '/_admin/learning/modules/'
+    | '/_admin/learning/quizzes/'
+    | '/_admin/learning/topics/'
+    | '/_admin/learning/tutorials/'
     | '/_admin/practice/assessments/'
     | '/_admin/practice/case-studies/'
     | '/_admin/practice/dsa/'
@@ -393,6 +561,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminMediaIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/_admin/learning/': {
+      id: '/_admin/learning/'
+      path: '/learning'
+      fullPath: '/learning/'
+      preLoaderRoute: typeof AdminLearningIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/_admin/invites/': {
       id: '/_admin/invites/'
       path: '/invites'
@@ -463,6 +638,90 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPracticeAssessmentsIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/_admin/learning/tutorials/': {
+      id: '/_admin/learning/tutorials/'
+      path: '/learning/tutorials'
+      fullPath: '/learning/tutorials/'
+      preLoaderRoute: typeof AdminLearningTutorialsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/learning/topics/': {
+      id: '/_admin/learning/topics/'
+      path: '/learning/topics'
+      fullPath: '/learning/topics/'
+      preLoaderRoute: typeof AdminLearningTopicsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/learning/quizzes/': {
+      id: '/_admin/learning/quizzes/'
+      path: '/learning/quizzes'
+      fullPath: '/learning/quizzes/'
+      preLoaderRoute: typeof AdminLearningQuizzesIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/learning/modules/': {
+      id: '/_admin/learning/modules/'
+      path: '/learning/modules'
+      fullPath: '/learning/modules/'
+      preLoaderRoute: typeof AdminLearningModulesIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/learning/lessons/': {
+      id: '/_admin/learning/lessons/'
+      path: '/learning/lessons'
+      fullPath: '/learning/lessons/'
+      preLoaderRoute: typeof AdminLearningLessonsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/learning/instructors/': {
+      id: '/_admin/learning/instructors/'
+      path: '/learning/instructors'
+      fullPath: '/learning/instructors/'
+      preLoaderRoute: typeof AdminLearningInstructorsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/learning/dashboard/': {
+      id: '/_admin/learning/dashboard/'
+      path: '/learning/dashboard'
+      fullPath: '/learning/dashboard/'
+      preLoaderRoute: typeof AdminLearningDashboardIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/learning/courses/': {
+      id: '/_admin/learning/courses/'
+      path: '/learning/courses'
+      fullPath: '/learning/courses/'
+      preLoaderRoute: typeof AdminLearningCoursesIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/learning/certificates/': {
+      id: '/_admin/learning/certificates/'
+      path: '/learning/certificates'
+      fullPath: '/learning/certificates/'
+      preLoaderRoute: typeof AdminLearningCertificatesIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/learning/categories/': {
+      id: '/_admin/learning/categories/'
+      path: '/learning/categories'
+      fullPath: '/learning/categories/'
+      preLoaderRoute: typeof AdminLearningCategoriesIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/learning/assignments/': {
+      id: '/_admin/learning/assignments/'
+      path: '/learning/assignments'
+      fullPath: '/learning/assignments/'
+      preLoaderRoute: typeof AdminLearningAssignmentsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/learning/analytics/': {
+      id: '/_admin/learning/analytics/'
+      path: '/learning/analytics'
+      fullPath: '/learning/analytics/'
+      preLoaderRoute: typeof AdminLearningAnalyticsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/_admin/cms/newsletter/': {
       id: '/_admin/cms/newsletter/'
       path: '/cms/newsletter'
@@ -494,6 +753,7 @@ interface AdminRouteChildren {
   AdminAuditIndexRoute: typeof AdminAuditIndexRoute
   AdminCoursesIndexRoute: typeof AdminCoursesIndexRoute
   AdminInvitesIndexRoute: typeof AdminInvitesIndexRoute
+  AdminLearningIndexRoute: typeof AdminLearningIndexRoute
   AdminMediaIndexRoute: typeof AdminMediaIndexRoute
   AdminOverviewIndexRoute: typeof AdminOverviewIndexRoute
   AdminResearchIndexRoute: typeof AdminResearchIndexRoute
@@ -504,6 +764,18 @@ interface AdminRouteChildren {
   AdminCmsBlogIndexRoute: typeof AdminCmsBlogIndexRoute
   AdminCmsEventsIndexRoute: typeof AdminCmsEventsIndexRoute
   AdminCmsNewsletterIndexRoute: typeof AdminCmsNewsletterIndexRoute
+  AdminLearningAnalyticsIndexRoute: typeof AdminLearningAnalyticsIndexRoute
+  AdminLearningAssignmentsIndexRoute: typeof AdminLearningAssignmentsIndexRoute
+  AdminLearningCategoriesIndexRoute: typeof AdminLearningCategoriesIndexRoute
+  AdminLearningCertificatesIndexRoute: typeof AdminLearningCertificatesIndexRoute
+  AdminLearningCoursesIndexRoute: typeof AdminLearningCoursesIndexRoute
+  AdminLearningDashboardIndexRoute: typeof AdminLearningDashboardIndexRoute
+  AdminLearningInstructorsIndexRoute: typeof AdminLearningInstructorsIndexRoute
+  AdminLearningLessonsIndexRoute: typeof AdminLearningLessonsIndexRoute
+  AdminLearningModulesIndexRoute: typeof AdminLearningModulesIndexRoute
+  AdminLearningQuizzesIndexRoute: typeof AdminLearningQuizzesIndexRoute
+  AdminLearningTopicsIndexRoute: typeof AdminLearningTopicsIndexRoute
+  AdminLearningTutorialsIndexRoute: typeof AdminLearningTutorialsIndexRoute
   AdminPracticeAssessmentsIndexRoute: typeof AdminPracticeAssessmentsIndexRoute
   AdminPracticeCaseStudiesIndexRoute: typeof AdminPracticeCaseStudiesIndexRoute
   AdminPracticeDsaIndexRoute: typeof AdminPracticeDsaIndexRoute
@@ -517,6 +789,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminAuditIndexRoute: AdminAuditIndexRoute,
   AdminCoursesIndexRoute: AdminCoursesIndexRoute,
   AdminInvitesIndexRoute: AdminInvitesIndexRoute,
+  AdminLearningIndexRoute: AdminLearningIndexRoute,
   AdminMediaIndexRoute: AdminMediaIndexRoute,
   AdminOverviewIndexRoute: AdminOverviewIndexRoute,
   AdminResearchIndexRoute: AdminResearchIndexRoute,
@@ -527,6 +800,18 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminCmsBlogIndexRoute: AdminCmsBlogIndexRoute,
   AdminCmsEventsIndexRoute: AdminCmsEventsIndexRoute,
   AdminCmsNewsletterIndexRoute: AdminCmsNewsletterIndexRoute,
+  AdminLearningAnalyticsIndexRoute: AdminLearningAnalyticsIndexRoute,
+  AdminLearningAssignmentsIndexRoute: AdminLearningAssignmentsIndexRoute,
+  AdminLearningCategoriesIndexRoute: AdminLearningCategoriesIndexRoute,
+  AdminLearningCertificatesIndexRoute: AdminLearningCertificatesIndexRoute,
+  AdminLearningCoursesIndexRoute: AdminLearningCoursesIndexRoute,
+  AdminLearningDashboardIndexRoute: AdminLearningDashboardIndexRoute,
+  AdminLearningInstructorsIndexRoute: AdminLearningInstructorsIndexRoute,
+  AdminLearningLessonsIndexRoute: AdminLearningLessonsIndexRoute,
+  AdminLearningModulesIndexRoute: AdminLearningModulesIndexRoute,
+  AdminLearningQuizzesIndexRoute: AdminLearningQuizzesIndexRoute,
+  AdminLearningTopicsIndexRoute: AdminLearningTopicsIndexRoute,
+  AdminLearningTutorialsIndexRoute: AdminLearningTutorialsIndexRoute,
   AdminPracticeAssessmentsIndexRoute: AdminPracticeAssessmentsIndexRoute,
   AdminPracticeCaseStudiesIndexRoute: AdminPracticeCaseStudiesIndexRoute,
   AdminPracticeDsaIndexRoute: AdminPracticeDsaIndexRoute,
