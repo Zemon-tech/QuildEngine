@@ -114,24 +114,76 @@ export function AdminSecondarySidebar() {
     sectionTitle = "Practice Room";
     groups = [
       {
-        label: "Algorithms & DSA",
-        to: "/practice/dsa",
-        icon: Code2,
+        label: "Workspace",
+        items: [
+          {
+            label: "Dashboard",
+            to: "/practice/dsa",
+            search: { tab: "dashboard" },
+            icon: LayoutDashboard,
+          },
+          {
+            label: "DSA Problems",
+            to: "/practice/dsa",
+            search: { tab: "problems" },
+            icon: Code2,
+          },
+          {
+            label: "Question & Answers",
+            to: "/practice/interview-qa",
+            icon: MessageSquare,
+          },
+          {
+            label: "Case Studies",
+            to: "/practice/case-studies",
+            icon: Briefcase,
+          },
+          {
+            label: "Tests & Contests",
+            to: "/practice/assessments",
+            icon: ClipboardList,
+          },
+        ],
       },
       {
-        label: "Interview Q&A",
-        to: "/practice/interview-qa",
-        icon: MessageSquare,
+        label: "Metadata & Config",
+        items: [
+          {
+            label: "Categories",
+            to: "/practice/dsa",
+            search: { tab: "categories" },
+            icon: Layers,
+          },
+          {
+            label: "Tags",
+            to: "/practice/dsa",
+            search: { tab: "tags" },
+            icon: Database,
+          },
+          {
+            label: "Difficulty Levels",
+            to: "/practice/dsa",
+            search: { tab: "difficulty" },
+            icon: Binary,
+          },
+          {
+            label: "Languages",
+            to: "/practice/dsa",
+            search: { tab: "languages" },
+            icon: Terminal,
+          },
+        ],
       },
       {
-        label: "Case Studies",
-        to: "/practice/case-studies",
-        icon: Briefcase,
-      },
-      {
-        label: "Assessments",
-        to: "/practice/assessments",
-        icon: ClipboardList,
+        label: "Analytics",
+        items: [
+          {
+            label: "Reports & Analytics",
+            to: "/practice/dsa",
+            search: { tab: "analytics" },
+            icon: LineChart,
+          },
+        ],
       },
     ];
   } else if (currentPath.startsWith("/cms")) {
@@ -305,7 +357,7 @@ export function AdminSecondarySidebar() {
       return activeTab === itemSearch.tab;
     }
 
-    if (to === "/ai" && !itemSearch) {
+    if ((to === "/ai" || to === "/practice/dsa") && !itemSearch) {
       return (searchParams.tab || "dashboard") === "dashboard";
     }
 
