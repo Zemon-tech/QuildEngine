@@ -5,9 +5,10 @@
  * - authMiddleware: reads session, injects into context (non-blocking)
  * - adminMiddleware: blocks non-admin roles with a redirect to /login
  */
-import { createMiddleware } from "@tanstack/react-start";
+
 import { redirect } from "@tanstack/react-router";
-import { getSession, type AdminSession } from "./session.server";
+import { createMiddleware } from "@tanstack/react-start";
+import { type AdminSession, getSession } from "./session.server";
 
 const ADMIN_ROLES = ["superadmin", "admin", "editor", "moderator"] as const;
 export type AdminRole = (typeof ADMIN_ROLES)[number];

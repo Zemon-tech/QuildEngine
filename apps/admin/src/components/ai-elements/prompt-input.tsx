@@ -1,6 +1,5 @@
 "use client";
 
-import type { ChatStatus, FileUIPart, SourceDocumentUIPart } from "#/components/ai-elements/ai-types.ts";
 import {
   CornerDownLeftIcon,
   ImageIcon,
@@ -33,6 +32,11 @@ import {
   useRef,
   useState,
 } from "react";
+import type {
+  ChatStatus,
+  FileUIPart,
+  SourceDocumentUIPart,
+} from "#/components/ai-elements/ai-types.ts";
 import {
   Command,
   CommandEmpty,

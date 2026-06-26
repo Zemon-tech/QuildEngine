@@ -1,6 +1,5 @@
 "use client";
 
-import type { UIMessage } from "#/components/ai-elements/ai-types.ts";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import type { ComponentProps, HTMLAttributes, ReactElement } from "react";
 import {
@@ -12,6 +11,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import type { UIMessage } from "#/components/ai-elements/ai-types.ts";
 import { Button } from "#/components/ui/button.tsx";
 import { ButtonGroup, ButtonGroupText } from "#/components/ui/button-group.tsx";
 import {
@@ -327,7 +327,7 @@ export const MessageResponse = memo(
     >
       {children}
     </div>
-  )
+  ),
 );
 
 MessageResponse.displayName = "MessageResponse";

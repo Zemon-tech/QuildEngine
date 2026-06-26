@@ -9,7 +9,10 @@ type StatusVariant =
   | "archived"
   | "live";
 
-const STATUS_STYLES: Record<StatusVariant, { bg: string; color: string; label: string }> = {
+const STATUS_STYLES: Record<
+  StatusVariant,
+  { bg: string; color: string; label: string }
+> = {
   published: {
     bg: "oklch(0.72 0.16 142 / 0.12)",
     color: "oklch(0.58 0.16 142)",

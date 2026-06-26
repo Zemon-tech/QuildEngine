@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Bell, Bot, Check, Globe, Save, Settings, Shield } from "lucide-react";
 import { useState } from "react";
-import { Settings, Globe, Shield, Bot, Bell, Save, Check } from "lucide-react";
 import { PageHeader } from "#/components/admin/page-header";
 import { Button } from "#/components/ui/button";
 import { cn } from "#/lib/utils";
@@ -32,7 +32,9 @@ function SettingsPage() {
   const [maxTokens, setMaxTokens] = useState("2048");
 
   // Notifications State
-  const [slackWebhook, setSlackWebhook] = useState("https://hooks.slack.com/services/...");
+  const [slackWebhook, setSlackWebhook] = useState(
+    "https://hooks.slack.com/services/...",
+  );
   const [alertEmails, setAlertEmails] = useState("devops@quild.in");
 
   const handleSave = async (e: React.FormEvent) => {
@@ -87,10 +89,18 @@ function SettingsPage() {
                 "flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 cursor-pointer active:scale-98 text-left",
                 activeTab === tab.id
                   ? "bg-[color-mix(in_oklab,var(--sb-ink)_8%,transparent)] text-[var(--sb-ink)]"
-                  : "text-[var(--sb-ink-muted)] hover:bg-[color-mix(in_oklab,var(--sb-ink)_3%,transparent)]"
+                  : "text-[var(--sb-ink-muted)] hover:bg-[color-mix(in_oklab,var(--sb-ink)_3%,transparent)]",
               )}
             >
-              <tab.icon size={13} style={{ color: activeTab === tab.id ? "var(--sb-accent)" : "var(--sb-ink-dim)" }} />
+              <tab.icon
+                size={13}
+                style={{
+                  color:
+                    activeTab === tab.id
+                      ? "var(--sb-accent)"
+                      : "var(--sb-ink-dim)",
+                }}
+              />
               {tab.label}
             </button>
           ))}
@@ -98,17 +108,27 @@ function SettingsPage() {
 
         {/* Content (Forms) */}
         <div className="md:col-span-3">
-          <form onSubmit={handleSave} className="island-shell rounded-xl p-6 flex flex-col gap-5">
+          <form
+            onSubmit={handleSave}
+            className="island-shell rounded-xl p-6 flex flex-col gap-5"
+          >
             {/* GENERAL TAB */}
             {activeTab === "general" && (
               <div className="flex flex-col gap-4">
-                <h3 className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: "var(--sb-ink-dim)" }}>
+                <h3
+                  className="text-xs font-bold uppercase tracking-wider mb-2"
+                  style={{ color: "var(--sb-ink-dim)" }}
+                >
                   General System Preferences
                 </h3>
 
                 {/* App Name */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="appName" className="text-xs font-semibold" style={{ color: "var(--sb-ink-muted)" }}>
+                  <label
+                    htmlFor="appName"
+                    className="text-xs font-semibold"
+                    style={{ color: "var(--sb-ink-muted)" }}
+                  >
                     Platform Name
                   </label>
                   <input
@@ -122,7 +142,8 @@ function SettingsPage() {
                       "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
                     )}
                     style={{
-                      background: "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
+                      background:
+                        "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
                       border: "1px solid var(--sb-border)",
                       color: "var(--sb-ink)",
                     }}
@@ -131,7 +152,11 @@ function SettingsPage() {
 
                 {/* Support Email */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="supportEmail" className="text-xs font-semibold" style={{ color: "var(--sb-ink-muted)" }}>
+                  <label
+                    htmlFor="supportEmail"
+                    className="text-xs font-semibold"
+                    style={{ color: "var(--sb-ink-muted)" }}
+                  >
                     System Support Email
                   </label>
                   <input
@@ -145,7 +170,8 @@ function SettingsPage() {
                       "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
                     )}
                     style={{
-                      background: "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
+                      background:
+                        "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
                       border: "1px solid var(--sb-border)",
                       color: "var(--sb-ink)",
                     }}
@@ -153,13 +179,23 @@ function SettingsPage() {
                 </div>
 
                 {/* Maintenance Mode Toggle */}
-                <div className="flex items-center justify-between p-3 rounded-lg mt-2 border" style={{ borderColor: "var(--sb-border)" }}>
+                <div
+                  className="flex items-center justify-between p-3 rounded-lg mt-2 border"
+                  style={{ borderColor: "var(--sb-border)" }}
+                >
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-xs font-semibold" style={{ color: "var(--sb-ink)" }}>
+                    <span
+                      className="text-xs font-semibold"
+                      style={{ color: "var(--sb-ink)" }}
+                    >
                       Maintenance Mode
                     </span>
-                    <span className="text-[10px]" style={{ color: "var(--sb-ink-dim)" }}>
-                      Disable public access to the platform with a maintenance screen.
+                    <span
+                      className="text-[10px]"
+                      style={{ color: "var(--sb-ink-dim)" }}
+                    >
+                      Disable public access to the platform with a maintenance
+                      screen.
                     </span>
                   </div>
                   <input
@@ -175,13 +211,20 @@ function SettingsPage() {
             {/* SECURITY TAB */}
             {activeTab === "security" && (
               <div className="flex flex-col gap-4">
-                <h3 className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: "var(--sb-ink-dim)" }}>
+                <h3
+                  className="text-xs font-bold uppercase tracking-wider mb-2"
+                  style={{ color: "var(--sb-ink-dim)" }}
+                >
                   Security & Authentication Policies
                 </h3>
 
                 {/* Session Timeout */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="timeout" className="text-xs font-semibold" style={{ color: "var(--sb-ink-muted)" }}>
+                  <label
+                    htmlFor="timeout"
+                    className="text-xs font-semibold"
+                    style={{ color: "var(--sb-ink-muted)" }}
+                  >
                     Inactivity Session Timeout (Minutes)
                   </label>
                   <input
@@ -195,7 +238,8 @@ function SettingsPage() {
                       "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
                     )}
                     style={{
-                      background: "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
+                      background:
+                        "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
                       border: "1px solid var(--sb-border)",
                       color: "var(--sb-ink)",
                     }}
@@ -204,7 +248,11 @@ function SettingsPage() {
 
                 {/* Allowed Domains */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="allowedDomains" className="text-xs font-semibold" style={{ color: "var(--sb-ink-muted)" }}>
+                  <label
+                    htmlFor="allowedDomains"
+                    className="text-xs font-semibold"
+                    style={{ color: "var(--sb-ink-muted)" }}
+                  >
                     Allowed Sign-up Email Domains
                   </label>
                   <input
@@ -218,24 +266,39 @@ function SettingsPage() {
                       "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
                     )}
                     style={{
-                      background: "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
+                      background:
+                        "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
                       border: "1px solid var(--sb-border)",
                       color: "var(--sb-ink)",
                     }}
                   />
-                  <span className="text-[10px]" style={{ color: "var(--sb-ink-dim)" }}>
-                    Comma-separated list of domain names allowed to register accounts. Leave empty for all.
+                  <span
+                    className="text-[10px]"
+                    style={{ color: "var(--sb-ink-dim)" }}
+                  >
+                    Comma-separated list of domain names allowed to register
+                    accounts. Leave empty for all.
                   </span>
                 </div>
 
                 {/* Force MFA Toggle */}
-                <div className="flex items-center justify-between p-3 rounded-lg mt-2 border" style={{ borderColor: "var(--sb-border)" }}>
+                <div
+                  className="flex items-center justify-between p-3 rounded-lg mt-2 border"
+                  style={{ borderColor: "var(--sb-border)" }}
+                >
                   <div className="flex flex-col gap-0.5">
-                    <span className="text-xs font-semibold" style={{ color: "var(--sb-ink)" }}>
+                    <span
+                      className="text-xs font-semibold"
+                      style={{ color: "var(--sb-ink)" }}
+                    >
                       Require Multi-Factor Auth (MFA)
                     </span>
-                    <span className="text-[10px]" style={{ color: "var(--sb-ink-dim)" }}>
-                      Force administrative accounts to setup MFA on their first sign-in.
+                    <span
+                      className="text-[10px]"
+                      style={{ color: "var(--sb-ink-dim)" }}
+                    >
+                      Force administrative accounts to setup MFA on their first
+                      sign-in.
                     </span>
                   </div>
                   <input
@@ -251,13 +314,20 @@ function SettingsPage() {
             {/* AI CONFIG TAB */}
             {activeTab === "ai" && (
               <div className="flex flex-col gap-4">
-                <h3 className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: "var(--sb-ink-dim)" }}>
+                <h3
+                  className="text-xs font-bold uppercase tracking-wider mb-2"
+                  style={{ color: "var(--sb-ink-dim)" }}
+                >
                   Platform AI Models & Parameters
                 </h3>
 
                 {/* Default Model */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="aiModel" className="text-xs font-semibold" style={{ color: "var(--sb-ink-muted)" }}>
+                  <label
+                    htmlFor="aiModel"
+                    className="text-xs font-semibold"
+                    style={{ color: "var(--sb-ink-muted)" }}
+                  >
                     Default Completion Model
                   </label>
                   <select
@@ -266,21 +336,30 @@ function SettingsPage() {
                     onChange={(e) => setAiModel(e.target.value)}
                     className="w-full rounded-[10px] px-2.5 py-2 text-xs outline-none cursor-pointer"
                     style={{
-                      background: "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
+                      background:
+                        "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
                       border: "1px solid var(--sb-border)",
                       color: "var(--sb-ink)",
                     }}
                   >
                     <option value="gpt-4o">GPT-4o (OpenAI)</option>
                     <option value="gpt-4-turbo">GPT-4 Turbo (OpenAI)</option>
-                    <option value="claude-3-5-sonnet">Claude 3.5 Sonnet (Anthropic)</option>
-                    <option value="gemini-1.5-pro">Gemini 1.5 Pro (Google)</option>
+                    <option value="claude-3-5-sonnet">
+                      Claude 3.5 Sonnet (Anthropic)
+                    </option>
+                    <option value="gemini-1.5-pro">
+                      Gemini 1.5 Pro (Google)
+                    </option>
                   </select>
                 </div>
 
                 {/* Temperature */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="temp" className="text-xs font-semibold" style={{ color: "var(--sb-ink-muted)" }}>
+                  <label
+                    htmlFor="temp"
+                    className="text-xs font-semibold"
+                    style={{ color: "var(--sb-ink-muted)" }}
+                  >
                     Temperature (Creativity)
                   </label>
                   <input
@@ -297,7 +376,8 @@ function SettingsPage() {
                       "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
                     )}
                     style={{
-                      background: "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
+                      background:
+                        "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
                       border: "1px solid var(--sb-border)",
                       color: "var(--sb-ink)",
                     }}
@@ -306,7 +386,11 @@ function SettingsPage() {
 
                 {/* Max Tokens */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="maxTokens" className="text-xs font-semibold" style={{ color: "var(--sb-ink-muted)" }}>
+                  <label
+                    htmlFor="maxTokens"
+                    className="text-xs font-semibold"
+                    style={{ color: "var(--sb-ink-muted)" }}
+                  >
                     Max Tokens limit per request
                   </label>
                   <input
@@ -320,7 +404,8 @@ function SettingsPage() {
                       "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
                     )}
                     style={{
-                      background: "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
+                      background:
+                        "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
                       border: "1px solid var(--sb-border)",
                       color: "var(--sb-ink)",
                     }}
@@ -332,13 +417,20 @@ function SettingsPage() {
             {/* NOTIFICATIONS TAB */}
             {activeTab === "notifications" && (
               <div className="flex flex-col gap-4">
-                <h3 className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: "var(--sb-ink-dim)" }}>
+                <h3
+                  className="text-xs font-bold uppercase tracking-wider mb-2"
+                  style={{ color: "var(--sb-ink-dim)" }}
+                >
                   Notification & Alarm Webhooks
                 </h3>
 
                 {/* Slack Webhook */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="slack" className="text-xs font-semibold" style={{ color: "var(--sb-ink-muted)" }}>
+                  <label
+                    htmlFor="slack"
+                    className="text-xs font-semibold"
+                    style={{ color: "var(--sb-ink-muted)" }}
+                  >
                     Slack System Alarms Webhook
                   </label>
                   <input
@@ -352,7 +444,8 @@ function SettingsPage() {
                       "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
                     )}
                     style={{
-                      background: "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
+                      background:
+                        "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
                       border: "1px solid var(--sb-border)",
                       color: "var(--sb-ink)",
                     }}
@@ -361,7 +454,11 @@ function SettingsPage() {
 
                 {/* Alert Emails */}
                 <div className="flex flex-col gap-1.5">
-                  <label htmlFor="alertEmails" className="text-xs font-semibold" style={{ color: "var(--sb-ink-muted)" }}>
+                  <label
+                    htmlFor="alertEmails"
+                    className="text-xs font-semibold"
+                    style={{ color: "var(--sb-ink-muted)" }}
+                  >
                     Alert Alert Recipient Emails
                   </label>
                   <input
@@ -376,19 +473,27 @@ function SettingsPage() {
                       "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
                     )}
                     style={{
-                      background: "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
+                      background:
+                        "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
                       border: "1px solid var(--sb-border)",
                       color: "var(--sb-ink)",
                     }}
                   />
-                  <span className="text-[10px]" style={{ color: "var(--sb-ink-dim)" }}>
-                    System failures and critical security alerts will be immediately mailed here.
+                  <span
+                    className="text-[10px]"
+                    style={{ color: "var(--sb-ink-dim)" }}
+                  >
+                    System failures and critical security alerts will be
+                    immediately mailed here.
                   </span>
                 </div>
               </div>
             )}
 
-            <div className="flex items-center justify-end border-t pt-4 mt-2" style={{ borderColor: "var(--sb-border)" }}>
+            <div
+              className="flex items-center justify-end border-t pt-4 mt-2"
+              style={{ borderColor: "var(--sb-border)" }}
+            >
               <Button
                 type="submit"
                 disabled={saving}

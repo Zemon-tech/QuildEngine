@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
-import { SidebarInset, SidebarProvider } from "#/components/ui/sidebar";
 import { AdminAppSidebar } from "#/components/sidebar/admin-app-sidebar";
+import { SidebarInset, SidebarProvider } from "#/components/ui/sidebar";
 import { getSessionFn } from "#/lib/server-fns/auth";
 
 const ADMIN_ROLES = ["superadmin", "admin", "editor", "moderator"] as const;
@@ -16,7 +16,9 @@ export const Route = createFileRoute("/_admin")({
       });
     }
 
-    if (!ADMIN_ROLES.includes(session.user.role as (typeof ADMIN_ROLES)[number])) {
+    if (
+      !ADMIN_ROLES.includes(session.user.role as (typeof ADMIN_ROLES)[number])
+    ) {
       throw redirect({
         to: "/login",
         search: { redirect: location.href },

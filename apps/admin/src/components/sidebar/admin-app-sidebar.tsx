@@ -14,15 +14,15 @@ import {
   Mail,
   Map,
   Menu,
-  Moon,
+  MessageSquare,
   Monitor,
+  Moon,
   Rocket,
   Settings,
   Shield,
   Sparkles,
   Sun,
   Users,
-  MessageSquare,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useState } from "react";
@@ -48,10 +48,10 @@ import {
   TooltipTrigger,
 } from "#/components/ui/tooltip";
 import { cn } from "#/lib/utils";
-import { NavItem } from "./nav-item";
-import { NavSection } from "./nav-section";
 import { AdminSidebarHeader } from "./admin-sidebar-header";
 import { AdminUserNav } from "./admin-user-nav";
+import { NavItem } from "./nav-item";
+import { NavSection } from "./nav-section";
 
 export function AdminAppSidebar() {
   const { state, toggleSidebar, setOpenMobile } = useSidebar();
@@ -84,28 +84,70 @@ export function AdminAppSidebar() {
         <Menu size={16} />
       </button>
 
-      <Sidebar collapsible="icon" className="border-r border-[var(--sb-border)]">
+      <Sidebar
+        collapsible="icon"
+        className="border-r border-[var(--sb-border)]"
+      >
         <SidebarHeader className="p-0">
-          <AdminSidebarHeader
-            collapsed={collapsed}
-            onToggle={toggleSidebar}
-          />
+          <AdminSidebarHeader collapsed={collapsed} onToggle={toggleSidebar} />
         </SidebarHeader>
 
         <SidebarContent className="px-2 py-2 flex flex-col gap-1 overflow-y-auto overflow-x-hidden">
           <SidebarMenu>
             {[
-              { label: "Overview", to: "/overview", icon: LayoutDashboard, prefixes: ["/overview", "/analytics", "/audit"] },
-              { label: "People", to: "/users", icon: Users, prefixes: ["/users", "/roles", "/invites"] },
-              { label: "Learning", to: "/courses", icon: BookOpen, prefixes: ["/courses"] },
-              { label: "Practice", to: "/practice/dsa", icon: Code2, prefixes: ["/practice"] },
-              { label: "Content", to: "/cms/blog", icon: FileText, prefixes: ["/cms"] },
-              { label: "Research", to: "/research", icon: Rocket, prefixes: ["/research", "/roadmaps"] },
-              { label: "AI Center", to: "/ai", icon: BrainCircuit, prefixes: ["/ai"] },
-              { label: "Settings", to: "/settings", icon: Settings, prefixes: ["/settings", "/media"] },
+              {
+                label: "Overview",
+                to: "/overview",
+                icon: LayoutDashboard,
+                prefixes: ["/overview", "/analytics", "/audit"],
+              },
+              {
+                label: "People",
+                to: "/users",
+                icon: Users,
+                prefixes: ["/users", "/roles", "/invites"],
+              },
+              {
+                label: "Learning",
+                to: "/courses",
+                icon: BookOpen,
+                prefixes: ["/courses"],
+              },
+              {
+                label: "Practice",
+                to: "/practice/dsa",
+                icon: Code2,
+                prefixes: ["/practice"],
+              },
+              {
+                label: "Content",
+                to: "/cms/blog",
+                icon: FileText,
+                prefixes: ["/cms"],
+              },
+              {
+                label: "Research",
+                to: "/research",
+                icon: Rocket,
+                prefixes: ["/research", "/roadmaps"],
+              },
+              {
+                label: "AI Center",
+                to: "/ai",
+                icon: BrainCircuit,
+                prefixes: ["/ai"],
+              },
+              {
+                label: "Settings",
+                to: "/settings",
+                icon: Settings,
+                prefixes: ["/settings", "/media"],
+              },
             ].map((item) => {
               const active = item.prefixes.some(
-                (prefix) => currentPath === prefix || currentPath.startsWith(prefix + "/")
+                (prefix) =>
+                  currentPath === prefix ||
+                  currentPath.startsWith(prefix + "/"),
               );
               return (
                 <SidebarMenuItem key={item.label}>
@@ -178,13 +220,22 @@ export function AdminAppSidebar() {
                   color: "var(--sb-ink)",
                 }}
               >
-                <DropdownMenuItem onClick={() => setTheme("light")} className="cursor-pointer gap-2 text-xs">
+                <DropdownMenuItem
+                  onClick={() => setTheme("light")}
+                  className="cursor-pointer gap-2 text-xs"
+                >
                   <Sun size={14} /> Light
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("dark")} className="cursor-pointer gap-2 text-xs">
+                <DropdownMenuItem
+                  onClick={() => setTheme("dark")}
+                  className="cursor-pointer gap-2 text-xs"
+                >
                   <Moon size={14} /> Dark
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("system")} className="cursor-pointer gap-2 text-xs">
+                <DropdownMenuItem
+                  onClick={() => setTheme("system")}
+                  className="cursor-pointer gap-2 text-xs"
+                >
                   <Monitor size={14} /> System
                 </DropdownMenuItem>
               </DropdownMenuContent>

@@ -1,9 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
-import { BookOpen, Plus, Search, MoreHorizontal, Eye, Trash, Edit } from "lucide-react";
+import {
+  type ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import {
+  BookOpen,
+  Edit,
+  Eye,
+  MoreHorizontal,
+  Plus,
+  Search,
+  Trash,
+} from "lucide-react";
+import { useMemo, useState } from "react";
+import { EmptyState } from "#/components/admin/empty-state";
 import { PageHeader } from "#/components/admin/page-header";
 import { StatusBadge } from "#/components/admin/status-badge";
-import { EmptyState } from "#/components/admin/empty-state";
 import { Button } from "#/components/ui/button";
 import {
   DropdownMenu,
@@ -13,12 +27,6 @@ import {
   DropdownMenuTrigger,
 } from "#/components/ui/dropdown-menu";
 import { cn } from "#/lib/utils";
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
 
 interface Course {
   id: string;
@@ -34,11 +42,61 @@ interface Course {
 
 // Mock courses data
 const MOCK_COURSES: Course[] = [
-  { id: "1", title: "Complete Data Structures & Algorithms", slug: "dsa-complete", instructor: "Dr. Emily Smith", difficulty: "Beginner", lessons: 48, students: 2843, status: "active", category: "Computer Science" },
-  { id: "2", title: "Advanced System Design Interview Prep", slug: "system-design-advanced", instructor: "Alex Rivera", difficulty: "Advanced", lessons: 24, students: 1205, status: "active", category: "Software Eng" },
-  { id: "3", title: "Mastering React 19 & Next.js 15", slug: "react-next-mastery", instructor: "Jessica Zhang", difficulty: "Intermediate", lessons: 36, students: 954, status: "active", category: "Web Development" },
-  { id: "4", title: "Introduction to Machine Learning with PyTorch", slug: "pytorch-intro", instructor: "David Miller", difficulty: "Intermediate", lessons: 18, students: 512, status: "pending", category: "Data Science" },
-  { id: "5", title: "Rust Programming Crash Course", slug: "rust-crash-course", instructor: "Marcus Vester", difficulty: "Beginner", lessons: 15, students: 0, status: "suspended", category: "Systems" },
+  {
+    id: "1",
+    title: "Complete Data Structures & Algorithms",
+    slug: "dsa-complete",
+    instructor: "Dr. Emily Smith",
+    difficulty: "Beginner",
+    lessons: 48,
+    students: 2843,
+    status: "active",
+    category: "Computer Science",
+  },
+  {
+    id: "2",
+    title: "Advanced System Design Interview Prep",
+    slug: "system-design-advanced",
+    instructor: "Alex Rivera",
+    difficulty: "Advanced",
+    lessons: 24,
+    students: 1205,
+    status: "active",
+    category: "Software Eng",
+  },
+  {
+    id: "3",
+    title: "Mastering React 19 & Next.js 15",
+    slug: "react-next-mastery",
+    instructor: "Jessica Zhang",
+    difficulty: "Intermediate",
+    lessons: 36,
+    students: 954,
+    status: "active",
+    category: "Web Development",
+  },
+  {
+    id: "4",
+    title: "Introduction to Machine Learning with PyTorch",
+    slug: "pytorch-intro",
+    instructor: "David Miller",
+    difficulty: "Intermediate",
+    lessons: 18,
+    students: 512,
+    status: "pending",
+    category: "Data Science",
+  },
+  {
+    id: "5",
+    title: "Rust Programming Crash Course",
+    slug: "rust-crash-course",
+    instructor: "Marcus Vester",
+    difficulty: "Beginner",
+    lessons: 15,
+    students: 0,
+    status: "suspended",
+    category: "Systems",
+  },
 ];
 
 export const Route = createFileRoute("/_admin/courses/")({
@@ -86,7 +144,8 @@ function CoursesPage() {
               <span
                 className="flex size-8 items-center justify-center rounded-lg border text-sm"
                 style={{
-                  background: "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
+                  background:
+                    "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
                   borderColor: "var(--sb-border)",
                   color: "var(--sb-ink-muted)",
                 }}
@@ -94,10 +153,16 @@ function CoursesPage() {
                 <BookOpen size={14} />
               </span>
               <div className="flex flex-col">
-                <span className="font-semibold" style={{ color: "var(--sb-ink)" }}>
+                <span
+                  className="font-semibold"
+                  style={{ color: "var(--sb-ink)" }}
+                >
                   {course.title}
                 </span>
-                <span className="text-[10px]" style={{ color: "var(--sb-ink-dim)" }}>
+                <span
+                  className="text-[10px]"
+                  style={{ color: "var(--sb-ink-dim)" }}
+                >
                   /{course.slug}
                 </span>
               </div>
@@ -109,14 +174,18 @@ function CoursesPage() {
         accessorKey: "instructor",
         header: "Instructor",
         cell: ({ getValue }) => (
-          <span style={{ color: "var(--sb-ink-muted)" }}>{getValue<string>()}</span>
+          <span style={{ color: "var(--sb-ink-muted)" }}>
+            {getValue<string>()}
+          </span>
         ),
       },
       {
         accessorKey: "category",
         header: "Category",
         cell: ({ getValue }) => (
-          <span style={{ color: "var(--sb-ink-muted)" }}>{getValue<string>()}</span>
+          <span style={{ color: "var(--sb-ink-muted)" }}>
+            {getValue<string>()}
+          </span>
         ),
       },
       {
@@ -130,7 +199,7 @@ function CoursesPage() {
                 "px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide capitalize",
                 diff === "Beginner" && "bg-green-500/10 text-green-500",
                 diff === "Intermediate" && "bg-amber-500/10 text-amber-500",
-                diff === "Advanced" && "bg-red-500/10 text-red-500"
+                diff === "Advanced" && "bg-red-500/10 text-red-500",
               )}
             >
               {diff}
@@ -142,7 +211,10 @@ function CoursesPage() {
         accessorKey: "lessons",
         header: () => <div className="text-center">Lessons</div>,
         cell: ({ getValue }) => (
-          <div className="text-center font-medium" style={{ color: "var(--sb-ink-muted)" }}>
+          <div
+            className="text-center font-medium"
+            style={{ color: "var(--sb-ink-muted)" }}
+          >
             {getValue<number>()}
           </div>
         ),
@@ -151,7 +223,10 @@ function CoursesPage() {
         accessorKey: "students",
         header: () => <div className="text-center">Students</div>,
         cell: ({ getValue }) => (
-          <div className="text-center font-medium" style={{ color: "var(--sb-ink-muted)" }}>
+          <div
+            className="text-center font-medium"
+            style={{ color: "var(--sb-ink-muted)" }}
+          >
             {getValue<number>().toLocaleString()}
           </div>
         ),
@@ -160,14 +235,18 @@ function CoursesPage() {
         accessorKey: "status",
         header: "Status",
         cell: ({ getValue }) => (
-          <StatusBadge status={getValue<"active" | "pending" | "suspended">()} />
+          <StatusBadge
+            status={getValue<"active" | "pending" | "suspended">()}
+          />
         ),
       },
       {
         id: "actions",
         cell: ({ row, table }) => {
           const course = row.original;
-          const meta = table.options.meta as { handleDelete: (id: string) => void } | undefined;
+          const meta = table.options.meta as
+            | { handleDelete: (id: string) => void }
+            | undefined;
           return (
             <div className="text-center">
               <DropdownMenu>
@@ -211,7 +290,7 @@ function CoursesPage() {
         },
       },
     ],
-    []
+    [],
   );
 
   const table = useReactTable({
@@ -277,11 +356,13 @@ function CoursesPage() {
                 "px-2.5 py-1 rounded-full text-[11px] font-medium transition-all duration-150 cursor-pointer active:scale-95",
               )}
               style={{
-                background: diffFilter === diff
-                  ? "color-mix(in oklab, var(--sb-ink) 10%, transparent)"
-                  : "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
+                background:
+                  diffFilter === diff
+                    ? "color-mix(in oklab, var(--sb-ink) 10%, transparent)"
+                    : "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
                 border: "1px solid var(--sb-border)",
-                color: diffFilter === diff ? "var(--sb-ink)" : "var(--sb-ink-muted)",
+                color:
+                  diffFilter === diff ? "var(--sb-ink)" : "var(--sb-ink-muted)",
               }}
             >
               {diff ?? "All Difficulties"}
@@ -300,11 +381,15 @@ function CoursesPage() {
                 "px-2.5 py-1 rounded-full text-[11px] font-medium transition-all duration-150 capitalize cursor-pointer active:scale-95",
               )}
               style={{
-                background: statusFilter === status
-                  ? "color-mix(in oklab, var(--sb-ink) 10%, transparent)"
-                  : "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
+                background:
+                  statusFilter === status
+                    ? "color-mix(in oklab, var(--sb-ink) 10%, transparent)"
+                    : "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
                 border: "1px solid var(--sb-border)",
-                color: statusFilter === status ? "var(--sb-ink)" : "var(--sb-ink-muted)",
+                color:
+                  statusFilter === status
+                    ? "var(--sb-ink)"
+                    : "var(--sb-ink-muted)",
               }}
             >
               {status ?? "All Statuses"}
@@ -337,7 +422,8 @@ function CoursesPage() {
                   key={headerGroup.id}
                   style={{
                     borderBottom: "1px solid var(--sb-border)",
-                    background: "color-mix(in oklab, var(--sb-ink) 2%, transparent)",
+                    background:
+                      "color-mix(in oklab, var(--sb-ink) 2%, transparent)",
                   }}
                 >
                   {headerGroup.headers.map((header) => (
@@ -350,7 +436,7 @@ function CoursesPage() {
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </th>
                   ))}
@@ -368,7 +454,7 @@ function CoursesPage() {
                     <td key={cell.id} className="px-4 py-3.5">
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </td>
                   ))}

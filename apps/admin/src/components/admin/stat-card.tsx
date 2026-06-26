@@ -46,7 +46,10 @@ export function StatCard({
       <div className="flex items-end justify-between gap-2">
         <span
           className="text-2xl font-bold tracking-tight"
-          style={{ color: "var(--sb-ink)", fontFamily: "'Fraunces', Georgia, serif" }}
+          style={{
+            color: "var(--sb-ink)",
+            fontFamily: "'Fraunces', Georgia, serif",
+          }}
         >
           {value}
         </span>

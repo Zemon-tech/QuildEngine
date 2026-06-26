@@ -8,7 +8,10 @@ interface AdminSidebarHeaderProps {
   onToggle: () => void;
 }
 
-export function AdminSidebarHeader({ collapsed, onToggle }: AdminSidebarHeaderProps) {
+export function AdminSidebarHeader({
+  collapsed,
+  onToggle,
+}: AdminSidebarHeaderProps) {
   const [hovered, setHovered] = useState(false);
 
   return (

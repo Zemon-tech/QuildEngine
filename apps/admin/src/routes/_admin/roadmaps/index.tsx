@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Map } from "lucide-react";
-import { PageHeader } from "#/components/admin/page-header";
 import { EmptyState } from "#/components/admin/empty-state";
+import { PageHeader } from "#/components/admin/page-header";
 
 export const Route = createFileRoute("/_admin/roadmaps/")({
   component: Page,
@@ -14,7 +14,11 @@ function Page() {
         title="Roadmaps"
         description="Manage learning roadmaps"
         icon={Map}
-        breadcrumbs={[{ label: "Admin" }, { label: "Research" }, { label: "Roadmaps" }]}
+        breadcrumbs={[
+          { label: "Admin" },
+          { label: "Research" },
+          { label: "Roadmaps" },
+        ]}
       />
       <EmptyState
         icon={Map}

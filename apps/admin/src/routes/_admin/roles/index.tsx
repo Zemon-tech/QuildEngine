@@ -1,6 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
+import {
+  Check,
+  Info,
+  Key,
+  Save,
+  Shield,
+  ShieldAlert,
+  Users,
+  X,
+} from "lucide-react";
 import { useState } from "react";
-import { Shield, Info, Save, Check, X, ShieldAlert, Key, Users } from "lucide-react";
 import { PageHeader } from "#/components/admin/page-header";
 import { Button } from "#/components/ui/button";
 import { cn } from "#/lib/utils";
@@ -10,40 +19,106 @@ export const Route = createFileRoute("/_admin/roles/")({
 });
 
 const ROLES = [
-  { id: "superadmin", name: "Super Admin", count: 2, color: "oklch(0.627 0.265 303.9)" },
+  {
+    id: "superadmin",
+    name: "Super Admin",
+    count: 2,
+    color: "oklch(0.627 0.265 303.9)",
+  },
   { id: "admin", name: "Admin", count: 4, color: "oklch(0.75 0.08 220)" },
   { id: "editor", name: "Editor", count: 6, color: "oklch(0.82 0.15 55)" },
-  { id: "moderator", name: "Moderator", count: 3, color: "oklch(0.72 0.16 142)" },
+  {
+    id: "moderator",
+    name: "Moderator",
+    count: 3,
+    color: "oklch(0.72 0.16 142)",
+  },
 ];
 
 const PERMISSIONS = [
   {
     category: "User & Access Management",
     items: [
-      { key: "users.view", name: "View Users", desc: "Allows viewing user list, profiles, and basic statistics." },
-      { key: "users.create", name: "Create & Invite", desc: "Allows adding new users and sending email invitations." },
-      { key: "users.edit", name: "Edit Details", desc: "Allows modifying user names, emails, and user settings." },
-      { key: "users.roles", name: "Manage Roles", desc: "Allows promoting, demoting, or modifying user role assignments." },
-      { key: "users.suspend", name: "Suspend & Ban", desc: "Allows suspending or permanently banning accounts." },
+      {
+        key: "users.view",
+        name: "View Users",
+        desc: "Allows viewing user list, profiles, and basic statistics.",
+      },
+      {
+        key: "users.create",
+        name: "Create & Invite",
+        desc: "Allows adding new users and sending email invitations.",
+      },
+      {
+        key: "users.edit",
+        name: "Edit Details",
+        desc: "Allows modifying user names, emails, and user settings.",
+      },
+      {
+        key: "users.roles",
+        name: "Manage Roles",
+        desc: "Allows promoting, demoting, or modifying user role assignments.",
+      },
+      {
+        key: "users.suspend",
+        name: "Suspend & Ban",
+        desc: "Allows suspending or permanently banning accounts.",
+      },
     ],
   },
   {
     category: "LMS & Course Content",
     items: [
-      { key: "courses.view", name: "View Course Builder", desc: "Allows browsing internal course trees and modules." },
-      { key: "courses.create", name: "Create/Modify Courses", desc: "Allows editing course outlines, metadata, and adding lessons." },
-      { key: "courses.publish", name: "Publish/Archive", desc: "Allows making courses live or archiving them." },
-      { key: "practice.dsa", name: "Manage DSA Problems", desc: "Allows adding, deleting, and editing coding questions." },
+      {
+        key: "courses.view",
+        name: "View Course Builder",
+        desc: "Allows browsing internal course trees and modules.",
+      },
+      {
+        key: "courses.create",
+        name: "Create/Modify Courses",
+        desc: "Allows editing course outlines, metadata, and adding lessons.",
+      },
+      {
+        key: "courses.publish",
+        name: "Publish/Archive",
+        desc: "Allows making courses live or archiving them.",
+      },
+      {
+        key: "practice.dsa",
+        name: "Manage DSA Problems",
+        desc: "Allows adding, deleting, and editing coding questions.",
+      },
     ],
   },
   {
     category: "CMS & Platform",
     items: [
-      { key: "cms.blog", name: "Manage Blog", desc: "Allows writing, editing, and publishing blog posts." },
-      { key: "cms.events", name: "Organize Events", desc: "Allows scheduling and managing platform live events." },
-      { key: "cms.newsletter", name: "Newsletter Broadcasts", desc: "Allows managing lists and broadcasting email updates." },
-      { key: "system.audit", name: "View Audit Logs", desc: "Grants access to trace security, action, and access logs." },
-      { key: "system.settings", name: "System Settings", desc: "Allows updating platform branding, API keys, and environment variables." },
+      {
+        key: "cms.blog",
+        name: "Manage Blog",
+        desc: "Allows writing, editing, and publishing blog posts.",
+      },
+      {
+        key: "cms.events",
+        name: "Organize Events",
+        desc: "Allows scheduling and managing platform live events.",
+      },
+      {
+        key: "cms.newsletter",
+        name: "Newsletter Broadcasts",
+        desc: "Allows managing lists and broadcasting email updates.",
+      },
+      {
+        key: "system.audit",
+        name: "View Audit Logs",
+        desc: "Grants access to trace security, action, and access logs.",
+      },
+      {
+        key: "system.settings",
+        name: "System Settings",
+        desc: "Allows updating platform branding, API keys, and environment variables.",
+      },
     ],
   },
 ];
@@ -67,7 +142,8 @@ const INITIAL_MATRIX: Record<string, string[]> = {
 };
 
 function RolesPage() {
-  const [matrix, setMatrix] = useState<Record<string, string[]>>(INITIAL_MATRIX);
+  const [matrix, setMatrix] =
+    useState<Record<string, string[]>>(INITIAL_MATRIX);
   const [saving, setSaving] = useState(false);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
@@ -142,14 +218,24 @@ function RolesPage() {
               >
                 {role.name}
               </span>
-              <p className="text-[11px] mt-1 leading-relaxed" style={{ color: "var(--sb-ink-muted)" }}>
-                {role.id === "superadmin" && "Full administrative power, system-level configurations."}
-                {role.id === "admin" && "Manage daily activities, users, and generic LMS functions."}
-                {role.id === "editor" && "Creation and curation of courses, CMS blog posts, and LMS lessons."}
-                {role.id === "moderator" && "Moderates user logs, issues suspensions, monitors audit logs."}
+              <p
+                className="text-[11px] mt-1 leading-relaxed"
+                style={{ color: "var(--sb-ink-muted)" }}
+              >
+                {role.id === "superadmin" &&
+                  "Full administrative power, system-level configurations."}
+                {role.id === "admin" &&
+                  "Manage daily activities, users, and generic LMS functions."}
+                {role.id === "editor" &&
+                  "Creation and curation of courses, CMS blog posts, and LMS lessons."}
+                {role.id === "moderator" &&
+                  "Moderates user logs, issues suspensions, monitors audit logs."}
               </p>
             </div>
-            <div className="flex items-center gap-1.5 mt-4 text-xs font-semibold" style={{ color: "var(--sb-ink)" }}>
+            <div
+              className="flex items-center gap-1.5 mt-4 text-xs font-semibold"
+              style={{ color: "var(--sb-ink)" }}
+            >
               <Users size={12} style={{ color: "var(--sb-ink-dim)" }} />
               {role.count} {role.count === 1 ? "user" : "users"} assigned
             </div>
@@ -165,10 +251,14 @@ function RolesPage() {
               <tr
                 style={{
                   borderBottom: "1px solid var(--sb-border)",
-                  background: "color-mix(in oklab, var(--sb-ink) 2%, transparent)",
+                  background:
+                    "color-mix(in oklab, var(--sb-ink) 2%, transparent)",
                 }}
               >
-                <th className="px-4 py-3 text-left w-1/3 font-semibold uppercase tracking-wider" style={{ color: "var(--sb-ink-dim)" }}>
+                <th
+                  className="px-4 py-3 text-left w-1/3 font-semibold uppercase tracking-wider"
+                  style={{ color: "var(--sb-ink-dim)" }}
+                >
                   Permission Module
                 </th>
                 {ROLES.map((role) => (
@@ -184,10 +274,15 @@ function RolesPage() {
             </thead>
             <tbody>
               {PERMISSIONS.map((group) => (
-                <optgroup key={group.category} label={group.category} className="not-italic">
+                <optgroup
+                  key={group.category}
+                  label={group.category}
+                  className="not-italic"
+                >
                   <tr
                     style={{
-                      background: "color-mix(in oklab, var(--sb-ink) 1%, transparent)",
+                      background:
+                        "color-mix(in oklab, var(--sb-ink) 1%, transparent)",
                     }}
                   >
                     <td
@@ -209,28 +304,40 @@ function RolesPage() {
                     >
                       <td className="px-4 py-3.5 max-w-sm">
                         <div className="flex flex-col">
-                          <span className="font-semibold flex items-center gap-1.5" style={{ color: "var(--sb-ink)" }}>
+                          <span
+                            className="font-semibold flex items-center gap-1.5"
+                            style={{ color: "var(--sb-ink)" }}
+                          >
                             {perm.name}
                             <span className="group relative cursor-pointer">
-                              <Info size={11} style={{ color: "var(--sb-ink-dim)" }} />
-                              <span className="pointer-events-none absolute bottom-full left-0 mb-1.5 hidden group-hover:block w-48 p-2 rounded-lg text-[10px] leading-relaxed z-20 shadow-md border"
-                                    style={{
-                                      background: "var(--sb-bg)",
-                                      borderColor: "var(--sb-border)",
-                                      color: "var(--sb-ink-muted)",
-                                    }}
+                              <Info
+                                size={11}
+                                style={{ color: "var(--sb-ink-dim)" }}
+                              />
+                              <span
+                                className="pointer-events-none absolute bottom-full left-0 mb-1.5 hidden group-hover:block w-48 p-2 rounded-lg text-[10px] leading-relaxed z-20 shadow-md border"
+                                style={{
+                                  background: "var(--sb-bg)",
+                                  borderColor: "var(--sb-border)",
+                                  color: "var(--sb-ink-muted)",
+                                }}
                               >
                                 {perm.desc}
                               </span>
                             </span>
                           </span>
-                          <span className="text-[10px] mt-0.5" style={{ color: "var(--sb-ink-dim)" }}>
+                          <span
+                            className="text-[10px] mt-0.5"
+                            style={{ color: "var(--sb-ink-dim)" }}
+                          >
                             {perm.key}
                           </span>
                         </div>
                       </td>
                       {ROLES.map((role) => {
-                        const isAssigned = (matrix[perm.key] || []).includes(role.id) || role.id === "superadmin";
+                        const isAssigned =
+                          (matrix[perm.key] || []).includes(role.id) ||
+                          role.id === "superadmin";
                         const isSuper = role.id === "superadmin";
                         return (
                           <td key={role.id} className="px-4 py-3.5 text-center">
@@ -240,16 +347,21 @@ function RolesPage() {
                               disabled={isSuper}
                               className={cn(
                                 "mx-auto flex size-6 items-center justify-center rounded-md border transition-all duration-150 active:scale-90",
-                                isSuper ? "cursor-not-allowed bg-color-mix(in oklab, var(--sb-ink) 5%, transparent)" : "cursor-pointer",
+                                isSuper
+                                  ? "cursor-not-allowed bg-color-mix(in oklab, var(--sb-ink) 5%, transparent)"
+                                  : "cursor-pointer",
                                 isAssigned
                                   ? "border-[var(--sb-accent)]/50 text-[var(--sb-accent)] bg-[var(--sb-accent)]/5"
-                                  : "border-transparent text-gray-400 hover:border-gray-300"
+                                  : "border-transparent text-gray-400 hover:border-gray-300",
                               )}
                             >
                               {isAssigned ? (
                                 <Check size={14} strokeWidth={2.5} />
                               ) : (
-                                <X size={14} className="opacity-30 group-hover:opacity-100" />
+                                <X
+                                  size={14}
+                                  className="opacity-30 group-hover:opacity-100"
+                                />
                               )}
                             </button>
                           </td>

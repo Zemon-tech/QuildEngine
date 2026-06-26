@@ -3,7 +3,14 @@
 import type { LucideIcon } from "lucide-react";
 import { BrainIcon, ChevronDownIcon, DotIcon } from "lucide-react";
 import type { ComponentProps, ReactNode } from "react";
-import { createContext, memo, useContext, useMemo, useState, useCallback } from "react";
+import {
+  createContext,
+  memo,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 import { Badge } from "#/components/ui/badge.tsx";
 import {
   Collapsible,
@@ -22,21 +29,24 @@ function useControllableState<T>({
   defaultProp?: T;
   onChange?: (state: T) => void;
 }) {
-  const [uncontrolledProp, setUncontrolledProp] = useState<T | undefined>(defaultProp);
+  const [uncontrolledProp, setUncontrolledProp] = useState<T | undefined>(
+    defaultProp,
+  );
   const isControlled = prop !== undefined;
   const value = isControlled ? prop : uncontrolledProp;
 
   const setValue = useCallback(
     (nextValue: T | ((prev: T | undefined) => T)) => {
-      const resolvedValue = typeof nextValue === "function"
-        ? (nextValue as Function)(value)
-        : nextValue;
+      const resolvedValue =
+        typeof nextValue === "function"
+          ? (nextValue as Function)(value)
+          : nextValue;
       if (!isControlled) {
         setUncontrolledProp(resolvedValue);
       }
       onChange(resolvedValue);
     },
-    [isControlled, value, onChange]
+    [isControlled, value, onChange],
   );
 
   return [value as T, setValue] as const;

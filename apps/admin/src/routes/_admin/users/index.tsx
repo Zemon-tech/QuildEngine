@@ -1,9 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import {
+  type ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 import { MoreHorizontal, Plus, Search, UserRound } from "lucide-react";
+import { useMemo, useState } from "react";
+import { EmptyState } from "#/components/admin/empty-state";
 import { PageHeader } from "#/components/admin/page-header";
 import { StatusBadge } from "#/components/admin/status-badge";
-import { EmptyState } from "#/components/admin/empty-state";
+import { Avatar, AvatarFallback } from "#/components/ui/avatar";
 import { Button } from "#/components/ui/button";
 import {
   DropdownMenu,
@@ -12,14 +19,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "#/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "#/components/ui/avatar";
 import { cn } from "#/lib/utils";
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
 
 interface User {
   id: string;
@@ -34,20 +34,83 @@ interface User {
 
 // Mock data — will be replaced by fetchUsers() SSR loader
 const MOCK_USERS: User[] = [
-  { id: "1", name: "Sarah Chen", email: "sarah@example.com", username: "sarah_c", role: "admin", status: "active", createdAt: "Jan 12, 2025", lastActive: "2h ago" },
-  { id: "2", name: "James Wilson", email: "james@example.com", username: "james_w", role: "editor", status: "active", createdAt: "Feb 3, 2025", lastActive: "5h ago" },
-  { id: "3", name: "Maria Lopez", email: "maria@example.com", username: "maria_l", role: "user", status: "suspended", createdAt: "Mar 15, 2025", lastActive: "14d ago" },
-  { id: "4", name: "Ahmed Al-Rashid", email: "ahmed@example.com", username: "ahmed_r", role: "moderator", status: "active", createdAt: "Apr 2, 2025", lastActive: "1d ago" },
-  { id: "5", name: "Priya Sharma", email: "priya@example.com", username: "priya_s", role: "user", status: "pending", createdAt: "May 20, 2025", lastActive: "Never" },
-  { id: "6", name: "Dmitri Volkov", email: "dmitri@example.com", username: "dmitri_v", role: "user", status: "active", createdAt: "Jun 1, 2025", lastActive: "30m ago" },
+  {
+    id: "1",
+    name: "Sarah Chen",
+    email: "sarah@example.com",
+    username: "sarah_c",
+    role: "admin",
+    status: "active",
+    createdAt: "Jan 12, 2025",
+    lastActive: "2h ago",
+  },
+  {
+    id: "2",
+    name: "James Wilson",
+    email: "james@example.com",
+    username: "james_w",
+    role: "editor",
+    status: "active",
+    createdAt: "Feb 3, 2025",
+    lastActive: "5h ago",
+  },
+  {
+    id: "3",
+    name: "Maria Lopez",
+    email: "maria@example.com",
+    username: "maria_l",
+    role: "user",
+    status: "suspended",
+    createdAt: "Mar 15, 2025",
+    lastActive: "14d ago",
+  },
+  {
+    id: "4",
+    name: "Ahmed Al-Rashid",
+    email: "ahmed@example.com",
+    username: "ahmed_r",
+    role: "moderator",
+    status: "active",
+    createdAt: "Apr 2, 2025",
+    lastActive: "1d ago",
+  },
+  {
+    id: "5",
+    name: "Priya Sharma",
+    email: "priya@example.com",
+    username: "priya_s",
+    role: "user",
+    status: "pending",
+    createdAt: "May 20, 2025",
+    lastActive: "Never",
+  },
+  {
+    id: "6",
+    name: "Dmitri Volkov",
+    email: "dmitri@example.com",
+    username: "dmitri_v",
+    role: "user",
+    status: "active",
+    createdAt: "Jun 1, 2025",
+    lastActive: "30m ago",
+  },
 ];
 
 const ROLE_COLORS: Record<string, { bg: string; color: string }> = {
-  superadmin: { bg: "oklch(0.627 0.265 303.9 / 0.12)", color: "oklch(0.627 0.265 303.9)" },
+  superadmin: {
+    bg: "oklch(0.627 0.265 303.9 / 0.12)",
+    color: "oklch(0.627 0.265 303.9)",
+  },
   admin: { bg: "oklch(0.75 0.08 220 / 0.12)", color: "oklch(0.52 0.08 220)" },
   editor: { bg: "oklch(0.82 0.15 55 / 0.12)", color: "oklch(0.62 0.15 55)" },
-  moderator: { bg: "oklch(0.72 0.16 142 / 0.12)", color: "oklch(0.58 0.16 142)" },
-  user: { bg: "color-mix(in oklab, var(--sb-ink) 6%, transparent)", color: "var(--sb-ink-dim)" },
+  moderator: {
+    bg: "oklch(0.72 0.16 142 / 0.12)",
+    color: "oklch(0.58 0.16 142)",
+  },
+  user: {
+    bg: "color-mix(in oklab, var(--sb-ink) 6%, transparent)",
+    color: "var(--sb-ink-dim)",
+  },
 };
 
 const initials = (name: string) =>
@@ -120,7 +183,8 @@ function UsersPage() {
                 <AvatarFallback
                   className="text-[10px] font-semibold"
                   style={{
-                    background: "color-mix(in oklab, var(--sb-ink) 8%, transparent)",
+                    background:
+                      "color-mix(in oklab, var(--sb-ink) 8%, transparent)",
                     color: "var(--sb-ink-muted)",
                   }}
                 >
@@ -128,7 +192,10 @@ function UsersPage() {
                 </AvatarFallback>
               </Avatar>
               <div className="flex flex-col">
-                <span className="font-semibold" style={{ color: "var(--sb-ink)" }}>
+                <span
+                  className="font-semibold"
+                  style={{ color: "var(--sb-ink)" }}
+                >
                   {user.name}
                 </span>
                 <span style={{ color: "var(--sb-ink-dim)" }}>{user.email}</span>
@@ -157,21 +224,27 @@ function UsersPage() {
         accessorKey: "status",
         header: "Status",
         cell: ({ getValue }) => (
-          <StatusBadge status={getValue<"active" | "suspended" | "pending">()} />
+          <StatusBadge
+            status={getValue<"active" | "suspended" | "pending">()}
+          />
         ),
       },
       {
         accessorKey: "createdAt",
         header: "Joined",
         cell: ({ getValue }) => (
-          <span style={{ color: "var(--sb-ink-muted)" }}>{getValue<string>()}</span>
+          <span style={{ color: "var(--sb-ink-muted)" }}>
+            {getValue<string>()}
+          </span>
         ),
       },
       {
         accessorKey: "lastActive",
         header: "Last Active",
         cell: ({ getValue }) => (
-          <span style={{ color: "var(--sb-ink-dim)" }}>{getValue<string>()}</span>
+          <span style={{ color: "var(--sb-ink-dim)" }}>
+            {getValue<string>()}
+          </span>
         ),
       },
       {
@@ -213,7 +286,7 @@ function UsersPage() {
         },
       },
     ],
-    []
+    [],
   );
 
   const table = useReactTable({
@@ -240,7 +313,12 @@ function UsersPage() {
         icon={UserRound}
         breadcrumbs={[{ label: "Admin" }, { label: "Users" }]}
         actions={[
-          { label: "Invite User", to: "/invites", icon: Plus, variant: "default" },
+          {
+            label: "Invite User",
+            to: "/invites",
+            icon: Plus,
+            variant: "default",
+          },
         ]}
       />
 
@@ -281,11 +359,13 @@ function UsersPage() {
                 "px-2.5 py-1 rounded-full text-[11px] font-medium transition-all duration-150 capitalize cursor-pointer active:scale-95",
               )}
               style={{
-                background: roleFilter === role
-                  ? "color-mix(in oklab, var(--sb-ink) 10%, transparent)"
-                  : "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
+                background:
+                  roleFilter === role
+                    ? "color-mix(in oklab, var(--sb-ink) 10%, transparent)"
+                    : "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
                 border: "1px solid var(--sb-border)",
-                color: roleFilter === role ? "var(--sb-ink)" : "var(--sb-ink-muted)",
+                color:
+                  roleFilter === role ? "var(--sb-ink)" : "var(--sb-ink-muted)",
               }}
             >
               {role ?? "All roles"}
@@ -304,11 +384,15 @@ function UsersPage() {
                 "px-2.5 py-1 rounded-full text-[11px] font-medium transition-all duration-150 capitalize cursor-pointer active:scale-95",
               )}
               style={{
-                background: statusFilter === status
-                  ? "color-mix(in oklab, var(--sb-ink) 10%, transparent)"
-                  : "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
+                background:
+                  statusFilter === status
+                    ? "color-mix(in oklab, var(--sb-ink) 10%, transparent)"
+                    : "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
                 border: "1px solid var(--sb-border)",
-                color: statusFilter === status ? "var(--sb-ink)" : "var(--sb-ink-muted)",
+                color:
+                  statusFilter === status
+                    ? "var(--sb-ink)"
+                    : "var(--sb-ink-muted)",
               }}
             >
               {status ?? "All statuses"}
@@ -329,7 +413,11 @@ function UsersPage() {
         >
           <span className="font-semibold">{selectedCount} selected</span>
           <div className="flex items-center gap-2 ml-auto">
-            <Button size="xs" variant="outline" onClick={() => setRowSelection({})}>
+            <Button
+              size="xs"
+              variant="outline"
+              onClick={() => setRowSelection({})}
+            >
               Clear
             </Button>
             <Button size="xs" variant="destructive">
@@ -345,12 +433,17 @@ function UsersPage() {
           icon={UserRound}
           title="No users found"
           description="Try adjusting your search or filter criteria."
-          action={{ label: "Clear filters", onClick: () => { setSearch(""); setRoleFilter(null); setStatusFilter(null); } }}
+          action={{
+            label: "Clear filters",
+            onClick: () => {
+              setSearch("");
+              setRoleFilter(null);
+              setStatusFilter(null);
+            },
+          }}
         />
       ) : (
-        <div
-          className="island-shell rounded-xl overflow-hidden"
-        >
+        <div className="island-shell rounded-xl overflow-hidden">
           <table className="w-full text-xs border-collapse">
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -358,7 +451,8 @@ function UsersPage() {
                   key={headerGroup.id}
                   style={{
                     borderBottom: "1px solid var(--sb-border)",
-                    background: "color-mix(in oklab, var(--sb-ink) 2%, transparent)",
+                    background:
+                      "color-mix(in oklab, var(--sb-ink) 2%, transparent)",
                   }}
                 >
                   {headerGroup.headers.map((header) => {
@@ -369,15 +463,17 @@ function UsersPage() {
                         className={cn(
                           isSelect
                             ? "pl-4 py-3 w-10 text-left"
-                            : "px-4 py-3 text-left font-semibold uppercase tracking-wider"
+                            : "px-4 py-3 text-left font-semibold uppercase tracking-wider",
                         )}
-                        style={{ color: isSelect ? undefined : "var(--sb-ink-dim)" }}
+                        style={{
+                          color: isSelect ? undefined : "var(--sb-ink-dim)",
+                        }}
                       >
                         {header.isPlaceholder
                           ? null
                           : flexRender(
                               header.column.columnDef.header,
-                              header.getContext()
+                              header.getContext(),
                             )}
                       </th>
                     );
@@ -391,16 +487,19 @@ function UsersPage() {
                   key={row.id}
                   className={cn(
                     "stagger-item transition-colors duration-100",
-                    row.getIsSelected() && "bg-[color-mix(in_oklab,var(--sb-ink)_3%,transparent)]",
+                    row.getIsSelected() &&
+                      "bg-[color-mix(in_oklab,var(--sb-ink)_3%,transparent)]",
                   )}
                   style={{ borderBottom: "1px solid var(--sb-border)" }}
                   onMouseOver={(e) => {
                     if (!row.getIsSelected()) {
-                      e.currentTarget.style.background = "color-mix(in oklab, var(--sb-ink) 2%, transparent)";
+                      e.currentTarget.style.background =
+                        "color-mix(in oklab, var(--sb-ink) 2%, transparent)";
                     }
                   }}
                   onMouseOut={(e) => {
-                    if (!row.getIsSelected()) e.currentTarget.style.background = "";
+                    if (!row.getIsSelected())
+                      e.currentTarget.style.background = "";
                   }}
                 >
                   {row.getVisibleCells().map((cell) => {
@@ -409,12 +508,12 @@ function UsersPage() {
                       <td
                         key={cell.id}
                         className={cn(
-                          isSelect ? "pl-4 py-3.5 w-10" : "px-4 py-3.5"
+                          isSelect ? "pl-4 py-3.5 w-10" : "px-4 py-3.5",
                         )}
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
-                          cell.getContext()
+                          cell.getContext(),
                         )}
                       </td>
                     );
@@ -432,12 +531,19 @@ function UsersPage() {
               background: "color-mix(in oklab, var(--sb-ink) 2%, transparent)",
             }}
           >
-            <span className="text-[11px]" style={{ color: "var(--sb-ink-dim)" }}>
+            <span
+              className="text-[11px]"
+              style={{ color: "var(--sb-ink-dim)" }}
+            >
               Showing {filtered.length} of {users.length} users
             </span>
             <div className="flex items-center gap-1">
-              <Button size="xs" variant="outline" disabled>Previous</Button>
-              <Button size="xs" variant="outline" disabled>Next</Button>
+              <Button size="xs" variant="outline" disabled>
+                Previous
+              </Button>
+              <Button size="xs" variant="outline" disabled>
+                Next
+              </Button>
             </div>
           </div>
         </div>

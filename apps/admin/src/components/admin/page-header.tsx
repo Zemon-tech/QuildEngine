@@ -1,8 +1,8 @@
-import type { LucideIcon } from "lucide-react";
 import { Link, useRouterState } from "@tanstack/react-router";
+import type { LucideIcon } from "lucide-react";
 import { ChevronRight } from "lucide-react";
-import { cn } from "#/lib/utils";
 import { Button } from "#/components/ui/button";
+import { cn } from "#/lib/utils";
 
 interface Breadcrumb {
   label: string;
@@ -36,13 +36,9 @@ export function PageHeader({
 }: PageHeaderProps) {
   return (
     <div
-      className={cn(
-        "flex flex-col gap-1 border-b pb-5 mb-6",
-        className,
-      )}
+      className={cn("flex flex-col gap-1 border-b pb-5 mb-6", className)}
       style={{ borderColor: "var(--sb-border)" }}
     >
-
       {/* Title row */}
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
@@ -50,7 +46,8 @@ export function PageHeader({
             <span
               className="flex size-9 items-center justify-center rounded-[10px] shrink-0"
               style={{
-                background: "color-mix(in oklab, var(--sb-ink) 6%, transparent)",
+                background:
+                  "color-mix(in oklab, var(--sb-ink) 6%, transparent)",
                 color: "var(--sb-ink-muted)",
               }}
             >

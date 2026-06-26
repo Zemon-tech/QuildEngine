@@ -1,9 +1,25 @@
-import { createRootRoute, HeadContent, Outlet, ScrollRestoration, Scripts } from "@tanstack/react-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  createRootRoute,
+  HeadContent,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { ThemeProvider } from "next-themes";
 import { TooltipProvider } from "#/components/ui/tooltip";
 
 import appCss from "../style.css?url";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60_000,
+      retry: 1,
+    },
+  },
+});
 
 export const Route = createRootRoute({
   head: () => ({
@@ -13,7 +29,8 @@ export const Route = createRootRoute({
       { title: "Quild Admin Panel" },
       {
         name: "description",
-        content: "Quild Admin Panel — manage users, content, and platform settings.",
+        content:
+          "Quild Admin Panel — manage users, content, and platform settings.",
       },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
@@ -28,14 +45,21 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body style={{ margin: 0 }}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange={false}>
-          <TooltipProvider delayDuration={300}>
-            {children}
-            <ScrollRestoration />
-            <TanStackRouterDevtools position="bottom-right" />
-            <Scripts />
-          </TooltipProvider>
-        </ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange={false}
+          >
+            <TooltipProvider delayDuration={300}>
+              {children}
+              <ScrollRestoration />
+              <TanStackRouterDevtools position="bottom-right" />
+              <Scripts />
+            </TooltipProvider>
+          </ThemeProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );

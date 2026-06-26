@@ -3,8 +3,8 @@
  */
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { adminMiddleware } from "../middleware";
 import { backendFetch } from "../api.server";
+import { adminMiddleware } from "../middleware";
 
 export interface AdminCourse {
   id: string;
@@ -102,12 +102,16 @@ export const fetchCourseModules = createServerFn({ method: "GET" })
   .middleware([adminMiddleware])
   .validator(z.object({ courseId: z.string() }))
   .handler(async ({ data }) => {
-    return backendFetch<AdminModule[]>(`/api/v1/admin/courses/${data.courseId}/modules`);
+    return backendFetch<AdminModule[]>(
+      `/api/v1/admin/courses/${data.courseId}/modules`,
+    );
   });
 
 export const fetchModuleLessons = createServerFn({ method: "GET" })
   .middleware([adminMiddleware])
   .validator(z.object({ moduleId: z.string() }))
   .handler(async ({ data }) => {
-    return backendFetch<AdminLesson[]>(`/api/v1/admin/modules/${data.moduleId}/lessons`);
+    return backendFetch<AdminLesson[]>(
+      `/api/v1/admin/modules/${data.moduleId}/lessons`,
+    );
   });

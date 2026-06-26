@@ -1,37 +1,37 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
   BarChart3,
+  Binary,
   BookOpen,
+  Bot,
   BrainCircuit,
   Briefcase,
   Calendar,
   ClipboardList,
+  Clock,
   Code2,
+  Cpu,
+  Database,
   FileText,
+  FlaskConical,
   History,
   Image,
+  Key,
+  Layers,
   LayoutDashboard,
+  LineChart,
   Mail,
   Map,
-  Plus,
+  MessageSquare,
+  Network,
   PanelLeftClose,
   PanelLeftOpen,
+  Plus,
   Rocket,
   Settings,
   Shield,
-  Users,
-  MessageSquare,
-  Cpu,
-  Bot,
   Terminal,
-  Database,
-  Network,
-  LineChart,
-  Binary,
-  Key,
-  Layers,
-  Clock,
-  FlaskConical,
+  Users,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
@@ -67,7 +67,11 @@ export function AdminSecondarySidebar() {
   let sectionTitle = "";
   let groups: SubGroup[] = [];
 
-  if (currentPath.startsWith("/overview") || currentPath.startsWith("/analytics") || currentPath.startsWith("/audit")) {
+  if (
+    currentPath.startsWith("/overview") ||
+    currentPath.startsWith("/analytics") ||
+    currentPath.startsWith("/audit")
+  ) {
     sectionTitle = "Insights & Logs";
     groups = [
       {
@@ -142,9 +146,7 @@ export function AdminSecondarySidebar() {
       },
       {
         label: "Scheduling",
-        items: [
-          { label: "Live Events", to: "/cms/events", icon: Calendar },
-        ],
+        items: [{ label: "Live Events", to: "/cms/events", icon: Calendar }],
       },
     ];
   } else if (
@@ -163,8 +165,18 @@ export function AdminSecondarySidebar() {
       {
         label: "Innovation",
         items: [
-          { label: "Experiments", to: "/research", search: { tab: "experiments" }, icon: FlaskConical },
-          { label: "Documentation", to: "/research", search: { tab: "docs" }, icon: FileText },
+          {
+            label: "Experiments",
+            to: "/research",
+            search: { tab: "experiments" },
+            icon: FlaskConical,
+          },
+          {
+            label: "Documentation",
+            to: "/research",
+            search: { tab: "docs" },
+            icon: FileText,
+          },
         ],
       },
     ];
@@ -174,33 +186,96 @@ export function AdminSecondarySidebar() {
       {
         label: "Workspace",
         items: [
-          { label: "AI Dashboard", to: "/ai", search: { tab: "dashboard" }, icon: LayoutDashboard },
-          { label: "AI Chat", to: "/ai", search: { tab: "chat" }, icon: MessageSquare },
+          {
+            label: "AI Dashboard",
+            to: "/ai",
+            search: { tab: "dashboard" },
+            icon: LayoutDashboard,
+          },
+          {
+            label: "AI Chat",
+            to: "/ai",
+            search: { tab: "chat" },
+            icon: MessageSquare,
+          },
         ],
       },
       {
         label: "Management",
         items: [
           { label: "Models", to: "/ai", search: { tab: "models" }, icon: Cpu },
-          { label: "Prompts", to: "/ai", search: { tab: "prompts" }, icon: Terminal },
-          { label: "AI Agents", to: "/ai", search: { tab: "agents" }, icon: Bot },
-          { label: "Knowledge Base", to: "/ai", search: { tab: "knowledge" }, icon: Database },
-          { label: "RAG Management", to: "/ai", search: { tab: "rag" }, icon: Network },
+          {
+            label: "Prompts",
+            to: "/ai",
+            search: { tab: "prompts" },
+            icon: Terminal,
+          },
+          {
+            label: "AI Agents",
+            to: "/ai",
+            search: { tab: "agents" },
+            icon: Bot,
+          },
+          {
+            label: "Knowledge Base",
+            to: "/ai",
+            search: { tab: "knowledge" },
+            icon: Database,
+          },
+          {
+            label: "RAG Management",
+            to: "/ai",
+            search: { tab: "rag" },
+            icon: Network,
+          },
         ],
       },
       {
         label: "Analytics & Ops",
         items: [
-          { label: "AI Analytics", to: "/ai", search: { tab: "analytics" }, icon: LineChart },
-          { label: "Token Usage", to: "/ai", search: { tab: "tokens" }, icon: Binary },
-          { label: "API Monitoring", to: "/ai", search: { tab: "api" }, icon: Key },
-          { label: "Background Jobs", to: "/ai", search: { tab: "jobs" }, icon: Layers },
-          { label: "AI Activity Feed", to: "/ai", search: { tab: "timeline" }, icon: Clock },
-          { label: "AI Settings", to: "/ai", search: { tab: "settings" }, icon: Settings },
+          {
+            label: "AI Analytics",
+            to: "/ai",
+            search: { tab: "analytics" },
+            icon: LineChart,
+          },
+          {
+            label: "Token Usage",
+            to: "/ai",
+            search: { tab: "tokens" },
+            icon: Binary,
+          },
+          {
+            label: "API Monitoring",
+            to: "/ai",
+            search: { tab: "api" },
+            icon: Key,
+          },
+          {
+            label: "Background Jobs",
+            to: "/ai",
+            search: { tab: "jobs" },
+            icon: Layers,
+          },
+          {
+            label: "AI Activity Feed",
+            to: "/ai",
+            search: { tab: "timeline" },
+            icon: Clock,
+          },
+          {
+            label: "AI Settings",
+            to: "/ai",
+            search: { tab: "settings" },
+            icon: Settings,
+          },
         ],
       },
     ];
-  } else if (currentPath.startsWith("/media") || currentPath.startsWith("/settings")) {
+  } else if (
+    currentPath.startsWith("/media") ||
+    currentPath.startsWith("/settings")
+  ) {
     sectionTitle = "System Options";
     groups = [
       {
@@ -219,7 +294,10 @@ export function AdminSecondarySidebar() {
   const searchParams = routerState.location.search as Record<string, any>;
 
   const isItemActive = (to: string, itemSearch?: any) => {
-    const pathActive = to === "/" ? currentPath === "/" : currentPath === to || currentPath.startsWith(`${to}/`);
+    const pathActive =
+      to === "/"
+        ? currentPath === "/"
+        : currentPath === to || currentPath.startsWith(`${to}/`);
     if (!pathActive) return false;
 
     if (itemSearch && itemSearch.tab) {

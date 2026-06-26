@@ -3,8 +3,8 @@
  */
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { adminMiddleware } from "../middleware";
 import { backendFetch } from "../api.server";
+import { adminMiddleware } from "../middleware";
 
 export interface AdminUser {
   id: string;
@@ -60,9 +60,12 @@ export const suspendUser = createServerFn({ method: "POST" })
   .middleware([adminMiddleware])
   .validator(z.object({ userId: z.string() }))
   .handler(async ({ data }) => {
-    return backendFetch<AdminUser>(`/api/v1/admin/users/${data.userId}/suspend`, {
-      method: "POST",
-    });
+    return backendFetch<AdminUser>(
+      `/api/v1/admin/users/${data.userId}/suspend`,
+      {
+        method: "POST",
+      },
+    );
   });
 
 export const createInvite = createServerFn({ method: "POST" })

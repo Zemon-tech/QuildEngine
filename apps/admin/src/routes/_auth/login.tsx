@@ -1,7 +1,7 @@
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
-import { z } from "zod";
-import { useState } from "react";
 import { Lock, Mail, Shield } from "lucide-react";
+import { useState } from "react";
+import { z } from "zod";
 import { Button } from "#/components/ui/button";
 import { cn } from "#/lib/utils";
 
@@ -27,8 +27,16 @@ function LoginPage() {
 
     try {
       // Set a mock admin session cookie for testing/development
-      const mockUser = { id: "mock-admin-id", email: email || "admin@quild.in", role: "superadmin" };
-      const mockToken = { access_token: "mock-access-token", refresh_token: "mock-refresh-token", user: mockUser };
+      const mockUser = {
+        id: "mock-admin-id",
+        email: email || "admin@quild.in",
+        role: "superadmin",
+      };
+      const mockToken = {
+        access_token: "mock-access-token",
+        refresh_token: "mock-refresh-token",
+        user: mockUser,
+      };
       const encodedCookie = encodeURIComponent(JSON.stringify(mockToken));
       document.cookie = `sb-auth-token=${encodedCookie}; path=/; max-age=3600; SameSite=Lax`;
 
@@ -44,9 +52,7 @@ function LoginPage() {
   return (
     <div className="rise-in w-full max-w-sm">
       {/* Card */}
-      <div
-        className="island-shell rounded-2xl p-8 flex flex-col gap-6"
-      >
+      <div className="island-shell rounded-2xl p-8 flex flex-col gap-6">
         {/* Header */}
         <div className="flex flex-col items-center gap-3 text-center">
           <span
@@ -62,11 +68,17 @@ function LoginPage() {
           <div>
             <h1
               className="text-xl font-bold tracking-tight"
-              style={{ color: "var(--sb-ink)", fontFamily: "'Fraunces', Georgia, serif" }}
+              style={{
+                color: "var(--sb-ink)",
+                fontFamily: "'Fraunces', Georgia, serif",
+              }}
             >
               Quild Admin
             </h1>
-            <p className="mt-1 text-xs" style={{ color: "var(--sb-ink-muted)" }}>
+            <p
+              className="mt-1 text-xs"
+              style={{ color: "var(--sb-ink-muted)" }}
+            >
               Sign in to access the admin panel
             </p>
           </div>
@@ -103,7 +115,8 @@ function LoginPage() {
                   "placeholder:text-[var(--sb-ink-dim)]",
                 )}
                 style={{
-                  background: "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
+                  background:
+                    "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
                   border: "1px solid var(--sb-border)",
                   color: "var(--sb-ink)",
                 }}
@@ -140,7 +153,8 @@ function LoginPage() {
                   "placeholder:text-[var(--sb-ink-dim)]",
                 )}
                 style={{
-                  background: "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
+                  background:
+                    "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
                   border: "1px solid var(--sb-border)",
                   color: "var(--sb-ink)",
                 }}
@@ -150,7 +164,8 @@ function LoginPage() {
 
           {/* Error */}
           {error && (
-            <p className="text-xs rounded-lg px-3 py-2 text-center"
+            <p
+              className="text-xs rounded-lg px-3 py-2 text-center"
               style={{
                 background: "oklch(0.58 0.24 27 / 0.1)",
                 color: "oklch(0.58 0.24 27)",

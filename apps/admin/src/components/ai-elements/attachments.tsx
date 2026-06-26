@@ -1,6 +1,5 @@
 "use client";
 
-import type { FileUIPart, SourceDocumentUIPart } from "#/components/ai-elements/ai-types.ts";
 import {
   FileTextIcon,
   GlobeIcon,
@@ -12,6 +11,10 @@ import {
 } from "lucide-react";
 import type { ComponentProps, HTMLAttributes, ReactNode } from "react";
 import { createContext, useCallback, useContext, useMemo } from "react";
+import type {
+  FileUIPart,
+  SourceDocumentUIPart,
+} from "#/components/ai-elements/ai-types.ts";
 import { Button } from "#/components/ui/button.tsx";
 import {
   HoverCard,
