@@ -451,7 +451,7 @@ export function AdminSecondarySidebar() {
           type="button"
           onClick={() => setCollapsed(!collapsed)}
           className={cn(
-            "flex shrink-0 items-center justify-center rounded-[8px] outline-none transition-all duration-150 size-7 cursor-pointer text-[var(--sb-ink-dim)] hover:opacity-75 focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60 active:scale-95",
+            "flex shrink-0 items-center justify-center rounded-[8px] outline-none transition-all duration-150 size-7 cursor-pointer text-(--sb-ink-dim) hover:opacity-75 focus-visible:ring-2 focus-visible:ring-(--sb-accent)/60 active:scale-95",
           )}
           title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
@@ -483,8 +483,8 @@ export function AdminSecondarySidebar() {
                         "group/sec-nav flex items-center gap-2 px-2 py-1.5 text-xs font-bold tracking-wide rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative uppercase",
                         "justify-center px-1.5",
                         active
-                          ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)]"
-                          : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]",
+                          ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-(--sb-accent)"
+                          : "text-(--sb-ink-muted) hover:bg-(--sb-bg-hover) hover:text-(--sb-ink)",
                       )}
                     >
                       {Icon && (
@@ -493,8 +493,8 @@ export function AdminSecondarySidebar() {
                           className={cn(
                             "shrink-0",
                             active
-                              ? "text-[var(--sb-accent)]"
-                              : "text-[var(--sb-ink-muted)] group-hover/sec-nav:text-[var(--sb-ink)]",
+                              ? "text-(--sb-accent)"
+                              : "text-(--sb-ink-muted) group-hover/sec-nav:text-(--sb-ink)",
                           )}
                         />
                       )}
@@ -513,8 +513,8 @@ export function AdminSecondarySidebar() {
                   className={cn(
                     "group/sec-nav flex items-center gap-2 px-2 py-1.5 text-xs font-bold tracking-wide rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative uppercase",
                     active
-                      ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)]"
-                      : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]",
+                      ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-(--sb-accent)"
+                      : "text-(--sb-ink-muted) hover:bg-(--sb-bg-hover) hover:text-(--sb-ink)",
                   )}
                 >
                   {Icon && (
@@ -523,8 +523,8 @@ export function AdminSecondarySidebar() {
                       className={cn(
                         "shrink-0",
                         active
-                          ? "text-[var(--sb-accent)]"
-                          : "text-[var(--sb-ink-muted)] group-hover/sec-nav:text-[var(--sb-ink)]",
+                          ? "text-(--sb-accent)"
+                          : "text-(--sb-ink-muted) group-hover/sec-nav:text-(--sb-ink)",
                       )}
                     />
                   )}
@@ -558,8 +558,8 @@ export function AdminSecondarySidebar() {
                               "group/sec-nav flex items-center gap-2 px-2 py-1.5 text-xs font-medium rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative",
                               "justify-center px-1.5",
                               active
-                                ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)] font-semibold"
-                                : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]",
+                                ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-(--sb-accent) font-semibold"
+                                : "text-(--sb-ink-muted) hover:bg-(--sb-bg-hover) hover:text-(--sb-ink)",
                             )}
                           >
                             <item.icon
@@ -567,8 +567,8 @@ export function AdminSecondarySidebar() {
                               className={cn(
                                 "shrink-0",
                                 active
-                                  ? "text-[var(--sb-accent)]"
-                                  : "text-[var(--sb-ink-muted)] group-hover/sec-nav:text-[var(--sb-ink)]",
+                                  ? "text-(--sb-accent)"
+                                  : "text-(--sb-ink-muted) group-hover/sec-nav:text-(--sb-ink)",
                               )}
                             />
                           </Link>
@@ -588,8 +588,8 @@ export function AdminSecondarySidebar() {
                         className={cn(
                           "group/sec-nav flex items-center gap-2 px-2 py-1.5 text-xs font-medium rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative",
                           active
-                            ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)] font-semibold"
-                            : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]",
+                            ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-(--sb-accent) font-semibold"
+                            : "text-(--sb-ink-muted) hover:bg-(--sb-bg-hover) hover:text-(--sb-ink)",
                         )}
                       >
                         <item.icon
@@ -597,8 +597,8 @@ export function AdminSecondarySidebar() {
                           className={cn(
                             "shrink-0",
                             active
-                              ? "text-[var(--sb-accent)]"
-                              : "text-[var(--sb-ink-muted)] group-hover/sec-nav:text-[var(--sb-ink)]",
+                              ? "text-(--sb-accent)"
+                              : "text-(--sb-ink-muted) group-hover/sec-nav:text-(--sb-ink)",
                           )}
                         />
                         <span className="flex-1 truncate">{item.label}</span>

@@ -492,12 +492,12 @@ function CaseStudiesPage() {
           </div>
 
           {/* List Table */}
-          <div className="island-shell rounded-xl overflow-hidden border border-[var(--sb-border)]">
+          <div className="island-shell rounded-xl overflow-hidden border border-(--sb-border)">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
                   <tr
-                    className="border-b border-[var(--sb-border)]"
+                    className="border-b border-(--sb-border)"
                     style={{ background: "rgba(var(--sb-accent-rgb), 0.02)" }}
                   >
                     <th className="p-4 font-bold text-muted-foreground">
@@ -520,7 +520,7 @@ function CaseStudiesPage() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[var(--sb-border)]">
+                <tbody className="divide-y divide-(--sb-border)">
                   {isLoading ? (
                     <tr>
                       <td
@@ -684,7 +684,7 @@ function CaseStudiesPage() {
               <button
                 type="button"
                 onClick={handleSaveStudy}
-                className="flex items-center gap-1.5 px-4 py-2 bg-[var(--sb-accent)] text-white text-[11px] font-bold rounded-lg shadow-sm hover:opacity-95 transition-all active:scale-[0.98]"
+                className="flex items-center gap-1.5 px-4 py-2 bg-(--sb-accent) text-white text-[11px] font-bold rounded-lg shadow-sm hover:opacity-95 transition-all active:scale-[0.98]"
               >
                 <Save size={13} />
                 Save Changes
@@ -778,7 +778,7 @@ function CaseStudiesPage() {
           </div>
 
           {/* Section tab controllers */}
-          <div className="flex border-b border-[var(--sb-border)] gap-1 scrollbar-none overflow-x-auto pb-px">
+          <div className="flex border-b border-(--sb-border) gap-1 scrollbar-none overflow-x-auto pb-px">
             {(
               [
                 { id: "overview", label: "1. Overview & Summary" },
@@ -897,7 +897,7 @@ function CaseStudiesPage() {
 
             {/* Right Workspace Panel: Live Preview */}
             <div className="island-shell rounded-xl p-5 flex flex-col space-y-3 bg-neutral-950/40">
-              <div className="flex items-center justify-between border-b border-[var(--sb-border)] pb-2">
+              <div className="flex items-center justify-between border-b border-(--sb-border) pb-2">
                 <span className="text-[10px] font-extrabold text-muted-foreground uppercase tracking-wider flex items-center gap-1">
                   <Eye size={12} className="text-emerald-500" />
                   Live Preview
@@ -995,7 +995,7 @@ function CaseStudiesPage() {
                   [...formVersions].reverse().map((ver, _idx) => (
                     <div
                       key={ver.version}
-                      className="p-3 bg-muted/40 rounded-lg border border-[var(--sb-border)] flex items-center justify-between text-xs text-left"
+                      className="p-3 bg-muted/40 rounded-lg border border-(--sb-border) flex items-center justify-between text-xs text-left"
                     >
                       <div className="space-y-0.5">
                         <div className="flex items-center gap-2">

@@ -94,7 +94,7 @@ function NewCoursePage() {
                 placeholder="e.g. Master Object Oriented Design Patterns"
                 className={cn(
                   "w-full rounded-[10px] px-3 py-2 text-xs outline-none transition-all duration-150",
-                  "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                  "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
                 )}
                 style={{
                   background:
@@ -130,7 +130,7 @@ function NewCoursePage() {
                   placeholder="master-design-patterns"
                   className={cn(
                     "w-full rounded-[10px] pl-[92px] pr-3 py-2 text-xs outline-none transition-all duration-150",
-                    "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                    "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
                   )}
                   style={{
                     background:
@@ -160,7 +160,7 @@ function NewCoursePage() {
                 placeholder="e.g. A comprehensive guide to building extensible, clean software."
                 className={cn(
                   "w-full rounded-[10px] px-3 py-2 text-xs outline-none transition-all duration-150",
-                  "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                  "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
                 )}
                 style={{
                   background:
@@ -189,7 +189,7 @@ function NewCoursePage() {
                 placeholder="Describe what students will learn, target audience, prerequisites, etc."
                 className={cn(
                   "w-full rounded-[10px] px-3 py-2 text-xs outline-none transition-all duration-150 resize-none",
-                  "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                  "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
                 )}
                 style={{
                   background:
@@ -286,7 +286,7 @@ function NewCoursePage() {
                 placeholder="e.g. Dr. Emily Smith"
                 className={cn(
                   "w-full rounded-[10px] px-3 py-2 text-xs outline-none transition-all duration-150",
-                  "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                  "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
                 )}
                 style={{
                   background:
@@ -317,7 +317,7 @@ function NewCoursePage() {
                   placeholder="30"
                   className={cn(
                     "w-full rounded-[10px] px-3 py-2 text-xs outline-none transition-all duration-150",
-                    "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                    "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
                   )}
                   style={{
                     background:
@@ -346,7 +346,7 @@ function NewCoursePage() {
                   placeholder="24"
                   className={cn(
                     "w-full rounded-[10px] px-3 py-2 text-xs outline-none transition-all duration-150",
-                    "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                    "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
                   )}
                   style={{
                     background:

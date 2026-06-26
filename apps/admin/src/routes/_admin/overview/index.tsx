@@ -313,7 +313,7 @@ function OverviewPage() {
         {/* Analytics Tabs Viewport (Column span 3) */}
         <div className="xl:col-span-3 space-y-4">
           {/* Custom Tabs Navigation */}
-          <div className="flex border-b border-[var(--sb-border)] gap-2 scrollbar-none overflow-x-auto pb-px">
+          <div className="flex border-b border-(--sb-border) gap-2 scrollbar-none overflow-x-auto pb-px">
             {(
               [
                 { id: "users", label: "User Analytics", icon: Users },
@@ -374,7 +374,7 @@ function OverviewPage() {
                           : `+${userAnalytics?.growthRatePercent}%`}
                       </span>
                     </div>
-                    <div className="border-l border-[var(--sb-border)] pl-4">
+                    <div className="border-l border-(--sb-border) pl-4">
                       <span className="text-[10px] text-muted-foreground block">
                         Retention Rate
                       </span>
@@ -450,7 +450,7 @@ function OverviewPage() {
                     </span>
                   </div>
                 ) : (
-                  <div className="flex flex-col divide-y divide-[var(--sb-border)]">
+                  <div className="flex flex-col divide-y divide-(--sb-border)">
                     {learningAnalytics?.mostPopularCourses.map((c) => (
                       <div
                         key={c.id}
@@ -652,7 +652,7 @@ function OverviewPage() {
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    <div className="flex flex-col divide-y divide-[var(--sb-border)]">
+                    <div className="flex flex-col divide-y divide-(--sb-border)">
                       {researchAnalytics?.recentlyUpdated.map((doc) => (
                         <div
                           key={doc.id}
@@ -760,7 +760,7 @@ function OverviewPage() {
                     </span>
                   </div>
                 ) : (
-                  <div className="flex flex-col divide-y divide-[var(--sb-border)]">
+                  <div className="flex flex-col divide-y divide-(--sb-border)">
                     {eventAnalytics?.upcomingEventsList.map((e) => (
                       <div
                         key={e.id}
@@ -849,7 +849,7 @@ function OverviewPage() {
 
           {/* Recent Activity Feed */}
           <div className="island-shell rounded-xl p-5 space-y-3.5">
-            <div className="flex items-center justify-between pb-1 border-b border-[var(--sb-border)]">
+            <div className="flex items-center justify-between pb-1 border-b border-(--sb-border)">
               <h3
                 className="text-[11px] font-bold uppercase tracking-wider"
                 style={{ color: "var(--sb-ink-dim)" }}
@@ -859,7 +859,7 @@ function OverviewPage() {
               <button
                 type="button"
                 onClick={() => refetchActivities()}
-                className="text-[10px] font-semibold text-muted-foreground flex items-center gap-1 hover:text-[var(--sb-ink)] transition-colors active:scale-95"
+                className="text-[10px] font-semibold text-muted-foreground flex items-center gap-1 hover:text-(--sb-ink) transition-colors active:scale-95"
               >
                 <RefreshCw size={8} />
                 Refresh
@@ -883,7 +883,7 @@ function OverviewPage() {
                 Failed to load activities.
               </div>
             ) : (
-              <div className="flex flex-col gap-2 relative pl-2.5 border-l border-[var(--sb-border)]">
+              <div className="flex flex-col gap-2 relative pl-2.5 border-l border-(--sb-border)">
                 {activities?.map((act) => (
                   <div
                     key={act.id}
@@ -891,7 +891,7 @@ function OverviewPage() {
                   >
                     {/* Activity node */}
                     <div
-                      className="absolute -left-[14.5px] top-[10px] size-2 rounded-full border border-background"
+                      className="absolute left-[-14.5px] top-[10px] size-2 rounded-full border border-background"
                       style={{
                         backgroundColor:
                           act.type === "user_signup"

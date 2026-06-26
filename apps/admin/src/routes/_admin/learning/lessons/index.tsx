@@ -266,7 +266,7 @@ function LessonsPage() {
                   <button
                     type="button"
                     onClick={() => openCreate(moduleId)}
-                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-medium cursor-pointer hover:bg-[var(--sb-bg-hover)] active:scale-95 transition-all"
+                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-medium cursor-pointer hover:bg-(--sb-bg-hover) active:scale-95 transition-all"
                     style={{
                       color: "var(--sb-ink-muted)",
                       border: "1px solid var(--sb-border)",
@@ -374,7 +374,7 @@ function LessonsPage() {
                             <DropdownMenuTrigger asChild>
                               <button
                                 type="button"
-                                className="flex size-7 items-center justify-center rounded-[7px] outline-none cursor-pointer hover:bg-[var(--sb-bg-hover)] active:scale-95 mx-auto"
+                                className="flex size-7 items-center justify-center rounded-[7px] outline-none cursor-pointer hover:bg-(--sb-bg-hover) active:scale-95 mx-auto"
                                 style={{ color: "var(--sb-ink-dim)" }}
                               >
                                 <MoreHorizontal size={14} />
@@ -443,7 +443,7 @@ function LessonsPage() {
               <button
                 type="button"
                 onClick={() => setDrawerOpen(false)}
-                className="size-7 flex items-center justify-center rounded-lg hover:bg-[var(--sb-bg-hover)] cursor-pointer active:scale-95"
+                className="size-7 flex items-center justify-center rounded-lg hover:bg-(--sb-bg-hover) cursor-pointer active:scale-95"
                 style={{ color: "var(--sb-ink-dim)" }}
               >
                 <X size={14} />

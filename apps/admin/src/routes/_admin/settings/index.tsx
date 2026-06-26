@@ -88,8 +88,8 @@ function SettingsPage() {
               className={cn(
                 "flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 cursor-pointer active:scale-98 text-left",
                 activeTab === tab.id
-                  ? "bg-[color-mix(in_oklab,var(--sb-ink)_8%,transparent)] text-[var(--sb-ink)]"
-                  : "text-[var(--sb-ink-muted)] hover:bg-[color-mix(in_oklab,var(--sb-ink)_3%,transparent)]",
+                  ? "bg-[color-mix(in_oklab,var(--sb-ink)_8%,transparent)] text-(--sb-ink)"
+                  : "text-(--sb-ink-muted) hover:bg-[color-mix(in_oklab,var(--sb-ink)_3%,transparent)]",
               )}
             >
               <tab.icon
@@ -139,7 +139,7 @@ function SettingsPage() {
                     required
                     className={cn(
                       "w-full rounded-[10px] px-3 py-2 text-xs outline-none transition-all duration-150",
-                      "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                      "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
                     )}
                     style={{
                       background:
@@ -167,7 +167,7 @@ function SettingsPage() {
                     required
                     className={cn(
                       "w-full rounded-[10px] px-3 py-2 text-xs outline-none transition-all duration-150",
-                      "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                      "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
                     )}
                     style={{
                       background:
@@ -235,7 +235,7 @@ function SettingsPage() {
                     required
                     className={cn(
                       "w-full rounded-[10px] px-3 py-2 text-xs outline-none transition-all duration-150",
-                      "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                      "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
                     )}
                     style={{
                       background:
@@ -263,7 +263,7 @@ function SettingsPage() {
                     placeholder="e.g. quild.in, quild.com"
                     className={cn(
                       "w-full rounded-[10px] px-3 py-2 text-xs outline-none transition-all duration-150",
-                      "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                      "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
                     )}
                     style={{
                       background:
@@ -373,7 +373,7 @@ function SettingsPage() {
                     required
                     className={cn(
                       "w-full rounded-[10px] px-3 py-2 text-xs outline-none transition-all duration-150",
-                      "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                      "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
                     )}
                     style={{
                       background:
@@ -401,7 +401,7 @@ function SettingsPage() {
                     required
                     className={cn(
                       "w-full rounded-[10px] px-3 py-2 text-xs outline-none transition-all duration-150",
-                      "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                      "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
                     )}
                     style={{
                       background:
@@ -441,7 +441,7 @@ function SettingsPage() {
                     placeholder="https://hooks.slack.com/services/..."
                     className={cn(
                       "w-full rounded-[10px] px-3 py-2 text-xs outline-none transition-all duration-150",
-                      "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                      "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
                     )}
                     style={{
                       background:
@@ -470,7 +470,7 @@ function SettingsPage() {
                     placeholder="devops@quild.in"
                     className={cn(
                       "w-full rounded-[10px] px-3 py-2 text-xs outline-none transition-all duration-150",
-                      "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                      "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
                     )}
                     style={{
                       background:

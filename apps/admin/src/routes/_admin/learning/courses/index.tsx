@@ -464,7 +464,7 @@ function LmsCoursesPage() {
                         <DropdownMenuTrigger asChild>
                           <button
                             type="button"
-                            className="flex size-7 items-center justify-center rounded-[7px] outline-none cursor-pointer transition-all duration-100 hover:bg-[var(--sb-bg-hover)] active:scale-95 mx-auto"
+                            className="flex size-7 items-center justify-center rounded-[7px] outline-none cursor-pointer transition-all duration-100 hover:bg-(--sb-bg-hover) active:scale-95 mx-auto"
                             style={{ color: "var(--sb-ink-dim)" }}
                           >
                             <MoreHorizontal size={14} />
@@ -552,7 +552,7 @@ function LmsCoursesPage() {
               <button
                 type="button"
                 onClick={() => setDrawerOpen(false)}
-                className="size-7 flex items-center justify-center rounded-lg hover:bg-[var(--sb-bg-hover)] cursor-pointer active:scale-95 transition-all"
+                className="size-7 flex items-center justify-center rounded-lg hover:bg-(--sb-bg-hover) cursor-pointer active:scale-95 transition-all"
                 style={{ color: "var(--sb-ink-dim)" }}
               >
                 <X size={14} />
@@ -818,7 +818,7 @@ function LmsCoursesPage() {
                           "flex items-center gap-2 p-2 rounded-lg border text-left transition-all active:scale-[0.98] cursor-pointer",
                           selected
                             ? "border-indigo-500 bg-indigo-500/[0.03] text-indigo-500"
-                            : "hover:border-[var(--sb-ink-dim)]",
+                            : "hover:border-(--sb-ink-dim)",
                         )}
                         style={{
                           borderColor: selected

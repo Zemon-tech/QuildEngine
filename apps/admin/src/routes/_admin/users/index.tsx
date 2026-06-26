@@ -256,7 +256,7 @@ function UsersPage() {
               <DropdownMenuTrigger asChild>
                 <button
                   type="button"
-                  className="flex size-7 items-center justify-center rounded-[7px] outline-none cursor-pointer transition-all duration-100 hover:bg-[var(--sb-bg-hover)] active:scale-95"
+                  className="flex size-7 items-center justify-center rounded-[7px] outline-none cursor-pointer transition-all duration-100 hover:bg-(--sb-bg-hover) active:scale-95"
                   style={{ color: "var(--sb-ink-dim)" }}
                 >
                   <MoreHorizontal size={14} />
@@ -338,7 +338,7 @@ function UsersPage() {
             placeholder="Search users…"
             className={cn(
               "pl-8 pr-3 py-2 text-xs rounded-[10px] outline-none w-56 transition-all duration-150",
-              "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+              "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
             )}
             style={{
               background: "color-mix(in oklab, var(--sb-ink) 4%, transparent)",

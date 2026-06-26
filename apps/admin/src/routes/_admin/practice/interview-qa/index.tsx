@@ -284,7 +284,7 @@ function QaPage() {
             </div>
 
             {/* Status tab selectors */}
-            <div className="flex border-b border-[var(--sb-border)] pb-px gap-1">
+            <div className="flex border-b border-(--sb-border) pb-px gap-1">
               {(["all", "pending", "approved", "rejected"] as const).map(
                 (status) => (
                   <button
@@ -340,7 +340,7 @@ function QaPage() {
                     }}
                     className={`w-full text-left island-shell rounded-xl p-4 transition-all duration-200 cursor-pointer border relative block ${
                       isSelected
-                        ? "border-[var(--sb-accent)] shadow-sm"
+                        ? "border-(--sb-accent) shadow-sm"
                         : "hover:border-neutral-400/30"
                     }`}
                     style={{
@@ -373,7 +373,7 @@ function QaPage() {
                     </h4>
 
                     {/* Footer: Date, pins, locks */}
-                    <div className="flex items-center justify-between text-[10px] text-muted-foreground mt-3 pt-2 border-t border-[var(--sb-border)]/50">
+                    <div className="flex items-center justify-between text-[10px] text-muted-foreground mt-3 pt-2 border-t border-(--sb-border)/50">
                       <div className="flex items-center gap-1">
                         <User size={10} />
                         <span className="truncate max-w-[80px] font-semibold">
@@ -485,17 +485,17 @@ function QaPage() {
                 </div>
 
                 {/* Question body content */}
-                <p className="text-xs leading-relaxed text-muted-foreground whitespace-pre-wrap bg-muted/40 p-3 rounded-lg border border-[var(--sb-border)]/55">
+                <p className="text-xs leading-relaxed text-muted-foreground whitespace-pre-wrap bg-muted/40 p-3 rounded-lg border border-(--sb-border)/55">
                   {selectedQuestion.content}
                 </p>
 
                 {/* Status moderation controls */}
-                <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-[var(--sb-border)]">
+                <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-(--sb-border)">
                   <div className="flex items-center gap-3">
                     <span className="text-[11px] font-bold text-muted-foreground">
                       MODERATION STATUS:
                     </span>
-                    <div className="flex items-center gap-1 bg-muted p-1 rounded-lg border border-[var(--sb-border)]">
+                    <div className="flex items-center gap-1 bg-muted p-1 rounded-lg border border-(--sb-border)">
                       <button
                         type="button"
                         onClick={() =>
@@ -526,7 +526,7 @@ function QaPage() {
                   </div>
 
                   {/* Vote score adjustments */}
-                  <div className="flex items-center gap-1 bg-muted p-0.5 rounded-lg border border-[var(--sb-border)]">
+                  <div className="flex items-center gap-1 bg-muted p-0.5 rounded-lg border border-(--sb-border)">
                     <button
                       type="button"
                       onClick={() => handleVoteQuestion(selectedQuestion, 1)}
@@ -583,9 +583,9 @@ function QaPage() {
 
                 {/* AI Result Content */}
                 {aiResult && (
-                  <div className="space-y-3.5 border-t border-[var(--sb-border)] pt-3.5 stagger-item">
+                  <div className="space-y-3.5 border-t border-(--sb-border) pt-3.5 stagger-item">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-[10px]">
-                      <div className="bg-muted/50 p-2.5 rounded-lg border border-[var(--sb-border)]">
+                      <div className="bg-muted/50 p-2.5 rounded-lg border border-(--sb-border)">
                         <span className="text-muted-foreground font-semibold uppercase block">
                           Semantic Summary
                         </span>
@@ -596,7 +596,7 @@ function QaPage() {
                           {aiResult.summary}
                         </span>
                       </div>
-                      <div className="bg-muted/50 p-2.5 rounded-lg border border-[var(--sb-border)]">
+                      <div className="bg-muted/50 p-2.5 rounded-lg border border-(--sb-border)">
                         <span className="text-muted-foreground font-semibold uppercase block">
                           Duplicate Scanner
                         </span>
@@ -648,7 +648,7 @@ function QaPage() {
 
               {/* Answers Section */}
               <div className="island-shell rounded-xl p-5 flex-1 flex flex-col space-y-4">
-                <div className="flex items-center justify-between border-b border-[var(--sb-border)] pb-2">
+                <div className="flex items-center justify-between border-b border-(--sb-border) pb-2">
                   <h4
                     className="text-xs font-bold flex items-center gap-1.5"
                     style={{ color: "var(--sb-ink)" }}
@@ -675,7 +675,7 @@ function QaPage() {
                         className={`p-3 rounded-lg border text-left relative transition-all ${
                           ans.isAccepted
                             ? "border-emerald-500/30 bg-emerald-500/[0.02]"
-                            : "border-[var(--sb-border)] bg-muted/20"
+                            : "border-(--sb-border) bg-muted/20"
                         }`}
                       >
                         {/* Answer Author and Meta */}
@@ -738,7 +738,7 @@ function QaPage() {
                         </p>
 
                         {/* Vote Controls on Answer */}
-                        <div className="flex items-center gap-2 mt-3 pt-2 border-t border-[var(--sb-border)]/50">
+                        <div className="flex items-center gap-2 mt-3 pt-2 border-t border-(--sb-border)/50">
                           <button
                             type="button"
                             onClick={() =>
@@ -758,7 +758,7 @@ function QaPage() {
                 {/* Add Answer Form */}
                 <form
                   onSubmit={handleAddAnswer}
-                  className="space-y-3 pt-3 border-t border-[var(--sb-border)] mt-auto"
+                  className="space-y-3 pt-3 border-t border-(--sb-border) mt-auto"
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-[10px] font-bold text-muted-foreground uppercase">
@@ -794,7 +794,7 @@ function QaPage() {
                     />
                     <button
                       type="submit"
-                      className="px-4 bg-[var(--sb-accent)] text-[var(--sb-accent-foreground,white)] rounded-lg flex items-center justify-center hover:opacity-90 transition-all active:scale-[0.98]"
+                      className="px-4 bg-(--sb-accent) text-[var(--sb-accent-foreground,white)] rounded-lg flex items-center justify-center hover:opacity-90 transition-all active:scale-[0.98]"
                       style={{ background: "var(--sb-accent)" }}
                     >
                       <Send size={14} />

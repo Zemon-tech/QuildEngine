@@ -291,7 +291,7 @@ export function DashboardChart({
       {/* HTML Tooltip Overlay */}
       {hoveredIndex !== null && (
         <div
-          className="absolute z-10 pointer-events-none rounded-lg border border-[var(--sb-border)] px-2.5 py-1.5 text-xs shadow-md transition-all duration-75 ease-out animate-in fade-in zoom-in-95"
+          className="absolute z-10 pointer-events-none rounded-lg border border-(--sb-border) px-2.5 py-1.5 text-xs shadow-md transition-all duration-75 ease-out animate-in fade-in zoom-in-95"
           style={{
             background: "var(--card-bg)",
             borderColor: "var(--card-border)",

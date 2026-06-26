@@ -417,7 +417,7 @@ function LmsCertificatesPage() {
                           "w-full flex items-center justify-between text-[10px] border rounded-lg px-2.5 py-1.5 transition-all cursor-pointer font-medium active:scale-[0.97]",
                           cert.autoIssue
                             ? "border-emerald-500 bg-emerald-500/[0.03] text-emerald-500"
-                            : "hover:border-[var(--sb-ink-dim)] text-muted-foreground",
+                            : "hover:border-(--sb-ink-dim) text-muted-foreground",
                         )}
                         style={{
                           borderColor: cert.autoIssue

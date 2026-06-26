@@ -31,7 +31,7 @@ export function AdminSidebarHeader({
               type="button"
               onClick={onToggle}
               className={cn(
-                "flex items-center justify-center rounded-[8px] outline-none transition-all duration-150 size-7 cursor-pointer text-[var(--sb-ink-dim)] hover:opacity-75 focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60 active:scale-95",
+                "flex items-center justify-center rounded-[8px] outline-none transition-all duration-150 size-7 cursor-pointer text-(--sb-ink-dim) hover:opacity-75 focus-visible:ring-2 focus-visible:ring-(--sb-accent)/60 active:scale-95",
               )}
               title="Expand sidebar"
               aria-label="Expand sidebar"
@@ -102,7 +102,7 @@ export function AdminSidebarHeader({
             type="button"
             onClick={onToggle}
             className={cn(
-              "flex shrink-0 items-center justify-center rounded-[8px] outline-none transition-all duration-150 size-7 cursor-pointer text-[var(--sb-ink-dim)] hover:opacity-75 focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60 active:scale-95",
+              "flex shrink-0 items-center justify-center rounded-[8px] outline-none transition-all duration-150 size-7 cursor-pointer text-(--sb-ink-dim) hover:opacity-75 focus-visible:ring-2 focus-visible:ring-(--sb-accent)/60 active:scale-95",
             )}
             title="Collapse sidebar"
             aria-label="Collapse sidebar"

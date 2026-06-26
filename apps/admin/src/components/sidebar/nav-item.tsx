@@ -43,7 +43,7 @@ export function NavItem({
       className={cn(
         "group/nav-item relative flex items-center gap-2.5 rounded-[10px] px-2.5 py-[7px] text-sm font-medium outline-none",
         "transition-colors duration-150",
-        "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60",
+        "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/60",
         indent && "ml-3",
         collapsed ? "justify-center px-2" : "",
       )}
@@ -78,7 +78,7 @@ export function NavItem({
             color: isActive ? "var(--sb-accent)" : "var(--sb-ink-muted)",
             transition: "color 150ms ease",
           }}
-          className="group-hover/nav-item:!text-[var(--sb-ink)]"
+          className="group-hover/nav-item:!text-(--sb-ink)"
         />
       </span>
 

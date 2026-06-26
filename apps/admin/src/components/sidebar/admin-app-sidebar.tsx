@@ -73,7 +73,7 @@ export function AdminAppSidebar() {
         className={cn(
           "fixed left-4 top-4 z-40 flex size-9 items-center justify-center rounded-[10px] md:hidden",
           "transition-opacity duration-150 hover:opacity-70 cursor-pointer",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--sb-accent)/60",
         )}
         style={{
           background: "var(--sb-bg)",
@@ -86,7 +86,7 @@ export function AdminAppSidebar() {
 
       <Sidebar
         collapsible="icon"
-        className="border-r border-[var(--sb-border)]"
+        className="border-r border-(--sb-border)"
       >
         <SidebarHeader className="p-0">
           <AdminSidebarHeader collapsed={collapsed} onToggle={toggleSidebar} />
@@ -171,7 +171,7 @@ export function AdminAppSidebar() {
           </SidebarMenu>
         </SidebarContent>
 
-        <SidebarFooter className="p-2 gap-2 border-t border-[var(--sb-border)]">
+        <SidebarFooter className="p-2 gap-2 border-t border-(--sb-border)">
           <div
             className={cn(
               "flex gap-2 items-center justify-center",
@@ -187,7 +187,7 @@ export function AdminAppSidebar() {
                       type="button"
                       className={cn(
                         "relative flex items-center justify-center rounded-[10px] size-9 outline-none transition-all duration-150 cursor-pointer active:scale-95",
-                        "hover:bg-[var(--sb-bg-hover)] text-[var(--sb-ink-muted)]",
+                        "hover:bg-(--sb-bg-hover) text-(--sb-ink-muted)",
                       )}
                     >
                       {theme === "light" ? (

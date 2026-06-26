@@ -78,7 +78,7 @@ export function MetricCard({
               e.stopPropagation();
               onRetry();
             }}
-            className="flex items-center gap-1.5 self-start text-[11px] font-semibold text-[var(--sb-ink)] hover:opacity-80 transition-opacity active:scale-[0.97]"
+            className="flex items-center gap-1.5 self-start text-[11px] font-semibold text-(--sb-ink) hover:opacity-80 transition-opacity active:scale-[0.97]"
             style={{
               background: "color-mix(in oklab, var(--sb-ink) 5%, transparent)",
               padding: "4px 8px",
@@ -118,7 +118,7 @@ export function MetricCard({
           {title}
         </span>
         <span
-          className="flex size-8 items-center justify-center rounded-[8px] transition-colors group-hover:bg-[var(--sb-bg-hover)]"
+          className="flex size-8 items-center justify-center rounded-[8px] transition-colors group-hover:bg-(--sb-bg-hover)"
           style={{
             background: "color-mix(in oklab, var(--sb-ink) 6%, transparent)",
             color: "var(--sb-ink-muted)",
@@ -166,7 +166,7 @@ export function MetricCard({
 
       {/* Comparison Text / Description */}
       {(comparisonText || description) && (
-        <div className="flex flex-col gap-0.5 mt-1 border-t border-[var(--sb-border)] pt-2">
+        <div className="flex flex-col gap-0.5 mt-1 border-t border-(--sb-border) pt-2">
           {comparisonText && (
             <span
               className="text-[10px] font-semibold"

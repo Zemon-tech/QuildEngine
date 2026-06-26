@@ -354,7 +354,7 @@ function DsaPage() {
       />
 
       {/* Primary Subpage switch board (tabs) */}
-      <div className="flex border-b border-[var(--sb-border)] gap-2 scrollbar-none overflow-x-auto pb-px">
+      <div className="flex border-b border-(--sb-border) gap-2 scrollbar-none overflow-x-auto pb-px">
         {(
           [
             { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -559,7 +559,7 @@ function DsaPage() {
 
           {/* Bulk actions options bar */}
           {selectedProblems.length > 0 && (
-            <div className="flex items-center justify-between px-4 py-2 bg-muted/30 border border-[var(--sb-border)] rounded-lg text-xs font-semibold">
+            <div className="flex items-center justify-between px-4 py-2 bg-muted/30 border border-(--sb-border) rounded-lg text-xs font-semibold">
               <div className="text-muted-foreground">
                 {selectedProblems.length} problems selected
               </div>
@@ -594,7 +594,7 @@ function DsaPage() {
             <div className="overflow-x-auto w-full">
               <table className="w-full text-xs text-left">
                 <thead>
-                  <tr className="border-b border-[var(--sb-border)] bg-muted/40" style={{ color: "var(--sb-ink-dim)" }}>
+                  <tr className="border-b border-(--sb-border) bg-muted/40" style={{ color: "var(--sb-ink-dim)" }}>
                     <th className="p-4 w-10">
                       <input
                         type="checkbox"
@@ -617,7 +617,7 @@ function DsaPage() {
                     <th className="p-4 font-bold text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[var(--sb-border)]">
+                <tbody className="divide-y divide-(--sb-border)">
                   {isLoading ? (
                     [1, 2, 3].map((n) => (
                       <tr key={n} className="animate-pulse h-12 bg-card">
@@ -760,7 +760,7 @@ function DsaPage() {
       {["categories", "tags", "difficulty", "languages", "analytics"].includes(activeTab) && (
         <div className="island-shell rounded-xl p-6 stagger-item space-y-4">
           <div className="flex items-center gap-3">
-            <Settings className="text-[var(--sb-accent)]" size={18} />
+            <Settings className="text-(--sb-accent)" size={18} />
             <div>
               <h3 className="text-sm font-bold capitalize" style={{ color: "var(--sb-ink)" }}>
                 {activeTab} Management Panel
@@ -804,7 +804,7 @@ function DsaPage() {
             style={{ borderColor: "var(--sb-border)", background: "var(--card-bg)" }}
           >
             {/* Drawer Header */}
-            <div className="p-5 border-b border-[var(--sb-border)] flex items-center justify-between">
+            <div className="p-5 border-b border-(--sb-border) flex items-center justify-between">
               <div>
                 <h3 className="text-sm font-bold" style={{ color: "var(--sb-ink)" }}>
                   {editingProblem ? `Edit Problem: ${editingProblem.title}` : "Create New DSA Problem"}
@@ -816,7 +816,7 @@ function DsaPage() {
               <button
                 type="button"
                 onClick={() => setIsDrawerOpen(false)}
-                className="text-xs font-bold text-muted-foreground hover:text-[var(--sb-ink)] transition"
+                className="text-xs font-bold text-muted-foreground hover:text-(--sb-ink) transition"
               >
                 Close (ESC)
               </button>
@@ -1010,7 +1010,7 @@ function DsaPage() {
               </div>
 
               {/* Sub-form: Test cases */}
-              <div className="border border-[var(--sb-border)] rounded-lg p-4 space-y-3">
+              <div className="border border-(--sb-border) rounded-lg p-4 space-y-3">
                 <h4 className="font-bold text-[11px] uppercase tracking-wider text-muted-foreground">
                   Test Case Management
                 </h4>
@@ -1094,7 +1094,7 @@ function DsaPage() {
               </div>
 
               {/* Sub-form: Solution Editorials */}
-              <div className="border border-[var(--sb-border)] rounded-lg p-4 space-y-3">
+              <div className="border border-(--sb-border) rounded-lg p-4 space-y-3">
                 <h4 className="font-bold text-[11px] uppercase tracking-wider text-muted-foreground">
                   Solution Codes & Editorials
                 </h4>
@@ -1173,7 +1173,7 @@ function DsaPage() {
             </form>
 
             {/* Drawer Footer */}
-            <div className="p-5 border-t border-[var(--sb-border)] flex items-center justify-end gap-3 bg-muted/30">
+            <div className="p-5 border-t border-(--sb-border) flex items-center justify-end gap-3 bg-muted/30">
               <button
                 type="button"
                 onClick={() => setIsDrawerOpen(false)}
@@ -1185,7 +1185,7 @@ function DsaPage() {
               <button
                 type="button"
                 onClick={handleSave}
-                className="px-4 py-2 bg-[var(--sb-accent)] text-[var(--sb-accent-foreground)] rounded-lg font-bold hover:opacity-90 transition active:scale-95"
+                className="px-4 py-2 bg-(--sb-accent) text-(--sb-accent-foreground) rounded-lg font-bold hover:opacity-90 transition active:scale-95"
               >
                 Save Problem
               </button>

@@ -36,8 +36,8 @@ export function AdminUserNav({ collapsed = false }: AdminUserNavProps) {
       className={cn(
         "group flex w-full items-center rounded-[10px] px-2 py-1.5 outline-none",
         "transition-colors duration-150",
-        "hover:bg-[var(--sb-bg-hover)]",
-        "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60",
+        "hover:bg-(--sb-bg-hover)",
+        "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/60",
         collapsed && "justify-center px-1.5",
       )}
     >

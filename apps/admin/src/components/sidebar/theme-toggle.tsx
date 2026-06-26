@@ -47,8 +47,8 @@ export function ThemeToggle({ collapsed = false }: ThemeToggleProps) {
       className={cn(
         "group relative flex w-full items-center gap-2.5 rounded-[10px] px-2.5 py-2 text-sm font-medium outline-none",
         "transition-all duration-150",
-        "hover:bg-[var(--sb-bg-hover)]",
-        "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60",
+        "hover:bg-(--sb-bg-hover)",
+        "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/60",
         collapsed && "justify-center px-2",
       )}
       style={{ color: "var(--sb-ink-muted)" }}
@@ -102,8 +102,8 @@ export function ThemeToggle({ collapsed = false }: ThemeToggleProps) {
         className={cn(
           "flex items-center gap-2.5 px-2.5 py-2 text-[13px] rounded-md transition-colors cursor-pointer justify-between",
           theme === "light"
-            ? "bg-[var(--sb-bg-active)] text-[var(--sb-accent)] font-medium"
-            : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] focus:bg-[var(--sb-bg-hover)] focus:text-[var(--sb-ink)]",
+            ? "bg-(--sb-bg-active) text-(--sb-accent) font-medium"
+            : "text-(--sb-ink-muted) hover:bg-(--sb-bg-hover) focus:bg-(--sb-bg-hover) focus:text-(--sb-ink)",
         )}
       >
         <div className="flex items-center gap-2">
@@ -111,7 +111,7 @@ export function ThemeToggle({ collapsed = false }: ThemeToggleProps) {
           <span>Light</span>
         </div>
         {theme === "light" && (
-          <div className="size-1.5 rounded-full bg-[var(--sb-accent)]" />
+          <div className="size-1.5 rounded-full bg-(--sb-accent)" />
         )}
       </DropdownMenuItem>
 
@@ -120,8 +120,8 @@ export function ThemeToggle({ collapsed = false }: ThemeToggleProps) {
         className={cn(
           "flex items-center gap-2.5 px-2.5 py-2 text-[13px] rounded-md transition-colors cursor-pointer justify-between",
           theme === "dark"
-            ? "bg-[var(--sb-bg-active)] text-[var(--sb-accent)] font-medium"
-            : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] focus:bg-[var(--sb-bg-hover)] focus:text-[var(--sb-ink)]",
+            ? "bg-(--sb-bg-active) text-(--sb-accent) font-medium"
+            : "text-(--sb-ink-muted) hover:bg-(--sb-bg-hover) focus:bg-(--sb-bg-hover) focus:text-(--sb-ink)",
         )}
       >
         <div className="flex items-center gap-2">
@@ -129,7 +129,7 @@ export function ThemeToggle({ collapsed = false }: ThemeToggleProps) {
           <span>Dark</span>
         </div>
         {theme === "dark" && (
-          <div className="size-1.5 rounded-full bg-[var(--sb-accent)]" />
+          <div className="size-1.5 rounded-full bg-(--sb-accent)" />
         )}
       </DropdownMenuItem>
 
@@ -138,8 +138,8 @@ export function ThemeToggle({ collapsed = false }: ThemeToggleProps) {
         className={cn(
           "flex items-center gap-2.5 px-2.5 py-2 text-[13px] rounded-md transition-colors cursor-pointer justify-between",
           theme === "system"
-            ? "bg-[var(--sb-bg-active)] text-[var(--sb-accent)] font-medium"
-            : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] focus:bg-[var(--sb-bg-hover)] focus:text-[var(--sb-ink)]",
+            ? "bg-(--sb-bg-active) text-(--sb-accent) font-medium"
+            : "text-(--sb-ink-muted) hover:bg-(--sb-bg-hover) focus:bg-(--sb-bg-hover) focus:text-(--sb-ink)",
         )}
       >
         <div className="flex items-center gap-2">
@@ -147,7 +147,7 @@ export function ThemeToggle({ collapsed = false }: ThemeToggleProps) {
           <span>System</span>
         </div>
         {theme === "system" && (
-          <div className="size-1.5 rounded-full bg-[var(--sb-accent)]" />
+          <div className="size-1.5 rounded-full bg-(--sb-accent)" />
         )}
       </DropdownMenuItem>
     </DropdownMenuContent>

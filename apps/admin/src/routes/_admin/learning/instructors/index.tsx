@@ -465,7 +465,7 @@ function LmsInstructorsPage() {
                             "flex items-center justify-between p-2 rounded-lg border text-left text-[10px] transition-all cursor-pointer",
                             selected
                               ? "border-indigo-500 bg-indigo-500/[0.03] text-indigo-500"
-                              : "hover:border-[var(--sb-ink-dim)]",
+                              : "hover:border-(--sb-ink-dim)",
                           )}
                           style={{
                             borderColor: selected

@@ -351,7 +351,7 @@ function RolesPage() {
                                   ? "cursor-not-allowed bg-color-mix(in oklab, var(--sb-ink) 5%, transparent)"
                                   : "cursor-pointer",
                                 isAssigned
-                                  ? "border-[var(--sb-accent)]/50 text-[var(--sb-accent)] bg-[var(--sb-accent)]/5"
+                                  ? "border-(--sb-accent)/50 text-(--sb-accent) bg-(--sb-accent)/5"
                                   : "border-transparent text-gray-400 hover:border-gray-300",
                               )}
                             >

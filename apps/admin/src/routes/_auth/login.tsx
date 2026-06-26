@@ -111,8 +111,8 @@ function LoginPage() {
                 className={cn(
                   "w-full rounded-[10px] pl-9 pr-3 py-2.5 text-sm outline-none",
                   "transition-all duration-150",
-                  "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
-                  "placeholder:text-[var(--sb-ink-dim)]",
+                  "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
+                  "placeholder:text-(--sb-ink-dim)",
                 )}
                 style={{
                   background:
@@ -149,8 +149,8 @@ function LoginPage() {
                 className={cn(
                   "w-full rounded-[10px] pl-9 pr-3 py-2.5 text-sm outline-none",
                   "transition-all duration-150",
-                  "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
-                  "placeholder:text-[var(--sb-ink-dim)]",
+                  "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
+                  "placeholder:text-(--sb-ink-dim)",
                 )}
                 style={{
                   background:

@@ -110,9 +110,9 @@ export function NavSection({
               className={cn(
                 "group/nav-section relative flex size-9 items-center justify-center rounded-[10px] outline-none",
                 "transition-colors duration-150",
-                "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60",
-                hasActiveChild && "text-[var(--sb-accent)]",
-                !hasActiveChild && "text-[var(--sb-ink-muted)]",
+                "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/60",
+                hasActiveChild && "text-(--sb-accent)",
+                !hasActiveChild && "text-(--sb-ink-muted)",
               )}
             >
               {/* Hover bg */}
@@ -168,7 +168,7 @@ export function NavSection({
         className={cn(
           "group/nav-section relative flex w-full items-center gap-2.5 rounded-[10px] px-2.5 py-[7px] text-sm font-medium outline-none",
           "transition-colors duration-150",
-          "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60",
+          "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/60",
         )}
         style={{
           color: hasActiveChild ? "var(--sb-ink)" : "var(--sb-ink-muted)",
@@ -203,7 +203,7 @@ export function NavSection({
                 : "var(--sb-ink-muted)",
               transition: "color 150ms ease",
             }}
-            className="group-hover/nav-section:!text-[var(--sb-ink)]"
+            className="group-hover/nav-section:!text-(--sb-ink)"
           />
         </span>
 

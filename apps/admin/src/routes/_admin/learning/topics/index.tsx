@@ -333,7 +333,7 @@ function TopicsPage() {
                         <DropdownMenuTrigger asChild>
                           <button
                             type="button"
-                            className="flex size-7 items-center justify-center rounded-[7px] outline-none cursor-pointer hover:bg-[var(--sb-bg-hover)] active:scale-95 mx-auto"
+                            className="flex size-7 items-center justify-center rounded-[7px] outline-none cursor-pointer hover:bg-(--sb-bg-hover) active:scale-95 mx-auto"
                             style={{ color: "var(--sb-ink-dim)" }}
                           >
                             <MoreHorizontal size={14} />
@@ -400,7 +400,7 @@ function TopicsPage() {
               <button
                 type="button"
                 onClick={() => setDrawerOpen(false)}
-                className="size-7 flex items-center justify-center rounded-lg hover:bg-[var(--sb-bg-hover)] cursor-pointer active:scale-95"
+                className="size-7 flex items-center justify-center rounded-lg hover:bg-(--sb-bg-hover) cursor-pointer active:scale-95"
                 style={{ color: "var(--sb-ink-dim)" }}
               >
                 <X size={14} />

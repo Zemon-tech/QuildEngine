@@ -43,7 +43,7 @@ export function NavAccordion({
       className={cn(
         "group/nav-accordion relative flex w-full items-center gap-2.5 rounded-[10px] px-2.5 py-[7px] text-sm font-medium outline-none",
         "transition-colors duration-150",
-        "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60",
+        "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/60",
         collapsed && "justify-center px-2",
       )}
       style={{ color: "var(--sb-ink-muted)" }}
@@ -66,7 +66,7 @@ export function NavAccordion({
             color: open ? "var(--sb-ink)" : "var(--sb-ink-muted)",
             transition: "color 150ms ease",
           }}
-          className="group-hover/nav-accordion:!text-[var(--sb-ink)]"
+          className="group-hover/nav-accordion:!text-(--sb-ink)"
         />
       </span>
 

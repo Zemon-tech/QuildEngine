@@ -329,7 +329,7 @@ function AssessmentsPage() {
       />
 
       {/* Tabs */}
-      <div className="flex border-b border-[var(--sb-border)] gap-2 scrollbar-none overflow-x-auto pb-px">
+      <div className="flex border-b border-(--sb-border) gap-2 scrollbar-none overflow-x-auto pb-px">
         {(
           [
             { id: "tests", label: "Mock Assessments", icon: ClipboardList },
@@ -373,7 +373,7 @@ function AssessmentsPage() {
               {tests.map((test) => (
                 <div
                   key={test.id}
-                  className="island-shell rounded-xl p-5 border border-[var(--sb-border)] flex flex-col justify-between space-y-4 hover:border-neutral-400/30 transition-all text-left"
+                  className="island-shell rounded-xl p-5 border border-(--sb-border) flex flex-col justify-between space-y-4 hover:border-neutral-400/30 transition-all text-left"
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between gap-2">
@@ -397,7 +397,7 @@ function AssessmentsPage() {
                     </h4>
 
                     {/* Stats List */}
-                    <div className="grid grid-cols-2 gap-2.5 pt-2 text-[10px] text-muted-foreground border-t border-[var(--sb-border)]/50">
+                    <div className="grid grid-cols-2 gap-2.5 pt-2 text-[10px] text-muted-foreground border-t border-(--sb-border)/50">
                       <div className="flex items-center gap-1">
                         <Clock size={11} className="text-indigo-400" />
                         <span>{test.timeLimit} mins limit</span>
@@ -420,7 +420,7 @@ function AssessmentsPage() {
                   </div>
 
                   {/* Summary performance stubs */}
-                  <div className="bg-muted/40 p-3 rounded-lg border border-[var(--sb-border)]/50 grid grid-cols-3 text-center text-[10px]">
+                  <div className="bg-muted/40 p-3 rounded-lg border border-(--sb-border)/50 grid grid-cols-3 text-center text-[10px]">
                     <div>
                       <span className="text-muted-foreground block uppercase font-bold text-[8px]">
                         Attempts
@@ -451,7 +451,7 @@ function AssessmentsPage() {
                   </div>
 
                   {/* Card actions footer */}
-                  <div className="flex items-center justify-between pt-2 border-t border-[var(--sb-border)]/50">
+                  <div className="flex items-center justify-between pt-2 border-t border-(--sb-border)/50">
                     <span className="text-[9px] text-muted-foreground">
                       Dist: {test.difficultyDistribution?.easy}E /{" "}
                       {test.difficultyDistribution?.medium}M /{" "}
@@ -521,7 +521,7 @@ function AssessmentsPage() {
                 return (
                   <div
                     key={contest.id}
-                    className="island-shell rounded-xl p-5 border border-[var(--sb-border)] flex flex-col justify-between space-y-4 hover:border-neutral-400/30 transition-all text-left"
+                    className="island-shell rounded-xl p-5 border border-(--sb-border) flex flex-col justify-between space-y-4 hover:border-neutral-400/30 transition-all text-left"
                   >
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
@@ -547,7 +547,7 @@ function AssessmentsPage() {
                       </p>
 
                       {/* Displaying selected problems */}
-                      <div className="pt-2 border-t border-[var(--sb-border)]/55 space-y-1.5">
+                      <div className="pt-2 border-t border-(--sb-border)/55 space-y-1.5">
                         <span className="text-[9px] font-bold text-muted-foreground uppercase block">
                           Assigned DSA Problems ({contest.problems?.length || 0}
                           )
@@ -566,7 +566,7 @@ function AssessmentsPage() {
                       </div>
                     </div>
 
-                    <div className="bg-muted/40 p-3 rounded-lg border border-[var(--sb-border)]/50 flex justify-between items-center text-[10px] text-muted-foreground">
+                    <div className="bg-muted/40 p-3 rounded-lg border border-(--sb-border)/50 flex justify-between items-center text-[10px] text-muted-foreground">
                       <div className="flex items-center gap-1 font-bold text-foreground">
                         <Users size={12} className="text-indigo-500" />
                         <span>
@@ -585,7 +585,7 @@ function AssessmentsPage() {
                     </div>
 
                     {/* Footer Actions */}
-                    <div className="flex items-center justify-between pt-2 border-t border-[var(--sb-border)]/50">
+                    <div className="flex items-center justify-between pt-2 border-t border-(--sb-border)/50">
                       <span className="text-[9px] text-muted-foreground font-semibold">
                         Penalties: {contest.penalties || "None"}
                       </span>
@@ -653,7 +653,7 @@ function AssessmentsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left side: Attempts table */}
             <div className="lg:col-span-2 island-shell rounded-xl p-5 space-y-4">
-              <div className="flex items-center justify-between border-b border-[var(--sb-border)] pb-3">
+              <div className="flex items-center justify-between border-b border-(--sb-border) pb-3">
                 <div>
                   <h3
                     className="text-xs font-bold"
@@ -670,7 +670,7 @@ function AssessmentsPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
-                    <tr className="border-b border-[var(--sb-border)]/50 text-[10px] text-muted-foreground">
+                    <tr className="border-b border-(--sb-border)/50 text-[10px] text-muted-foreground">
                       <th className="pb-2 font-bold uppercase">
                         Candidate User
                       </th>
@@ -688,7 +688,7 @@ function AssessmentsPage() {
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[var(--sb-border)]/40">
+                  <tbody className="divide-y divide-(--sb-border)/40">
                     {allAttempts.length === 0 ? (
                       <tr>
                         <td
@@ -771,7 +771,7 @@ function AssessmentsPage() {
               />
 
               {/* Score Bracket analysis */}
-              <div className="border-t border-[var(--sb-border)]/50 pt-4 space-y-3">
+              <div className="border-t border-(--sb-border)/50 pt-4 space-y-3">
                 <span className="text-[10px] font-bold text-muted-foreground uppercase block">
                   Score Bracket Distributions
                 </span>
@@ -832,13 +832,13 @@ function AssessmentsPage() {
           ========================================== */}
       {isTestDrawerOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex justify-end z-50">
-          <div className="w-full max-w-lg bg-background border-l border-[var(--sb-border)] p-6 h-full overflow-y-auto flex flex-col justify-between shadow-2xl">
+          <div className="w-full max-w-lg bg-background border-l border-(--sb-border) p-6 h-full overflow-y-auto flex flex-col justify-between shadow-2xl">
             <form
               onSubmit={handleSaveTest}
               className="space-y-5 flex-1 flex flex-col justify-between"
             >
               <div className="space-y-5">
-                <div className="flex items-center justify-between border-b border-[var(--sb-border)] pb-3">
+                <div className="flex items-center justify-between border-b border-(--sb-border) pb-3">
                   <h3
                     className="text-sm font-bold flex items-center gap-1.5"
                     style={{ color: "var(--sb-ink)" }}
@@ -966,7 +966,7 @@ function AssessmentsPage() {
                   </div>
 
                   {/* Difficulty Distributions */}
-                  <div className="border border-[var(--sb-border)] p-3.5 rounded-xl bg-muted/20 space-y-3">
+                  <div className="border border-(--sb-border) p-3.5 rounded-xl bg-muted/20 space-y-3">
                     <span className="text-[9px] font-bold text-muted-foreground uppercase block">
                       Target Difficulty Balance Distribution
                     </span>
@@ -1050,7 +1050,7 @@ function AssessmentsPage() {
                     </label>
 
                     {/* Switches */}
-                    <div className="flex flex-col justify-around gap-2 bg-muted/30 p-2 border border-[var(--sb-border)]/60 rounded-lg">
+                    <div className="flex flex-col justify-around gap-2 bg-muted/30 p-2 border border-(--sb-border)/60 rounded-lg">
                       <label className="flex items-center gap-2 text-[10px] font-semibold cursor-pointer">
                         <input
                           type="checkbox"
@@ -1077,10 +1077,10 @@ function AssessmentsPage() {
               </div>
 
               {/* Submit Buttons */}
-              <div className="flex items-center gap-2 pt-4 border-t border-[var(--sb-border)] mt-auto">
+              <div className="flex items-center gap-2 pt-4 border-t border-(--sb-border) mt-auto">
                 <button
                   type="submit"
-                  className="flex-1 py-2 bg-[var(--sb-accent)] hover:opacity-90 text-white rounded-lg text-xs font-bold shadow-sm transition-all active:scale-[0.98]"
+                  className="flex-1 py-2 bg-(--sb-accent) hover:opacity-90 text-white rounded-lg text-xs font-bold shadow-sm transition-all active:scale-[0.98]"
                 >
                   Save Assessment Template
                 </button>
@@ -1103,13 +1103,13 @@ function AssessmentsPage() {
           ========================================== */}
       {isContestDrawerOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex justify-end z-50">
-          <div className="w-full max-w-lg bg-background border-l border-[var(--sb-border)] p-6 h-full overflow-y-auto flex flex-col justify-between shadow-2xl">
+          <div className="w-full max-w-lg bg-background border-l border-(--sb-border) p-6 h-full overflow-y-auto flex flex-col justify-between shadow-2xl">
             <form
               onSubmit={handleSaveContest}
               className="space-y-5 flex-1 flex flex-col justify-between"
             >
               <div className="space-y-5">
-                <div className="flex items-center justify-between border-b border-[var(--sb-border)] pb-3">
+                <div className="flex items-center justify-between border-b border-(--sb-border) pb-3">
                   <h3
                     className="text-sm font-bold flex items-center gap-1.5"
                     style={{ color: "var(--sb-ink)" }}
@@ -1242,7 +1242,7 @@ function AssessmentsPage() {
                   </div>
 
                   {/* Problem Selections list */}
-                  <div className="border border-[var(--sb-border)] p-3 rounded-xl bg-muted/20 space-y-2">
+                  <div className="border border-(--sb-border) p-3 rounded-xl bg-muted/20 space-y-2">
                     <span className="text-[9px] font-bold text-muted-foreground uppercase block">
                       Assign DSA Problems to Contest Challenge
                     </span>
@@ -1278,10 +1278,10 @@ function AssessmentsPage() {
               </div>
 
               {/* Submit Buttons */}
-              <div className="flex items-center gap-2 pt-4 border-t border-[var(--sb-border)] mt-auto">
+              <div className="flex items-center gap-2 pt-4 border-t border-(--sb-border) mt-auto">
                 <button
                   type="submit"
-                  className="flex-1 py-2 bg-[var(--sb-accent)] hover:opacity-90 text-white rounded-lg text-xs font-bold shadow-sm transition-all active:scale-[0.98]"
+                  className="flex-1 py-2 bg-(--sb-accent) hover:opacity-90 text-white rounded-lg text-xs font-bold shadow-sm transition-all active:scale-[0.98]"
                 >
                   Schedule Contest Window
                 </button>

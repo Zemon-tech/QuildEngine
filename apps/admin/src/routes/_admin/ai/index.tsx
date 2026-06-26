@@ -561,11 +561,11 @@ function DashboardTab({
 
   if (isChatActive) {
     return (
-      <div className="relative w-full h-[650px] border border-[var(--sb-border)] rounded-xl flex flex-col bg-background text-foreground overflow-hidden shadow-md animate-in fade-in duration-200">
+      <div className="relative w-full h-[650px] border border-(--sb-border) rounded-xl flex flex-col bg-background text-foreground overflow-hidden shadow-md animate-in fade-in duration-200">
         {/* Header toolbar */}
-        <div className="flex h-14 shrink-0 items-center justify-between border-b border-[var(--sb-border)] px-6 select-none bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)]">
+        <div className="flex h-14 shrink-0 items-center justify-between border-b border-(--sb-border) px-6 select-none bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)]">
           <div className="flex items-center gap-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)]">
+            <span className="text-xs font-bold uppercase tracking-wider text-(--sb-ink-dim)">
               AI Workspace Chat
             </span>
           </div>
@@ -624,13 +624,13 @@ function DashboardTab({
         </div>
 
         {/* Fixed bottom input container */}
-        <div className="shrink-0 border-t border-[var(--sb-border)] bg-background pt-4 pb-4 px-4">
+        <div className="shrink-0 border-t border-(--sb-border) bg-background pt-4 pb-4 px-4">
           <div className="max-w-2xl w-full mx-auto flex flex-col gap-3">
             <DashboardPromptInput
               onSubmit={handleSubmitPrompt}
               status={status}
               placeholder="Write a message..."
-              className="w-full rounded-2xl border border-[var(--sb-border)] bg-card px-3 pt-2.5 pb-2.5 focus-within:border-ring [&_[data-slot=input-group]]:border-none [&_[data-slot=input-group]]:bg-transparent [&_[data-slot=input-group]]:shadow-none"
+              className="w-full rounded-2xl border border-(--sb-border) bg-card px-3 pt-2.5 pb-2.5 focus-within:border-ring **:data-[slot=input-group]:border-none **:data-[slot=input-group]:bg-transparent **:data-[slot=input-group]:shadow-none"
             />
             <div className="text-[10px] text-muted-foreground text-center select-none">
               Quild AI can make mistakes. Check important details.
@@ -642,7 +642,7 @@ function DashboardTab({
   }
 
   return (
-    <div className="relative w-full h-[650px] border border-[var(--sb-border)] rounded-xl flex flex-col text-white overflow-hidden select-none bg-black shadow-2xl animate-in fade-in duration-200">
+    <div className="relative w-full h-[650px] border border-(--sb-border) rounded-xl flex flex-col text-white overflow-hidden select-none bg-black shadow-2xl animate-in fade-in duration-200">
       {/* Background (No filters, no brightness adjustments, no custom scale shifts) */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-center"
@@ -675,7 +675,7 @@ function DashboardTab({
           <DashboardPromptInput
             onSubmit={handleSubmitPrompt}
             status={status}
-            className="w-full rounded-2xl border border-white/10 bg-black/70 backdrop-blur-md px-3.5 pt-3 pb-3 shadow-lg focus-within:border-white/30 [&_[data-slot=input-group]]:border-none [&_[data-slot=input-group]]:bg-transparent [&_[data-slot=input-group]]:shadow-none"
+            className="w-full rounded-2xl border border-white/10 bg-black/70 backdrop-blur-md px-3.5 pt-3 pb-3 shadow-lg focus-within:border-white/30 **:data-[slot=input-group]:border-none **:data-[slot=input-group]:bg-transparent **:data-[slot=input-group]:shadow-none"
           />
         </div>
 
@@ -931,11 +931,11 @@ function ChatTab({
   };
 
   return (
-    <div className="relative w-full h-[650px] border border-[var(--sb-border)] rounded-xl flex flex-col bg-background text-foreground overflow-hidden shadow-md animate-in fade-in duration-200">
+    <div className="relative w-full h-[650px] border border-(--sb-border) rounded-xl flex flex-col bg-background text-foreground overflow-hidden shadow-md animate-in fade-in duration-200">
       {/* Header toolbar */}
-      <div className="flex h-14 shrink-0 items-center justify-between border-b border-[var(--sb-border)] px-6 select-none bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)]">
+      <div className="flex h-14 shrink-0 items-center justify-between border-b border-(--sb-border) px-6 select-none bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)]">
         <div className="flex items-center gap-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)]">
+          <span className="text-xs font-bold uppercase tracking-wider text-(--sb-ink-dim)">
             Direct AI Agent Chat
           </span>
         </div>
@@ -1006,13 +1006,13 @@ function ChatTab({
       </div>
 
       {/* Fixed bottom input container */}
-      <div className="shrink-0 border-t border-[var(--sb-border)] bg-background pt-4 pb-4 px-4">
+      <div className="shrink-0 border-t border-(--sb-border) bg-background pt-4 pb-4 px-4">
         <div className="max-w-2xl w-full mx-auto flex flex-col gap-3">
           <DashboardPromptInput
             onSubmit={handleSubmitPrompt}
             status={status}
             placeholder="Ask AI anything..."
-            className="w-full rounded-2xl border border-[var(--sb-border)] bg-card px-3 pt-2.5 pb-2.5 focus-within:border-ring [&_[data-slot=input-group]]:border-none [&_[data-slot=input-group]]:bg-transparent [&_[data-slot=input-group]]:shadow-none"
+            className="w-full rounded-2xl border border-(--sb-border) bg-card px-3 pt-2.5 pb-2.5 focus-within:border-ring **:data-[slot=input-group]:border-none **:data-[slot=input-group]:bg-transparent **:data-[slot=input-group]:shadow-none"
           />
         </div>
       </div>
@@ -1158,7 +1158,7 @@ function AIDashboardPage() {
       <div className="grid grid-cols-1 xl:grid-cols-5 gap-6 mt-6">
         {/* Navigation Sidebar (Vertical tabs) */}
         <div className="xl:col-span-1 flex flex-col gap-1.5 island-shell rounded-xl p-3 h-fit">
-          <div className="px-2.5 pb-2 border-b border-[var(--sb-border)]">
+          <div className="px-2.5 pb-2 border-b border-(--sb-border)">
             <span
               className="text-[10px] font-bold tracking-wider uppercase"
               style={{ color: "var(--sb-ink-dim)" }}
@@ -1178,8 +1178,8 @@ function AIDashboardPage() {
                   className={cn(
                     "flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 cursor-pointer active:scale-98 text-left",
                     active
-                      ? "bg-[color-mix(in_oklab,var(--sb-ink)_8%,transparent)] text-[var(--sb-ink)] font-bold shadow-xs"
-                      : "text-[var(--sb-ink-muted)] hover:bg-[color-mix(in_oklab,var(--sb-ink)_3%,transparent)] hover:text-[var(--sb-ink)]",
+                      ? "bg-[color-mix(in_oklab,var(--sb-ink)_8%,transparent)] text-(--sb-ink) font-bold shadow-xs"
+                      : "text-(--sb-ink-muted) hover:bg-[color-mix(in_oklab,var(--sb-ink)_3%,transparent)] hover:text-(--sb-ink)",
                   )}
                 >
                   <span className={cn("p-1 rounded-md", tab.color)}>
@@ -1332,7 +1332,7 @@ function OverviewTab() {
             {agentsList.map((agent) => (
               <div
                 key={agent.name}
-                className="flex items-center justify-between p-3 rounded-lg border border-[var(--sb-border)]"
+                className="flex items-center justify-between p-3 rounded-lg border border-(--sb-border)"
                 style={{
                   background:
                     "color-mix(in oklab, var(--sb-ink) 2%, transparent)",
@@ -1364,7 +1364,7 @@ function OverviewTab() {
                       "text-[9px] uppercase tracking-wider font-bold py-0.5 px-1.5",
                       agent.status === "running"
                         ? "bg-amber-500/15 text-amber-500"
-                        : "bg-[color-mix(in_oklab,var(--sb-ink)_8%,transparent)] text-[var(--sb-ink-muted)]",
+                        : "bg-[color-mix(in_oklab,var(--sb-ink)_8%,transparent)] text-(--sb-ink-muted)",
                     )}
                   >
                     {agent.status}
@@ -1392,9 +1392,9 @@ function OverviewTab() {
                 </span>
                 <span style={{ color: "var(--sb-accent)" }}>62%</span>
               </div>
-              <div className="h-2 w-full rounded-full bg-[var(--sb-border)] overflow-hidden">
+              <div className="h-2 w-full rounded-full bg-(--sb-border) overflow-hidden">
                 <div
-                  className="h-full bg-[var(--sb-accent)] rounded-full"
+                  className="h-full bg-(--sb-accent) rounded-full"
                   style={{ width: "62%" }}
                 />
               </div>
@@ -1408,7 +1408,7 @@ function OverviewTab() {
                 </span>
                 <span className="text-blue-500">24%</span>
               </div>
-              <div className="h-2 w-full rounded-full bg-[var(--sb-border)] overflow-hidden">
+              <div className="h-2 w-full rounded-full bg-(--sb-border) overflow-hidden">
                 <div
                   className="h-full bg-blue-500 rounded-full"
                   style={{ width: "24%" }}
@@ -1424,7 +1424,7 @@ function OverviewTab() {
                 </span>
                 <span className="text-emerald-500">14%</span>
               </div>
-              <div className="h-2 w-full rounded-full bg-[var(--sb-border)] overflow-hidden">
+              <div className="h-2 w-full rounded-full bg-(--sb-border) overflow-hidden">
                 <div
                   className="h-full bg-emerald-500 rounded-full"
                   style={{ width: "14%" }}
@@ -1451,7 +1451,7 @@ function AnalyticsTab() {
 
   return (
     <div className="island-shell rounded-xl p-6 flex flex-col gap-6 animate-in fade-in duration-200">
-      <div className="flex items-center justify-between border-b pb-3 border-[var(--sb-border)]">
+      <div className="flex items-center justify-between border-b pb-3 border-(--sb-border)">
         <div className="flex flex-col">
           <h2 className="text-sm font-bold" style={{ color: "var(--sb-ink)" }}>
             System Performance Analytics
@@ -1476,7 +1476,7 @@ function AnalyticsTab() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Latency card */}
-        <div className="flex flex-col border border-[var(--sb-border)] p-4 rounded-lg">
+        <div className="flex flex-col border border-(--sb-border) p-4 rounded-lg">
           <span
             className="text-xs font-semibold mb-3 uppercase tracking-wider"
             style={{ color: "var(--sb-ink-muted)" }}
@@ -1489,9 +1489,9 @@ function AnalyticsTab() {
                 <span>GPT-4o</span>
                 <span>240ms</span>
               </div>
-              <div className="h-1.5 w-full bg-[var(--sb-border)] rounded-full overflow-hidden">
+              <div className="h-1.5 w-full bg-(--sb-border) rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[var(--sb-accent)]"
+                  className="h-full bg-(--sb-accent)"
                   style={{ width: "48%" }}
                 />
               </div>
@@ -1501,7 +1501,7 @@ function AnalyticsTab() {
                 <span>Claude 3.5 Sonnet</span>
                 <span>390ms</span>
               </div>
-              <div className="h-1.5 w-full bg-[var(--sb-border)] rounded-full overflow-hidden">
+              <div className="h-1.5 w-full bg-(--sb-border) rounded-full overflow-hidden">
                 <div className="h-full bg-blue-500" style={{ width: "78%" }} />
               </div>
             </div>
@@ -1510,7 +1510,7 @@ function AnalyticsTab() {
                 <span>Gemini 1.5 Pro</span>
                 <span>310ms</span>
               </div>
-              <div className="h-1.5 w-full bg-[var(--sb-border)] rounded-full overflow-hidden">
+              <div className="h-1.5 w-full bg-(--sb-border) rounded-full overflow-hidden">
                 <div
                   className="h-full bg-emerald-500"
                   style={{ width: "62%" }}
@@ -1521,7 +1521,7 @@ function AnalyticsTab() {
         </div>
 
         {/* Errors card */}
-        <div className="flex flex-col border border-[var(--sb-border)] p-4 rounded-lg">
+        <div className="flex flex-col border border-(--sb-border) p-4 rounded-lg">
           <span
             className="text-xs font-semibold mb-3 uppercase tracking-wider"
             style={{ color: "var(--sb-ink-muted)" }}
@@ -1534,7 +1534,7 @@ function AnalyticsTab() {
                 <span>GPT-4o</span>
                 <span>0.05%</span>
               </div>
-              <div className="h-1.5 w-full bg-[var(--sb-border)] rounded-full overflow-hidden">
+              <div className="h-1.5 w-full bg-(--sb-border) rounded-full overflow-hidden">
                 <div
                   className="h-full bg-emerald-500"
                   style={{ width: "5%" }}
@@ -1546,7 +1546,7 @@ function AnalyticsTab() {
                 <span>Claude 3.5 Sonnet</span>
                 <span>0.12%</span>
               </div>
-              <div className="h-1.5 w-full bg-[var(--sb-border)] rounded-full overflow-hidden">
+              <div className="h-1.5 w-full bg-(--sb-border) rounded-full overflow-hidden">
                 <div
                   className="h-full bg-emerald-500"
                   style={{ width: "12%" }}
@@ -1558,7 +1558,7 @@ function AnalyticsTab() {
                 <span>Gemini 1.5 Pro</span>
                 <span>0.08%</span>
               </div>
-              <div className="h-1.5 w-full bg-[var(--sb-border)] rounded-full overflow-hidden">
+              <div className="h-1.5 w-full bg-(--sb-border) rounded-full overflow-hidden">
                 <div
                   className="h-full bg-emerald-500"
                   style={{ width: "8%" }}
@@ -1569,7 +1569,7 @@ function AnalyticsTab() {
         </div>
 
         {/* Cache card */}
-        <div className="flex flex-col border border-[var(--sb-border)] p-4 rounded-lg justify-between">
+        <div className="flex flex-col border border-(--sb-border) p-4 rounded-lg justify-between">
           <div>
             <span
               className="text-xs font-semibold mb-1 block uppercase tracking-wider"
@@ -1577,7 +1577,7 @@ function AnalyticsTab() {
             >
               Response Cache Hit Rate
             </span>
-            <span className="text-3xl font-extrabold text-[var(--sb-accent)] block mt-2">
+            <span className="text-3xl font-extrabold text-(--sb-accent) block mt-2">
               34.2%
             </span>
             <span
@@ -1641,7 +1641,7 @@ function UsageTab() {
 
   return (
     <div className="island-shell rounded-xl p-6 flex flex-col gap-6 animate-in fade-in duration-200">
-      <div className="flex flex-col border-b pb-3 border-[var(--sb-border)]">
+      <div className="flex flex-col border-b pb-3 border-(--sb-border)">
         <h2 className="text-sm font-bold" style={{ color: "var(--sb-ink)" }}>
           Completion Volume by Feature
         </h2>
@@ -1656,14 +1656,14 @@ function UsageTab() {
           return (
             <div
               key={data.feature}
-              className="flex items-center justify-between p-4 rounded-xl border border-[var(--sb-border)]"
+              className="flex items-center justify-between p-4 rounded-xl border border-(--sb-border)"
               style={{
                 background:
                   "color-mix(in oklab, var(--sb-ink) 2%, transparent)",
               }}
             >
               <div className="flex items-center gap-3">
-                <span className="p-2 rounded-lg bg-[var(--sb-bg-hover)] text-[var(--sb-ink-muted)] shrink-0">
+                <span className="p-2 rounded-lg bg-(--sb-bg-hover) text-(--sb-ink-muted) shrink-0">
                   <Icon size={14} />
                 </span>
                 <div className="flex flex-col">
@@ -1697,7 +1697,7 @@ function UsageTab() {
                     Est. cost
                   </span>
                 </div>
-                <div className="w-12 text-center text-xs font-bold text-[var(--sb-accent)] bg-[var(--sb-pill)] py-1 rounded-md shrink-0">
+                <div className="w-12 text-center text-xs font-bold text-(--sb-accent) bg-(--sb-pill) py-1 rounded-md shrink-0">
                   {data.share}
                 </div>
               </div>
@@ -1742,7 +1742,7 @@ function TokensTab() {
 
   return (
     <div className="island-shell rounded-xl p-6 flex flex-col gap-6 animate-in fade-in duration-200">
-      <div className="flex flex-col border-b pb-3 border-[var(--sb-border)]">
+      <div className="flex flex-col border-b pb-3 border-(--sb-border)">
         <h2 className="text-sm font-bold" style={{ color: "var(--sb-ink)" }}>
           Token Breakdown & Provider Costing
         </h2>
@@ -1782,7 +1782,7 @@ function TokensTab() {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[var(--sb-border)]">
+          <tbody className="divide-y divide-(--sb-border)">
             {providerTokens.map((t) => (
               <tr key={t.provider} style={{ color: "var(--sb-ink)" }}>
                 <td className="py-3.5 font-semibold">{t.provider}</td>
@@ -1798,7 +1798,7 @@ function TokensTab() {
                 <td className="py-3.5" style={{ color: "var(--sb-ink-dim)" }}>
                   {t.outputCost}
                 </td>
-                <td className="py-3.5 text-right font-bold text-[var(--sb-accent)]">
+                <td className="py-3.5 text-right font-bold text-(--sb-accent)">
                   {t.totalCost}
                 </td>
               </tr>
@@ -1815,7 +1815,7 @@ function TokensTab() {
               <td className="py-4">83.1M</td>
               <td className="py-4">$466.78</td>
               <td className="py-4">$688.50</td>
-              <td className="py-4 text-right text-base text-[var(--sb-accent)]">
+              <td className="py-4 text-right text-base text-(--sb-accent)">
                 $1,155.28
               </td>
             </tr>
@@ -1904,20 +1904,20 @@ function ModelsTab() {
                 <th className="pb-2 font-semibold text-right">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[var(--sb-border)]">
+            <tbody className="divide-y divide-(--sb-border)">
               {models.map((m) => (
                 <tr key={m.name} style={{ color: "var(--sb-ink)" }}>
                   <td className="py-3 font-semibold">{m.name}</td>
-                  <td className="py-3 text-[var(--sb-ink-muted)]">
+                  <td className="py-3 text-(--sb-ink-muted)">
                     {m.provider}
                   </td>
-                  <td className="py-3 text-[var(--sb-ink-muted)]">
+                  <td className="py-3 text-(--sb-ink-muted)">
                     {m.latency}
                   </td>
                   <td className="py-3 text-emerald-500 font-semibold">
                     {m.reliability}
                   </td>
-                  <td className="py-3 text-[var(--sb-ink-dim)]">{m.type}</td>
+                  <td className="py-3 text-(--sb-ink-dim)">{m.type}</td>
                   <td className="py-3 text-right">
                     <Badge className="bg-emerald-500/10 text-emerald-500 border-none font-bold py-0.5 text-[9px]">
                       {m.status}
@@ -1963,8 +1963,8 @@ function ModelsTab() {
                 className={cn(
                   "flex flex-col p-4 rounded-xl border transition-all cursor-pointer",
                   routingType === policy.id
-                    ? "border-[var(--sb-accent)] bg-[color-mix(in_oklab,var(--sb-ink)_3%,transparent)]"
-                    : "border-[var(--sb-border)] hover:bg-[color-mix(in_oklab,var(--sb-ink)_1.5%,transparent)]",
+                    ? "border-(--sb-accent) bg-[color-mix(in_oklab,var(--sb-ink)_3%,transparent)]"
+                    : "border-(--sb-border) hover:bg-[color-mix(in_oklab,var(--sb-ink)_1.5%,transparent)]",
                 )}
               >
                 <div className="flex items-center gap-2">
@@ -1973,7 +1973,7 @@ function ModelsTab() {
                     name="routingPolicy"
                     checked={routingType === policy.id}
                     onChange={() => setRoutingType(policy.id as any)}
-                    className="cursor-pointer size-3.5 accent-[var(--sb-accent)]"
+                    className="cursor-pointer size-3.5 accent-(--sb-accent)"
                   />
                   <span
                     className="text-xs font-bold"
@@ -1992,7 +1992,7 @@ function ModelsTab() {
             ))}
           </div>
 
-          <div className="flex items-center justify-end gap-3 mt-2 border-t pt-4 border-[var(--sb-border)]">
+          <div className="flex items-center justify-end gap-3 mt-2 border-t pt-4 border-(--sb-border)">
             {success && (
               <span className="text-xs text-emerald-500 font-semibold animate-in fade-in duration-200">
                 Router policy saved successfully
@@ -2079,7 +2079,7 @@ function AgentsTab() {
 
   return (
     <div className="island-shell rounded-xl p-6 flex flex-col gap-6 animate-in fade-in duration-200">
-      <div className="flex flex-col border-b pb-3 border-[var(--sb-border)]">
+      <div className="flex flex-col border-b pb-3 border-(--sb-border)">
         <h2 className="text-sm font-bold" style={{ color: "var(--sb-ink)" }}>
           AI Agents Console
         </h2>
@@ -2104,8 +2104,8 @@ function AgentsTab() {
                 className={cn(
                   "flex flex-col p-4 rounded-xl border transition-all text-left cursor-pointer",
                   active
-                    ? "border-[var(--sb-accent)] bg-[color-mix(in_oklab,var(--sb-ink)_3%,transparent)]"
-                    : "border-[var(--sb-border)] hover:bg-[color-mix(in_oklab,var(--sb-ink)_1.5%,transparent)]",
+                    ? "border-(--sb-accent) bg-[color-mix(in_oklab,var(--sb-ink)_3%,transparent)]"
+                    : "border-(--sb-border) hover:bg-[color-mix(in_oklab,var(--sb-ink)_1.5%,transparent)]",
                 )}
               >
                 <span
@@ -2126,7 +2126,7 @@ function AgentsTab() {
         </div>
 
         {/* Right Side: Agent Details & Execution Console */}
-        <div className="lg:col-span-2 flex flex-col gap-4 border border-[var(--sb-border)] p-4 rounded-xl">
+        <div className="lg:col-span-2 flex flex-col gap-4 border border-(--sb-border) p-4 rounded-xl">
           <div className="flex justify-between items-center">
             <div className="flex flex-col">
               <span
@@ -2158,7 +2158,7 @@ function AgentsTab() {
               <Badge
                 key={t}
                 variant="outline"
-                className="text-[9px] font-semibold text-[var(--sb-ink-muted)] bg-[var(--sb-bg-hover)] border-[var(--sb-border)]"
+                className="text-[9px] font-semibold text-(--sb-ink-muted) bg-(--sb-bg-hover) border-(--sb-border)"
               >
                 Tool: {t}
               </Badge>
@@ -2251,7 +2251,7 @@ function PromptsTab() {
 
   return (
     <div className="island-shell rounded-xl p-6 flex flex-col gap-6 animate-in fade-in duration-200">
-      <div className="flex flex-col border-b pb-3 border-[var(--sb-border)]">
+      <div className="flex flex-col border-b pb-3 border-(--sb-border)">
         <h2 className="text-sm font-bold" style={{ color: "var(--sb-ink)" }}>
           System Prompts Playground
         </h2>
@@ -2274,8 +2274,8 @@ function PromptsTab() {
                 className={cn(
                   "flex items-center justify-between p-3 rounded-lg border transition-all text-left cursor-pointer",
                   active
-                    ? "border-[var(--sb-accent)] bg-[color-mix(in_oklab,var(--sb-ink)_3%,transparent)]"
-                    : "border-[var(--sb-border)] hover:bg-[color-mix(in_oklab,var(--sb-ink)_1.5%,transparent)]",
+                    ? "border-(--sb-accent) bg-[color-mix(in_oklab,var(--sb-ink)_3%,transparent)]"
+                    : "border-(--sb-border) hover:bg-[color-mix(in_oklab,var(--sb-ink)_1.5%,transparent)]",
                 )}
               >
                 <div className="flex flex-col min-w-0">
@@ -2320,7 +2320,7 @@ function PromptsTab() {
                 rows={5}
                 className={cn(
                   "w-full rounded-[10px] p-3 text-xs outline-none transition-all duration-150 resize-none leading-relaxed",
-                  "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                  "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
                 )}
                 style={{
                   background:
@@ -2353,7 +2353,7 @@ function PromptsTab() {
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-3 mt-2 border-t pt-4 border-[var(--sb-border)]">
+            <div className="flex items-center justify-end gap-3 mt-2 border-t pt-4 border-(--sb-border)">
               {success && (
                 <span className="text-xs text-emerald-500 font-semibold animate-in fade-in duration-200">
                   Prompt updated to v2.2
@@ -2418,7 +2418,7 @@ function KnowledgeTab() {
 
   return (
     <div className="island-shell rounded-xl p-6 flex flex-col gap-6 animate-in fade-in duration-200">
-      <div className="flex items-center justify-between border-b pb-3 border-[var(--sb-border)]">
+      <div className="flex items-center justify-between border-b pb-3 border-(--sb-border)">
         <div className="flex flex-col">
           <h2 className="text-sm font-bold" style={{ color: "var(--sb-ink)" }}>
             RAG Knowledge Base
@@ -2459,27 +2459,27 @@ function KnowledgeTab() {
 
       {/* Index statistics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="border border-[var(--sb-border)] p-4 rounded-xl flex flex-col justify-center">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-[var(--sb-ink-muted)]">
+        <div className="border border-(--sb-border) p-4 rounded-xl flex flex-col justify-center">
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-(--sb-ink-muted)">
             Total Embedded Chunks
           </span>
-          <span className="text-2xl font-bold mt-1 text-[var(--sb-ink)]">
+          <span className="text-2xl font-bold mt-1 text-(--sb-ink)">
             14,821 chunks
           </span>
         </div>
-        <div className="border border-[var(--sb-border)] p-4 rounded-xl flex flex-col justify-center">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-[var(--sb-ink-muted)]">
+        <div className="border border-(--sb-border) p-4 rounded-xl flex flex-col justify-center">
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-(--sb-ink-muted)">
             Embedding Model
           </span>
-          <span className="text-sm font-semibold mt-1 text-[var(--sb-ink)]">
+          <span className="text-sm font-semibold mt-1 text-(--sb-ink)">
             text-embedding-3-small (1536 dim)
           </span>
         </div>
-        <div className="border border-[var(--sb-border)] p-4 rounded-xl flex flex-col justify-center">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-[var(--sb-ink-muted)]">
+        <div className="border border-(--sb-border) p-4 rounded-xl flex flex-col justify-center">
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-(--sb-ink-muted)">
             Index Density
           </span>
-          <span className="text-sm font-semibold mt-1 text-[var(--sb-ink)]">
+          <span className="text-sm font-semibold mt-1 text-(--sb-ink)">
             3 files • 15.2 MB indexed
           </span>
         </div>
@@ -2495,7 +2495,7 @@ function KnowledgeTab() {
         {docs.map((doc) => (
           <div
             key={doc.title}
-            className="flex items-center justify-between p-3 rounded-lg border border-[var(--sb-border)]"
+            className="flex items-center justify-between p-3 rounded-lg border border-(--sb-border)"
             style={{
               background: "color-mix(in oklab, var(--sb-ink) 2%, transparent)",
             }}
@@ -2515,7 +2515,7 @@ function KnowledgeTab() {
               </span>
             </div>
             <div className="flex items-center gap-4 shrink-0">
-              <span className="text-[10px] font-bold text-[var(--sb-accent)] bg-[var(--sb-pill)] px-2 py-0.5 rounded">
+              <span className="text-[10px] font-bold text-(--sb-accent) bg-(--sb-pill) px-2 py-0.5 rounded">
                 {doc.chunks}
               </span>
               <span
@@ -2568,7 +2568,7 @@ function RAGTab() {
 
   return (
     <div className="island-shell rounded-xl p-6 flex flex-col gap-6 animate-in fade-in duration-200">
-      <div className="flex flex-col border-b pb-3 border-[var(--sb-border)]">
+      <div className="flex flex-col border-b pb-3 border-(--sb-border)">
         <h2 className="text-sm font-bold" style={{ color: "var(--sb-ink)" }}>
           RAG Retrieval Simulator
         </h2>
@@ -2580,7 +2580,7 @@ function RAGTab() {
 
       {/* Vector Store statuses */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="border border-[var(--sb-border)] p-3 rounded-lg flex items-center justify-between">
+        <div className="border border-(--sb-border) p-3 rounded-lg flex items-center justify-between">
           <div className="flex flex-col">
             <span
               className="text-xs font-bold"
@@ -2603,7 +2603,7 @@ function RAGTab() {
           </div>
         </div>
 
-        <div className="border border-[var(--sb-border)] p-3 rounded-lg flex items-center justify-between">
+        <div className="border border-(--sb-border) p-3 rounded-lg flex items-center justify-between">
           <div className="flex flex-col">
             <span
               className="text-xs font-bold"
@@ -2643,7 +2643,7 @@ function RAGTab() {
             placeholder="Type a query to search vector database..."
             className={cn(
               "w-full rounded-[10px] pl-9 pr-3 py-2 text-xs outline-none transition-all duration-150",
-              "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+              "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
             )}
             style={{
               background: "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
@@ -2675,7 +2675,7 @@ function RAGTab() {
             className="text-center p-8 border border-dashed rounded-lg"
             style={{ borderColor: "var(--sb-border)" }}
           >
-            <span className="text-xs text-[var(--sb-ink-dim)] italic">
+            <span className="text-xs text-(--sb-ink-dim) italic">
               Query the index above to display chunk vectors...
             </span>
           </div>
@@ -2684,7 +2684,7 @@ function RAGTab() {
             {results.map((r) => (
               <div
                 key={r.id}
-                className="flex flex-col border border-[var(--sb-border)] p-4 rounded-xl bg-transparent"
+                className="flex flex-col border border-(--sb-border) p-4 rounded-xl bg-transparent"
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
@@ -2698,7 +2698,7 @@ function RAGTab() {
                       Source: {r.source}
                     </span>
                   </div>
-                  <span className="text-[10px] font-bold text-[var(--sb-accent)]">
+                  <span className="text-[10px] font-bold text-(--sb-accent)">
                     Score: {r.score}
                   </span>
                 </div>
@@ -2756,7 +2756,7 @@ function APITab() {
 
   return (
     <div className="island-shell rounded-xl p-6 flex flex-col gap-6 animate-in fade-in duration-200">
-      <div className="flex items-center justify-between border-b pb-3 border-[var(--sb-border)]">
+      <div className="flex items-center justify-between border-b pb-3 border-(--sb-border)">
         <div className="flex flex-col">
           <h2 className="text-sm font-bold" style={{ color: "var(--sb-ink)" }}>
             API Integrations & Authorization Keys
@@ -2786,7 +2786,7 @@ function APITab() {
 
       {/* Rate Limits */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="border border-[var(--sb-border)] p-4 rounded-xl">
+        <div className="border border-(--sb-border) p-4 rounded-xl">
           <div className="flex justify-between text-xs font-semibold mb-1">
             <span style={{ color: "var(--sb-ink)" }}>
               OpenAI Rate Limits (RPM)
@@ -2795,22 +2795,22 @@ function APITab() {
               600 / 5,000 RPM (12%)
             </span>
           </div>
-          <div className="h-2 w-full bg-[var(--sb-border)] rounded-full overflow-hidden mt-2">
+          <div className="h-2 w-full bg-(--sb-border) rounded-full overflow-hidden mt-2">
             <div
-              className="h-full bg-[var(--sb-accent)]"
+              className="h-full bg-(--sb-accent)"
               style={{ width: "12%" }}
             />
           </div>
         </div>
 
-        <div className="border border-[var(--sb-border)] p-4 rounded-xl">
+        <div className="border border-(--sb-border) p-4 rounded-xl">
           <div className="flex justify-between text-xs font-semibold mb-1">
             <span style={{ color: "var(--sb-ink)" }}>
               Anthropic Rate Limits (RPM)
             </span>
             <span className="text-blue-500">80 / 4,000 RPM (2%)</span>
           </div>
-          <div className="h-2 w-full bg-[var(--sb-border)] rounded-full overflow-hidden mt-2">
+          <div className="h-2 w-full bg-(--sb-border) rounded-full overflow-hidden mt-2">
             <div className="h-full bg-blue-500" style={{ width: "2%" }} />
           </div>
         </div>
@@ -2843,7 +2843,7 @@ function APITab() {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[var(--sb-border)]">
+          <tbody className="divide-y divide-(--sb-border)">
             {keys.map((k) => (
               <tr key={k.name} style={{ color: "var(--sb-ink)" }}>
                 <td className="py-3.5 font-semibold">{k.name}</td>
@@ -2911,7 +2911,7 @@ function JobsTab() {
 
   return (
     <div className="island-shell rounded-xl p-6 flex flex-col gap-6 animate-in fade-in duration-200">
-      <div className="flex flex-col border-b pb-3 border-[var(--sb-border)]">
+      <div className="flex flex-col border-b pb-3 border-(--sb-border)">
         <h2 className="text-sm font-bold" style={{ color: "var(--sb-ink)" }}>
           Active Pipelines & Fine-tuning Jobs
         </h2>
@@ -2924,7 +2924,7 @@ function JobsTab() {
         {jobs.map((job) => (
           <div
             key={job.title}
-            className="flex flex-col border border-[var(--sb-border)] p-4 rounded-xl bg-transparent gap-3"
+            className="flex flex-col border border-(--sb-border) p-4 rounded-xl bg-transparent gap-3"
           >
             <div className="flex items-center justify-between">
               <div className="flex flex-col">
@@ -2948,7 +2948,7 @@ function JobsTab() {
                     "bg-emerald-500/10 text-emerald-500",
                   job.status === "Running" && "bg-amber-500/15 text-amber-500",
                   job.status === "Queued" &&
-                    "bg-[color-mix(in_oklab,var(--sb-ink)_8%,transparent)] text-[var(--sb-ink-muted)]",
+                    "bg-[color-mix(in_oklab,var(--sb-ink)_8%,transparent)] text-(--sb-ink-muted)",
                 )}
               >
                 {job.status}
@@ -2957,7 +2957,7 @@ function JobsTab() {
 
             {/* Progress bar */}
             <div className="flex items-center gap-3">
-              <div className="h-1.5 flex-1 bg-[var(--sb-border)] rounded-full overflow-hidden">
+              <div className="h-1.5 flex-1 bg-(--sb-border) rounded-full overflow-hidden">
                 <div
                   className={cn(
                     "h-full rounded-full transition-all duration-300",
@@ -3022,7 +3022,7 @@ function TimelineTab() {
 
   return (
     <div className="island-shell rounded-xl p-6 flex flex-col gap-6 animate-in fade-in duration-200">
-      <div className="flex flex-col border-b pb-3 border-[var(--sb-border)]">
+      <div className="flex flex-col border-b pb-3 border-(--sb-border)">
         <h2 className="text-sm font-bold" style={{ color: "var(--sb-ink)" }}>
           Real-time completion activity log
         </h2>
@@ -3041,7 +3041,7 @@ function TimelineTab() {
             {/* Timeline Dot */}
             <span
               className={cn(
-                "absolute -left-[31px] top-1.5 size-2.5 rounded-full border-2 bg-transparent shrink-0",
+                "absolute left-[-31px] top-1.5 size-2.5 rounded-full border-2 bg-transparent shrink-0",
                 e.success ? "border-emerald-500" : "border-red-500",
               )}
               style={{
@@ -3090,7 +3090,7 @@ function SettingsTab() {
 
   return (
     <div className="island-shell rounded-xl p-6 flex flex-col gap-6 animate-in fade-in duration-200">
-      <div className="flex flex-col border-b pb-3 border-[var(--sb-border)]">
+      <div className="flex flex-col border-b pb-3 border-(--sb-border)">
         <h2 className="text-sm font-bold" style={{ color: "var(--sb-ink)" }}>
           AI Engine Parameters Config
         </h2>
@@ -3106,7 +3106,7 @@ function SettingsTab() {
           <div className="flex flex-col gap-1.5">
             <label
               htmlFor="sysTemp"
-              className="text-xs font-bold text-[var(--sb-ink-muted)]"
+              className="text-xs font-bold text-(--sb-ink-muted)"
             >
               Global Default Temperature
             </label>
@@ -3121,7 +3121,7 @@ function SettingsTab() {
               required
               className={cn(
                 "w-full rounded-[10px] px-3 py-2 text-xs outline-none transition-all duration-150",
-                "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
               )}
               style={{
                 background:
@@ -3142,7 +3142,7 @@ function SettingsTab() {
           <div className="flex flex-col gap-1.5">
             <label
               htmlFor="cacheTtl"
-              className="text-xs font-bold text-[var(--sb-ink-muted)]"
+              className="text-xs font-bold text-(--sb-ink-muted)"
             >
               Cache TTL Duration (Seconds)
             </label>
@@ -3154,7 +3154,7 @@ function SettingsTab() {
               required
               className={cn(
                 "w-full rounded-[10px] px-3 py-2 text-xs outline-none transition-all duration-150",
-                "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
               )}
               style={{
                 background:
@@ -3175,7 +3175,7 @@ function SettingsTab() {
           <div className="flex flex-col gap-1.5">
             <label
               htmlFor="maxRetries"
-              className="text-xs font-bold text-[var(--sb-ink-muted)]"
+              className="text-xs font-bold text-(--sb-ink-muted)"
             >
               Provider Rate Limit Retries
             </label>
@@ -3187,7 +3187,7 @@ function SettingsTab() {
               required
               className={cn(
                 "w-full rounded-[10px] px-3 py-2 text-xs outline-none transition-all duration-150",
-                "focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30",
+                "focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30",
               )}
               style={{
                 background:
@@ -3205,7 +3205,7 @@ function SettingsTab() {
           </div>
         </div>
 
-        <div className="flex items-center justify-end gap-3 mt-2 border-t pt-4 border-[var(--sb-border)]">
+        <div className="flex items-center justify-end gap-3 mt-2 border-t pt-4 border-(--sb-border)">
           {success && (
             <span className="text-xs text-emerald-500 font-semibold animate-in fade-in duration-200">
               Systemic AI configurations saved
@@ -3299,11 +3299,11 @@ function AssistantTab() {
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {/* Left Col: Config Panel */}
         <div className="island-shell rounded-xl p-5 flex flex-col gap-5">
-          <div className="flex flex-col border-b pb-3 border-[var(--sb-border)]">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)]">
+          <div className="flex flex-col border-b pb-3 border-(--sb-border)">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-(--sb-ink-dim)">
               Copilot System Settings
             </h2>
-            <span className="text-[10px] text-[var(--sb-ink-muted)]">
+            <span className="text-[10px] text-(--sb-ink-muted)">
               Manage how the global floating assistant behaves on the admin
               panel.
             </span>
@@ -3312,10 +3312,10 @@ function AssistantTab() {
           <form onSubmit={handleSave} className="flex flex-col gap-4">
             <div className="flex items-center justify-between">
               <div className="flex flex-col">
-                <span className="text-xs font-semibold text-[var(--sb-ink)]">
+                <span className="text-xs font-semibold text-(--sb-ink)">
                   Enable Assistant Copilot
                 </span>
-                <span className="text-[10px] text-[var(--sb-ink-dim)]">
+                <span className="text-[10px] text-(--sb-ink-dim)">
                   Show the floating chat bubble on all routes
                 </span>
               </div>
@@ -3323,16 +3323,16 @@ function AssistantTab() {
                 type="checkbox"
                 checked={enabled}
                 onChange={(e) => setEnabled(e.target.checked)}
-                className="size-4 rounded accent-[var(--sb-accent)] bg-zinc-900 border-[var(--sb-border)]"
+                className="size-4 rounded accent-(--sb-accent) bg-zinc-900 border-(--sb-border)"
               />
             </div>
 
-            <div className="flex items-center justify-between border-t pt-3 border-[var(--sb-border)]">
+            <div className="flex items-center justify-between border-t pt-3 border-(--sb-border)">
               <div className="flex flex-col">
-                <span className="text-xs font-semibold text-[var(--sb-ink)]">
+                <span className="text-xs font-semibold text-(--sb-ink)">
                   Enable Voice Command Input
                 </span>
-                <span className="text-[10px] text-[var(--sb-ink-dim)]">
+                <span className="text-[10px] text-(--sb-ink-dim)">
                   Allow dictation & natural language navigation triggers
                 </span>
               </div>
@@ -3340,14 +3340,14 @@ function AssistantTab() {
                 type="checkbox"
                 checked={voiceEnabled}
                 onChange={(e) => setVoiceEnabled(e.target.checked)}
-                className="size-4 rounded accent-[var(--sb-accent)] bg-zinc-900 border-[var(--sb-border)]"
+                className="size-4 rounded accent-(--sb-accent) bg-zinc-900 border-(--sb-border)"
               />
             </div>
 
-            <div className="flex flex-col gap-1.5 border-t pt-3 border-[var(--sb-border)]">
+            <div className="flex flex-col gap-1.5 border-t pt-3 border-(--sb-border)">
               <label
                 htmlFor="sysPrompt"
-                className="text-xs font-bold text-[var(--sb-ink-muted)]"
+                className="text-xs font-bold text-(--sb-ink-muted)"
               >
                 Copilot System Prompt Instruction
               </label>
@@ -3356,7 +3356,7 @@ function AssistantTab() {
                 rows={4}
                 value={sysPrompt}
                 onChange={(e) => setSysPrompt(e.target.value)}
-                className="w-full rounded-[10px] p-2 text-xs outline-none focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/30 resize-none"
+                className="w-full rounded-[10px] p-2 text-xs outline-none focus-visible:ring-2 focus-visible:ring-(--sb-accent)/30 resize-none"
                 style={{
                   background:
                     "color-mix(in oklab, var(--sb-ink) 4%, transparent)",
@@ -3366,7 +3366,7 @@ function AssistantTab() {
               />
             </div>
 
-            <div className="flex items-center justify-end gap-3 mt-1 border-t pt-3 border-[var(--sb-border)]">
+            <div className="flex items-center justify-end gap-3 mt-1 border-t pt-3 border-(--sb-border)">
               {success && (
                 <span className="text-xs text-emerald-500 font-semibold animate-in fade-in">
                   Assistant configurations saved
@@ -3386,20 +3386,20 @@ function AssistantTab() {
         {/* Right Col: Top Actions & Testing */}
         <div className="flex flex-col gap-6">
           <div className="island-shell rounded-xl p-5 flex flex-col">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)] mb-4">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-(--sb-ink-dim) mb-4">
               Top Executed Actions
             </h2>
             <div className="flex flex-col gap-3">
               {topActions.map((action) => (
                 <div
                   key={action.name}
-                  className="flex items-center justify-between p-3 rounded-lg border border-[var(--sb-border)] bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)]"
+                  className="flex items-center justify-between p-3 rounded-lg border border-(--sb-border) bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)]"
                 >
                   <div className="flex flex-col">
-                    <span className="text-xs font-semibold text-[var(--sb-ink)]">
+                    <span className="text-xs font-semibold text-(--sb-ink)">
                       {action.name}
                     </span>
-                    <span className="text-[10px] text-[var(--sb-ink-dim)]">
+                    <span className="text-[10px] text-(--sb-ink-dim)">
                       {action.count}
                     </span>
                   </div>
@@ -3412,11 +3412,11 @@ function AssistantTab() {
           </div>
 
           <div className="island-shell rounded-xl p-5 flex flex-col gap-3">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)] border-b pb-2 border-[var(--sb-border)]">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-(--sb-ink-dim) border-b pb-2 border-(--sb-border)">
               System Rules Playground
             </h2>
             <div className="flex flex-col gap-2">
-              <span className="text-[10px] text-[var(--sb-ink-muted)]">
+              <span className="text-[10px] text-(--sb-ink-muted)">
                 Verify prompt instructions in real-time.
               </span>
               <div className="flex gap-2">
@@ -3444,7 +3444,7 @@ function AssistantTab() {
               </div>
               {testOutput && (
                 <div
-                  className="rounded-lg p-3 text-xs border border-[var(--sb-border)] whitespace-pre-wrap leading-relaxed mt-2"
+                  className="rounded-lg p-3 text-xs border border-(--sb-border) whitespace-pre-wrap leading-relaxed mt-2"
                   style={{
                     background:
                       "color-mix(in oklab, var(--sb-ink) 2%, transparent)",
@@ -3642,11 +3642,11 @@ function ResearchTab() {
       {/* Left Panel: References and Upload (2 Columns) */}
       <div className="lg:col-span-2 flex flex-col gap-6">
         <div className="island-shell rounded-xl p-5 flex flex-col gap-4">
-          <div className="flex flex-col border-b pb-3 border-[var(--sb-border)]">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)]">
+          <div className="flex flex-col border-b pb-3 border-(--sb-border)">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-(--sb-ink-dim)">
               Research Source Documents
             </h2>
-            <span className="text-[10px] text-[var(--sb-ink-muted)]">
+            <span className="text-[10px] text-(--sb-ink-muted)">
               Upload literature papers and manage academic reference citations.
             </span>
           </div>
@@ -3656,15 +3656,15 @@ function ResearchTab() {
             type="button"
             onClick={handleSimulateUpload}
             disabled={uploading}
-            className="flex flex-col items-center justify-center border-2 border-dashed border-[var(--sb-border)] rounded-xl py-6 hover:bg-secondary/20 transition-all cursor-pointer active:scale-[0.98] group"
+            className="flex flex-col items-center justify-center border-2 border-dashed border-(--sb-border) rounded-xl py-6 hover:bg-secondary/20 transition-all cursor-pointer active:scale-[0.98] group"
           >
-            <FlaskConical className="size-6 text-muted-foreground/60 group-hover:text-[var(--sb-accent)] transition-colors mb-2" />
-            <span className="text-xs font-semibold text-[var(--sb-ink)]">
+            <FlaskConical className="size-6 text-muted-foreground/60 group-hover:text-(--sb-accent) transition-colors mb-2" />
+            <span className="text-xs font-semibold text-(--sb-ink)">
               {uploading
                 ? "Analyzing document structure..."
                 : "Upload Paper (PDF, DOCX, MD)"}
             </span>
-            <span className="text-[9px] text-[var(--sb-ink-dim)] mt-0.5">
+            <span className="text-[9px] text-(--sb-ink-dim) mt-0.5">
               Drag file here or click to simulate upload
             </span>
           </button>
@@ -3679,17 +3679,17 @@ function ResearchTab() {
                 className={cn(
                   "w-full text-left p-3 rounded-lg border transition-all cursor-pointer text-xs flex flex-col gap-1",
                   ref.selected
-                    ? "border-[var(--sb-accent)] bg-[var(--sb-accent)]/5 text-[var(--sb-ink)] font-semibold"
-                    : "border-[var(--sb-border)] hover:bg-secondary/40 text-[var(--sb-ink-muted)]",
+                    ? "border-(--sb-accent) bg-(--sb-accent)/5 text-(--sb-ink) font-semibold"
+                    : "border-(--sb-border) hover:bg-secondary/40 text-(--sb-ink-muted)",
                 )}
               >
                 <div className="flex justify-between w-full">
                   <span className="truncate pr-2 font-bold">{ref.title}</span>
-                  <span className="text-[10px] text-[var(--sb-ink-dim)] shrink-0">
+                  <span className="text-[10px] text-(--sb-ink-dim) shrink-0">
                     {ref.year}
                   </span>
                 </div>
-                <span className="text-[10px] text-[var(--sb-ink-dim)]">
+                <span className="text-[10px] text-(--sb-ink-dim)">
                   {ref.author} • {ref.journal}
                 </span>
               </button>
@@ -3699,11 +3699,11 @@ function ResearchTab() {
 
         {/* Citation Generator Widget */}
         <div className="island-shell rounded-xl p-5 flex flex-col gap-4">
-          <div className="flex flex-col border-b pb-2 border-[var(--sb-border)]">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)]">
+          <div className="flex flex-col border-b pb-2 border-(--sb-border)">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-(--sb-ink-dim)">
               Citation Generator
             </h2>
-            <span className="text-[10px] text-[var(--sb-ink-muted)]">
+            <span className="text-[10px] text-(--sb-ink-muted)">
               Generate formatted citations instantly for the selected resource.
             </span>
           </div>
@@ -3717,8 +3717,8 @@ function ResearchTab() {
                 className={cn(
                   "flex-1 py-1 rounded text-[10px] font-bold uppercase border transition-all cursor-pointer",
                   citationStyle === style
-                    ? "bg-[var(--sb-accent)] text-white border-transparent"
-                    : "border-[var(--sb-border)] hover:bg-secondary/40 text-[var(--sb-ink-muted)]",
+                    ? "bg-(--sb-accent) text-white border-transparent"
+                    : "border-(--sb-border) hover:bg-secondary/40 text-(--sb-ink-muted)",
                 )}
               >
                 {style}
@@ -3727,7 +3727,7 @@ function ResearchTab() {
           </div>
 
           <div
-            className="p-3 rounded-lg border border-[var(--sb-border)] font-mono text-[10px] leading-relaxed break-words whitespace-pre-wrap select-text"
+            className="p-3 rounded-lg border border-(--sb-border) font-mono text-[10px] leading-relaxed break-words whitespace-pre-wrap select-text"
             style={{
               background: "color-mix(in oklab, var(--sb-ink) 2%, transparent)",
               color: "var(--sb-ink)",
@@ -3755,8 +3755,8 @@ function ResearchTab() {
 
         {/* Discover Related Research */}
         <div className="island-shell rounded-xl p-5 flex flex-col gap-3">
-          <div className="flex items-center justify-between border-b pb-2 border-[var(--sb-border)]">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)]">
+          <div className="flex items-center justify-between border-b pb-2 border-(--sb-border)">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-(--sb-ink-dim)">
               Cross-Reference Discovery
             </h2>
             <Button
@@ -3775,7 +3775,7 @@ function ResearchTab() {
               {discoveryList.map((disc, idx) => (
                 <div
                   key={idx}
-                  className="p-2.5 rounded-lg border border-[var(--sb-border)] text-[10px] bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)] leading-relaxed"
+                  className="p-2.5 rounded-lg border border-(--sb-border) text-[10px] bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)] leading-relaxed"
                   style={{ color: "var(--sb-ink-muted)" }}
                 >
                   {disc}
@@ -3783,7 +3783,7 @@ function ResearchTab() {
               ))}
             </div>
           ) : (
-            <span className="text-[10px] text-[var(--sb-ink-dim)]">
+            <span className="text-[10px] text-(--sb-ink-dim)">
               Query our research repository to find mathematically matching
               literature.
             </span>
@@ -3794,13 +3794,13 @@ function ResearchTab() {
       {/* Right Panel: Chat & Knowledge Graph (3 Columns) */}
       <div className="lg:col-span-3 flex flex-col gap-6">
         {/* Research Helper Chat Workspace */}
-        <div className="relative border border-[var(--sb-border)] rounded-xl flex flex-col bg-background text-foreground h-[420px] overflow-hidden shadow-sm">
-          <div className="flex h-12 shrink-0 items-center justify-between border-b border-[var(--sb-border)] px-4 bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)]">
+        <div className="relative border border-(--sb-border) rounded-xl flex flex-col bg-background text-foreground h-[420px] overflow-hidden shadow-sm">
+          <div className="flex h-12 shrink-0 items-center justify-between border-b border-(--sb-border) px-4 bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)]">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--sb-ink-dim)]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-(--sb-ink-dim)">
                 Literature AI Helper
               </span>
-              <span className="text-[9px] px-1.5 py-0.2 rounded border border-[var(--sb-accent)]/20 bg-[var(--sb-accent)]/10 text-[var(--sb-accent)] font-semibold truncate max-w-[200px]">
+              <span className="text-[9px] px-1.5 py-0.2 rounded border border-(--sb-accent)/20 bg-(--sb-accent)/10 text-(--sb-accent) font-semibold truncate max-w-[200px]">
                 {selectedRef.title}
               </span>
             </div>
@@ -3820,7 +3820,7 @@ function ResearchTab() {
                   size={28}
                   className="text-muted-foreground/30 mb-2 animate-pulse"
                 />
-                <span className="text-xs font-semibold text-[var(--sb-ink)] mb-1">
+                <span className="text-xs font-semibold text-(--sb-ink) mb-1">
                   Analyze Selected Literature
                 </span>
                 <span className="text-[10px] max-w-[280px]">
@@ -3854,23 +3854,23 @@ function ResearchTab() {
             )}
           </div>
 
-          <div className="shrink-0 border-t border-[var(--sb-border)] bg-background pt-3 pb-3 px-3">
+          <div className="shrink-0 border-t border-(--sb-border) bg-background pt-3 pb-3 px-3">
             <DashboardPromptInput
               onSubmit={handleSendPrompt}
               status={status}
               placeholder="Ask research helper about this paper..."
-              className="w-full rounded-xl border border-[var(--sb-border)] bg-card px-2.5 pt-1.5 pb-1.5 [&_[data-slot=input-group]]:border-none [&_[data-slot=input-group]]:bg-transparent [&_[data-slot=input-group]]:shadow-none"
+              className="w-full rounded-xl border border-(--sb-border) bg-card px-2.5 pt-1.5 pb-1.5 **:data-[slot=input-group]:border-none **:data-[slot=input-group]:bg-transparent **:data-[slot=input-group]:shadow-none"
             />
           </div>
         </div>
 
         {/* Paper Insights (Key Findings & Visual Knowledge Graph) */}
         <div className="island-shell rounded-xl p-5 flex flex-col gap-4">
-          <div className="flex flex-col border-b pb-2 border-[var(--sb-border)]">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)]">
+          <div className="flex flex-col border-b pb-2 border-(--sb-border)">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-(--sb-ink-dim)">
               Document Insights & Knowledge Graph
             </h2>
-            <span className="text-[10px] text-[var(--sb-ink-muted)]">
+            <span className="text-[10px] text-(--sb-ink-muted)">
               Synthesized theoretical findings and reference citations mapped
               visually.
             </span>
@@ -3878,17 +3878,17 @@ function ResearchTab() {
 
           {/* Key Findings list */}
           <div className="flex flex-col gap-2">
-            <span className="text-[10px] font-bold text-[var(--sb-ink-muted)]">
+            <span className="text-[10px] font-bold text-(--sb-ink-muted)">
               Key Extracted Findings:
             </span>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {selectedRef.findings.map((f, idx) => (
                 <div
                   key={idx}
-                  className="p-3 rounded-lg border border-[var(--sb-border)] bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)] text-[10px] leading-relaxed flex flex-col justify-between"
+                  className="p-3 rounded-lg border border-(--sb-border) bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)] text-[10px] leading-relaxed flex flex-col justify-between"
                   style={{ color: "var(--sb-ink-muted)" }}
                 >
-                  <span className="font-semibold text-[var(--sb-accent)] block mb-1">
+                  <span className="font-semibold text-(--sb-accent) block mb-1">
                     Finding #{idx + 1}
                   </span>
                   <span>{f}</span>
@@ -3899,10 +3899,10 @@ function ResearchTab() {
 
           {/* Interactive Knowledge Graph */}
           <div className="flex flex-col gap-2 mt-2">
-            <span className="text-[10px] font-bold text-[var(--sb-ink-muted)]">
+            <span className="text-[10px] font-bold text-(--sb-ink-muted)">
               Theoretical Map (References & Influence):
             </span>
-            <div className="relative w-full h-[180px] rounded-xl border border-[var(--sb-border)] overflow-hidden flex items-center justify-center p-4 bg-zinc-950/20">
+            <div className="relative w-full h-[180px] rounded-xl border border-(--sb-border) overflow-hidden flex items-center justify-center p-4 bg-zinc-950/20">
               {/* Decorative SVG connection lines */}
               <svg
                 className="absolute inset-0 w-full h-full pointer-events-none z-0"
@@ -3939,7 +3939,7 @@ function ResearchTab() {
               </svg>
 
               {/* Node 1: Pre-requisite node */}
-              <div className="absolute left-[5%] top-[40%] z-10 w-[28%] p-2 rounded-lg border border-dashed border-[var(--sb-border)] bg-zinc-900/60 text-[9px] text-center shadow-sm">
+              <div className="absolute left-[5%] top-[40%] z-10 w-[28%] p-2 rounded-lg border border-dashed border-(--sb-border) bg-zinc-900/60 text-[9px] text-center shadow-sm">
                 <span className="text-zinc-500 font-medium block">
                   Precedent
                 </span>
@@ -3949,8 +3949,8 @@ function ResearchTab() {
               </div>
 
               {/* Node 2: Selected Paper Center Node */}
-              <div className="absolute left-[38%] top-[35%] z-10 w-[24%] p-3 rounded-xl border border-[var(--sb-accent)] bg-zinc-900/90 text-[10px] text-center shadow-lg animate-pulse">
-                <span className="text-[var(--sb-accent)] font-extrabold uppercase tracking-wide block text-[8px]">
+              <div className="absolute left-[38%] top-[35%] z-10 w-[24%] p-3 rounded-xl border border-(--sb-accent) bg-zinc-900/90 text-[10px] text-center shadow-lg animate-pulse">
+                <span className="text-(--sb-accent) font-extrabold uppercase tracking-wide block text-[8px]">
                   Active
                 </span>
                 <span className="text-white font-bold block truncate mt-0.5">
@@ -3962,7 +3962,7 @@ function ResearchTab() {
               </div>
 
               {/* Node 3: Influence child node 1 */}
-              <div className="absolute right-[5%] top-[20%] z-10 w-[28%] p-2 rounded-lg border border-[var(--sb-border)] bg-zinc-900/60 text-[9px] text-center shadow-sm">
+              <div className="absolute right-[5%] top-[20%] z-10 w-[28%] p-2 rounded-lg border border-(--sb-border) bg-zinc-900/60 text-[9px] text-center shadow-sm">
                 <span className="text-emerald-500 font-medium block">
                   Influence (98%)
                 </span>
@@ -3972,7 +3972,7 @@ function ResearchTab() {
               </div>
 
               {/* Node 4: Influence child node 2 */}
-              <div className="absolute right-[5%] top-[60%] z-10 w-[28%] p-2 rounded-lg border border-[var(--sb-border)] bg-zinc-900/60 text-[9px] text-center shadow-sm">
+              <div className="absolute right-[5%] top-[60%] z-10 w-[28%] p-2 rounded-lg border border-(--sb-border) bg-zinc-900/60 text-[9px] text-center shadow-sm">
                 <span className="text-emerald-500 font-medium block">
                   Influence (94%)
                 </span>
