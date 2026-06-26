@@ -8,52 +8,557 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./routes/__root";
-import { Route as IndexRouteImport } from "./routes/index";
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthRouteImport } from './routes/_auth'
+import { Route as AdminRouteImport } from './routes/_admin'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthLoginRouteImport } from './routes/_auth/login'
+import { Route as AdminUsersIndexRouteImport } from './routes/_admin/users/index'
+import { Route as AdminSettingsIndexRouteImport } from './routes/_admin/settings/index'
+import { Route as AdminRolesIndexRouteImport } from './routes/_admin/roles/index'
+import { Route as AdminRoadmapsIndexRouteImport } from './routes/_admin/roadmaps/index'
+import { Route as AdminResearchIndexRouteImport } from './routes/_admin/research/index'
+import { Route as AdminOverviewIndexRouteImport } from './routes/_admin/overview/index'
+import { Route as AdminMediaIndexRouteImport } from './routes/_admin/media/index'
+import { Route as AdminInvitesIndexRouteImport } from './routes/_admin/invites/index'
+import { Route as AdminCoursesIndexRouteImport } from './routes/_admin/courses/index'
+import { Route as AdminAuditIndexRouteImport } from './routes/_admin/audit/index'
+import { Route as AdminAnalyticsIndexRouteImport } from './routes/_admin/analytics/index'
+import { Route as AdminAiIndexRouteImport } from './routes/_admin/ai/index'
+import { Route as AdminCoursesNewRouteImport } from './routes/_admin/courses/new'
+import { Route as AdminPracticeInterviewQaIndexRouteImport } from './routes/_admin/practice/interview-qa/index'
+import { Route as AdminPracticeDsaIndexRouteImport } from './routes/_admin/practice/dsa/index'
+import { Route as AdminPracticeCaseStudiesIndexRouteImport } from './routes/_admin/practice/case-studies/index'
+import { Route as AdminPracticeAssessmentsIndexRouteImport } from './routes/_admin/practice/assessments/index'
+import { Route as AdminCmsNewsletterIndexRouteImport } from './routes/_admin/cms/newsletter/index'
+import { Route as AdminCmsEventsIndexRouteImport } from './routes/_admin/cms/events/index'
+import { Route as AdminCmsBlogIndexRouteImport } from './routes/_admin/cms/blog/index'
 
-const IndexRoute = IndexRouteImport.update({
-  id: "/",
-  path: "/",
+const AuthRoute = AuthRouteImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/_admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AdminUsersIndexRoute = AdminUsersIndexRouteImport.update({
+  id: '/users/',
+  path: '/users/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsIndexRoute = AdminSettingsIndexRouteImport.update({
+  id: '/settings/',
+  path: '/settings/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminRolesIndexRoute = AdminRolesIndexRouteImport.update({
+  id: '/roles/',
+  path: '/roles/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminRoadmapsIndexRoute = AdminRoadmapsIndexRouteImport.update({
+  id: '/roadmaps/',
+  path: '/roadmaps/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminResearchIndexRoute = AdminResearchIndexRouteImport.update({
+  id: '/research/',
+  path: '/research/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminOverviewIndexRoute = AdminOverviewIndexRouteImport.update({
+  id: '/overview/',
+  path: '/overview/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMediaIndexRoute = AdminMediaIndexRouteImport.update({
+  id: '/media/',
+  path: '/media/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminInvitesIndexRoute = AdminInvitesIndexRouteImport.update({
+  id: '/invites/',
+  path: '/invites/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCoursesIndexRoute = AdminCoursesIndexRouteImport.update({
+  id: '/courses/',
+  path: '/courses/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAuditIndexRoute = AdminAuditIndexRouteImport.update({
+  id: '/audit/',
+  path: '/audit/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAnalyticsIndexRoute = AdminAnalyticsIndexRouteImport.update({
+  id: '/analytics/',
+  path: '/analytics/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAiIndexRoute = AdminAiIndexRouteImport.update({
+  id: '/ai/',
+  path: '/ai/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCoursesNewRoute = AdminCoursesNewRouteImport.update({
+  id: '/courses/new',
+  path: '/courses/new',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPracticeInterviewQaIndexRoute =
+  AdminPracticeInterviewQaIndexRouteImport.update({
+    id: '/practice/interview-qa/',
+    path: '/practice/interview-qa/',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminPracticeDsaIndexRoute = AdminPracticeDsaIndexRouteImport.update({
+  id: '/practice/dsa/',
+  path: '/practice/dsa/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPracticeCaseStudiesIndexRoute =
+  AdminPracticeCaseStudiesIndexRouteImport.update({
+    id: '/practice/case-studies/',
+    path: '/practice/case-studies/',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminPracticeAssessmentsIndexRoute =
+  AdminPracticeAssessmentsIndexRouteImport.update({
+    id: '/practice/assessments/',
+    path: '/practice/assessments/',
+    getParentRoute: () => AdminRoute,
+  } as any)
+const AdminCmsNewsletterIndexRoute = AdminCmsNewsletterIndexRouteImport.update({
+  id: '/cms/newsletter/',
+  path: '/cms/newsletter/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCmsEventsIndexRoute = AdminCmsEventsIndexRouteImport.update({
+  id: '/cms/events/',
+  path: '/cms/events/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCmsBlogIndexRoute = AdminCmsBlogIndexRouteImport.update({
+  id: '/cms/blog/',
+  path: '/cms/blog/',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexRoute;
+  '/': typeof IndexRoute
+  '/login': typeof AuthLoginRoute
+  '/courses/new': typeof AdminCoursesNewRoute
+  '/ai/': typeof AdminAiIndexRoute
+  '/analytics/': typeof AdminAnalyticsIndexRoute
+  '/audit/': typeof AdminAuditIndexRoute
+  '/courses/': typeof AdminCoursesIndexRoute
+  '/invites/': typeof AdminInvitesIndexRoute
+  '/media/': typeof AdminMediaIndexRoute
+  '/overview/': typeof AdminOverviewIndexRoute
+  '/research/': typeof AdminResearchIndexRoute
+  '/roadmaps/': typeof AdminRoadmapsIndexRoute
+  '/roles/': typeof AdminRolesIndexRoute
+  '/settings/': typeof AdminSettingsIndexRoute
+  '/users/': typeof AdminUsersIndexRoute
+  '/cms/blog/': typeof AdminCmsBlogIndexRoute
+  '/cms/events/': typeof AdminCmsEventsIndexRoute
+  '/cms/newsletter/': typeof AdminCmsNewsletterIndexRoute
+  '/practice/assessments/': typeof AdminPracticeAssessmentsIndexRoute
+  '/practice/case-studies/': typeof AdminPracticeCaseStudiesIndexRoute
+  '/practice/dsa/': typeof AdminPracticeDsaIndexRoute
+  '/practice/interview-qa/': typeof AdminPracticeInterviewQaIndexRoute
 }
 export interface FileRoutesByTo {
-  "/": typeof IndexRoute;
+  '/': typeof IndexRoute
+  '/login': typeof AuthLoginRoute
+  '/courses/new': typeof AdminCoursesNewRoute
+  '/ai': typeof AdminAiIndexRoute
+  '/analytics': typeof AdminAnalyticsIndexRoute
+  '/audit': typeof AdminAuditIndexRoute
+  '/courses': typeof AdminCoursesIndexRoute
+  '/invites': typeof AdminInvitesIndexRoute
+  '/media': typeof AdminMediaIndexRoute
+  '/overview': typeof AdminOverviewIndexRoute
+  '/research': typeof AdminResearchIndexRoute
+  '/roadmaps': typeof AdminRoadmapsIndexRoute
+  '/roles': typeof AdminRolesIndexRoute
+  '/settings': typeof AdminSettingsIndexRoute
+  '/users': typeof AdminUsersIndexRoute
+  '/cms/blog': typeof AdminCmsBlogIndexRoute
+  '/cms/events': typeof AdminCmsEventsIndexRoute
+  '/cms/newsletter': typeof AdminCmsNewsletterIndexRoute
+  '/practice/assessments': typeof AdminPracticeAssessmentsIndexRoute
+  '/practice/case-studies': typeof AdminPracticeCaseStudiesIndexRoute
+  '/practice/dsa': typeof AdminPracticeDsaIndexRoute
+  '/practice/interview-qa': typeof AdminPracticeInterviewQaIndexRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport;
-  "/": typeof IndexRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/_admin': typeof AdminRouteWithChildren
+  '/_auth': typeof AuthRouteWithChildren
+  '/_auth/login': typeof AuthLoginRoute
+  '/_admin/courses/new': typeof AdminCoursesNewRoute
+  '/_admin/ai/': typeof AdminAiIndexRoute
+  '/_admin/analytics/': typeof AdminAnalyticsIndexRoute
+  '/_admin/audit/': typeof AdminAuditIndexRoute
+  '/_admin/courses/': typeof AdminCoursesIndexRoute
+  '/_admin/invites/': typeof AdminInvitesIndexRoute
+  '/_admin/media/': typeof AdminMediaIndexRoute
+  '/_admin/overview/': typeof AdminOverviewIndexRoute
+  '/_admin/research/': typeof AdminResearchIndexRoute
+  '/_admin/roadmaps/': typeof AdminRoadmapsIndexRoute
+  '/_admin/roles/': typeof AdminRolesIndexRoute
+  '/_admin/settings/': typeof AdminSettingsIndexRoute
+  '/_admin/users/': typeof AdminUsersIndexRoute
+  '/_admin/cms/blog/': typeof AdminCmsBlogIndexRoute
+  '/_admin/cms/events/': typeof AdminCmsEventsIndexRoute
+  '/_admin/cms/newsletter/': typeof AdminCmsNewsletterIndexRoute
+  '/_admin/practice/assessments/': typeof AdminPracticeAssessmentsIndexRoute
+  '/_admin/practice/case-studies/': typeof AdminPracticeCaseStudiesIndexRoute
+  '/_admin/practice/dsa/': typeof AdminPracticeDsaIndexRoute
+  '/_admin/practice/interview-qa/': typeof AdminPracticeInterviewQaIndexRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/";
-  fileRoutesByTo: FileRoutesByTo;
-  to: "/";
-  id: "__root__" | "/";
-  fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/courses/new'
+    | '/ai/'
+    | '/analytics/'
+    | '/audit/'
+    | '/courses/'
+    | '/invites/'
+    | '/media/'
+    | '/overview/'
+    | '/research/'
+    | '/roadmaps/'
+    | '/roles/'
+    | '/settings/'
+    | '/users/'
+    | '/cms/blog/'
+    | '/cms/events/'
+    | '/cms/newsletter/'
+    | '/practice/assessments/'
+    | '/practice/case-studies/'
+    | '/practice/dsa/'
+    | '/practice/interview-qa/'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/login'
+    | '/courses/new'
+    | '/ai'
+    | '/analytics'
+    | '/audit'
+    | '/courses'
+    | '/invites'
+    | '/media'
+    | '/overview'
+    | '/research'
+    | '/roadmaps'
+    | '/roles'
+    | '/settings'
+    | '/users'
+    | '/cms/blog'
+    | '/cms/events'
+    | '/cms/newsletter'
+    | '/practice/assessments'
+    | '/practice/case-studies'
+    | '/practice/dsa'
+    | '/practice/interview-qa'
+  id:
+    | '__root__'
+    | '/'
+    | '/_admin'
+    | '/_auth'
+    | '/_auth/login'
+    | '/_admin/courses/new'
+    | '/_admin/ai/'
+    | '/_admin/analytics/'
+    | '/_admin/audit/'
+    | '/_admin/courses/'
+    | '/_admin/invites/'
+    | '/_admin/media/'
+    | '/_admin/overview/'
+    | '/_admin/research/'
+    | '/_admin/roadmaps/'
+    | '/_admin/roles/'
+    | '/_admin/settings/'
+    | '/_admin/users/'
+    | '/_admin/cms/blog/'
+    | '/_admin/cms/events/'
+    | '/_admin/cms/newsletter/'
+    | '/_admin/practice/assessments/'
+    | '/_admin/practice/case-studies/'
+    | '/_admin/practice/dsa/'
+    | '/_admin/practice/interview-qa/'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
+  IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  AuthRoute: typeof AuthRouteWithChildren
 }
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_admin': {
+      id: '/_admin'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_admin/users/': {
+      id: '/_admin/users/'
+      path: '/users'
+      fullPath: '/users/'
+      preLoaderRoute: typeof AdminUsersIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/settings/': {
+      id: '/_admin/settings/'
+      path: '/settings'
+      fullPath: '/settings/'
+      preLoaderRoute: typeof AdminSettingsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/roles/': {
+      id: '/_admin/roles/'
+      path: '/roles'
+      fullPath: '/roles/'
+      preLoaderRoute: typeof AdminRolesIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/roadmaps/': {
+      id: '/_admin/roadmaps/'
+      path: '/roadmaps'
+      fullPath: '/roadmaps/'
+      preLoaderRoute: typeof AdminRoadmapsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/research/': {
+      id: '/_admin/research/'
+      path: '/research'
+      fullPath: '/research/'
+      preLoaderRoute: typeof AdminResearchIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/overview/': {
+      id: '/_admin/overview/'
+      path: '/overview'
+      fullPath: '/overview/'
+      preLoaderRoute: typeof AdminOverviewIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/media/': {
+      id: '/_admin/media/'
+      path: '/media'
+      fullPath: '/media/'
+      preLoaderRoute: typeof AdminMediaIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/invites/': {
+      id: '/_admin/invites/'
+      path: '/invites'
+      fullPath: '/invites/'
+      preLoaderRoute: typeof AdminInvitesIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/courses/': {
+      id: '/_admin/courses/'
+      path: '/courses'
+      fullPath: '/courses/'
+      preLoaderRoute: typeof AdminCoursesIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/audit/': {
+      id: '/_admin/audit/'
+      path: '/audit'
+      fullPath: '/audit/'
+      preLoaderRoute: typeof AdminAuditIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/analytics/': {
+      id: '/_admin/analytics/'
+      path: '/analytics'
+      fullPath: '/analytics/'
+      preLoaderRoute: typeof AdminAnalyticsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/ai/': {
+      id: '/_admin/ai/'
+      path: '/ai'
+      fullPath: '/ai/'
+      preLoaderRoute: typeof AdminAiIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/courses/new': {
+      id: '/_admin/courses/new'
+      path: '/courses/new'
+      fullPath: '/courses/new'
+      preLoaderRoute: typeof AdminCoursesNewRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/practice/interview-qa/': {
+      id: '/_admin/practice/interview-qa/'
+      path: '/practice/interview-qa'
+      fullPath: '/practice/interview-qa/'
+      preLoaderRoute: typeof AdminPracticeInterviewQaIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/practice/dsa/': {
+      id: '/_admin/practice/dsa/'
+      path: '/practice/dsa'
+      fullPath: '/practice/dsa/'
+      preLoaderRoute: typeof AdminPracticeDsaIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/practice/case-studies/': {
+      id: '/_admin/practice/case-studies/'
+      path: '/practice/case-studies'
+      fullPath: '/practice/case-studies/'
+      preLoaderRoute: typeof AdminPracticeCaseStudiesIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/practice/assessments/': {
+      id: '/_admin/practice/assessments/'
+      path: '/practice/assessments'
+      fullPath: '/practice/assessments/'
+      preLoaderRoute: typeof AdminPracticeAssessmentsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/cms/newsletter/': {
+      id: '/_admin/cms/newsletter/'
+      path: '/cms/newsletter'
+      fullPath: '/cms/newsletter/'
+      preLoaderRoute: typeof AdminCmsNewsletterIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/cms/events/': {
+      id: '/_admin/cms/events/'
+      path: '/cms/events'
+      fullPath: '/cms/events/'
+      preLoaderRoute: typeof AdminCmsEventsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_admin/cms/blog/': {
+      id: '/_admin/cms/blog/'
+      path: '/cms/blog'
+      fullPath: '/cms/blog/'
+      preLoaderRoute: typeof AdminCmsBlogIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminCoursesNewRoute: typeof AdminCoursesNewRoute
+  AdminAiIndexRoute: typeof AdminAiIndexRoute
+  AdminAnalyticsIndexRoute: typeof AdminAnalyticsIndexRoute
+  AdminAuditIndexRoute: typeof AdminAuditIndexRoute
+  AdminCoursesIndexRoute: typeof AdminCoursesIndexRoute
+  AdminInvitesIndexRoute: typeof AdminInvitesIndexRoute
+  AdminMediaIndexRoute: typeof AdminMediaIndexRoute
+  AdminOverviewIndexRoute: typeof AdminOverviewIndexRoute
+  AdminResearchIndexRoute: typeof AdminResearchIndexRoute
+  AdminRoadmapsIndexRoute: typeof AdminRoadmapsIndexRoute
+  AdminRolesIndexRoute: typeof AdminRolesIndexRoute
+  AdminSettingsIndexRoute: typeof AdminSettingsIndexRoute
+  AdminUsersIndexRoute: typeof AdminUsersIndexRoute
+  AdminCmsBlogIndexRoute: typeof AdminCmsBlogIndexRoute
+  AdminCmsEventsIndexRoute: typeof AdminCmsEventsIndexRoute
+  AdminCmsNewsletterIndexRoute: typeof AdminCmsNewsletterIndexRoute
+  AdminPracticeAssessmentsIndexRoute: typeof AdminPracticeAssessmentsIndexRoute
+  AdminPracticeCaseStudiesIndexRoute: typeof AdminPracticeCaseStudiesIndexRoute
+  AdminPracticeDsaIndexRoute: typeof AdminPracticeDsaIndexRoute
+  AdminPracticeInterviewQaIndexRoute: typeof AdminPracticeInterviewQaIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminCoursesNewRoute: AdminCoursesNewRoute,
+  AdminAiIndexRoute: AdminAiIndexRoute,
+  AdminAnalyticsIndexRoute: AdminAnalyticsIndexRoute,
+  AdminAuditIndexRoute: AdminAuditIndexRoute,
+  AdminCoursesIndexRoute: AdminCoursesIndexRoute,
+  AdminInvitesIndexRoute: AdminInvitesIndexRoute,
+  AdminMediaIndexRoute: AdminMediaIndexRoute,
+  AdminOverviewIndexRoute: AdminOverviewIndexRoute,
+  AdminResearchIndexRoute: AdminResearchIndexRoute,
+  AdminRoadmapsIndexRoute: AdminRoadmapsIndexRoute,
+  AdminRolesIndexRoute: AdminRolesIndexRoute,
+  AdminSettingsIndexRoute: AdminSettingsIndexRoute,
+  AdminUsersIndexRoute: AdminUsersIndexRoute,
+  AdminCmsBlogIndexRoute: AdminCmsBlogIndexRoute,
+  AdminCmsEventsIndexRoute: AdminCmsEventsIndexRoute,
+  AdminCmsNewsletterIndexRoute: AdminCmsNewsletterIndexRoute,
+  AdminPracticeAssessmentsIndexRoute: AdminPracticeAssessmentsIndexRoute,
+  AdminPracticeCaseStudiesIndexRoute: AdminPracticeCaseStudiesIndexRoute,
+  AdminPracticeDsaIndexRoute: AdminPracticeDsaIndexRoute,
+  AdminPracticeInterviewQaIndexRoute: AdminPracticeInterviewQaIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface AuthRouteChildren {
+  AuthLoginRoute: typeof AuthLoginRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthLoginRoute: AuthLoginRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-};
+  AdminRoute: AdminRouteWithChildren,
+  AuthRoute: AuthRouteWithChildren,
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
