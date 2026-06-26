@@ -95,14 +95,14 @@ export function AdminAppSidebar() {
         <SidebarContent className="px-2 py-2 flex flex-col gap-1 overflow-y-auto overflow-x-hidden">
           <SidebarMenu>
             {[
-              { label: "Overview", to: "/overview", icon: LayoutDashboard, prefixes: ["/overview"] },
+              { label: "Overview", to: "/overview", icon: LayoutDashboard, prefixes: ["/overview", "/analytics", "/audit"] },
               { label: "People", to: "/users", icon: Users, prefixes: ["/users", "/roles", "/invites"] },
               { label: "Learning", to: "/courses", icon: BookOpen, prefixes: ["/courses"] },
               { label: "Practice", to: "/practice/dsa", icon: Code2, prefixes: ["/practice"] },
               { label: "Content", to: "/cms/blog", icon: FileText, prefixes: ["/cms"] },
-              { label: "Platform", to: "/roadmaps", icon: Map, prefixes: ["/roadmaps", "/research"] },
+              { label: "Research", to: "/research", icon: Rocket, prefixes: ["/research", "/roadmaps"] },
               { label: "AI Center", to: "/ai", icon: BrainCircuit, prefixes: ["/ai"] },
-              { label: "Settings", to: "/settings", icon: Settings, prefixes: ["/settings", "/media", "/analytics", "/audit"] },
+              { label: "Settings", to: "/settings", icon: Settings, prefixes: ["/settings", "/media"] },
             ].map((item) => {
               const active = item.prefixes.some(
                 (prefix) => currentPath === prefix || currentPath.startsWith(prefix + "/")

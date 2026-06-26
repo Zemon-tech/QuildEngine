@@ -21,6 +21,17 @@ import {
   Shield,
   Users,
   MessageSquare,
+  Cpu,
+  Bot,
+  Terminal,
+  Database,
+  Network,
+  LineChart,
+  Binary,
+  Key,
+  Layers,
+  Clock,
+  FlaskConical,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
@@ -33,6 +44,7 @@ import { cn } from "#/lib/utils";
 interface SubItem {
   label: string;
   to: string;
+  search?: any;
   icon: any;
   badge?: string | number;
 }
@@ -41,6 +53,7 @@ interface SubGroup {
   label: string;
   items?: SubItem[];
   to?: string;
+  search?: any;
   icon?: any;
   badge?: string | number;
 }
@@ -136,10 +149,9 @@ export function AdminSecondarySidebar() {
     ];
   } else if (
     currentPath.startsWith("/roadmaps") ||
-    currentPath.startsWith("/research") ||
-    currentPath.startsWith("/ai")
+    currentPath.startsWith("/research")
   ) {
-    sectionTitle = "Platform & AI";
+    sectionTitle = "Research Workspace";
     groups = [
       {
         label: "Curation Workspace",
@@ -149,9 +161,42 @@ export function AdminSecondarySidebar() {
         ],
       },
       {
-        label: "Intelligence",
+        label: "Innovation",
         items: [
-          { label: "Models & Prompts", to: "/ai", icon: BrainCircuit },
+          { label: "Experiments", to: "/research", search: { tab: "experiments" }, icon: FlaskConical },
+          { label: "Documentation", to: "/research", search: { tab: "docs" }, icon: FileText },
+        ],
+      },
+    ];
+  } else if (currentPath.startsWith("/ai")) {
+    sectionTitle = "AI Center";
+    groups = [
+      {
+        label: "Workspace",
+        items: [
+          { label: "AI Dashboard", to: "/ai", search: { tab: "dashboard" }, icon: LayoutDashboard },
+          { label: "AI Chat", to: "/ai", search: { tab: "chat" }, icon: MessageSquare },
+        ],
+      },
+      {
+        label: "Management",
+        items: [
+          { label: "Models", to: "/ai", search: { tab: "models" }, icon: Cpu },
+          { label: "Prompts", to: "/ai", search: { tab: "prompts" }, icon: Terminal },
+          { label: "AI Agents", to: "/ai", search: { tab: "agents" }, icon: Bot },
+          { label: "Knowledge Base", to: "/ai", search: { tab: "knowledge" }, icon: Database },
+          { label: "RAG Management", to: "/ai", search: { tab: "rag" }, icon: Network },
+        ],
+      },
+      {
+        label: "Analytics & Ops",
+        items: [
+          { label: "AI Analytics", to: "/ai", search: { tab: "analytics" }, icon: LineChart },
+          { label: "Token Usage", to: "/ai", search: { tab: "tokens" }, icon: Binary },
+          { label: "API Monitoring", to: "/ai", search: { tab: "api" }, icon: Key },
+          { label: "Background Jobs", to: "/ai", search: { tab: "jobs" }, icon: Layers },
+          { label: "AI Activity Feed", to: "/ai", search: { tab: "timeline" }, icon: Clock },
+          { label: "AI Settings", to: "/ai", search: { tab: "settings" }, icon: Settings },
         ],
       },
     ];
@@ -171,9 +216,22 @@ export function AdminSecondarySidebar() {
     return null;
   }
 
-  const isItemActive = (to: string) => {
-    if (to === "/") return currentPath === "/";
-    return currentPath === to || currentPath.startsWith(`${to}/`);
+  const searchParams = routerState.location.search as Record<string, any>;
+
+  const isItemActive = (to: string, itemSearch?: any) => {
+    const pathActive = to === "/" ? currentPath === "/" : currentPath === to || currentPath.startsWith(`${to}/`);
+    if (!pathActive) return false;
+
+    if (itemSearch && itemSearch.tab) {
+      const activeTab = searchParams.tab || "dashboard";
+      return activeTab === itemSearch.tab;
+    }
+
+    if (to === "/ai" && !itemSearch) {
+      return (searchParams.tab || "dashboard") === "dashboard";
+    }
+
+    return true;
   };
 
   return (
@@ -227,7 +285,7 @@ export function AdminSecondarySidebar() {
         {groups.map((group) => {
           if (group.to) {
             // Render group itself as a navigation trigger
-            const active = isItemActive(group.to);
+            const active = isItemActive(group.to, group.search);
             const Icon = group.icon;
 
             return collapsed ? (
@@ -236,6 +294,7 @@ export function AdminSecondarySidebar() {
                   <div>
                     <Link
                       to={group.to}
+                      search={group.search}
                       className={cn(
                         "group/sec-nav flex items-center gap-2 px-2 py-1.5 text-xs font-bold tracking-wide rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative uppercase",
                         "justify-center px-1.5",
@@ -266,6 +325,7 @@ export function AdminSecondarySidebar() {
               <div key={group.label}>
                 <Link
                   to={group.to}
+                  search={group.search}
                   className={cn(
                     "group/sec-nav flex items-center gap-2 px-2 py-1.5 text-xs font-bold tracking-wide rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative uppercase",
                     active
@@ -301,7 +361,7 @@ export function AdminSecondarySidebar() {
 
               <div className="space-y-0.5">
                 {group.items?.map((item) => {
-                  const active = isItemActive(item.to);
+                  const active = isItemActive(item.to, item.search);
 
                   return collapsed ? (
                     <Tooltip key={item.label} delayDuration={0}>
@@ -309,6 +369,7 @@ export function AdminSecondarySidebar() {
                         <div>
                           <Link
                             to={item.to}
+                            search={item.search}
                             className={cn(
                               "group/sec-nav flex items-center gap-2 px-2 py-1.5 text-xs font-medium rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative",
                               "justify-center px-1.5",
@@ -339,6 +400,7 @@ export function AdminSecondarySidebar() {
                     <div key={item.label}>
                       <Link
                         to={item.to}
+                        search={item.search}
                         className={cn(
                           "group/sec-nav flex items-center gap-2 px-2 py-1.5 text-xs font-medium rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative",
                           active

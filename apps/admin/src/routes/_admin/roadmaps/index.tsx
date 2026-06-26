@@ -14,7 +14,7 @@ function Page() {
         title="Roadmaps"
         description="Manage learning roadmaps"
         icon={Map}
-        breadcrumbs={[{ label: "Admin" }, { label: "Roadmaps" }]}
+        breadcrumbs={[{ label: "Admin" }, { label: "Research" }, { label: "Roadmaps" }]}
       />
       <EmptyState
         icon={Map}

@@ -1,5 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState, useMemo, useEffect, useRef } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useState, useMemo, useEffect, useRef, memo, useCallback } from "react";
+import { z } from "zod";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   BrainCircuit,
   Activity,
@@ -39,19 +41,98 @@ import {
   ExternalLink,
   Lock,
   Trash2,
-  Edit2
+  Edit2,
+  Calendar,
+  CheckIcon,
+  CheckSquare,
+  ChevronDown,
+  ChevronUp,
+  Mic,
+  SquarePen,
+  MessageSquare,
+  Globe as GlobeIcon,
+  PanelLeft,
+  X as XIcon,
+  History,
+  LayoutDashboard,
 } from "lucide-react";
+import {
+  Attachment,
+  AttachmentPreview,
+  AttachmentRemove,
+  Attachments,
+} from "#/components/ai-elements/attachments.tsx";
+import {
+  Message,
+  MessageContent,
+  MessageResponse,
+} from "#/components/ai-elements/message.tsx";
+import {
+  ModelSelector,
+  ModelSelectorContent,
+  ModelSelectorEmpty,
+  ModelSelectorGroup,
+  ModelSelectorInput,
+  ModelSelectorItem,
+  ModelSelectorList,
+  ModelSelectorLogo,
+  ModelSelectorLogoGroup,
+  ModelSelectorName,
+  ModelSelectorTrigger,
+} from "#/components/ai-elements/model-selector.tsx";
+import {
+  PromptInput,
+  PromptInputActionAddAttachments,
+  PromptInputActionAddScreenshot,
+  PromptInputActionMenu,
+  PromptInputActionMenuContent,
+  PromptInputActionMenuTrigger,
+  PromptInputBody,
+  PromptInputButton,
+  PromptInputFooter,
+  PromptInputProvider,
+  PromptInputSubmit,
+  PromptInputTextarea,
+  PromptInputTools,
+  usePromptInputAttachments,
+} from "#/components/ai-elements/prompt-input.tsx";
 import { PageHeader } from "#/components/admin/page-header";
 import { StatCard } from "#/components/admin/stat-card";
 import { Button } from "#/components/ui/button";
 import { Badge } from "#/components/ui/badge";
 import { cn } from "#/lib/utils";
 
+// Custom light-weight unique ID generator to avoid package dependencies
+const nanoid = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+const aiSearchSchema = z.object({
+  tab: z.enum([
+    "dashboard",
+    "chat",
+    "overview",
+    "analytics",
+    "usage",
+    "tokens",
+    "models",
+    "agents",
+    "prompts",
+    "knowledge",
+    "rag",
+    "api",
+    "jobs",
+    "timeline",
+    "settings"
+  ]).catch("dashboard").optional(),
+});
+
 export const Route = createFileRoute("/_admin/ai/")({
+  validateSearch: aiSearchSchema,
   component: AIDashboardPage,
 });
 
 type TabId =
+  | "dashboard"
+  | "chat"
   | "overview"
   | "analytics"
   | "usage"
@@ -66,33 +147,873 @@ type TabId =
   | "timeline"
   | "settings";
 
+const models = [
+  {
+    chef: "OpenAI",
+    chefSlug: "openai",
+    id: "gpt-4o",
+    name: "GPT-4o",
+    providers: ["openai", "azure"],
+  },
+  {
+    chef: "OpenAI",
+    chefSlug: "openai",
+    id: "gpt-4o-mini",
+    name: "GPT-4o Mini",
+    providers: ["openai", "azure"],
+  },
+  {
+    chef: "Anthropic",
+    chefSlug: "anthropic",
+    id: "claude-opus-4-20250514",
+    name: "Claude 4 Opus",
+    providers: ["anthropic", "azure", "google", "amazon-bedrock"],
+  },
+  {
+    chef: "Anthropic",
+    chefSlug: "anthropic",
+    id: "claude-sonnet-4-20250514",
+    name: "Claude 4 Sonnet",
+    providers: ["anthropic", "azure", "google", "amazon-bedrock"],
+  },
+  {
+    chef: "Google",
+    chefSlug: "google",
+    id: "gemini-2.0-flash-exp",
+    name: "Gemini 2.0 Flash",
+    providers: ["google"],
+  },
+];
+
+interface AttachmentItemProps {
+  attachment: {
+    id: string;
+    type: "file";
+    filename?: string;
+    mediaType?: string;
+    url: string;
+  };
+  onRemove: (id: string) => void;
+}
+
+const AttachmentItem = memo(({ attachment, onRemove }: AttachmentItemProps) => {
+  const handleRemove = useCallback(
+    () => onRemove(attachment.id),
+    [onRemove, attachment.id],
+  );
+  const data = useMemo(
+    () => ({
+      ...attachment,
+      mediaType: attachment.mediaType ?? "application/octet-stream",
+    }),
+    [attachment],
+  );
+  return (
+    <Attachment data={data} key={attachment.id} onRemove={handleRemove}>
+      <AttachmentPreview />
+      <AttachmentRemove />
+    </Attachment>
+  );
+});
+
+AttachmentItem.displayName = "AttachmentItem";
+
+interface ModelItemProps {
+  m: (typeof models)[0];
+  selectedModel: string;
+  onSelect: (id: string) => void;
+}
+
+const ModelItem = memo(({ m, selectedModel, onSelect }: ModelItemProps) => {
+  const handleSelect = useCallback(() => onSelect(m.id), [onSelect, m.id]);
+  return (
+    <ModelSelectorItem key={m.id} onSelect={handleSelect} value={m.id}>
+      <ModelSelectorLogo provider={m.chefSlug} />
+      <ModelSelectorName>{m.name}</ModelSelectorName>
+      <ModelSelectorLogoGroup>
+        {m.providers.map((provider) => (
+          <ModelSelectorLogo key={provider} provider={provider} />
+        ))}
+      </ModelSelectorLogoGroup>
+      {selectedModel === m.id ? (
+        <CheckIcon className="ml-auto size-4" />
+      ) : (
+        <div className="ml-auto size-4" />
+      )}
+    </ModelSelectorItem>
+  );
+});
+
+ModelItem.displayName = "ModelItem";
+
+const PromptInputAttachmentsDisplay = memo(() => {
+  const attachments = usePromptInputAttachments();
+
+  const handleRemove = useCallback(
+    (id: string) => attachments.remove(id),
+    [attachments],
+  );
+
+  if (attachments.files.length === 0) {
+    return null;
+  }
+
+  return (
+    <Attachments className="mb-1.5 px-0" variant="inline">
+      {attachments.files.map((attachment) => (
+        <AttachmentItem
+          attachment={attachment}
+          key={attachment.id}
+          onRemove={handleRemove}
+        />
+      ))}
+    </Attachments>
+  );
+});
+
+PromptInputAttachmentsDisplay.displayName = "PromptInputAttachmentsDisplay";
+
+interface LocalMessage {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  createdAt?: Date;
+}
+
+interface DashboardPromptInputProps {
+  onSubmit: (msg: PromptInputMessage) => void;
+  className?: string;
+  status: "ready" | "submitted" | "streaming" | "error";
+  placeholder?: string;
+}
+
+const DashboardPromptInput = memo(
+  ({
+    onSubmit,
+    className,
+    status,
+    placeholder = "How can I help you today?",
+  }: DashboardPromptInputProps) => {
+    const [model, setModel] = useState<string>(models[0].id);
+    const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
+
+    const selectedModelData = models.find((m) => m.id === model);
+
+    const handleModelSelect = useCallback((id: string) => {
+      setModel(id);
+      setModelSelectorOpen(false);
+    }, []);
+
+    return (
+      <PromptInputProvider>
+        <PromptInput
+          globalDrop
+          multiple
+          onSubmit={onSubmit}
+          className={cn(
+            "w-full [&>div]:border-none! [&>div]:bg-transparent! [&>div]:shadow-none! [&>div]:ring-0! [&>div]:outline-none!",
+            className,
+          )}
+        >
+          <PromptInputAttachmentsDisplay />
+          <PromptInputBody>
+            <PromptInputTextarea
+              className="w-full bg-transparent text-foreground border-0 resize-none focus-visible:ring-0 text-[14px] leading-relaxed placeholder:text-muted-foreground min-h-[56px] max-h-[160px] scrollbar-none py-1.5 px-0"
+              placeholder={placeholder}
+            />
+          </PromptInputBody>
+          <PromptInputFooter className="flex items-center justify-between mt-1.5 px-0 pb-0">
+            <PromptInputTools className="flex items-center gap-1.5 flex-wrap">
+              <PromptInputActionMenu>
+                <PromptInputActionMenuTrigger className="rounded-full border border-border bg-secondary/40 hover:bg-secondary/80 hover:text-foreground text-muted-foreground size-8 transition-all cursor-pointer active:scale-95 shrink-0 flex items-center justify-center" />
+                <PromptInputActionMenuContent>
+                  <PromptInputActionAddAttachments />
+                  <PromptInputActionAddScreenshot />
+                </PromptInputActionMenuContent>
+              </PromptInputActionMenu>
+
+              <PromptInputButton className="flex items-center gap-1 px-2.5 py-1.5 rounded-full border border-border bg-secondary/40 text-muted-foreground hover:bg-secondary/80 hover:text-foreground transition-all text-xs cursor-pointer active:scale-95 shrink-0">
+                <GlobeIcon size={13} />
+                <span>Search</span>
+              </PromptInputButton>
+
+              <ModelSelector
+                onOpenChange={setModelSelectorOpen}
+                open={modelSelectorOpen}
+              >
+                <ModelSelectorTrigger asChild>
+                  <PromptInputButton className="flex items-center gap-1 px-2.5 py-1.5 rounded-full border border-border bg-secondary/40 text-muted-foreground hover:bg-secondary/80 hover:text-foreground transition-all text-xs cursor-pointer active:scale-95 shrink-0">
+                    {selectedModelData?.chefSlug && (
+                      <ModelSelectorLogo
+                        provider={selectedModelData.chefSlug}
+                      />
+                    )}
+                    {selectedModelData?.name && (
+                      <ModelSelectorName className="text-foreground">
+                        {selectedModelData.name}
+                      </ModelSelectorName>
+                    )}
+                  </PromptInputButton>
+                </ModelSelectorTrigger>
+                <ModelSelectorContent>
+                  <ModelSelectorInput placeholder="Search models..." />
+                  <ModelSelectorList>
+                    <ModelSelectorEmpty>No models found.</ModelSelectorEmpty>
+                    {["OpenAI", "Anthropic", "Google"].map((chef) => (
+                      <ModelSelectorGroup heading={chef} key={chef}>
+                        {models
+                          .filter((m) => m.chef === chef)
+                          .map((m) => (
+                            <ModelItem
+                              key={m.id}
+                              m={m}
+                              onSelect={handleModelSelect}
+                              selectedModel={model}
+                            />
+                          ))}
+                      </ModelSelectorGroup>
+                    ))}
+                  </ModelSelectorList>
+                </ModelSelectorContent>
+              </ModelSelector>
+            </PromptInputTools>
+
+            <div className="flex items-center gap-1.5">
+              <PromptInputButton
+                tooltip="Use voice input"
+                className="flex items-center justify-center rounded-full hover:bg-secondary/80 text-muted-foreground hover:text-foreground size-8 transition-all cursor-pointer active:scale-95 shrink-0"
+              >
+                <Mic size={15} />
+              </PromptInputButton>
+              <PromptInputSubmit
+                status={status}
+                className="flex items-center justify-center rounded-full bg-primary text-primary-foreground hover:bg-primary/90 size-8 transition-all cursor-pointer active:scale-95 shrink-0 [&_svg]:text-primary-foreground"
+              />
+            </div>
+          </PromptInputFooter>
+        </PromptInput>
+      </PromptInputProvider>
+    );
+  },
+);
+
+DashboardPromptInput.displayName = "DashboardPromptInput";
+
+interface DashboardTabProps {
+  messages: LocalMessage[];
+  setMessages: React.Dispatch<React.SetStateAction<LocalMessage[]>>;
+  status: "ready" | "submitted" | "streaming" | "error";
+  setStatus: React.Dispatch<React.SetStateAction<"ready" | "submitted" | "streaming" | "error">>;
+}
+
+function DashboardTab({ messages, setMessages, status, setStatus }: DashboardTabProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [userName, setUserName] = useState("Admin");
+  const [time, setTime] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  // Load user name from local storage
+  useEffect(() => {
+    const loadProfile = () => {
+      try {
+        const stored = localStorage.getItem("quild_user_profile");
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (parsed.name) {
+            setUserName(parsed.name.split(" ")[0]);
+          }
+        }
+      } catch (e) {
+        console.error("Failed to load user profile:", e);
+      }
+    };
+    loadProfile();
+  }, []);
+
+  // Update ticking clock
+  useEffect(() => {
+    const updateClock = () => {
+      const d = new Date();
+      let hours = d.getHours();
+      const minutes = d.getMinutes();
+      const ampm = hours >= 12 ? "pm" : "am";
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      const minStr = minutes < 10 ? "0" + minutes : minutes;
+      setTime(`${hours}:${minStr} ${ampm}`);
+    };
+    updateClock();
+    const interval = setInterval(updateClock, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Scroll to bottom
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, status]);
+
+  const getGreeting = () => {
+    const hr = new Date().getHours();
+    if (hr < 12) return "Good morning";
+    if (hr < 17) return "Good afternoon";
+    return "Good evening";
+  };
+
+  const getFormattedDate = () => {
+    const d = new Date();
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    return `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]}`;
+  };
+
+  const handleNewChat = () => {
+    setMessages([]);
+    setStatus("ready");
+  };
+
+  const handleSubmitPrompt = async (message: PromptInputMessage) => {
+    const prompt = message.text.trim();
+    if (!prompt && message.files?.length === 0) return;
+
+    const userMsg: LocalMessage = {
+      id: nanoid(),
+      role: "user",
+      content: prompt,
+      createdAt: new Date(),
+    };
+    setMessages((prev) => [...prev, userMsg]);
+    setStatus("submitted");
+
+    await new Promise((resolve) => setTimeout(resolve, 800));
+
+    const isSpanishGreeting = prompt.toLowerCase().includes("hola");
+    const fullText = isSpanishGreeting
+      ? "¡Hola! ¿En qué puedo ayudarte hoy?\n\nVeo que estás revisando la sección de notas en Motion. Si necesitas que busquemos alguna nota en particular, redactemos un borrador, o coordinemos tus tareas y calendario, dímelo y nos ponemos a trabajar en ello."
+      : `Hello ${userName}! I see you're currently reviewing the focus area in your Workspace Dashboard. \n\nI can help you manage your outline notes, write drafts, synchronize tasks, or analyze your current learning progress. Let me know what you would like to tackle first!`;
+
+    const assistantMsgId = nanoid();
+    const assistantMsg: LocalMessage = {
+      id: assistantMsgId,
+      role: "assistant",
+      content: "",
+      createdAt: new Date(),
+    };
+
+    setMessages((prev) => [...prev, assistantMsg]);
+    setStatus("streaming");
+
+    let currentText = "";
+    const words = fullText.split(" ");
+    let wordIndex = 0;
+
+    const streamInterval = setInterval(() => {
+      if (wordIndex < words.length) {
+        currentText += (wordIndex === 0 ? "" : " ") + words[wordIndex];
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === assistantMsgId ? { ...msg, content: currentText } : msg,
+          ),
+        );
+        wordIndex++;
+      } else {
+        clearInterval(streamInterval);
+        setStatus("ready");
+      }
+    }, 45);
+  };
+
+  const isChatActive = messages.length > 0;
+
+  if (isChatActive) {
+    return (
+      <div className="relative w-full h-[650px] border border-[var(--sb-border)] rounded-xl flex flex-col bg-background text-foreground overflow-hidden shadow-md animate-in fade-in duration-200">
+        {/* Header toolbar */}
+        <div className="flex h-14 shrink-0 items-center justify-between border-b border-[var(--sb-border)] px-6 select-none bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)]">
+          <div className="flex items-center gap-3">
+            <span className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)]">AI Workspace Chat</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={handleNewChat}
+              className="flex items-center justify-center p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-all cursor-pointer active:scale-95"
+              title="New Chat"
+            >
+              <SquarePen size={16} />
+            </button>
+          </div>
+        </div>
+
+        {/* Scrollable message container */}
+        <div className="flex-1 overflow-y-auto px-4 py-6 space-y-5 scrollbar-none">
+          <div className="max-w-2xl w-full mx-auto space-y-5 flex flex-col">
+            {messages.map((msg) => (
+              <Message from={msg.role} key={msg.id}>
+                <MessageContent>
+                  {msg.role === "user" ? (
+                    <span className="text-[14px] leading-relaxed">
+                      {msg.content}
+                    </span>
+                  ) : (
+                    <MessageResponse className="text-[14px] leading-relaxed text-foreground prose dark:prose-invert max-w-none">
+                      {msg.content}
+                    </MessageResponse>
+                  )}
+                </MessageContent>
+              </Message>
+            ))}
+
+            {status === "submitted" && (
+              <Message from="assistant">
+                <MessageContent>
+                  <div className="flex items-center gap-1.5 py-2 px-1 text-muted-foreground">
+                    <span
+                      className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce"
+                      style={{ animationDelay: "0ms" }}
+                    />
+                    <span
+                      className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce"
+                      style={{ animationDelay: "150ms" }}
+                    />
+                    <span
+                      className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce"
+                      style={{ animationDelay: "300ms" }}
+                    />
+                  </div>
+                </MessageContent>
+              </Message>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+        </div>
+
+        {/* Fixed bottom input container */}
+        <div className="shrink-0 border-t border-[var(--sb-border)] bg-background pt-4 pb-4 px-4">
+          <div className="max-w-2xl w-full mx-auto flex flex-col gap-3">
+            <DashboardPromptInput
+              onSubmit={handleSubmitPrompt}
+              status={status}
+              placeholder="Write a message..."
+              className="w-full rounded-2xl border border-[var(--sb-border)] bg-card px-3 pt-2.5 pb-2.5 focus-within:border-ring [&_[data-slot=input-group]]:border-none [&_[data-slot=input-group]]:bg-transparent [&_[data-slot=input-group]]:shadow-none"
+            />
+            <div className="text-[10px] text-muted-foreground text-center select-none">
+              Quild AI can make mistakes. Check important details.
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative w-full h-[650px] border border-[var(--sb-border)] rounded-xl flex flex-col text-white overflow-hidden select-none bg-black shadow-2xl animate-in fade-in duration-200">
+      {/* Background (No filters, no brightness adjustments, no custom scale shifts) */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/backgrounds/lib-gate.png')",
+        }}
+      />
+
+      <div className="absolute inset-0 bg-black/40 z-0 pointer-events-none" />
+
+      {/* Center content container */}
+      <div
+        className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 max-w-2xl w-full mx-auto pb-8"
+        style={{
+          transform: isExpanded ? "translateY(0)" : "translateY(-40px)",
+          transition: "transform 550ms cubic-bezier(0.16, 1, 0.3, 1)",
+        }}
+      >
+        <div className="w-full flex flex-col items-center text-center mb-2">
+          <h1
+            className="text-white text-3xl md:text-4xl font-medium tracking-tight mb-3 drop-shadow-md select-none"
+            style={{ fontFamily: "'Fraunces', Georgia, serif" }}
+          >
+            {getGreeting()}, {userName}
+          </h1>
+        </div>
+
+        {/* Prompt Input */}
+        <div className="w-full relative z-20">
+          <DashboardPromptInput
+            onSubmit={handleSubmitPrompt}
+            status={status}
+            className="w-full rounded-2xl border border-white/10 bg-black/70 backdrop-blur-md px-3.5 pt-3 pb-3 shadow-lg focus-within:border-white/30 [&_[data-slot=input-group]]:border-none [&_[data-slot=input-group]]:bg-transparent [&_[data-slot=input-group]]:shadow-none"
+          />
+        </div>
+
+        {/* Sliding Dashboard Panel */}
+        <div className="w-full relative z-10 -mt-5">
+          <motion.div
+            initial={{ height: 58, opacity: 0 }}
+            animate={{ height: isExpanded ? "auto" : 58, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 170, damping: 24 }}
+            className="w-full bg-black/85 backdrop-blur-md border border-white/10 border-t-0 rounded-b-[1.25rem] overflow-hidden shadow-2xl"
+          >
+            <AnimatePresence mode="popLayout" initial={false}>
+              {!isExpanded ? (
+                <motion.div
+                  key="minimized"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                  className="flex items-center justify-between px-5 pt-[26px] pb-[10px] h-[58px] text-[13px] text-zinc-400 select-none"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    <span className="text-[13px] font-medium tracking-wide">
+                      Workspace Status:{" "}
+                      <strong className="text-white font-normal">0 urgent</strong> •{" "}
+                      <strong className="text-white font-normal">0 replies</strong> •{" "}
+                      <strong className="text-white font-normal">2 queued</strong>
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => setIsExpanded(true)}
+                    className="flex items-center gap-1 hover:text-white transition-colors cursor-pointer text-zinc-400 text-[13px] font-semibold"
+                  >
+                    View snapshot
+                    <ChevronDown size={14} />
+                  </button>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="expanded"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="px-5 pb-6 pt-8 flex flex-col"
+                >
+                  {/* Header row when expanded */}
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-[10px] font-bold text-zinc-400 tracking-widest uppercase">
+                      Workspace Dashboard
+                    </span>
+                    <button
+                      onClick={() => setIsExpanded(false)}
+                      className="flex items-center gap-1 hover:text-white transition-colors cursor-pointer text-zinc-400 text-[13px] font-semibold"
+                    >
+                      Minimize
+                      <ChevronUp size={14} />
+                    </button>
+                  </div>
+
+                  {/* 3 Columns Dashboard Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-white/10">
+                    {/* Column 1 - Current Focus */}
+                    <div className="flex flex-col justify-between pr-4 h-full min-h-[90px]">
+                      <div>
+                        <div className="text-[10px] font-bold text-zinc-400 tracking-wider uppercase mb-3 flex items-center justify-between">
+                          <span>Current Focus</span>
+                          <span className="text-[9px] font-semibold px-2 py-0.2 rounded-md border border-white/10 bg-white/5 text-zinc-400">
+                            Medium
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center w-full mt-1.5">
+                          <div className="space-y-1 pr-2">
+                            <div className="text-sm font-semibold text-white leading-tight">
+                              Test Event Sync Outbound
+                            </div>
+                            <div className="text-xs text-zinc-400">
+                              Due today • Todo
+                            </div>
+                          </div>
+                          <div className="flex flex-col gap-1 shrink-0">
+                            <div className="w-1.5 h-1.5 rounded-full bg-white/80" />
+                            <div className="w-1.5 h-1.5 rounded-full bg-white/20" />
+                            <div className="w-1.5 h-1.5 rounded-full bg-white/20" />
+                            <div className="w-1.5 h-1.5 rounded-full bg-white/20" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Column 2 - Time & Date */}
+                    <div className="flex flex-col justify-between px-4 h-full min-h-[90px] border-l border-white/10">
+                      <div className="flex items-center gap-2 text-white text-xs">
+                        <Calendar size={14} className="text-zinc-400" />
+                        <span>{getFormattedDate()}</span>
+                        <span className="flex items-center gap-1 px-2 py-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-[10px] font-medium scale-95 origin-left">
+                          <span className="relative flex h-1.5 w-1.5">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                          </span>
+                          Live
+                        </span>
+                      </div>
+                      <div className="text-2xl font-bold text-white tracking-tight my-1 select-none">
+                        {time}
+                      </div>
+                      <div className="text-[11px] text-zinc-400">
+                        Workspace snapshot
+                      </div>
+                    </div>
+
+                    {/* Column 3 - Counter Badges */}
+                    <div className="flex flex-col gap-2 pl-4 h-full justify-center border-l border-white/10 select-none">
+                      <div className="flex items-center justify-between px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs hover:bg-white/10 transition-all text-white">
+                        <div className="flex items-center gap-2">
+                          <div className="p-1 rounded bg-red-500/10 border border-red-500/20 text-red-400 shrink-0">
+                            <AlertTriangle size={12} />
+                          </div>
+                          <span>Urgent</span>
+                        </div>
+                        <span className="font-semibold">0</span>
+                      </div>
+
+                      <div className="flex items-center justify-between px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs hover:bg-white/10 transition-all text-white">
+                        <div className="flex items-center gap-2">
+                          <div className="p-1 rounded bg-blue-500/10 border border-blue-500/20 text-blue-400 shrink-0">
+                            <MessageSquare size={12} />
+                          </div>
+                          <span>Replies</span>
+                        </div>
+                        <span className="font-semibold">0</span>
+                      </div>
+
+                      <div className="flex items-center justify-between px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs hover:bg-white/10 transition-all text-white">
+                        <div className="flex items-center gap-2">
+                          <div className="p-1 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 shrink-0">
+                            <CheckSquare size={12} />
+                          </div>
+                          <span>Queued</span>
+                        </div>
+                        <span className="font-semibold">2</span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ChatTab({ messages, setMessages, status, setStatus }: DashboardTabProps) {
+  const [userName, setUserName] = useState("Admin");
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const loadProfile = () => {
+      try {
+        const stored = localStorage.getItem("quild_user_profile");
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (parsed.name) {
+            setUserName(parsed.name.split(" ")[0]);
+          }
+        }
+      } catch (e) {
+        console.error("Failed to load user profile:", e);
+      }
+    };
+    loadProfile();
+  }, []);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, status]);
+
+  const handleNewChat = () => {
+    setMessages([]);
+    setStatus("ready");
+  };
+
+  const handleSubmitPrompt = async (message: PromptInputMessage) => {
+    const prompt = message.text.trim();
+    if (!prompt && message.files?.length === 0) return;
+
+    const userMsg: LocalMessage = {
+      id: nanoid(),
+      role: "user",
+      content: prompt,
+      createdAt: new Date(),
+    };
+    setMessages((prev) => [...prev, userMsg]);
+    setStatus("submitted");
+
+    await new Promise((resolve) => setTimeout(resolve, 800));
+
+    const isSpanishGreeting = prompt.toLowerCase().includes("hola");
+    const fullText = isSpanishGreeting
+      ? "¡Hola! ¿En qué puedo ayudarte hoy?\n\nVeo que estás revisando la sección de notas en Motion. Si necesitas que busquemos alguna nota en particular, redactemos un borrador, o coordinemos tus tareas y calendario, dímelo y nos ponemos a trabajar en ello."
+      : `Hello ${userName}! I see you're currently reviewing the focus area in your Workspace Dashboard. \n\nI can help you manage your outline notes, write drafts, synchronize tasks, or analyze your current learning progress. Let me know what you would like to tackle first!`;
+
+    const assistantMsgId = nanoid();
+    const assistantMsg: LocalMessage = {
+      id: assistantMsgId,
+      role: "assistant",
+      content: "",
+      createdAt: new Date(),
+    };
+
+    setMessages((prev) => [...prev, assistantMsg]);
+    setStatus("streaming");
+
+    let currentText = "";
+    const words = fullText.split(" ");
+    let wordIndex = 0;
+
+    const streamInterval = setInterval(() => {
+      if (wordIndex < words.length) {
+        currentText += (wordIndex === 0 ? "" : " ") + words[wordIndex];
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === assistantMsgId ? { ...msg, content: currentText } : msg,
+          ),
+        );
+        wordIndex++;
+      } else {
+        clearInterval(streamInterval);
+        setStatus("ready");
+      }
+    }, 45);
+  };
+
+  return (
+    <div className="relative w-full h-[650px] border border-[var(--sb-border)] rounded-xl flex flex-col bg-background text-foreground overflow-hidden shadow-md animate-in fade-in duration-200">
+      {/* Header toolbar */}
+      <div className="flex h-14 shrink-0 items-center justify-between border-b border-[var(--sb-border)] px-6 select-none bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)]">
+        <div className="flex items-center gap-3">
+          <span className="text-xs font-bold uppercase tracking-wider text-[var(--sb-ink-dim)]">Direct AI Agent Chat</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleNewChat}
+            className="flex items-center justify-center p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-all cursor-pointer active:scale-95"
+            title="New Chat"
+          >
+            <SquarePen size={16} />
+          </button>
+        </div>
+      </div>
+
+      {/* Scrollable message container */}
+      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-5 scrollbar-none">
+        {messages.length === 0 ? (
+          <div className="h-full flex flex-col items-center justify-center text-center p-6 text-muted-foreground select-none">
+            <MessageSquare size={36} className="text-muted-foreground/40 mb-3" />
+            <span className="text-xs font-medium">No active conversation. Type a prompt below to start.</span>
+          </div>
+        ) : (
+          <div className="max-w-2xl w-full mx-auto space-y-5 flex flex-col">
+            {messages.map((msg) => (
+              <Message from={msg.role} key={msg.id}>
+                <MessageContent>
+                  {msg.role === "user" ? (
+                    <span className="text-[14px] leading-relaxed">
+                      {msg.content}
+                    </span>
+                  ) : (
+                    <MessageResponse className="text-[14px] leading-relaxed text-foreground prose dark:prose-invert max-w-none">
+                      {msg.content}
+                    </MessageResponse>
+                  )}
+                </MessageContent>
+              </Message>
+            ))}
+
+            {status === "submitted" && (
+              <Message from="assistant">
+                <MessageContent>
+                  <div className="flex items-center gap-1.5 py-2 px-1 text-muted-foreground">
+                    <span
+                      className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce"
+                      style={{ animationDelay: "0ms" }}
+                    />
+                    <span
+                      className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce"
+                      style={{ animationDelay: "150ms" }}
+                    />
+                    <span
+                      className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce"
+                      style={{ animationDelay: "300ms" }}
+                    />
+                  </div>
+                </MessageContent>
+              </Message>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+        )}
+      </div>
+
+      {/* Fixed bottom input container */}
+      <div className="shrink-0 border-t border-[var(--sb-border)] bg-background pt-4 pb-4 px-4">
+        <div className="max-w-2xl w-full mx-auto flex flex-col gap-3">
+          <DashboardPromptInput
+            onSubmit={handleSubmitPrompt}
+            status={status}
+            placeholder="Ask AI anything..."
+            className="w-full rounded-2xl border border-[var(--sb-border)] bg-card px-3 pt-2.5 pb-2.5 focus-within:border-ring [&_[data-slot=input-group]]:border-none [&_[data-slot=input-group]]:bg-transparent [&_[data-slot=input-group]]:shadow-none"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function AIDashboardPage() {
-  const [activeTab, setActiveTab] = useState<TabId>("overview");
+  const { tab = "dashboard" } = Route.useSearch();
+  const navigate = useNavigate({ from: Route.fullPath });
+  const activeTab = tab || "dashboard";
+
+  const [messages, setMessages] = useState<LocalMessage[]>([]);
+  const [status, setStatus] = useState<"ready" | "submitted" | "streaming" | "error">("ready");
+
+  const setActiveTab = (newTab: string) => {
+    navigate({ search: (prev) => ({ ...prev, tab: newTab as any }) });
+  };
 
   // Tab definitions
   const tabs = [
-    { id: "overview" as TabId, label: "AI Overview", icon: Sparkles, color: "text-amber-500 bg-amber-500/10" },
-    { id: "analytics" as TabId, label: "AI Analytics", icon: LineChart, color: "text-blue-500 bg-blue-500/10" },
-    { id: "usage" as TabId, label: "AI Usage", icon: Activity, color: "text-emerald-500 bg-emerald-500/10" },
-    { id: "tokens" as TabId, label: "Token Usage", icon: Binary, color: "text-violet-500 bg-violet-500/10" },
-    { id: "models" as TabId, label: "Model Management", icon: Cpu, color: "text-purple-500 bg-purple-500/10" },
-    { id: "agents" as TabId, label: "AI Agents", icon: Bot, color: "text-indigo-500 bg-indigo-500/10" },
-    { id: "prompts" as TabId, label: "Prompt Management", icon: Terminal, color: "text-rose-500 bg-rose-500/10" },
-    { id: "knowledge" as TabId, label: "Knowledge Base", icon: Database, color: "text-cyan-500 bg-cyan-500/10" },
-    { id: "rag" as TabId, label: "RAG Management", icon: Network, color: "text-teal-500 bg-teal-500/10" },
-    { id: "api" as TabId, label: "API Usage", icon: Key, color: "text-sky-500 bg-sky-500/10" },
-    { id: "jobs" as TabId, label: "Background Jobs", icon: Layers, color: "text-orange-500 bg-orange-500/10" },
-    { id: "timeline" as TabId, label: "AI Activity Timeline", icon: Clock, color: "text-pink-500 bg-pink-500/10" },
-    { id: "settings" as TabId, label: "AI Settings", icon: Settings, color: "text-zinc-500 bg-zinc-500/10" },
+    { id: "dashboard" as const, label: "AI Dashboard", icon: LayoutDashboard, color: "text-amber-500 bg-amber-500/10" },
+    { id: "chat" as const, label: "AI Chat", icon: MessageSquare, color: "text-blue-500 bg-blue-500/10" },
+    { id: "overview" as const, label: "AI Overview", icon: Sparkles, color: "text-purple-500 bg-purple-500/10" },
+    { id: "analytics" as const, label: "AI Analytics", icon: LineChart, color: "text-emerald-500 bg-emerald-500/10" },
+    { id: "usage" as const, label: "AI Usage", icon: Activity, color: "text-cyan-500 bg-cyan-500/10" },
+    { id: "tokens" as const, label: "Token Usage", icon: Binary, color: "text-violet-500 bg-violet-500/10" },
+    { id: "models" as const, label: "Model Management", icon: Cpu, color: "text-purple-500 bg-purple-500/10" },
+    { id: "agents" as const, label: "AI Agents", icon: Bot, color: "text-indigo-500 bg-indigo-500/10" },
+    { id: "prompts" as const, label: "Prompt Management", icon: Terminal, color: "text-rose-500 bg-rose-500/10" },
+    { id: "knowledge" as const, label: "Knowledge Base", icon: Database, color: "text-teal-500 bg-teal-500/10" },
+    { id: "rag" as const, label: "RAG Management", icon: Network, color: "text-sky-500 bg-sky-500/10" },
+    { id: "api" as const, label: "API Usage", icon: Key, color: "text-orange-500 bg-orange-500/10" },
+    { id: "jobs" as const, label: "Background Jobs", icon: Layers, color: "text-pink-500 bg-pink-500/10" },
+    { id: "timeline" as const, label: "AI Activity Timeline", icon: Clock, color: "text-zinc-500 bg-zinc-500/10" },
+    { id: "settings" as const, label: "AI Settings", icon: Settings, color: "text-zinc-500 bg-zinc-500/10" },
   ];
+
+  const activeTabObj = tabs.find((t) => t.id === activeTab) || tabs[0];
 
   return (
     <div className="p-6 w-full pb-16">
       <PageHeader
-        title="AI Dashboard"
+        title="AI Center"
         description="Comprehensive control, optimization, and auditing workspace for Quild platform AI systems."
         icon={BrainCircuit}
-        breadcrumbs={[{ label: "Admin" }, { label: "AI Dashboard" }]}
+        breadcrumbs={[{ label: "Admin" }, { label: "AI Center" }, { label: activeTabObj.label }]}
       />
 
       <div className="grid grid-cols-1 xl:grid-cols-5 gap-6 mt-6">
@@ -131,6 +1052,22 @@ function AIDashboardPage() {
 
         {/* Content Viewport */}
         <div className="xl:col-span-4 flex flex-col min-h-[60vh]">
+          {activeTab === "dashboard" && (
+            <DashboardTab
+              messages={messages}
+              setMessages={setMessages}
+              status={status}
+              setStatus={setStatus}
+            />
+          )}
+          {activeTab === "chat" && (
+            <ChatTab
+              messages={messages}
+              setMessages={setMessages}
+              status={status}
+              setStatus={setStatus}
+            />
+          )}
           {activeTab === "overview" && <OverviewTab />}
           {activeTab === "analytics" && <AnalyticsTab />}
           {activeTab === "usage" && <UsageTab />}
