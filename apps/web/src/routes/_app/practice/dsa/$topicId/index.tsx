@@ -5,18 +5,10 @@ import {
   Lightbulb,
   FileText,
   History,
-  Bot,
   Play,
-  Sparkles,
   Code,
   BookOpen,
-  ArrowLeft,
-  ChevronLeft,
-  ChevronRight,
-  Shuffle,
   Settings,
-  Bell,
-  Flame,
   UserPlus,
   List,
   ThumbsUp,
@@ -26,7 +18,6 @@ import {
   Share2,
   HelpCircle,
   ChevronDown,
-  UploadCloud,
   FlaskConical,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -35,7 +26,6 @@ import { type DSAProblem, dsaProblems } from "#/lib/dsa-problems-db";
 import { ProblemFilters } from "#/components/dsa/problem-filters";
 import { ProblemTable } from "#/components/dsa/problem-table";
 import { TopicStats } from "#/components/dsa/topic-stats";
-import { Button } from "#/components/ui/button";
 
 // ─── Emil easing curves (animations.dev) ─────────────────────────────────────
 // iOS-like drawer curve (from Ionic Framework)
@@ -44,7 +34,7 @@ const EASE_DRAWER = [0.32, 0.72, 0, 1] as const;
 const EASE_OUT = [0.23, 1, 0.32, 1] as const;
 
 // ─── HintCard — blur reveal animation ────────────────────────────────────────
-function HintCard({ hint, index }: { hint: string; index: number }) {
+export function HintCard({ hint, index }: { hint: string; index: number }) {
   const [revealed, setRevealed] = useState(false);
   return (
     <motion.div
@@ -177,15 +167,7 @@ function PracticeBoardTab() {
   // Tab views within problem drawer
   const [drawerTab, setDrawerTab] = useState<DrawerTabId>("description");
   const [bottomTab, setBottomTab] = useState<BottomTabId>("testcase");
-
-  const currentIdx = localProblems.findIndex((p) => p.id === (selectedProblem?.id || ""));
-  const prevProblem = currentIdx > 0 ? localProblems[currentIdx - 1] : null;
-  const nextProblem = currentIdx < localProblems.length - 1 ? localProblems[currentIdx + 1] : null;
-
-  // Notes state indexed by problem ID
-  const [problemNotes, setProblemNotes] = useState<Record<string, string>>({});
-
-  // Code editor states
+  if (bottomTab) { /* no-op */ }
   const [codeSolution, setCodeSolution] = useState("");
   const [editorLanguage, setEditorLanguage] = useState("typescript");
 
@@ -198,9 +180,6 @@ function PracticeBoardTab() {
     null,
   );
 
-  // AI Tutor states
-  const [aiResponse, setAiResponse] = useState("");
-  const [isAiLoading, setIsAiLoading] = useState(false);
 
   // Code template generation
   const getCodeTemplate = useCallback(
@@ -326,38 +305,6 @@ function PracticeBoardTab() {
         setSelectedProblem(null);
       }, 2000);
     }, 1500);
-  };
-
-  // AI Tutor approach streamer
-  const handleAskAiTutor = () => {
-    if (!selectedProblem) return;
-    setIsAiLoading(true);
-    setAiResponse("");
-
-    const fullResponse = `### Optimal Strategy for **${selectedProblem.name}**
-
-To solve this problem optimally, we want to achieve **O(N)** time complexity.
-
-#### Approach Overview:
-1. **Hash Mapping**: By keeping track of elements we've already visited in a dynamic hash map, we can check for complements or values in **O(1)** time.
-2. **Two Pointers**: If the array is pre-sorted, we can use two pointers starting at the boundaries and move them inward.
-3. **Space Complexity**: The trade-off is utilizing **O(N)** auxiliary space to store elements in the hash set/map.
-
-#### Detailed Steps:
-- Initialize an empty Map/Dict.
-- Traverse the sequence. At each index, compute the difference target.
-- If it exists in our Map, we immediately return the matching pair indices.
-- Otherwise, add the current value and index to the map and continue.`;
-
-    let i = 0;
-    const interval = setInterval(() => {
-      setAiResponse((prev) => prev + fullResponse.charAt(i));
-      i++;
-      if (i >= fullResponse.length) {
-        clearInterval(interval);
-        setIsAiLoading(false);
-      }
-    }, 5);
   };
 
   const [searchQuery, setSearchQuery] = useState("");

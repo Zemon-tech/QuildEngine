@@ -168,7 +168,7 @@ const initialEvents: EventItem[] = [
     category: "meetups",
     date: "July 18, 2026",
     time: "07:00 PM CET",
-    organizer: "Design Eng Guild",
+    organizer: "Design Eng Quild",
     status: "Open",
     description:
       "Connect with design engineers around the globe to discuss UI craft, animation curves, and interactive prototyping tools.",
