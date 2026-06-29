@@ -16,7 +16,7 @@ export function ProblemTable({
 }: ProblemTableProps) {
   return (
     <div
-      className="w-full md:overflow-visible overflow-hidden rounded-2xl border"
+      className="w-full overflow-clip rounded-2xl border shadow-sm transition-all"
       style={{
         background: "var(--card-bg)",
         borderColor: "var(--card-border)",
@@ -33,15 +33,15 @@ export function ProblemTable({
                 background: "var(--card-bg)",
               }}
             >
-              <th className="py-3.5 pl-4 pr-2 text-center w-14 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">Status</th>
-              <th className="py-3.5 px-4 font-bold w-[35%] min-w-[200px] md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">Problem Name</th>
-              <th className="py-3.5 px-4 w-24 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">Difficulty</th>
-              <th className="py-3.5 px-4 w-24 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">Acceptance</th>
-              <th className="py-3.5 px-4 hidden lg:table-cell w-40 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">
+              <th className="py-4 pl-5 pr-2 text-center w-14 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">Status</th>
+              <th className="py-4 px-4 font-bold w-[40%] min-w-[200px] md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">Problem Name</th>
+              <th className="py-4 px-4 w-24 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">Difficulty</th>
+              <th className="py-4 px-4 w-28 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">Acceptance</th>
+              <th className="py-4 px-4 hidden lg:table-cell w-56 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">
                 Companies
               </th>
-              <th className="py-3.5 px-4 hidden md:table-cell w-48 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">Tags</th>
-              <th className="py-3.5 pr-4 pl-2 text-center w-14 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">Book</th>
+              <th className="py-4 px-4 hidden md:table-cell w-40 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">Tags</th>
+              <th className="py-4 pr-5 pl-2 text-center w-14 md:sticky md:top-[152px] z-10 bg-[var(--card-bg)] whitespace-nowrap">Book</th>
             </tr>
           </thead>
           <tbody
@@ -49,7 +49,7 @@ export function ProblemTable({
             style={{ borderColor: "var(--sb-border)" }}
           >
             {problems.length === 0 ? (
-              <tr>
+               <tr>
                 <td colSpan={7} className="py-12 text-center">
                   <p
                     className="text-sm font-medium"
@@ -67,7 +67,7 @@ export function ProblemTable({
                   onClick={() => onSelectProblem(prob)}
                 >
                   {/* Status Toggle Column */}
-                  <td className="py-3 pl-4 pr-2 text-center w-14 whitespace-nowrap">
+                  <td className="py-4 pl-5 pr-2 text-center w-14 whitespace-nowrap">
                     <button
                       type="button"
                       onClick={(e) => {
@@ -91,13 +91,13 @@ export function ProblemTable({
                   </td>
 
                   {/* Problem Name & Subcategory Column */}
-                  <td className="py-3 px-4 w-[35%] min-w-[200px] overflow-hidden whitespace-nowrap">
+                  <td className="py-4 px-4 w-[40%] min-w-[200px] overflow-hidden whitespace-nowrap">
                     <div className="flex flex-col gap-0.5 overflow-hidden">
                       <div
-                        className="flex items-center gap-1.5 font-semibold text-[13px] group-hover:text-[var(--sb-accent)] transition-colors overflow-hidden"
+                        className="flex items-center gap-1.5 font-semibold text-xs group-hover:text-[var(--sb-accent)] transition-colors overflow-hidden"
                         style={{ color: "var(--sb-ink)" }}
                       >
-                        <span className="truncate">{prob.name}</span>
+                        <span>{prob.name}</span>
                         <ExternalLink
                           size={11}
                           className="opacity-0 group-hover:opacity-100 transition-opacity text-[var(--sb-accent)] shrink-0"
@@ -113,7 +113,7 @@ export function ProblemTable({
                   </td>
 
                   {/* Difficulty Badge Column */}
-                  <td className="py-3 px-4 w-24 whitespace-nowrap">
+                  <td className="py-4 px-4 w-24 whitespace-nowrap">
                     <span
                       className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold border whitespace-nowrap`}
                       style={{
@@ -143,16 +143,16 @@ export function ProblemTable({
 
                   {/* Acceptance Rate Column */}
                   <td
-                    className="py-3 px-4 w-24 font-medium whitespace-nowrap"
+                    className="py-4 px-4 w-28 font-medium whitespace-nowrap"
                     style={{ color: "var(--sb-ink-muted)" }}
                   >
                     {prob.acceptance}%
                   </td>
 
                   {/* Companies Column */}
-                  <td className="py-3 px-4 hidden lg:table-cell w-40 overflow-hidden whitespace-nowrap">
-                    <div className="flex items-center gap-1 overflow-hidden whitespace-nowrap max-w-[150px] truncate">
-                      {prob.companies?.slice(0, 3).map((comp) => {
+                  <td className="py-4 px-4 hidden lg:table-cell w-56 overflow-hidden whitespace-nowrap">
+                    <div className="flex items-center gap-1.5 overflow-x-auto whitespace-nowrap max-w-[200px] pb-1 [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-zinc-200 dark:[&::-webkit-scrollbar-thumb]:bg-zinc-700">
+                      {prob.companies?.map((comp) => {
                         const colors: Record<
                           string,
                           { bg: string; text: string; border: string }
@@ -207,21 +207,13 @@ export function ProblemTable({
                           </span>
                         );
                       })}
-                      {prob.companies && prob.companies.length > 3 && (
-                        <span
-                          className="text-[9px] self-center whitespace-nowrap"
-                          style={{ color: "var(--sb-ink-dim)" }}
-                        >
-                          +{prob.companies.length - 3}
-                        </span>
-                      )}
                     </div>
                   </td>
 
                   {/* Tags Badges Column (Hidden on mobile) */}
-                  <td className="py-3 px-4 hidden md:table-cell w-48 overflow-hidden whitespace-nowrap">
-                    <div className="flex items-center gap-1 overflow-hidden whitespace-nowrap max-w-[180px] truncate">
-                      {prob.tags.slice(0, 3).map((t) => (
+                  <td className="py-4 px-4 hidden md:table-cell w-40 overflow-hidden whitespace-nowrap">
+                    <div className="flex items-center gap-0.5 overflow-x-auto whitespace-nowrap max-w-[150px] pb-1 [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-zinc-200 dark:[&::-webkit-scrollbar-thumb]:bg-zinc-700">
+                      {prob.tags.map((t) => (
                         <span
                           key={t}
                           className="rounded px-1.5 py-0.5 text-[9px] font-medium whitespace-nowrap"
@@ -234,19 +226,11 @@ export function ProblemTable({
                           {t}
                         </span>
                       ))}
-                      {prob.tags.length > 3 && (
-                        <span
-                          className="text-[9px] whitespace-nowrap"
-                          style={{ color: "var(--sb-ink-dim)" }}
-                        >
-                          +{prob.tags.length - 3}
-                        </span>
-                      )}
                     </div>
                   </td>
 
                   {/* Bookmark Toggle Column */}
-                  <td className="py-3 pr-4 pl-2 text-center w-14 whitespace-nowrap">
+                  <td className="py-4 pr-5 pl-2 text-center w-14 whitespace-nowrap">
                     <button
                       type="button"
                       onClick={(e) => {

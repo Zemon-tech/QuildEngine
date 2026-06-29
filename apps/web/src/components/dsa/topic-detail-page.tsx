@@ -7,6 +7,9 @@ import {
   BookOpen,
   Bot,
   Check,
+  CheckCircle2,
+  ChevronRight,
+  Hexagon,
   Code,
   Code2,
   Coins,
@@ -534,23 +537,25 @@ To solve this problem optimally, we want to achieve **O(N)** time complexity.
             {/* Left Column: Subtopic Sidebar */}
             <div className="lg:col-span-3 flex flex-col gap-4">
               <div
-                className="rounded-2xl border p-4 space-y-3.5"
+                className="rounded-3xl border p-5 space-y-4 shadow-sm"
                 style={{
                   background: "var(--card-bg)",
                   borderColor: "var(--card-border)",
                 }}
               >
-                <div
-                  className="flex items-center justify-between pb-2 border-b"
-                  style={{ borderColor: "var(--sb-border)" }}
-                >
-                  <h4
-                    className="font-bold text-xs"
-                    style={{ color: "var(--sb-ink)" }}
-                  >
-                    Syllabus Path
-                  </h4>
-                  <span className="text-[10px] font-bold text-zinc-400">
+                <div className="flex items-center justify-between pb-1">
+                  <div className="flex items-center gap-2.5">
+                    <div className="flex size-7 items-center justify-center rounded-lg bg-[var(--sb-pill)] shadow-sm">
+                      <BookOpen size={14} className="text-[var(--sb-accent)]" />
+                    </div>
+                    <h4
+                      className="font-bold text-sm tracking-tight"
+                      style={{ color: "var(--sb-ink)" }}
+                    >
+                      Syllabus Path
+                    </h4>
+                  </div>
+                  <span className="text-[10px] font-bold text-[var(--sb-accent)]">
                     {availableSubtopics.length} Sections
                   </span>
                 </div>
@@ -560,52 +565,88 @@ To solve this problem optimally, we want to achieve **O(N)** time complexity.
                   <button
                     type="button"
                     onClick={() => setSubtopicFilter("All")}
-                    className={`w-full rounded-xl px-3 py-2 text-xs font-semibold text-left transition-all flex items-center justify-between cursor-pointer select-none ${
+                    className={`group w-full rounded-2xl px-4 py-3.5 text-sm font-semibold text-left transition-all flex items-center justify-between cursor-pointer select-none border ${
                       subtopicFilter === "All"
-                        ? "bg-[var(--sb-pill)] text-[var(--sb-accent)]"
-                        : "text-[var(--sb-ink-muted)] hover:bg-zinc-50 dark:hover:bg-zinc-800/20"
+                        ? "bg-[var(--sb-pill)] text-[var(--sb-accent)] border-transparent shadow-sm"
+                        : "bg-[var(--sb-pill)] text-[var(--sb-ink)] hover:brightness-95 border-transparent"
                     }`}
                   >
-                    <span>All Subtopics</span>
-                    <span className="text-[10px] font-bold opacity-60">
-                      {localProblems.length}
-                    </span>
+                    <div className="flex items-center gap-3">
+                      <Layers size={16} className={subtopicFilter === "All" ? "opacity-100" : "opacity-70"} />
+                      <span>All Subtopics</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="rounded-full bg-white/60 dark:bg-black/20 px-2.5 py-0.5 text-[11px] font-bold shadow-sm">
+                        {localProblems.length}
+                      </span>
+                      <ChevronRight size={14} className="opacity-50 group-hover:opacity-100 transition-opacity" />
+                    </div>
                   </button>
 
                   {/* Subtopics list */}
-                  {availableSubtopics.map((sub) => {
-                    const subStats = subtopicStats[sub] || {
-                      total: 0,
-                      solved: 0,
-                    };
-                    const isCompleted =
-                      subStats.total > 0 && subStats.solved === subStats.total;
-                    const isActive = subtopicFilter === sub;
-                    return (
-                      <button
-                        key={sub}
-                        type="button"
-                        onClick={() => setSubtopicFilter(sub)}
-                        className={`w-full rounded-xl px-3 py-2 text-xs font-semibold text-left transition-all flex items-center justify-between cursor-pointer select-none ${
-                          isActive
-                            ? "bg-[var(--sb-pill)] text-[var(--sb-accent)]"
-                            : "text-[var(--sb-ink-muted)] hover:bg-zinc-50 dark:hover:bg-zinc-800/20"
-                        }`}
-                      >
-                        <span className="flex items-center gap-1.5 truncate">
-                          {isCompleted ? (
-                            <Check className="text-emerald-500 size-3 shrink-0" />
-                          ) : (
-                            <span className="size-1.5 rounded-full bg-zinc-300 dark:bg-zinc-600 shrink-0" />
-                          )}
-                          <span className="truncate">{sub}</span>
-                        </span>
-                        <span className="text-[10px] font-bold opacity-60">
-                          {subStats.solved}/{subStats.total}
-                        </span>
-                      </button>
-                    );
-                  })}
+                  <div className="flex flex-col gap-1 mt-3">
+                    {availableSubtopics.map((sub) => {
+                      const subStats = subtopicStats[sub] || {
+                        total: 0,
+                        solved: 0,
+                      };
+                      const isCompleted =
+                        subStats.total > 0 && subStats.solved === subStats.total;
+                      const isActive = subtopicFilter === sub;
+                      
+                      const radius = 9;
+                      const circumference = 2 * Math.PI * radius;
+                      const percent = subStats.total > 0 ? (subStats.solved / subStats.total) * 100 : 0;
+                      const offset = circumference - (percent / 100) * circumference;
+
+                      return (
+                        <button
+                          key={sub}
+                          type="button"
+                          onClick={() => setSubtopicFilter(sub)}
+                          className={`group w-full rounded-2xl px-4 py-3.5 text-[13px] font-semibold text-left transition-all flex items-center justify-between cursor-pointer select-none border ${
+                            isActive
+                              ? "bg-zinc-50 dark:bg-zinc-800/30 border-zinc-200 dark:border-zinc-700/50 shadow-sm"
+                              : "border-transparent hover:bg-zinc-50/50 dark:hover:bg-zinc-800/10"
+                          }`}
+                          style={{ color: isActive ? "var(--sb-ink)" : "var(--sb-ink-muted)" }}
+                        >
+                          <div className="flex items-center gap-3 truncate">
+                            {isCompleted ? (
+                              <CheckCircle2 className="text-[var(--sb-accent)] size-[18px] shrink-0" />
+                            ) : (
+                              <Hexagon className="text-zinc-300 dark:text-zinc-600 group-hover:text-zinc-400 size-[18px] shrink-0" />
+                            )}
+                            <span className="truncate">{sub}</span>
+                          </div>
+                          <div className="flex items-center gap-3 shrink-0">
+                            <span className={`text-[11px] font-bold ${isCompleted ? 'text-[var(--sb-accent)]' : 'text-emerald-500'}`}>
+                              {subStats.solved}/{subStats.total}
+                            </span>
+                            
+                            <div className="relative size-6 flex items-center justify-center shrink-0">
+                              <svg width="24" height="24" viewBox="0 0 24 24" className="absolute -rotate-90">
+                                <circle cx="12" cy="12" r={radius} fill="none" strokeWidth="2.5" className="stroke-zinc-100 dark:stroke-zinc-800/50" />
+                                {subStats.solved > 0 && (
+                                  <circle 
+                                    cx="12" 
+                                    cy="12" 
+                                    r={radius} 
+                                    fill="none" 
+                                    strokeWidth="2.5" 
+                                    strokeDasharray={circumference} 
+                                    strokeDashoffset={offset} 
+                                    className="stroke-[var(--sb-accent)] transition-all duration-500 ease-out"
+                                    strokeLinecap="round" 
+                                  />
+                                )}
+                              </svg>
+                            </div>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>

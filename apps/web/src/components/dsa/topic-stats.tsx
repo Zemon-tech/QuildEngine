@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Award,
   CheckCircle2,
@@ -8,6 +9,7 @@ import {
   HelpCircle,
   ListTodo,
   Percent,
+  ChevronDown,
 } from "lucide-react";
 import type { DSAProblem } from "#/lib/dsa-problems-db";
 
@@ -17,6 +19,7 @@ interface TopicStatsProps {
 }
 
 export function TopicStats({ problems, currentStreak = 6 }: TopicStatsProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
   const total = problems.length;
   const solved = problems.filter((p) => p.status === "completed").length;
   const remaining = total - solved;
@@ -96,60 +99,88 @@ export function TopicStats({ problems, currentStreak = 6 }: TopicStatsProps) {
     },
   ];
 
-  return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
-      {cards.map((card, idx) => {
-        const Icon = card.icon;
-        return (
-          <motion.div
-            key={card.title}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              delay: idx * 0.04,
-              type: "spring",
-              stiffness: 200,
-              damping: 20,
-            }}
-            className="rounded-2xl border p-4.5 flex flex-col justify-between h-[125px]"
-            style={{
-              background: "var(--card-bg)",
-              borderColor: "var(--card-border)",
-            }}
-          >
-            <div className="flex items-center justify-between">
-              <span
-                className="text-[10px] font-semibold tracking-wider uppercase"
-                style={{ color: "var(--sb-ink-dim)" }}
-              >
-                {card.title}
-              </span>
-              <div
-                className={`flex size-7 items-center justify-center rounded-lg border ${card.color}`}
-              >
-                <Icon size={14} />
-              </div>
-            </div>
+  const mainCards = cards.slice(0, 4);
+  const extraCards = cards.slice(4);
 
-            <div className="space-y-0.5">
-              <div
-                className="text-xl font-bold tracking-tight"
-                style={{ color: "var(--sb-ink)" }}
-              >
-                {card.value}
-              </div>
-              <p
-                className="text-[10px]"
-                style={{ color: "var(--sb-ink-muted)" }}
-              >
-                {card.desc}
-              </p>
+  const renderCard = (card: typeof cards[0], idx: number) => {
+    const Icon = card.icon;
+    return (
+      <motion.div
+        key={card.title}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          delay: idx * 0.04,
+          type: "spring",
+          stiffness: 200,
+          damping: 20,
+        }}
+        className="rounded-2xl border p-4 flex items-center gap-4 bg-white"
+        style={{
+          background: "var(--card-bg)",
+          borderColor: "var(--card-border)",
+        }}
+      >
+        <div
+          className={`flex size-12 shrink-0 items-center justify-center rounded-xl border ${card.color}`}
+        >
+          <Icon size={22} strokeWidth={2} />
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <span
+            className="text-[10px] font-semibold tracking-wider uppercase"
+            style={{ color: "var(--sb-ink-dim)" }}
+          >
+            {card.title}
+          </span>
+          <div
+            className="text-xl font-bold tracking-tight leading-none"
+            style={{ color: "var(--sb-ink)" }}
+          >
+            {card.value}
+          </div>
+        </div>
+      </motion.div>
+    );
+  };
+
+  return (
+    <div className="flex flex-col gap-3 w-full">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
+        {mainCards.map(renderCard)}
+      </div>
+
+      <div className="flex justify-center my-1">
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="flex items-center gap-1.5 text-xs font-medium hover:opacity-80 transition-opacity"
+          style={{ color: "var(--sb-ink-muted)" }}
+        >
+          {isExpanded ? "Hide Advanced Stats" : "Show Advanced Stats"}
+          <ChevronDown
+            size={14}
+            className={`transition-transform duration-200 ${
+              isExpanded ? "rotate-180" : ""
+            }`}
+          />
+        </button>
+      </div>
+
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="overflow-hidden"
+          >
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full pb-1">
+              {extraCards.map(renderCard)}
             </div>
           </motion.div>
-        );
-      })}
+        )}
+      </AnimatePresence>
     </div>
   );
 }
-
-import { useMemo } from "react";
