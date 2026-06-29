@@ -91,7 +91,6 @@ export function SidebarHeader({ collapsed, onToggle }: SidebarHeaderProps) {
                   className="text-sm font-semibold tracking-[-0.02em]"
                   style={{
                     color: "var(--sb-ink)",
-                    fontFamily: "'Fraunces', Georgia, serif",
                   }}
                 >
                   Quild

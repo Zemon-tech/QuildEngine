@@ -212,7 +212,7 @@ function UsersPage() {
           const roleStyle = ROLE_COLORS[role] ?? ROLE_COLORS.user;
           return (
             <span
-              className="px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wide capitalize"
+              className="px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide capitalize"
               style={{ background: roleStyle.bg, color: roleStyle.color }}
             >
               {role}
@@ -463,7 +463,7 @@ function UsersPage() {
                         className={cn(
                           isSelect
                             ? "pl-4 py-3 w-10 text-left"
-                            : "px-4 py-3 text-left font-semibold uppercase tracking-wider",
+                            : "px-4 py-3 text-left font-semibold",
                         )}
                         style={{
                           color: isSelect ? undefined : "var(--sb-ink-dim)",

@@ -476,7 +476,7 @@ function OverviewPage() {
                 )}
 
                 <div className="pt-2">
-                  <h4 className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-2">
+                  <h4 className="text-[11px] font-bold text-muted-foreground tracking-wider mb-2">
                     Course Growth Timeline
                   </h4>
                   <DashboardChart
@@ -550,7 +550,7 @@ function OverviewPage() {
                     </div>
 
                     <div className="pt-2">
-                      <h4 className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-2">
+                      <h4 className="text-[11px] font-bold text-muted-foreground tracking-wider mb-2">
                         Daily Solves Activity
                       </h4>
                       <DashboardChart
@@ -603,7 +603,7 @@ function OverviewPage() {
                     />
 
                     <div className="space-y-2 mt-2">
-                      <h4 className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+                      <h4 className="text-[11px] font-bold text-muted-foreground tracking-wider">
                         Model Request Share
                       </h4>
                       {aiAnalytics?.modelUsageDistribution.map((m) => (
@@ -680,7 +680,7 @@ function OverviewPage() {
                     </div>
 
                     <div className="pt-2">
-                      <h4 className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-2">
+                      <h4 className="text-[11px] font-bold text-muted-foreground tracking-wider mb-2">
                         Research Publications
                       </h4>
                       <DashboardChart
@@ -795,7 +795,7 @@ function OverviewPage() {
           {/* Quick Actions Panel */}
           <div className="island-shell rounded-xl p-5 space-y-3.5">
             <h3
-              className="text-[11px] font-bold uppercase tracking-wider pb-1"
+              className="text-[11px] font-bold tracking-wider pb-1"
               style={{ color: "var(--sb-ink-dim)" }}
             >
               Quick Actions
@@ -851,7 +851,7 @@ function OverviewPage() {
           <div className="island-shell rounded-xl p-5 space-y-3.5">
             <div className="flex items-center justify-between pb-1 border-b border-(--sb-border)">
               <h3
-                className="text-[11px] font-bold uppercase tracking-wider"
+                className="text-[11px] font-bold tracking-wider"
                 style={{ color: "var(--sb-ink-dim)" }}
               >
                 Recent Activity

@@ -63,7 +63,7 @@ export function MetricCard({
         )}
       >
         <div className="flex items-center justify-between text-destructive">
-          <span className="text-xs font-semibold uppercase tracking-wider">
+          <span className="text-xs font-semibold tracking-wider">
             {title}
           </span>
           <AlertCircle size={15} />
@@ -112,7 +112,7 @@ export function MetricCard({
       {/* Card Header */}
       <div className="flex items-center justify-between">
         <span
-          className="text-[11px] font-bold uppercase tracking-wider"
+          className="text-[11px] font-bold tracking-wider"
           style={{ color: "var(--sb-ink-dim)" }}
         >
           {title}
@@ -134,7 +134,6 @@ export function MetricCard({
           className="text-2xl font-bold tracking-tight display-title"
           style={{
             color: "var(--sb-ink)",
-            fontFamily: "'Fraunces', Georgia, serif",
           }}
         >
           {displayValue}

@@ -377,7 +377,7 @@ function AssessmentsPage() {
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="bg-indigo-500/10 text-indigo-500 font-bold px-2 py-0.5 rounded text-[9px] uppercase">
+                      <span className="bg-indigo-500/10 text-indigo-500 font-bold px-2 py-0.5 rounded text-[9px]">
                         {test.type}
                       </span>
                       <StatusBadge
@@ -422,7 +422,7 @@ function AssessmentsPage() {
                   {/* Summary performance stubs */}
                   <div className="bg-muted/40 p-3 rounded-lg border border-(--sb-border)/50 grid grid-cols-3 text-center text-[10px]">
                     <div>
-                      <span className="text-muted-foreground block uppercase font-bold text-[8px]">
+                      <span className="text-muted-foreground block font-bold text-[8px]">
                         Attempts
                       </span>
                       <span
@@ -433,7 +433,7 @@ function AssessmentsPage() {
                       </span>
                     </div>
                     <div>
-                      <span className="text-muted-foreground block uppercase font-bold text-[8px]">
+                      <span className="text-muted-foreground block font-bold text-[8px]">
                         Avg Score
                       </span>
                       <span className="font-extrabold mt-0.5 block text-indigo-400">
@@ -441,7 +441,7 @@ function AssessmentsPage() {
                       </span>
                     </div>
                     <div>
-                      <span className="text-muted-foreground block uppercase font-bold text-[8px]">
+                      <span className="text-muted-foreground block font-bold text-[8px]">
                         Pass Rate
                       </span>
                       <span className="font-extrabold mt-0.5 block text-emerald-500">
@@ -547,8 +547,8 @@ function AssessmentsPage() {
                       </p>
 
                       {/* Displaying selected problems */}
-                      <div className="pt-2 border-t border-(--sb-border)/55 space-y-1.5">
-                        <span className="text-[9px] font-bold text-muted-foreground uppercase block">
+                      <div className="pt-2 border-t border-[var(--sb-border)]/55 space-y-1.5">
+                        <span className="text-[9px] font-bold text-muted-foreground block">
                           Assigned DSA Problems ({contest.problems?.length || 0}
                           )
                         </span>
@@ -670,20 +670,20 @@ function AssessmentsPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
-                    <tr className="border-b border-(--sb-border)/50 text-[10px] text-muted-foreground">
-                      <th className="pb-2 font-bold uppercase">
+                    <tr className="border-b border-[var(--sb-border)]/50 text-[10px] text-muted-foreground">
+                      <th className="pb-2 font-bold">
                         Candidate User
                       </th>
-                      <th className="pb-2 font-bold uppercase">
+                      <th className="pb-2 font-bold">
                         Assessment Module
                       </th>
-                      <th className="pb-2 font-bold uppercase text-center">
+                      <th className="pb-2 font-bold text-center">
                         Score %
                       </th>
-                      <th className="pb-2 font-bold uppercase text-center">
+                      <th className="pb-2 font-bold text-center">
                         Duration
                       </th>
-                      <th className="pb-2 font-bold uppercase text-right">
+                      <th className="pb-2 font-bold text-right">
                         Status
                       </th>
                     </tr>
@@ -729,7 +729,7 @@ function AssessmentsPage() {
                               ) : (
                                 <XCircle size={9} />
                               )}
-                              {attempt.status.toUpperCase()}
+                              {attempt.status.charAt(0).toUpperCase() + attempt.status.slice(1)}
                             </span>
                           </td>
                         </tr>
@@ -771,8 +771,8 @@ function AssessmentsPage() {
               />
 
               {/* Score Bracket analysis */}
-              <div className="border-t border-(--sb-border)/50 pt-4 space-y-3">
-                <span className="text-[10px] font-bold text-muted-foreground uppercase block">
+              <div className="border-t border-[var(--sb-border)]/50 pt-4 space-y-3">
+                <span className="text-[10px] font-bold text-muted-foreground block">
                   Score Bracket Distributions
                 </span>
 
@@ -860,7 +860,7 @@ function AssessmentsPage() {
                 {/* Form Fields */}
                 <div className="space-y-4 text-xs text-left">
                   <div className="space-y-1 text-left">
-                    <label className="text-[9px] font-bold text-muted-foreground uppercase block">
+                    <label className="text-[9px] font-bold text-muted-foreground block">
                       <span>Assessment Title</span>
                       <input
                         type="text"
@@ -879,7 +879,7 @@ function AssessmentsPage() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <label className="text-[9px] font-bold text-muted-foreground uppercase block space-y-1">
+                    <label className="text-[9px] font-bold text-muted-foreground block space-y-1">
                       <span>Category Type</span>
                       <select
                         value={testType}
@@ -905,7 +905,7 @@ function AssessmentsPage() {
                       </select>
                     </label>
 
-                    <label className="text-[9px] font-bold text-muted-foreground uppercase block space-y-1">
+                    <label className="text-[9px] font-bold text-muted-foreground block space-y-1">
                       <span>Publish Status</span>
                       <select
                         value={testStatus}
@@ -925,7 +925,7 @@ function AssessmentsPage() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <label className="text-[9px] font-bold text-muted-foreground uppercase block space-y-1">
+                    <label className="text-[9px] font-bold text-muted-foreground block space-y-1">
                       <span>Time Limit (minutes)</span>
                       <input
                         type="number"
@@ -944,7 +944,7 @@ function AssessmentsPage() {
                       />
                     </label>
 
-                    <label className="text-[9px] font-bold text-muted-foreground uppercase block space-y-1">
+                    <label className="text-[9px] font-bold text-muted-foreground block space-y-1">
                       <span>Passing Criteria (%)</span>
                       <input
                         type="number"
@@ -966,13 +966,13 @@ function AssessmentsPage() {
                   </div>
 
                   {/* Difficulty Distributions */}
-                  <div className="border border-(--sb-border) p-3.5 rounded-xl bg-muted/20 space-y-3">
-                    <span className="text-[9px] font-bold text-muted-foreground uppercase block">
+                  <div className="border border-[var(--sb-border)] p-3.5 rounded-xl bg-muted/20 space-y-3">
+                    <span className="text-[9px] font-bold text-muted-foreground block">
                       Target Difficulty Balance Distribution
                     </span>
 
                     <div className="grid grid-cols-3 gap-3">
-                      <label className="text-[8px] font-bold text-muted-foreground block uppercase space-y-1">
+                      <label className="text-[8px] font-bold text-muted-foreground block space-y-1">
                         <span>Easy Count</span>
                         <input
                           type="number"
@@ -990,7 +990,7 @@ function AssessmentsPage() {
                           required
                         />
                       </label>
-                      <label className="text-[8px] font-bold text-muted-foreground block uppercase space-y-1">
+                      <label className="text-[8px] font-bold text-muted-foreground block space-y-1">
                         <span>Medium Count</span>
                         <input
                           type="number"
@@ -1008,7 +1008,7 @@ function AssessmentsPage() {
                           required
                         />
                       </label>
-                      <label className="text-[8px] font-bold text-muted-foreground block uppercase space-y-1">
+                      <label className="text-[8px] font-bold text-muted-foreground block space-y-1">
                         <span>Hard Count</span>
                         <input
                           type="number"
@@ -1030,7 +1030,7 @@ function AssessmentsPage() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <label className="text-[9px] font-bold text-muted-foreground uppercase block space-y-1">
+                    <label className="text-[9px] font-bold text-muted-foreground block space-y-1">
                       <span>Questions Pool Limit</span>
                       <input
                         type="number"
@@ -1131,7 +1131,7 @@ function AssessmentsPage() {
                 {/* Form Fields */}
                 <div className="space-y-4 text-xs text-left">
                   <div className="space-y-1 text-left">
-                    <label className="text-[9px] font-bold text-muted-foreground uppercase block">
+                    <label className="text-[9px] font-bold text-muted-foreground block">
                       <span>Contest Title</span>
                       <input
                         type="text"
@@ -1150,7 +1150,7 @@ function AssessmentsPage() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <label className="text-[9px] font-bold text-muted-foreground uppercase block space-y-1">
+                    <label className="text-[9px] font-bold text-muted-foreground block space-y-1">
                       <span>Start Window Date/Time</span>
                       <input
                         type="datetime-local"
@@ -1165,7 +1165,7 @@ function AssessmentsPage() {
                       />
                     </label>
 
-                    <label className="text-[9px] font-bold text-muted-foreground uppercase block space-y-1">
+                    <label className="text-[9px] font-bold text-muted-foreground block space-y-1">
                       <span>End Window Date/Time</span>
                       <input
                         type="datetime-local"
@@ -1182,7 +1182,7 @@ function AssessmentsPage() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <label className="text-[9px] font-bold text-muted-foreground uppercase block space-y-1">
+                    <label className="text-[9px] font-bold text-muted-foreground block space-y-1">
                       <span>Contest Phase Status</span>
                       <select
                         value={contestStatus}
@@ -1206,7 +1206,7 @@ function AssessmentsPage() {
                       </select>
                     </label>
 
-                    <label className="text-[9px] font-bold text-muted-foreground uppercase block space-y-1">
+                    <label className="text-[9px] font-bold text-muted-foreground block space-y-1">
                       <span>Penalty Submissions Rule</span>
                       <input
                         type="text"
@@ -1224,7 +1224,7 @@ function AssessmentsPage() {
                   </div>
 
                   <div className="space-y-1 text-left">
-                    <label className="text-[9px] font-bold text-muted-foreground uppercase block">
+                    <label className="text-[9px] font-bold text-muted-foreground block">
                       <span>General Rules Description</span>
                       <textarea
                         value={contestRules}
@@ -1242,8 +1242,8 @@ function AssessmentsPage() {
                   </div>
 
                   {/* Problem Selections list */}
-                  <div className="border border-(--sb-border) p-3 rounded-xl bg-muted/20 space-y-2">
-                    <span className="text-[9px] font-bold text-muted-foreground uppercase block">
+                  <div className="border border-[var(--sb-border)] p-3 rounded-xl bg-muted/20 space-y-2">
+                    <span className="text-[9px] font-bold text-muted-foreground block">
                       Assign DSA Problems to Contest Challenge
                     </span>
 

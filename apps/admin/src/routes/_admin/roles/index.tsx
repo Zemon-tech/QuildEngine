@@ -210,7 +210,7 @@ function RolesPage() {
           >
             <div>
               <span
-                className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider mb-2"
+                className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-semibold mb-2"
                 style={{
                   background: `color-mix(in oklab, ${role.color} 12%, transparent)`,
                   color: role.color,
@@ -256,7 +256,7 @@ function RolesPage() {
                 }}
               >
                 <th
-                  className="px-4 py-3 text-left w-1/3 font-semibold uppercase tracking-wider"
+                  className="px-4 py-3 text-left w-1/3 font-semibold"
                   style={{ color: "var(--sb-ink-dim)" }}
                 >
                   Permission Module
@@ -264,7 +264,7 @@ function RolesPage() {
                 {ROLES.map((role) => (
                   <th
                     key={role.id}
-                    className="px-4 py-3 text-center font-semibold uppercase tracking-wider"
+                    className="px-4 py-3 text-center font-semibold"
                     style={{ color: "var(--sb-ink-dim)" }}
                   >
                     {role.name}
@@ -287,7 +287,7 @@ function RolesPage() {
                   >
                     <td
                       colSpan={ROLES.length + 1}
-                      className="px-4 py-2 font-bold uppercase tracking-wider text-[9px] border-y"
+                      className="px-4 py-2 font-bold text-[9px] border-y"
                       style={{
                         color: "var(--sb-ink-muted)",
                         borderColor: "var(--sb-border)",

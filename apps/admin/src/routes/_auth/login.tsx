@@ -60,7 +60,6 @@ function LoginPage() {
             style={{
               background: "color-mix(in oklab, var(--sb-ink) 7%, transparent)",
               color: "var(--sb-ink)",
-              fontFamily: "'Fraunces', Georgia, serif",
             }}
           >
             Q
@@ -70,7 +69,6 @@ function LoginPage() {
               className="text-xl font-bold tracking-tight"
               style={{
                 color: "var(--sb-ink)",
-                fontFamily: "'Fraunces', Georgia, serif",
               }}
             >
               Quild Admin

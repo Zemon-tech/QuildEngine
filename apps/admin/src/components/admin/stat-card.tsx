@@ -27,7 +27,7 @@ export function StatCard({
     >
       <div className="flex items-center justify-between">
         <span
-          className="text-xs font-semibold uppercase tracking-wider"
+          className="text-xs font-semibold tracking-wider"
           style={{ color: "var(--sb-ink-dim)" }}
         >
           {title}
@@ -48,7 +48,6 @@ export function StatCard({
           className="text-2xl font-bold tracking-tight"
           style={{
             color: "var(--sb-ink)",
-            fontFamily: "'Fraunces', Georgia, serif",
           }}
         >
           {value}

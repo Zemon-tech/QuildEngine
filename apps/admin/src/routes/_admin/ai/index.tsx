@@ -421,424 +421,212 @@ interface DashboardTabProps {
   >;
 }
 
-function DashboardTab({
-  messages,
-  setMessages,
-  status,
-  setStatus,
-}: DashboardTabProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [userName, setUserName] = useState("Admin");
-  const [time, setTime] = useState("");
-  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+function DashboardTab({ setActiveTab }: DashboardTabProps & { setActiveTab: (tab: string) => void }) {
+  return (
+    <div className="flex flex-col gap-6 animate-in fade-in duration-200">
+      {/* Operations Dashboard Content */}
+      <div className="space-y-6">
+        {/* KPI Grid (8 Cards) */}
+        <div>
+          <h2 className="text-xs font-bold text-muted-foreground tracking-wider mb-3">
+            System Operations Overview
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {/* Card 1: Active Agents */}
+            <div className="island-shell rounded-xl p-4 flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-all active:scale-[0.98]">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold text-muted-foreground">Active AI Agents</span>
+                <span className="p-1 rounded bg-indigo-500/10 text-indigo-400"><Bot size={13} /></span>
+              </div>
+              <div className="flex items-baseline justify-between mt-1">
+                <span className="text-xl font-bold text-[var(--sb-ink)]">8 Running</span>
+                <span className="text-[9px] font-bold text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded-md">Healthy</span>
+              </div>
+            </div>
 
-  // Load user name from local storage
-  useEffect(() => {
-    const loadProfile = () => {
-      try {
-        const stored = localStorage.getItem("quild_user_profile");
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          if (parsed.name) {
-            setUserName(parsed.name.split(" ")[0]);
-          }
-        }
-      } catch (e) {
-        console.error("Failed to load user profile:", e);
-      }
-    };
-    loadProfile();
-  }, []);
+            {/* Card 2: Active Models */}
+            <div className="island-shell rounded-xl p-4 flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-all active:scale-[0.98]">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold text-muted-foreground">Active Models</span>
+                <span className="p-1 rounded bg-purple-500/10 text-purple-400"><Cpu size={13} /></span>
+              </div>
+              <div className="flex items-baseline justify-between mt-1">
+                <span className="text-xl font-bold text-[var(--sb-ink)]">5 Configured</span>
+                <span className="text-[9px] text-muted-foreground">Across 3 hosts</span>
+              </div>
+            </div>
 
-  // Update ticking clock
-  useEffect(() => {
-    const updateClock = () => {
-      const d = new Date();
-      let hours = d.getHours();
-      const minutes = d.getMinutes();
-      const ampm = hours >= 12 ? "pm" : "am";
-      hours = hours % 12;
-      hours = hours ? hours : 12;
-      const minStr = minutes < 10 ? "0" + minutes : minutes;
-      setTime(`${hours}:${minStr} ${ampm}`);
-    };
-    updateClock();
-    const interval = setInterval(updateClock, 1000);
-    return () => clearInterval(interval);
-  }, []);
+            {/* Card 3: API Requests */}
+            <div className="island-shell rounded-xl p-4 flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-all active:scale-[0.98]">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold text-muted-foreground">API Requests (Weekly)</span>
+                <span className="p-1 rounded bg-blue-500/10 text-blue-400"><Activity size={13} /></span>
+              </div>
+              <div className="flex items-baseline justify-between mt-1">
+                <span className="text-xl font-bold text-[var(--sb-ink)]">48,291</span>
+                <span className="text-[9px] font-bold text-emerald-500">↑ 12.4%</span>
+              </div>
+            </div>
 
-  // Scroll to bottom
-  useEffect(() => {
-    if (messages || status) {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages, status]);
+            {/* Card 4: Token Usage */}
+            <div className="island-shell rounded-xl p-4 flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-all active:scale-[0.98]">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold text-muted-foreground">Completions Token Volume</span>
+                <span className="p-1 rounded bg-violet-500/10 text-violet-400"><Binary size={13} /></span>
+              </div>
+              <div className="flex items-baseline justify-between mt-1">
+                <span className="text-xl font-bold text-[var(--sb-ink)]">42.9M</span>
+                <span className="text-[9px] font-bold text-emerald-500">↑ 41.2%</span>
+              </div>
+            </div>
 
-  const getGreeting = () => {
-    const hr = new Date().getHours();
-    if (hr < 12) return "Good morning";
-    if (hr < 17) return "Good afternoon";
-    return "Good evening";
-  };
+            {/* Card 5: Response Latency */}
+            <div className="island-shell rounded-xl p-4 flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-all active:scale-[0.98]">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold text-muted-foreground">Average Response Latency</span>
+                <span className="p-1 rounded bg-teal-500/10 text-teal-400"><Clock size={13} /></span>
+              </div>
+              <div className="flex items-baseline justify-between mt-1">
+                <span className="text-xl font-bold text-[var(--sb-ink)]">312 ms</span>
+                <span className="text-[9px] font-bold text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded-md">Excellent</span>
+              </div>
+            </div>
 
-  const getFormattedDate = () => {
-    const d = new Date();
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    return `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]}`;
-  };
+            {/* Card 6: Cost Savings */}
+            <div className="island-shell rounded-xl p-4 flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-all active:scale-[0.98]">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold text-muted-foreground">Calculated Cost Saved</span>
+                <span className="p-1 rounded bg-emerald-500/10 text-emerald-400"><DatabaseZap size={13} /></span>
+              </div>
+              <div className="flex items-baseline justify-between mt-1">
+                <span className="text-xl font-bold text-[var(--sb-ink)]">$342.90</span>
+                <span className="text-[9px] text-muted-foreground">Via prompt cache</span>
+              </div>
+            </div>
 
-  const handleNewChat = () => {
-    setMessages([]);
-    setStatus("ready");
-  };
+            {/* Card 7: Running Jobs */}
+            <div className="island-shell rounded-xl p-4 flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-all active:scale-[0.98]">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold text-muted-foreground">Queued Sync Jobs</span>
+                <span className="p-1 rounded bg-amber-500/10 text-amber-400"><Layers size={13} /></span>
+              </div>
+              <div className="flex items-baseline justify-between mt-1">
+                <span className="text-xl font-bold text-[var(--sb-ink)]">2 Pending</span>
+                <span className="text-[9px] font-bold text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded-md">Processing</span>
+              </div>
+            </div>
 
-  const handleSubmitPrompt = async (message: PromptInputMessage) => {
-    const prompt = message.text.trim();
-    if (!prompt && message.files?.length === 0) return;
-
-    const userMsg: LocalMessage = {
-      id: nanoid(),
-      role: "user",
-      content: prompt,
-      createdAt: new Date(),
-    };
-    setMessages((prev) => [...prev, userMsg]);
-    setStatus("submitted");
-
-    await new Promise((resolve) => setTimeout(resolve, 800));
-
-    const isSpanishGreeting = prompt.toLowerCase().includes("hola");
-    const fullText = isSpanishGreeting
-      ? "¡Hola! ¿En qué puedo ayudarte hoy?\n\nVeo que estás revisando la sección de notas en Motion. Si necesitas que busquemos alguna nota en particular, redactemos un borrador, o coordinemos tus tareas y calendario, dímelo y nos ponemos a trabajar en ello."
-      : `Hello ${userName}! I see you're currently reviewing the focus area in your Workspace Dashboard. \n\nI can help you manage your outline notes, write drafts, synchronize tasks, or analyze your current learning progress. Let me know what you would like to tackle first!`;
-
-    const assistantMsgId = nanoid();
-    const assistantMsg: LocalMessage = {
-      id: assistantMsgId,
-      role: "assistant",
-      content: "",
-      createdAt: new Date(),
-    };
-
-    setMessages((prev) => [...prev, assistantMsg]);
-    setStatus("streaming");
-
-    let currentText = "";
-    const words = fullText.split(" ");
-    let wordIndex = 0;
-
-    const streamInterval = setInterval(() => {
-      if (wordIndex < words.length) {
-        currentText += (wordIndex === 0 ? "" : " ") + words[wordIndex];
-        setMessages((prev) =>
-          prev.map((msg) =>
-            msg.id === assistantMsgId ? { ...msg, content: currentText } : msg,
-          ),
-        );
-        wordIndex++;
-      } else {
-        clearInterval(streamInterval);
-        setStatus("ready");
-      }
-    }, 45);
-  };
-
-  const isChatActive = messages.length > 0;
-
-  if (isChatActive) {
-    return (
-      <div className="relative w-full h-[650px] border border-(--sb-border) rounded-xl flex flex-col bg-background text-foreground overflow-hidden shadow-md animate-in fade-in duration-200">
-        {/* Header toolbar */}
-        <div className="flex h-14 shrink-0 items-center justify-between border-b border-(--sb-border) px-6 select-none bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)]">
-          <div className="flex items-center gap-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-(--sb-ink-dim)">
-              AI Workspace Chat
-            </span>
-          </div>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={handleNewChat}
-              className="flex items-center justify-center p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-all cursor-pointer active:scale-95"
-              title="New Chat"
-            >
-              <SquarePen size={16} />
-            </button>
+            {/* Card 8: Success Rate */}
+            <div className="island-shell rounded-xl p-4 flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-all active:scale-[0.98]">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold text-muted-foreground">API Success Rate</span>
+                <span className="p-1 rounded bg-rose-500/10 text-rose-400"><CheckCircle size={13} /></span>
+              </div>
+              <div className="flex items-baseline justify-between mt-1">
+                <span className="text-xl font-bold text-[var(--sb-ink)]">99.85%</span>
+                <span className="text-[9px] font-bold text-emerald-500">Nominal</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Scrollable message container */}
-        <div className="flex-1 overflow-y-auto px-4 py-6 space-y-5 scrollbar-none">
-          <div className="max-w-2xl w-full mx-auto space-y-5 flex flex-col">
-            {messages.map((msg) => (
-              <Message from={msg.role} key={msg.id}>
-                <MessageContent>
-                  {msg.role === "user" ? (
-                    <span className="text-[14px] leading-relaxed">
-                      {msg.content}
-                    </span>
-                  ) : (
-                    <MessageResponse className="text-[14px] leading-relaxed text-foreground prose dark:prose-invert max-w-none">
-                      {msg.content}
-                    </MessageResponse>
-                  )}
-                </MessageContent>
-              </Message>
-            ))}
-
-            {status === "submitted" && (
-              <Message from="assistant">
-                <MessageContent>
-                  <div className="flex items-center gap-1.5 py-2 px-1 text-muted-foreground">
-                    <span
-                      className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce"
-                      style={{ animationDelay: "0ms" }}
-                    />
-                    <span
-                      className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce"
-                      style={{ animationDelay: "150ms" }}
-                    />
-                    <span
-                      className="h-1.5 w-1.5 rounded-full bg-muted-foreground animate-bounce"
-                      style={{ animationDelay: "300ms" }}
-                    />
+        {/* Grid Split Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Active AI Agents List (2/3 width) */}
+          <div className="lg:col-span-2 island-shell rounded-xl p-5 flex flex-col gap-4">
+            <div>
+              <h3 className="text-sm font-bold text-[var(--sb-ink)]">Active Orchestration Agents</h3>
+              <p className="text-[11px] text-muted-foreground">AI agents actively executing background jobs and audits</p>
+            </div>
+            <div className="flex flex-col divide-y divide-[var(--sb-border)]">
+              {[
+                { name: "DSA Code Reviewer", trigger: "On submission", status: "idle", usage: "24.1k runs", color: "bg-emerald-500" },
+                { name: "Course Outline Generator", trigger: "On demand", status: "running", usage: "11.2k runs", color: "bg-amber-500" },
+                { name: "Semantic RAG Search Optimizer", trigger: "Cron (hourly)", status: "idle", usage: "9.4k runs", color: "bg-emerald-500" },
+                { name: "Customer Support Assistant", trigger: "Chat initiated", status: "idle", usage: "3.4k runs", color: "bg-emerald-500" }
+              ].map((agent, i) => (
+                <div key={i} className="py-3 flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <span className="p-2 rounded-lg bg-indigo-500/5 text-indigo-400 border border-[var(--sb-border)]"><Bot size={14} /></span>
+                    <div className="min-w-0">
+                      <p className="text-xs font-semibold text-[var(--sb-ink)] truncate">{agent.name}</p>
+                      <span className="text-[10px] text-muted-foreground flex items-center gap-1"><Clock size={9} /> {agent.trigger}</span>
+                    </div>
                   </div>
-                </MessageContent>
-              </Message>
-            )}
-            <div ref={messagesEndRef} />
+                  <div className="flex items-center gap-4 text-xs font-medium">
+                    <span className="text-muted-foreground text-[10px]">{agent.usage}</span>
+                    <span className="flex items-center gap-1.5 bg-muted/40 px-2 py-0.5 rounded text-[10px] font-bold">
+                      <span className={cn("size-1.5 rounded-full", agent.color)} />
+                      {agent.status}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Fixed bottom input container */}
-        <div className="shrink-0 border-t border-(--sb-border) bg-background pt-4 pb-4 px-4">
-          <div className="max-w-2xl w-full mx-auto flex flex-col gap-3">
-            <DashboardPromptInput
-              onSubmit={handleSubmitPrompt}
-              status={status}
-              placeholder="Write a message..."
-              className="w-full rounded-2xl border border-(--sb-border) bg-card px-3 pt-2.5 pb-2.5 focus-within:border-ring **:data-[slot=input-group]:border-none **:data-[slot=input-group]:bg-transparent **:data-[slot=input-group]:shadow-none"
-            />
-            <div className="text-[10px] text-muted-foreground text-center select-none">
-              Quild AI can make mistakes. Check important details.
+          {/* Quick Actions & Health (1/3 width) */}
+          <div className="flex flex-col gap-6">
+            {/* Quick Actions */}
+            <div className="island-shell rounded-xl p-5 flex flex-col gap-4">
+              <h3 className="text-xs font-bold text-muted-foreground tracking-wider">Quick Actions</h3>
+              <div className="flex flex-col gap-2">
+                {[
+                  { label: "New Agent", icon: Bot, to: "agents" },
+                  { label: "Upload Documents", icon: Database, to: "knowledge" },
+                  { label: "Create Prompt", icon: Terminal, to: "prompts" },
+                  { label: "Configure Models", icon: Cpu, to: "models" }
+                ].map((act, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => setActiveTab(act.to)}
+                    className="flex items-center gap-3 px-3.5 py-2 rounded-lg text-left text-xs font-semibold border border-[var(--sb-border)] hover:bg-[var(--sb-bg-hover)] active:scale-[0.98] transition-all cursor-pointer bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)]"
+                  >
+                    <span className="text-muted-foreground"><act.icon size={13} /></span>
+                    <span className="text-[var(--sb-ink)] flex-1">{act.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Diagnostics Preview */}
+            <div className="island-shell rounded-xl p-5 flex flex-col gap-3.5">
+              <h3 className="text-xs font-bold text-muted-foreground tracking-wider">System Latency (P90)</h3>
+              <div className="space-y-2 text-[10px]">
+                <div className="space-y-1">
+                  <div className="flex justify-between font-semibold">
+                    <span>GPT-4o</span>
+                    <span>240ms</span>
+                  </div>
+                  <div className="h-1 w-full bg-[var(--sb-border)] rounded-full overflow-hidden">
+                    <div className="h-full bg-violet-500" style={{ width: "48%" }} />
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <div className="flex justify-between font-semibold">
+                    <span>Claude 3.5 Sonnet</span>
+                    <span>390ms</span>
+                  </div>
+                  <div className="h-1 w-full bg-[var(--sb-border)] rounded-full overflow-hidden">
+                    <div className="h-full bg-blue-500" style={{ width: "78%" }} />
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <div className="flex justify-between font-semibold">
+                    <span>Gemini 1.5 Pro</span>
+                    <span>310ms</span>
+                  </div>
+                  <div className="h-1 w-full bg-[var(--sb-border)] rounded-full overflow-hidden">
+                    <div className="h-full bg-emerald-500" style={{ width: "62%" }} />
+                  </div>
+                </div>
             </div>
           </div>
         </div>
       </div>
-    );
-  }
-
-  return (
-    <div className="relative w-full h-[650px] border border-(--sb-border) rounded-xl flex flex-col text-white overflow-hidden select-none bg-black shadow-2xl animate-in fade-in duration-200">
-      {/* Background (No filters, no brightness adjustments, no custom scale shifts) */}
-      <div
-        className="absolute inset-0 z-0 bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/backgrounds/lib-gate.png')",
-        }}
-      />
-
-      <div className="absolute inset-0 bg-black/40 z-0 pointer-events-none" />
-
-      {/* Center content container */}
-      <div
-        className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 max-w-2xl w-full mx-auto pb-8"
-        style={{
-          transform: isExpanded ? "translateY(0)" : "translateY(-40px)",
-          transition: "transform 550ms cubic-bezier(0.16, 1, 0.3, 1)",
-        }}
-      >
-        <div className="w-full flex flex-col items-center text-center mb-2">
-          <h1
-            className="text-white text-3xl md:text-4xl font-medium tracking-tight mb-3 drop-shadow-md select-none"
-            style={{ fontFamily: "'Fraunces', Georgia, serif" }}
-          >
-            {getGreeting()}, {userName}
-          </h1>
-        </div>
-
-        {/* Prompt Input */}
-        <div className="w-full relative z-20">
-          <DashboardPromptInput
-            onSubmit={handleSubmitPrompt}
-            status={status}
-            className="w-full rounded-2xl border border-white/10 bg-black/70 backdrop-blur-md px-3.5 pt-3 pb-3 shadow-lg focus-within:border-white/30 **:data-[slot=input-group]:border-none **:data-[slot=input-group]:bg-transparent **:data-[slot=input-group]:shadow-none"
-          />
-        </div>
-
-        {/* Sliding Dashboard Panel */}
-        <div className="w-full relative z-10 -mt-5">
-          <motion.div
-            initial={{ height: 58, opacity: 0 }}
-            animate={{ height: isExpanded ? "auto" : 58, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 170, damping: 24 }}
-            className="w-full bg-black/85 backdrop-blur-md border border-white/10 border-t-0 rounded-b-[1.25rem] overflow-hidden shadow-2xl"
-          >
-            <AnimatePresence mode="popLayout" initial={false}>
-              {!isExpanded ? (
-                <motion.div
-                  key="minimized"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.15 }}
-                  className="flex items-center justify-between px-5 pt-[26px] pb-[10px] h-[58px] text-[13px] text-zinc-400 select-none"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                    </span>
-                    <span className="text-[13px] font-medium tracking-wide">
-                      Workspace Status:{" "}
-                      <strong className="text-white font-normal">
-                        0 urgent
-                      </strong>{" "}
-                      •{" "}
-                      <strong className="text-white font-normal">
-                        0 replies
-                      </strong>{" "}
-                      •{" "}
-                      <strong className="text-white font-normal">
-                        2 queued
-                      </strong>
-                    </span>
-                  </div>
-                  <button
-                    onClick={() => setIsExpanded(true)}
-                    className="flex items-center gap-1 hover:text-white transition-colors cursor-pointer text-zinc-400 text-[13px] font-semibold"
-                  >
-                    View snapshot
-                    <ChevronDown size={14} />
-                  </button>
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="expanded"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="px-5 pb-6 pt-8 flex flex-col"
-                >
-                  {/* Header row when expanded */}
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-[10px] font-bold text-zinc-400 tracking-widest uppercase">
-                      Workspace Dashboard
-                    </span>
-                    <button
-                      onClick={() => setIsExpanded(false)}
-                      className="flex items-center gap-1 hover:text-white transition-colors cursor-pointer text-zinc-400 text-[13px] font-semibold"
-                    >
-                      Minimize
-                      <ChevronUp size={14} />
-                    </button>
-                  </div>
-
-                  {/* 3 Columns Dashboard Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-white/10">
-                    {/* Column 1 - Current Focus */}
-                    <div className="flex flex-col justify-between pr-4 h-full min-h-[90px]">
-                      <div>
-                        <div className="text-[10px] font-bold text-zinc-400 tracking-wider uppercase mb-3 flex items-center justify-between">
-                          <span>Current Focus</span>
-                          <span className="text-[9px] font-semibold px-2 py-0.2 rounded-md border border-white/10 bg-white/5 text-zinc-400">
-                            Medium
-                          </span>
-                        </div>
-                        <div className="flex justify-between items-center w-full mt-1.5">
-                          <div className="space-y-1 pr-2">
-                            <div className="text-sm font-semibold text-white leading-tight">
-                              Test Event Sync Outbound
-                            </div>
-                            <div className="text-xs text-zinc-400">
-                              Due today • Todo
-                            </div>
-                          </div>
-                          <div className="flex flex-col gap-1 shrink-0">
-                            <div className="w-1.5 h-1.5 rounded-full bg-white/80" />
-                            <div className="w-1.5 h-1.5 rounded-full bg-white/20" />
-                            <div className="w-1.5 h-1.5 rounded-full bg-white/20" />
-                            <div className="w-1.5 h-1.5 rounded-full bg-white/20" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Column 2 - Time & Date */}
-                    <div className="flex flex-col justify-between px-4 h-full min-h-[90px] border-l border-white/10">
-                      <div className="flex items-center gap-2 text-white text-xs">
-                        <Calendar size={14} className="text-zinc-400" />
-                        <span>{getFormattedDate()}</span>
-                        <span className="flex items-center gap-1 px-2 py-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-[10px] font-medium scale-95 origin-left">
-                          <span className="relative flex h-1.5 w-1.5">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                          </span>
-                          Live
-                        </span>
-                      </div>
-                      <div className="text-2xl font-bold text-white tracking-tight my-1 select-none">
-                        {time}
-                      </div>
-                      <div className="text-[11px] text-zinc-400">
-                        Workspace snapshot
-                      </div>
-                    </div>
-
-                    {/* Column 3 - Counter Badges */}
-                    <div className="flex flex-col gap-2 pl-4 h-full justify-center border-l border-white/10 select-none">
-                      <div className="flex items-center justify-between px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs hover:bg-white/10 transition-all text-white">
-                        <div className="flex items-center gap-2">
-                          <div className="p-1 rounded bg-red-500/10 border border-red-500/20 text-red-400 shrink-0">
-                            <AlertTriangle size={12} />
-                          </div>
-                          <span>Urgent</span>
-                        </div>
-                        <span className="font-semibold">0</span>
-                      </div>
-
-                      <div className="flex items-center justify-between px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs hover:bg-white/10 transition-all text-white">
-                        <div className="flex items-center gap-2">
-                          <div className="p-1 rounded bg-blue-500/10 border border-blue-500/20 text-blue-400 shrink-0">
-                            <MessageSquare size={12} />
-                          </div>
-                          <span>Replies</span>
-                        </div>
-                        <span className="font-semibold">0</span>
-                      </div>
-
-                      <div className="flex items-center justify-between px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs hover:bg-white/10 transition-all text-white">
-                        <div className="flex items-center gap-2">
-                          <div className="p-1 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 shrink-0">
-                            <CheckSquare size={12} />
-                          </div>
-                          <span>Queued</span>
-                        </div>
-                        <span className="font-semibold">2</span>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        </div>
-      </div>
     </div>
+  </div>
   );
 }
 
@@ -935,7 +723,7 @@ function ChatTab({
       {/* Header toolbar */}
       <div className="flex h-14 shrink-0 items-center justify-between border-b border-(--sb-border) px-6 select-none bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)]">
         <div className="flex items-center gap-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-(--sb-ink-dim)">
+          <span className="text-xs font-bold tracking-wider text-[var(--sb-ink-dim)]">
             Direct AI Agent Chat
           </span>
         </div>
@@ -1012,7 +800,7 @@ function ChatTab({
             onSubmit={handleSubmitPrompt}
             status={status}
             placeholder="Ask AI anything..."
-            className="w-full rounded-2xl border border-(--sb-border) bg-card px-3 pt-2.5 pb-2.5 focus-within:border-ring **:data-[slot=input-group]:border-none **:data-[slot=input-group]:bg-transparent **:data-[slot=input-group]:shadow-none"
+            className="w-full rounded-2xl border border-[var(--sb-border)] bg-card/90 px-4 py-3 shadow-[0_2px_8px_rgba(0,0,0,0.04)] focus-within:border-[var(--sb-accent)] focus-within:shadow-[0_4px_16px_rgba(0,0,0,0.08)] transition-all [&_[data-slot=input-group]]:border-none! [&_[data-slot=input-group]]:bg-transparent! [&_[data-slot=input-group]]:shadow-none!"
           />
         </div>
       </div>
@@ -1155,77 +943,40 @@ function AIDashboardPage() {
         ]}
       />
 
-      <div className="grid grid-cols-1 xl:grid-cols-5 gap-6 mt-6">
-        {/* Navigation Sidebar (Vertical tabs) */}
-        <div className="xl:col-span-1 flex flex-col gap-1.5 island-shell rounded-xl p-3 h-fit">
-          <div className="px-2.5 pb-2 border-b border-(--sb-border)">
-            <span
-              className="text-[10px] font-bold tracking-wider uppercase"
-              style={{ color: "var(--sb-ink-dim)" }}
-            >
-              Dashboard Sections
-            </span>
-          </div>
-          <div className="flex flex-col gap-1 overflow-y-auto max-h-[70vh] scrollbar-none">
-            {tabs.map((tab) => {
-              const Icon = tab.icon;
-              const active = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => setActiveTab(tab.id)}
-                  className={cn(
-                    "flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 cursor-pointer active:scale-98 text-left",
-                    active
-                      ? "bg-[color-mix(in_oklab,var(--sb-ink)_8%,transparent)] text-(--sb-ink) font-bold shadow-xs"
-                      : "text-(--sb-ink-muted) hover:bg-[color-mix(in_oklab,var(--sb-ink)_3%,transparent)] hover:text-(--sb-ink)",
-                  )}
-                >
-                  <span className={cn("p-1 rounded-md", tab.color)}>
-                    <Icon size={13} />
-                  </span>
-                  <span className="flex-1 truncate">{tab.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Content Viewport */}
-        <div className="xl:col-span-4 flex flex-col min-h-[60vh]">
-          {activeTab === "dashboard" && (
-            <DashboardTab
-              messages={messages}
-              setMessages={setMessages}
-              status={status}
-              setStatus={setStatus}
-            />
-          )}
-          {activeTab === "chat" && (
-            <ChatTab
-              messages={messages}
-              setMessages={setMessages}
-              status={status}
-              setStatus={setStatus}
-            />
-          )}
-          {activeTab === "assistant" && <AssistantTab />}
-          {activeTab === "research" && <ResearchTab />}
-          {activeTab === "overview" && <OverviewTab />}
-          {activeTab === "analytics" && <AnalyticsTab />}
-          {activeTab === "usage" && <UsageTab />}
-          {activeTab === "tokens" && <TokensTab />}
-          {activeTab === "models" && <ModelsTab />}
-          {activeTab === "agents" && <AgentsTab />}
-          {activeTab === "prompts" && <PromptsTab />}
-          {activeTab === "knowledge" && <KnowledgeTab />}
-          {activeTab === "rag" && <RAGTab />}
-          {activeTab === "api" && <APITab />}
-          {activeTab === "jobs" && <JobsTab />}
-          {activeTab === "timeline" && <TimelineTab />}
-          {activeTab === "settings" && <SettingsTab />}
-        </div>
+      {/* Content Viewport (Full width) */}
+      <div className="flex flex-col min-h-[60vh] w-full mt-6">
+        {activeTab === "dashboard" && (
+          <DashboardTab
+            messages={messages}
+            setMessages={setMessages}
+            status={status}
+            setStatus={setStatus}
+            setActiveTab={setActiveTab}
+          />
+        )}
+        {activeTab === "chat" && (
+          <ChatTab
+            messages={messages}
+            setMessages={setMessages}
+            status={status}
+            setStatus={setStatus}
+          />
+        )}
+        {activeTab === "assistant" && <AssistantTab />}
+        {activeTab === "research" && <ResearchTab />}
+        {activeTab === "overview" && <OverviewTab />}
+        {activeTab === "analytics" && <AnalyticsTab />}
+        {activeTab === "usage" && <UsageTab />}
+        {activeTab === "tokens" && <TokensTab />}
+        {activeTab === "models" && <ModelsTab />}
+        {activeTab === "agents" && <AgentsTab />}
+        {activeTab === "prompts" && <PromptsTab />}
+        {activeTab === "knowledge" && <KnowledgeTab />}
+        {activeTab === "rag" && <RAGTab />}
+        {activeTab === "api" && <APITab />}
+        {activeTab === "jobs" && <JobsTab />}
+        {activeTab === "timeline" && <TimelineTab />}
+        {activeTab === "settings" && <SettingsTab />}
       </div>
     </div>
   );
@@ -1316,7 +1067,7 @@ function OverviewTab() {
         <div className="island-shell rounded-xl p-5 flex flex-col">
           <div className="flex items-center justify-between mb-4">
             <h2
-              className="text-xs font-bold uppercase tracking-wider"
+              className="text-xs font-bold tracking-wider"
               style={{ color: "var(--sb-ink-dim)" }}
             >
               Active AI Agents
@@ -1361,7 +1112,7 @@ function OverviewTab() {
                   </span>
                   <Badge
                     className={cn(
-                      "text-[9px] uppercase tracking-wider font-bold py-0.5 px-1.5",
+                      "text-[9px] font-bold py-0.5 px-1.5 capitalize",
                       agent.status === "running"
                         ? "bg-amber-500/15 text-amber-500"
                         : "bg-[color-mix(in_oklab,var(--sb-ink)_8%,transparent)] text-(--sb-ink-muted)",
@@ -1378,7 +1129,7 @@ function OverviewTab() {
         {/* Model breakdown progress bars */}
         <div className="island-shell rounded-xl p-5 flex flex-col">
           <h2
-            className="text-xs font-bold uppercase tracking-wider mb-4"
+            className="text-xs font-bold tracking-wider mb-4"
             style={{ color: "var(--sb-ink-dim)" }}
           >
             Provider & Model Routing Share
@@ -1478,7 +1229,7 @@ function AnalyticsTab() {
         {/* Latency card */}
         <div className="flex flex-col border border-(--sb-border) p-4 rounded-lg">
           <span
-            className="text-xs font-semibold mb-3 uppercase tracking-wider"
+            className="text-xs font-semibold mb-3 tracking-wider"
             style={{ color: "var(--sb-ink-muted)" }}
           >
             Average Latency by LLM
@@ -1523,7 +1274,7 @@ function AnalyticsTab() {
         {/* Errors card */}
         <div className="flex flex-col border border-(--sb-border) p-4 rounded-lg">
           <span
-            className="text-xs font-semibold mb-3 uppercase tracking-wider"
+            className="text-xs font-semibold mb-3 tracking-wider"
             style={{ color: "var(--sb-ink-muted)" }}
           >
             Error Rates (Last 24h)
@@ -1572,7 +1323,7 @@ function AnalyticsTab() {
         <div className="flex flex-col border border-(--sb-border) p-4 rounded-lg justify-between">
           <div>
             <span
-              className="text-xs font-semibold mb-1 block uppercase tracking-wider"
+              className="text-xs font-semibold mb-1 block tracking-wider"
               style={{ color: "var(--sb-ink-muted)" }}
             >
               Response Cache Hit Rate
@@ -1762,22 +1513,22 @@ function TokensTab() {
                 color: "var(--sb-ink-muted)",
               }}
             >
-              <th className="pb-3 font-semibold uppercase tracking-wider">
+              <th className="pb-3 font-semibold">
                 Provider
               </th>
-              <th className="pb-3 font-semibold uppercase tracking-wider">
+              <th className="pb-3 font-semibold">
                 Input Tokens
               </th>
-              <th className="pb-3 font-semibold uppercase tracking-wider">
+              <th className="pb-3 font-semibold">
                 Output Tokens
               </th>
-              <th className="pb-3 font-semibold uppercase tracking-wider">
+              <th className="pb-3 font-semibold">
                 Input Cost
               </th>
-              <th className="pb-3 font-semibold uppercase tracking-wider">
+              <th className="pb-3 font-semibold">
                 Output Cost
               </th>
-              <th className="pb-3 font-semibold uppercase tracking-wider text-right">
+              <th className="pb-3 font-semibold text-right">
                 Total Billing
               </th>
             </tr>
@@ -1881,7 +1632,7 @@ function ModelsTab() {
       {/* Active Model Configurations */}
       <div className="island-shell rounded-xl p-5 flex flex-col">
         <h2
-          className="text-xs font-bold uppercase tracking-wider mb-4"
+          className="text-xs font-bold tracking-wider mb-4"
           style={{ color: "var(--sb-ink-dim)" }}
         >
           Active Completion Models
@@ -1933,7 +1684,7 @@ function ModelsTab() {
       {/* Model Router Rules */}
       <div className="island-shell rounded-xl p-5 flex flex-col gap-4">
         <h2
-          className="text-xs font-bold uppercase tracking-wider"
+          className="text-xs font-bold tracking-wider"
           style={{ color: "var(--sb-ink-dim)" }}
         >
           Global Model Router Policy
@@ -2168,7 +1919,7 @@ function AgentsTab() {
           {/* Console Output */}
           <div className="flex flex-col gap-2">
             <span
-              className="text-[10px] font-bold uppercase tracking-wider"
+              className="text-[10px] font-bold"
               style={{ color: "var(--sb-ink-dim)" }}
             >
               Streaming Logs
@@ -2333,7 +2084,7 @@ function PromptsTab() {
 
             <div className="flex flex-col gap-2">
               <span
-                className="text-[10px] font-bold uppercase tracking-wider"
+                className="text-[10px] font-bold"
                 style={{ color: "var(--sb-ink-dim)" }}
               >
                 Prompt Input Parameters
@@ -2459,24 +2210,24 @@ function KnowledgeTab() {
 
       {/* Index statistics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="border border-(--sb-border) p-4 rounded-xl flex flex-col justify-center">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-(--sb-ink-muted)">
+        <div className="border border-[var(--sb-border)] p-4 rounded-xl flex flex-col justify-center">
+          <span className="text-[10px] font-semibold text-[var(--sb-ink-muted)]">
             Total Embedded Chunks
           </span>
           <span className="text-2xl font-bold mt-1 text-(--sb-ink)">
             14,821 chunks
           </span>
         </div>
-        <div className="border border-(--sb-border) p-4 rounded-xl flex flex-col justify-center">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-(--sb-ink-muted)">
+        <div className="border border-[var(--sb-border)] p-4 rounded-xl flex flex-col justify-center">
+          <span className="text-[10px] font-semibold text-[var(--sb-ink-muted)]">
             Embedding Model
           </span>
           <span className="text-sm font-semibold mt-1 text-(--sb-ink)">
             text-embedding-3-small (1536 dim)
           </span>
         </div>
-        <div className="border border-(--sb-border) p-4 rounded-xl flex flex-col justify-center">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-(--sb-ink-muted)">
+        <div className="border border-[var(--sb-border)] p-4 rounded-xl flex flex-col justify-center">
+          <span className="text-[10px] font-semibold text-[var(--sb-ink-muted)]">
             Index Density
           </span>
           <span className="text-sm font-semibold mt-1 text-(--sb-ink)">
@@ -2487,7 +2238,7 @@ function KnowledgeTab() {
 
       <div className="flex flex-col gap-3">
         <span
-          className="text-[10px] font-bold uppercase tracking-wider"
+          className="text-[10px] font-bold"
           style={{ color: "var(--sb-ink-dim)" }}
         >
           Indexed Sources
@@ -2665,7 +2416,7 @@ function RAGTab() {
       {/* RAG search results output */}
       <div className="flex flex-col gap-3">
         <span
-          className="text-[10px] font-bold uppercase tracking-wider"
+          className="text-[10px] font-bold"
           style={{ color: "var(--sb-ink-dim)" }}
         >
           Retrieved Chunks
@@ -2826,19 +2577,19 @@ function APITab() {
                 color: "var(--sb-ink-muted)",
               }}
             >
-              <th className="pb-3 font-semibold uppercase tracking-wider">
+              <th className="pb-3 font-semibold">
                 Key Label Name
               </th>
-              <th className="pb-3 font-semibold uppercase tracking-wider">
+              <th className="pb-3 font-semibold">
                 Security Token
               </th>
-              <th className="pb-3 font-semibold uppercase tracking-wider">
+              <th className="pb-3 font-semibold">
                 Created Date
               </th>
-              <th className="pb-3 font-semibold uppercase tracking-wider">
+              <th className="pb-3 font-semibold">
                 Status
               </th>
-              <th className="pb-3 font-semibold uppercase tracking-wider text-right">
+              <th className="pb-3 font-semibold text-right">
                 Actions
               </th>
             </tr>
@@ -2943,7 +2694,7 @@ function JobsTab() {
               </div>
               <Badge
                 className={cn(
-                  "text-[9px] uppercase tracking-wider font-bold py-0.5 px-2",
+                  "text-[9px] font-bold py-0.5 px-2 capitalize",
                   job.status === "Success" &&
                     "bg-emerald-500/10 text-emerald-500",
                   job.status === "Running" && "bg-amber-500/15 text-amber-500",

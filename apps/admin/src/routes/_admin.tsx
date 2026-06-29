@@ -211,10 +211,10 @@ function AdminShell() {
         } as React.CSSProperties
       }
     >
-      <div className="flex h-screen w-screen overflow-hidden bg-transparent relative">
+      <div className="flex h-screen w-screen overflow-hidden bg-[var(--page-bg)] text-[var(--page-ink)] relative">
         <AdminAppSidebar />
         <AdminSecondarySidebar />
-        <SidebarInset className="flex flex-1 flex-col overflow-hidden bg-transparent border-0 outline-none">
+        <SidebarInset className="flex flex-1 flex-col overflow-hidden bg-[var(--page-bg)] border-0 outline-none">
           <div className="flex-1 overflow-y-auto page-enter">
             <Outlet />
           </div>

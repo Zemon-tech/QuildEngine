@@ -29,6 +29,7 @@ import {
   Bot,
   AlertCircle,
   Check,
+  Settings,
 } from "lucide-react";
 import { PageHeader } from "#/components/admin/page-header";
 import { MetricCard } from "#/components/admin/metric-card";
@@ -38,9 +39,9 @@ import {
   useDsaProblems,
   useSaveDsaProblem,
   useDeleteDsaProblem,
-  DsaProblem,
-  TestCase,
-  ProblemSolution,
+  type DsaProblem,
+  type TestCase,
+  type ProblemSolution,
 } from "#/hooks/use-practice-state";
 
 const dsaSearchSchema = z.object({
@@ -697,10 +698,10 @@ function DsaPage() {
                               prob.status === "published"
                                 ? "active"
                                 : prob.status === "archived"
-                                  ? "inactive"
+                                  ? "archived"
                                   : "pending"
                             }
-                            className="text-[9px] uppercase font-bold"
+                            className="text-[9px] font-bold"
                           />
                         </td>
                         <td className="p-4 text-right">
@@ -1010,8 +1011,8 @@ function DsaPage() {
               </div>
 
               {/* Sub-form: Test cases */}
-              <div className="border border-(--sb-border) rounded-lg p-4 space-y-3">
-                <h4 className="font-bold text-[11px] uppercase tracking-wider text-muted-foreground">
+              <div className="border border-[var(--sb-border)] rounded-lg p-4 space-y-3">
+                <h4 className="font-bold text-[11px] tracking-wider text-muted-foreground">
                   Test Case Management
                 </h4>
                 <div className="flex gap-2 items-end">
@@ -1094,8 +1095,8 @@ function DsaPage() {
               </div>
 
               {/* Sub-form: Solution Editorials */}
-              <div className="border border-(--sb-border) rounded-lg p-4 space-y-3">
-                <h4 className="font-bold text-[11px] uppercase tracking-wider text-muted-foreground">
+              <div className="border border-[var(--sb-border)] rounded-lg p-4 space-y-3">
+                <h4 className="font-bold text-[11px] tracking-wider text-muted-foreground">
                   Solution Codes & Editorials
                 </h4>
                 <div className="flex gap-2 items-end">
