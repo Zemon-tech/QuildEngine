@@ -8,6 +8,7 @@
  *
  * @see https://tanstack.com/start/latest/docs/framework/react/guide/middleware
  */
+import { redirect } from "@tanstack/react-router";
 import { createMiddleware } from "@tanstack/react-start";
 import { getSession, type Session } from "./session.server";
 
@@ -46,19 +47,13 @@ export const authMiddleware = createMiddleware().server(async ({ next }) => {
  *     // context.session is guaranteed to be non-null here
  *   });
  * ```
- *
- * TODO: Update the redirect path once the login route exists.
  */
 export const protectedMiddleware = createMiddleware().server(
   async ({ next }) => {
     const session = getSession();
 
     if (!session) {
-      // When you add the login route, uncomment this:
-      // throw redirect({ to: "/login" });
-
-      // For now, throw an error that the client can handle
-      throw new Error("Unauthorized: No valid session found");
+      throw redirect({ to: "/login" });
     }
 
     return next({

@@ -1,13 +1,26 @@
 import { useEffect, useState, useRef } from "react";
-import { createFileRoute, Outlet, useRouterState } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useRouterState, redirect } from "@tanstack/react-router";
 import { AppSidebar } from "#/components/sidebar/app-sidebar";
 import { SecondarySidebar } from "#/components/sidebar/secondary-sidebar";
 import { SidebarInset, SidebarProvider } from "#/components/ui/sidebar";
 import { TooltipProvider } from "#/components/ui/tooltip";
+import { getSessionFn } from "../lib/server-fns/auth.js";
 
 export const Route = createFileRoute("/_app")({
+  beforeLoad: async ({ location }) => {
+    const session = await getSessionFn();
+    if (!session) {
+      throw redirect({
+        to: "/login" as any,
+        search: { redirect: location.href } as any,
+      });
+    }
+    return { session };
+  },
   component: AppLayout,
 });
+
+import { AuthGuard } from "../auth/guards/AuthGuard.js";
 
 function AppLayout() {
   const routerState = useRouterState();
@@ -68,25 +81,27 @@ function AppLayout() {
   }, [currentPath, isThirdLevelRoute, prevPath]);
 
   return (
-    <SidebarProvider open={open} onOpenChange={setOpen}>
-      <TooltipProvider delayDuration={400} skipDelayDuration={100}>
-        <div className="flex h-screen w-screen overflow-hidden">
-          <AppSidebar />
-          <SecondarySidebar />
-          <SidebarInset className="flex flex-1 flex-col overflow-hidden bg-transparent border-0 outline-none">
-            {/* Scrollable Main Content or Full-Screen Workspace */}
-            <div
-              className={`flex-1 ${
-                isProblemWorkspace
-                  ? "flex flex-col h-screen"
-                  : "overflow-y-auto page-enter px-3 py-6 md:px-4 pt-16 md:pt-6"
-              }`}
-            >
-              <Outlet />
-            </div>
-          </SidebarInset>
-        </div>
-      </TooltipProvider>
-    </SidebarProvider>
+    <AuthGuard>
+      <SidebarProvider open={open} onOpenChange={setOpen}>
+        <TooltipProvider delayDuration={400} skipDelayDuration={100}>
+          <div className="flex h-screen w-screen overflow-hidden">
+            <AppSidebar />
+            <SecondarySidebar />
+            <SidebarInset className="flex flex-1 flex-col overflow-hidden bg-transparent border-0 outline-none">
+              {/* Scrollable Main Content or Full-Screen Workspace */}
+              <div
+                className={`flex-1 ${
+                  isProblemWorkspace
+                    ? "flex flex-col h-screen"
+                    : "overflow-y-auto page-enter px-3 py-6 md:px-4 pt-16 md:pt-6"
+                }`}
+              >
+                <Outlet />
+              </div>
+            </SidebarInset>
+          </div>
+        </TooltipProvider>
+      </SidebarProvider>
+    </AuthGuard>
   );
 }

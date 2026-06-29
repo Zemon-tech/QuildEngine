@@ -1,50 +1,52 @@
-/**
- * Session utilities for reading/verifying auth state from the incoming request.
- *
- * Your dedicated backend (Supabase) issues auth tokens. The web BFF:
- * 1. Reads the token from cookies on the incoming request
- * 2. Optionally verifies it server-side
- * 3. Passes it downstream when proxying to your backend
- *
- * This module is a placeholder — fill in once Supabase auth is integrated.
- */
 import { getRequest } from "@tanstack/react-start/server";
+import {
+  type Role,
+  type Permission,
+  normalizeRole,
+  ROLE_PERMISSIONS,
+} from "@quild/contracts";
 
 export interface Session {
-  /** Supabase access token (JWT) */
   accessToken: string;
-  /** Supabase refresh token */
   refreshToken?: string;
-  /** Decoded user info (minimal, from JWT) */
   user: {
     id: string;
     email: string;
+    role: Role;
+    permissions: Permission[];
   } | null;
 }
 
-/**
- * Cookie name where Supabase stores the auth tokens.
- * Supabase JS client uses `sb-<project-ref>-auth-token` by default.
- * Adjust if you customize the cookie name.
- */
 const AUTH_COOKIE_NAME = "sb-auth-token";
 
 /**
+ * Base64url-decodes a JWT payload safely in edge-friendly runtime environments.
+ */
+function decodeJwtPayload(token: string) {
+  try {
+    const parts = token.split(".");
+    if (parts.length !== 3) return null;
+    const base64Url = parts[1];
+    if (!base64Url) return null;
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = atob(base64);
+    return JSON.parse(jsonPayload);
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Reads the session from the incoming request cookies.
- * Returns null if no valid session cookie is found.
- *
- * TODO: Once Supabase auth is wired up:
- * - Parse the cookie value (JSON with access_token + refresh_token)
- * - Optionally verify the JWT signature with SUPABASE_JWT_SECRET
- * - Handle token refresh if expired
+ * Decodes the JWT token payload directly to resolve the user claims (never trusting client-side modifications).
  */
 export function getSession(): Session | null {
   const request = getRequest();
-  const cookieHeader = request.headers.get("cookie");
+  if (!request) return null;
 
+  const cookieHeader = request.headers.get("cookie");
   if (!cookieHeader) return null;
 
-  // Parse cookies manually (Cloudflare Workers don't have a cookie jar API)
   const cookies = Object.fromEntries(
     cookieHeader.split(";").map((c: string) => {
       const [key, ...val] = c.trim().split("=");
@@ -56,25 +58,35 @@ export function getSession(): Session | null {
   if (!rawToken) return null;
 
   try {
-    // Supabase stores tokens as a JSON array: [access_token, refresh_token, ...]
-    // or as a base64-encoded JSON object depending on the client version.
-    // This is a simplified placeholder — adjust to your actual cookie format.
-    const decoded = JSON.parse(decodeURIComponent(rawToken));
+    const decodedCookie = JSON.parse(decodeURIComponent(rawToken));
+    const accessToken = decodedCookie.access_token ?? decodedCookie[0];
+    const refreshToken = decodedCookie.refresh_token ?? decodedCookie[1];
+
+    if (!accessToken) return null;
+
+    // Decode claims directly from the cryptographically signed JWT payload
+    const jwtPayload = decodeJwtPayload(accessToken);
+    if (!jwtPayload || !jwtPayload.sub) return null;
+
+    const rawRole = jwtPayload.app_metadata?.role || jwtPayload.user_metadata?.role || jwtPayload.raw_user_meta_data?.role;
+    const role = normalizeRole(rawRole);
+    const permissions = ROLE_PERMISSIONS[role] || [];
 
     return {
-      accessToken: decoded.access_token ?? decoded[0],
-      refreshToken: decoded.refresh_token ?? decoded[1],
-      user: null, // Will be populated after JWT decode
+      accessToken,
+      refreshToken,
+      user: {
+        id: jwtPayload.sub,
+        email: jwtPayload.email || "",
+        role,
+        permissions,
+      },
     };
   } catch {
     return null;
   }
 }
 
-/**
- * Gets just the access token for forwarding to the backend.
- * Returns null if not authenticated.
- */
 export function getAccessToken(): string | null {
   const session = getSession();
   return session?.accessToken ?? null;

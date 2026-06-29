@@ -38,6 +38,8 @@ export const Route = createRootRoute({
   shellComponent: RootDocument,
 });
 
+import { AuthProvider } from "../auth/providers/AuthProvider.js";
+
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -53,8 +55,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             disableTransitionOnChange={false}
           >
             <TooltipProvider delayDuration={300}>
-              {children}
-              <ScrollRestoration />
+              <AuthProvider>
+                {children}
+              </AuthProvider>
               <TanStackRouterDevtools position="bottom-right" />
               <Scripts />
             </TooltipProvider>

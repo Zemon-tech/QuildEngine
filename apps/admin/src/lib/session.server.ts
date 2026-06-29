@@ -1,9 +1,10 @@
-/**
- * Session utilities for the admin BFF.
- * Reads the Supabase auth token from the incoming request cookies.
- * Mirrors apps/web/src/lib/session.server.ts exactly.
- */
 import { getRequest } from "@tanstack/react-start/server";
+import {
+  type Role,
+  type Permission,
+  normalizeRole,
+  ROLE_PERMISSIONS,
+} from "@quild/contracts";
 
 export interface AdminSession {
   accessToken: string;
@@ -11,16 +12,27 @@ export interface AdminSession {
   user: {
     id: string;
     email: string;
-    role: string;
+    role: Role;
+    permissions: Permission[];
   } | null;
 }
 
 const AUTH_COOKIE_NAME = "sb-auth-token";
 
-/**
- * Reads the admin session from request cookies.
- * Returns null if no valid session is present.
- */
+function decodeJwtPayload(token: string) {
+  try {
+    const parts = token.split(".");
+    if (parts.length !== 3) return null;
+    const base64Url = parts[1];
+    if (!base64Url) return null;
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = atob(base64);
+    return JSON.parse(jsonPayload);
+  } catch {
+    return null;
+  }
+}
+
 export function getSession(): AdminSession | null {
   const request = getRequest();
   if (!request) return null;
@@ -39,20 +51,34 @@ export function getSession(): AdminSession | null {
   if (!rawToken) return null;
 
   try {
-    const decoded = JSON.parse(decodeURIComponent(rawToken));
+    const decodedCookie = JSON.parse(decodeURIComponent(rawToken));
+    const accessToken = decodedCookie.access_token ?? decodedCookie[0];
+    const refreshToken = decodedCookie.refresh_token ?? decodedCookie[1];
+
+    if (!accessToken) return null;
+
+    const jwtPayload = decodeJwtPayload(accessToken);
+    if (!jwtPayload || !jwtPayload.sub) return null;
+
+    const rawRole = jwtPayload.app_metadata?.role || jwtPayload.user_metadata?.role || jwtPayload.raw_user_meta_data?.role;
+    const role = normalizeRole(rawRole);
+    const permissions = ROLE_PERMISSIONS[role] || [];
+
     return {
-      accessToken: decoded.access_token ?? decoded[0],
-      refreshToken: decoded.refresh_token ?? decoded[1],
-      user: decoded.user ?? null,
+      accessToken,
+      refreshToken,
+      user: {
+        id: jwtPayload.sub,
+        email: jwtPayload.email || "",
+        role,
+        permissions,
+      },
     };
   } catch {
     return null;
   }
 }
 
-/**
- * Gets just the access token for forwarding to the backend.
- */
 export function getAccessToken(): string | null {
   const session = getSession();
   return session?.accessToken ?? null;

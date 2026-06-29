@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { LogOut, Settings, Shield, User } from "lucide-react";
 import { Avatar, AvatarFallback } from "#/components/ui/avatar";
+import { useAuth } from "#/auth/hooks/useAuth.js";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,7 +30,14 @@ const PLACEHOLDER_USER = {
 };
 
 export function AdminUserNav({ collapsed = false }: AdminUserNavProps) {
-  const user = PLACEHOLDER_USER;
+  const { logout, user: authUser } = useAuth();
+
+  const user = authUser ? {
+    name: authUser.email.split("@")[0] || "Admin",
+    email: authUser.email,
+    initials: (authUser.email[0] || "A").toUpperCase(),
+    role: authUser.role,
+  } : PLACEHOLDER_USER;
 
   const trigger = (
     <div
@@ -140,8 +148,7 @@ export function AdminUserNav({ collapsed = false }: AdminUserNavProps) {
           className="gap-2 text-[13px] cursor-pointer"
           style={{ color: "oklch(0.65 0 0)" }}
           onClick={() => {
-            // TODO: wire up Supabase sign out
-            window.location.href = "/login";
+            logout().catch((err) => console.error("Logout error", err));
           }}
         >
           <LogOut size={14} />

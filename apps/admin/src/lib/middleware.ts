@@ -41,11 +41,11 @@ export const adminMiddleware = createMiddleware()
     const session = context.session as AdminSession | null;
 
     if (!session || !session.user) {
-      throw redirect({ to: "/login" });
+      throw redirect({ to: "/admin/login" });
     }
 
     if (!ADMIN_ROLES.includes(session.user.role as AdminRole)) {
-      throw redirect({ to: "/login" });
+      throw redirect({ to: "/admin/login" });
     }
 
     return next({

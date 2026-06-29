@@ -9,8 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
+import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as AppResearchRouteImport } from './routes/_app/research'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
 import { Route as AppPracticeRouteImport } from './routes/_app/practice'
@@ -59,6 +62,10 @@ import { Route as AppPracticeDsaTopicIdCopilotRouteImport } from './routes/_app/
 import { Route as AppCoursesCourseIdModulesModuleIdIndexRouteImport } from './routes/_app/courses/$courseId/modules/$moduleId/index'
 import { Route as AppCoursesCourseIdModulesModuleIdLessonsLessonIdIndexRouteImport } from './routes/_app/courses/$courseId/modules/$moduleId/lessons/$lessonId/index'
 
+const AuthRoute = AuthRouteImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppRoute = AppRouteImport.update({
   id: '/_app',
   getParentRoute: () => rootRouteImport,
@@ -67,6 +74,16 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthSignupRoute = AuthSignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthRoute,
 } as any)
 const AppResearchRoute = AppResearchRouteImport.update({
   id: '/research',
@@ -328,6 +345,8 @@ export interface FileRoutesByFullPath {
   '/practice': typeof AppPracticeRouteWithChildren
   '/profile': typeof AppProfileRouteWithChildren
   '/research': typeof AppResearchRoute
+  '/login': typeof AuthLoginRoute
+  '/signup': typeof AuthSignupRoute
   '/ai/chat': typeof AppAiChatRoute
   '/ai/research': typeof AppAiResearchRoute
   '/assessments/$type': typeof AppAssessmentsTypeRoute
@@ -377,6 +396,8 @@ export interface FileRoutesByTo {
   '/help': typeof AppHelpRoute
   '/profile': typeof AppProfileRouteWithChildren
   '/research': typeof AppResearchRoute
+  '/login': typeof AuthLoginRoute
+  '/signup': typeof AuthSignupRoute
   '/ai/chat': typeof AppAiChatRoute
   '/ai/research': typeof AppAiResearchRoute
   '/assessments/$type': typeof AppAssessmentsTypeRoute
@@ -422,12 +443,15 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
+  '/_auth': typeof AuthRouteWithChildren
   '/_app/community': typeof AppCommunityRoute
   '/_app/documentation': typeof AppDocumentationRoute
   '/_app/help': typeof AppHelpRoute
   '/_app/practice': typeof AppPracticeRouteWithChildren
   '/_app/profile': typeof AppProfileRouteWithChildren
   '/_app/research': typeof AppResearchRoute
+  '/_auth/login': typeof AuthLoginRoute
+  '/_auth/signup': typeof AuthSignupRoute
   '/_app/ai/chat': typeof AppAiChatRoute
   '/_app/ai/research': typeof AppAiResearchRoute
   '/_app/assessments/$type': typeof AppAssessmentsTypeRoute
@@ -480,6 +504,8 @@ export interface FileRouteTypes {
     | '/practice'
     | '/profile'
     | '/research'
+    | '/login'
+    | '/signup'
     | '/ai/chat'
     | '/ai/research'
     | '/assessments/$type'
@@ -529,6 +555,8 @@ export interface FileRouteTypes {
     | '/help'
     | '/profile'
     | '/research'
+    | '/login'
+    | '/signup'
     | '/ai/chat'
     | '/ai/research'
     | '/assessments/$type'
@@ -573,12 +601,15 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_app'
+    | '/_auth'
     | '/_app/community'
     | '/_app/documentation'
     | '/_app/help'
     | '/_app/practice'
     | '/_app/profile'
     | '/_app/research'
+    | '/_auth/login'
+    | '/_auth/signup'
     | '/_app/ai/chat'
     | '/_app/ai/research'
     | '/_app/assessments/$type'
@@ -625,10 +656,18 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
+  AuthRoute: typeof AuthRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_app': {
       id: '/_app'
       path: ''
@@ -642,6 +681,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_auth/signup': {
+      id: '/_auth/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof AuthSignupRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof AuthRoute
     }
     '/_app/research': {
       id: '/_app/research'
@@ -1110,9 +1163,22 @@ const AppRouteChildren: AppRouteChildren = {
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
+interface AuthRouteChildren {
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthSignupRoute: typeof AuthSignupRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthLoginRoute: AuthLoginRoute,
+  AuthSignupRoute: AuthSignupRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
+  AuthRoute: AuthRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

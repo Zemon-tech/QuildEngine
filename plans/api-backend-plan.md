@@ -18,7 +18,7 @@ Backend for `@quild/web` and `@quild/admin`. Phase 1 covers auth, profile, and d
 - **Auth:** Supabase Auth. Users authenticate via Supabase client-side SDK. Supabase sets HttpOnly cookies. BFF reads token from cookie and forwards as `Authorization: Bearer <jwt>`.
 - **Database:** Supabase Postgres accessed via `@supabase/supabase-js` with the secret key (`sb_secret_...`). Single admin client instance, no RLS — access control is in application code.
 - **Schema management:** Raw SQL files stored in `apps/api/sql/`, applied manually against Supabase.
-- **Roles:** Two roles — `learner` (default) and `admin`. Role stored as `app_metadata.role` custom claim in the Supabase JWT.
+- **Roles:** Multiple roles supported: `learner` (default) for the public portal, and operator roles (`super_admin`, `admin`, `moderator`, `content_manager`) for the administrative portal. The role claim is securely resolved from the JWT payload by checking `app_metadata.role` with fallback to `user_metadata.role` (or `raw_user_meta_data.role`) to accommodate registration sync latency.
 - **Shared package:** `@quild/contracts` — API response types, shared enums, shared Zod schemas. Used by both `apps/web` and `apps/api`.
 
 ---
@@ -116,42 +116,42 @@ apps/api/src/
 
 ### profiles
 
-| Column | Type | Notes |
-|--------|------|-------|
-| id | uuid | PK, FK → auth.users.id |
-| display_name | text | nullable |
-| avatar_url | text | nullable |
-| timezone | text | default 'UTC' |
-| social_links | jsonb | `{ github?, linkedin?, behance?, ... }` |
-| onboarding_completed | boolean | default false |
-| created_at | timestamptz | default now() |
-| updated_at | timestamptz | default now() |
+| Column               | Type        | Notes                                   |
+| -------------------- | ----------- | --------------------------------------- |
+| id                   | uuid        | PK, FK → auth.users.id                  |
+| display_name         | text        | nullable                                |
+| avatar_url           | text        | nullable                                |
+| timezone             | text        | default 'UTC'                           |
+| social_links         | jsonb       | `{ github?, linkedin?, behance?, ... }` |
+| onboarding_completed | boolean     | default false                           |
+| created_at           | timestamptz | default now()                           |
+| updated_at           | timestamptz | default now()                           |
 
 ### activity_events
 
-| Column | Type | Notes |
-|--------|------|-------|
-| id | uuid | PK |
-| user_id | uuid | FK → profiles.id, indexed |
-| event_type | text | e.g. `problem_solved`, `lesson_completed` |
-| entity_id | text | nullable, reference to the entity |
-| entity_type | text | nullable, e.g. `dsa_problem`, `lesson` |
-| metadata | jsonb | nullable, extra context |
-| created_at | timestamptz | default now(), indexed |
+| Column      | Type        | Notes                                     |
+| ----------- | ----------- | ----------------------------------------- |
+| id          | uuid        | PK                                        |
+| user_id     | uuid        | FK → profiles.id, indexed                 |
+| event_type  | text        | e.g. `problem_solved`, `lesson_completed` |
+| entity_id   | text        | nullable, reference to the entity         |
+| entity_type | text        | nullable, e.g. `dsa_problem`, `lesson`    |
+| metadata    | jsonb       | nullable, extra context                   |
+| created_at  | timestamptz | default now(), indexed                    |
 
 ### user_stats
 
-| Column | Type | Notes |
-|--------|------|-------|
-| user_id | uuid | PK, FK → profiles.id |
-| problems_solved | int | default 0 |
-| lessons_completed | int | default 0 |
-| courses_enrolled | int | default 0 |
-| total_seconds | int | default 0 |
-| current_streak | int | default 0 |
-| longest_streak | int | default 0 |
-| last_activity_date | date | nullable, in user's timezone |
-| updated_at | timestamptz | default now() |
+| Column             | Type        | Notes                        |
+| ------------------ | ----------- | ---------------------------- |
+| user_id            | uuid        | PK, FK → profiles.id         |
+| problems_solved    | int         | default 0                    |
+| lessons_completed  | int         | default 0                    |
+| courses_enrolled   | int         | default 0                    |
+| total_seconds      | int         | default 0                    |
+| current_streak     | int         | default 0                    |
+| longest_streak     | int         | default 0                    |
+| last_activity_date | date        | nullable, in user's timezone |
+| updated_at         | timestamptz | default now()                |
 
 ---
 
@@ -159,12 +159,12 @@ apps/api/src/
 
 ### Infrastructure
 
-- [ ] Update `apps/api/config/env.ts` — add `SUPABASE_URL`, `SUPABASE_SECRET_KEY`, `JWT_SECRET` with Zod validation. Remove legacy key names.
-- [ ] Create `apps/api/src/lib/supabase.ts` — singleton admin client using `sb_secret_...` key.
-- [ ] Create `apps/api/src/middleware/auth.ts` — verify JWT locally using `jsonwebtoken` or `jose`, extract `user_id` and `role` from claims, attach to `req.user`.
-- [ ] Create `apps/api/src/middleware/require-role.ts` — factory function `requireRole("admin")` that checks `req.user.role`.
+- [x] Update `apps/api/config/env.ts` — add `SUPABASE_URL`, `SUPABASE_SECRET_KEY`, `JWT_SECRET` with Zod validation. Remove legacy key names.
+- [x] Create `apps/api/src/lib/supabase.ts` — singleton admin client using `sb_secret_...` key.
+- [x] Create `apps/api/src/middleware/auth.ts` — verify JWT locally using `jsonwebtoken` or `jose`, extract `user_id` and `role` (checking `app_metadata.role` with fallbacks for `user_metadata.role` and `raw_user_meta_data.role`) from claims, attach to `req.user`.
+- [x] Create `apps/api/src/middleware/require-role.ts` — factory function `requireRole(...)` supporting multiple operator roles (`super_admin`, `admin`, `moderator`, `content_manager`).
 - [ ] Create `apps/api/src/utils/pagination.ts` — parse `page`/`limit` from query, compute offset, build pagination meta from total count.
-- [ ] Add `@quild/contracts` package to `packages/contracts/` with shared types and Zod schemas.
+- [x] Add `@quild/contracts` package to `packages/contracts/` with shared types and Zod schemas.
 - [ ] Add Dockerfile to `apps/api/`.
 - [ ] Add Vitest config to `apps/api/`. Install vitest, supertest, @types/supertest.
 - [ ] Create test helpers (mock Supabase client, test app factory).
@@ -172,9 +172,9 @@ apps/api/src/
 
 ### Auth Module
 
-- [ ] `auth.controller.ts` — POST `/api/v1/auth/me` (returns current user from JWT, optional `auth.getUser()` for fresh data).
-- [ ] `auth.service.ts` — verify token, get user from Supabase if needed, ensure profile exists (create on first login).
-- [ ] `auth.validation.ts` — Zod schemas for any auth-related request bodies.
+- [x] `auth.controller.ts` — POST `/api/v1/auth/me` (returns current user from JWT, optional `auth.getUser()` for fresh data).
+- [x] `auth.service.ts` — verify token, extract role fallback claims (app_metadata / user_metadata), get user from Supabase if needed, ensure profile exists (create on first login).
+- [x] `auth.validation.ts` — Zod schemas for any auth-related request bodies.
 
 ### Profile Module
 
@@ -201,11 +201,7 @@ apps/api/src/
 
 ### Contracts Package
 
-- [ ] `packages/contracts/src/auth.ts` — `User`, `Session` types.
-- [ ] `packages/contracts/src/profile.ts` — `Profile`, `UpdateProfileInput` types.
-- [ ] `packages/contracts/src/dashboard.ts` — `DashboardStats`, `DashboardData` types.
-- [ ] `packages/contracts/src/activity.ts` — `ActivityEvent`, `LogActivityInput` types.
-- [ ] `packages/contracts/src/common.ts` — `PaginationParams`, `PaginationMeta`, `ApiErrorResponse`, enums (`Role`, `Difficulty`, `ContentStatus`).
+- [x] `packages/contracts/src/index.ts` — Centralized model definitions (`User`, `Session`, `Profile`, `DashboardStats`, `PaginationParams`, and enums for `Role`, `Difficulty`, etc.).
 
 ---
 
@@ -216,7 +212,7 @@ apps/api/src/
 - [ ] `GET /api/v1/auth/me` with valid JWT returns user profile and role.
 - [ ] `GET /api/v1/auth/me` with expired/invalid JWT returns 401.
 - [ ] First call auto-creates a profile row if one doesn't exist.
-- [ ] Role is extracted from `app_metadata.role` in the JWT payload.
+- [ ] Role is extracted from JWT claims, inspecting `app_metadata.role` with fallbacks for `user_metadata.role` and `raw_user_meta_data.role`.
 
 ### Profile
 

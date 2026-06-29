@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getEnv } from "../env.server.js";
 import { backendFetch } from "../api.server.js";
-import { getSession, type AdminSession } from "../session.server.js";
+import { getSession, type Session } from "../session.server.js";
 import type { User } from "@quild/contracts";
 
 /**
@@ -19,7 +19,7 @@ export const getPublicConfigFn = createServerFn({ method: "GET" }).handler(async
  * Server function to get the verified server session.
  */
 export const getSessionFn = createServerFn({ method: "GET" }).handler(
-  async (): Promise<AdminSession | null> => {
+  async (): Promise<Session | null> => {
     return getSession();
   }
 );

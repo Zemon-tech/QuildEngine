@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AdminRouteImport } from './routes/_admin'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as AdminUsersIndexRouteImport } from './routes/_admin/users/index'
 import { Route as AdminSettingsIndexRouteImport } from './routes/_admin/settings/index'
 import { Route as AdminRolesIndexRouteImport } from './routes/_admin/roles/index'
@@ -25,6 +24,8 @@ import { Route as AdminCoursesIndexRouteImport } from './routes/_admin/courses/i
 import { Route as AdminAuditIndexRouteImport } from './routes/_admin/audit/index'
 import { Route as AdminAnalyticsIndexRouteImport } from './routes/_admin/analytics/index'
 import { Route as AdminAiIndexRouteImport } from './routes/_admin/ai/index'
+import { Route as AuthAdminSignupRouteImport } from './routes/_auth/admin/signup'
+import { Route as AuthAdminLoginRouteImport } from './routes/_auth/admin/login'
 import { Route as AdminCoursesNewRouteImport } from './routes/_admin/courses/new'
 import { Route as AdminPracticeInterviewQaIndexRouteImport } from './routes/_admin/practice/interview-qa/index'
 import { Route as AdminPracticeDsaIndexRouteImport } from './routes/_admin/practice/dsa/index'
@@ -46,11 +47,6 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any)
-const AuthLoginRoute = AuthLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => AuthRoute,
 } as any)
 const AdminUsersIndexRoute = AdminUsersIndexRouteImport.update({
   id: '/users/',
@@ -112,6 +108,16 @@ const AdminAiIndexRoute = AdminAiIndexRouteImport.update({
   path: '/ai/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AuthAdminSignupRoute = AuthAdminSignupRouteImport.update({
+  id: '/admin/signup',
+  path: '/admin/signup',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthAdminLoginRoute = AuthAdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => AuthRoute,
+} as any)
 const AdminCoursesNewRoute = AdminCoursesNewRouteImport.update({
   id: '/courses/new',
   path: '/courses/new',
@@ -158,8 +164,9 @@ const AdminCmsBlogIndexRoute = AdminCmsBlogIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/login': typeof AuthLoginRoute
   '/courses/new': typeof AdminCoursesNewRoute
+  '/admin/login': typeof AuthAdminLoginRoute
+  '/admin/signup': typeof AuthAdminSignupRoute
   '/ai/': typeof AdminAiIndexRoute
   '/analytics/': typeof AdminAnalyticsIndexRoute
   '/audit/': typeof AdminAuditIndexRoute
@@ -182,8 +189,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/login': typeof AuthLoginRoute
   '/courses/new': typeof AdminCoursesNewRoute
+  '/admin/login': typeof AuthAdminLoginRoute
+  '/admin/signup': typeof AuthAdminSignupRoute
   '/ai': typeof AdminAiIndexRoute
   '/analytics': typeof AdminAnalyticsIndexRoute
   '/audit': typeof AdminAuditIndexRoute
@@ -209,8 +217,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_admin': typeof AdminRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
-  '/_auth/login': typeof AuthLoginRoute
   '/_admin/courses/new': typeof AdminCoursesNewRoute
+  '/_auth/admin/login': typeof AuthAdminLoginRoute
+  '/_auth/admin/signup': typeof AuthAdminSignupRoute
   '/_admin/ai/': typeof AdminAiIndexRoute
   '/_admin/analytics/': typeof AdminAnalyticsIndexRoute
   '/_admin/audit/': typeof AdminAuditIndexRoute
@@ -235,8 +244,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/login'
     | '/courses/new'
+    | '/admin/login'
+    | '/admin/signup'
     | '/ai/'
     | '/analytics/'
     | '/audit/'
@@ -259,8 +269,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/login'
     | '/courses/new'
+    | '/admin/login'
+    | '/admin/signup'
     | '/ai'
     | '/analytics'
     | '/audit'
@@ -285,8 +296,9 @@ export interface FileRouteTypes {
     | '/'
     | '/_admin'
     | '/_auth'
-    | '/_auth/login'
     | '/_admin/courses/new'
+    | '/_auth/admin/login'
+    | '/_auth/admin/signup'
     | '/_admin/ai/'
     | '/_admin/analytics/'
     | '/_admin/audit/'
@@ -336,13 +348,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/_auth/login': {
-      id: '/_auth/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof AuthLoginRouteImport
-      parentRoute: typeof AuthRoute
     }
     '/_admin/users/': {
       id: '/_admin/users/'
@@ -427,6 +432,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/ai/'
       preLoaderRoute: typeof AdminAiIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/_auth/admin/signup': {
+      id: '/_auth/admin/signup'
+      path: '/admin/signup'
+      fullPath: '/admin/signup'
+      preLoaderRoute: typeof AuthAdminSignupRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/admin/login': {
+      id: '/_auth/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AuthAdminLoginRouteImport
+      parentRoute: typeof AuthRoute
     }
     '/_admin/courses/new': {
       id: '/_admin/courses/new'
@@ -536,11 +555,13 @@ const AdminRouteChildren: AdminRouteChildren = {
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface AuthRouteChildren {
-  AuthLoginRoute: typeof AuthLoginRoute
+  AuthAdminLoginRoute: typeof AuthAdminLoginRoute
+  AuthAdminSignupRoute: typeof AuthAdminSignupRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
-  AuthLoginRoute: AuthLoginRoute,
+  AuthAdminLoginRoute: AuthAdminLoginRoute,
+  AuthAdminSignupRoute: AuthAdminSignupRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)

@@ -32,6 +32,8 @@ export const Route = createRootRoute({
   shellComponent: RootDocument,
 });
 
+import { AuthProvider } from "../auth/providers/AuthProvider.js";
+
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -41,7 +43,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body style={{ background: "var(--sb-bg)", margin: 0 }}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <QueryClientProvider client={queryClient}>
-            {children}
+            <AuthProvider>
+              {children}
+            </AuthProvider>
           </QueryClientProvider>
           <TanStackDevtools
             config={{ position: "bottom-right" }}

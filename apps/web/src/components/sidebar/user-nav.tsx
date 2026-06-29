@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { LogOut, Settings, Trophy, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback } from "#/components/ui/avatar";
+import { useAuth } from "#/auth/hooks/useAuth.js";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,6 +24,7 @@ interface UserNavProps {
 }
 
 export function UserNav({ collapsed = false }: UserNavProps) {
+  const { logout } = useAuth();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [user, setUser] = useState({
     name: "Alex Johnson",
@@ -181,7 +183,9 @@ export function UserNav({ collapsed = false }: UserNavProps) {
         <DropdownMenuItem
           className="gap-2 text-[13px] cursor-pointer"
           style={{ color: "oklch(0.65 0 0)" }}
-          onClick={() => alert("Signing out simulator")}
+          onClick={() => {
+            logout().catch((err) => console.error("Logout error", err));
+          }}
         >
           <LogOut size={14} />
           Sign out
