@@ -1,13 +1,20 @@
 import { createServerFn } from "@tanstack/react-start";
+import type {
+  Achievement,
+  NodeDifficulty,
+  Roadmap,
+  RoadmapCategory,
+  UserProgress,
+} from "../../types/roadmaps";
 import { authMiddleware } from "../middleware";
-import type { Roadmap, RoadmapCategory, UserProgress, Achievement, NodeDifficulty } from "../../types/roadmaps";
 
 // ─── Mock Category Data ────────────────────────────────────────────────────────
 export const MOCK_CATEGORIES: RoadmapCategory[] = [
   {
     id: "frontend",
     title: "Frontend Developer",
-    description: "Step-by-step guide to becoming a modern frontend developer focusing on React and responsive design.",
+    description:
+      "Step-by-step guide to becoming a modern frontend developer focusing on React and responsive design.",
     iconName: "Monitor",
     topicsCount: 6,
     difficulty: "beginner",
@@ -17,7 +24,8 @@ export const MOCK_CATEGORIES: RoadmapCategory[] = [
   {
     id: "backend",
     title: "Backend Developer",
-    description: "Detailed path for building scalable backend systems, focusing on APIs, caching, and distributed databases.",
+    description:
+      "Detailed path for building scalable backend systems, focusing on APIs, caching, and distributed databases.",
     iconName: "Server",
     topicsCount: 5,
     difficulty: "intermediate",
@@ -27,7 +35,8 @@ export const MOCK_CATEGORIES: RoadmapCategory[] = [
   {
     id: "ai-ml",
     title: "AI / ML Engineer",
-    description: "Practical guide to learning machine learning pipelines, deep learning models, and LLM fine-tuning.",
+    description:
+      "Practical guide to learning machine learning pipelines, deep learning models, and LLM fine-tuning.",
     iconName: "Brain",
     topicsCount: 5,
     difficulty: "advanced",
@@ -37,7 +46,8 @@ export const MOCK_CATEGORIES: RoadmapCategory[] = [
   {
     id: "fullstack",
     title: "Full Stack Developer",
-    description: "Master both ends of the stack, bridging client interfaces with underlying databases and server architecture.",
+    description:
+      "Master both ends of the stack, bridging client interfaces with underlying databases and server architecture.",
     iconName: "Layers",
     topicsCount: 4,
     difficulty: "intermediate",
@@ -47,7 +57,8 @@ export const MOCK_CATEGORIES: RoadmapCategory[] = [
   {
     id: "devops",
     title: "DevOps Engineer",
-    description: "Focus on build pipelines, deployment systems, Kubernetes orchestration, and cloud infrastructure.",
+    description:
+      "Focus on build pipelines, deployment systems, Kubernetes orchestration, and cloud infrastructure.",
     iconName: "Infinity",
     topicsCount: 4,
     difficulty: "advanced",
@@ -57,7 +68,8 @@ export const MOCK_CATEGORIES: RoadmapCategory[] = [
   {
     id: "data-science",
     title: "Data Science",
-    description: "Learn statistical modeling, data visualization, Pandas analysis, and data engineering patterns.",
+    description:
+      "Learn statistical modeling, data visualization, Pandas analysis, and data engineering patterns.",
     iconName: "Database",
     topicsCount: 4,
     difficulty: "intermediate",
@@ -67,7 +79,8 @@ export const MOCK_CATEGORIES: RoadmapCategory[] = [
   {
     id: "cybersecurity",
     title: "Cybersecurity",
-    description: "Understand penetration testing, network defense, system audits, and secure coding practices.",
+    description:
+      "Understand penetration testing, network defense, system audits, and secure coding practices.",
     iconName: "Shield",
     topicsCount: 4,
     difficulty: "advanced",
@@ -77,7 +90,8 @@ export const MOCK_CATEGORIES: RoadmapCategory[] = [
   {
     id: "mobile",
     title: "Mobile Development",
-    description: "Build native and cross-platform apps using React Native, Flutter, Swift, and Kotlin.",
+    description:
+      "Build native and cross-platform apps using React Native, Flutter, Swift, and Kotlin.",
     iconName: "Smartphone",
     topicsCount: 4,
     difficulty: "intermediate",
@@ -87,7 +101,8 @@ export const MOCK_CATEGORIES: RoadmapCategory[] = [
   {
     id: "cloud",
     title: "Cloud Computing",
-    description: "Master Amazon Web Services (AWS), Google Cloud (GCP), serverless patterns, and hybrid cloud designs.",
+    description:
+      "Master Amazon Web Services (AWS), Google Cloud (GCP), serverless patterns, and hybrid cloud designs.",
     iconName: "Cloud",
     topicsCount: 4,
     difficulty: "intermediate",
@@ -97,7 +112,8 @@ export const MOCK_CATEGORIES: RoadmapCategory[] = [
   {
     id: "system-design",
     title: "System Design",
-    description: "Architect large-scale software structures. Learn load balancers, messaging queues, and scaling strategies.",
+    description:
+      "Architect large-scale software structures. Learn load balancers, messaging queues, and scaling strategies.",
     iconName: "GitFork",
     topicsCount: 4,
     difficulty: "advanced",
@@ -107,7 +123,8 @@ export const MOCK_CATEGORIES: RoadmapCategory[] = [
   {
     id: "ui-ux",
     title: "UI / UX Designer",
-    description: "Dive into wireframing, color theory, component design systems, usability research, and Figma handoffs.",
+    description:
+      "Dive into wireframing, color theory, component design systems, usability research, and Figma handoffs.",
     iconName: "Palette",
     topicsCount: 4,
     difficulty: "beginner",
@@ -117,7 +134,8 @@ export const MOCK_CATEGORIES: RoadmapCategory[] = [
   {
     id: "competitive-programming",
     title: "Competitive Programming",
-    description: "Master algorithms, graphs, dynamic programming, and complexity logic for speed coding tests.",
+    description:
+      "Master algorithms, graphs, dynamic programming, and complexity logic for speed coding tests.",
     iconName: "Code2",
     topicsCount: 4,
     difficulty: "advanced",
@@ -175,7 +193,8 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
   frontend: {
     id: "frontend",
     title: "Frontend Developer",
-    description: "A comprehensive roadmap for mastering modern client-side architectures.",
+    description:
+      "A comprehensive roadmap for mastering modern client-side architectures.",
     category: "Frontend",
     difficulty: "beginner",
     duration: "2-3 months",
@@ -186,7 +205,8 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
         position: { x: 300, y: 50 },
         data: {
           title: "HTML & CSS Basics",
-          description: "Structure web pages and style them with modern CSS layouts (Flexbox, Grid).",
+          description:
+            "Structure web pages and style them with modern CSS layouts (Flexbox, Grid).",
           duration: "1 week",
           difficulty: "beginner",
           resourceCount: 5,
@@ -200,7 +220,8 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
         position: { x: 300, y: 200 },
         data: {
           title: "JavaScript ES6+",
-          description: "Learn variables, loops, DOM manipulations, async programming, and modern APIs.",
+          description:
+            "Learn variables, loops, DOM manipulations, async programming, and modern APIs.",
           duration: "2 weeks",
           difficulty: "beginner",
           resourceCount: 5,
@@ -214,7 +235,8 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
         position: { x: 150, y: 380 },
         data: {
           title: "React Fundamentals",
-          description: "Understand state, props, JSX, component lifecycle, hooks, and basic routing.",
+          description:
+            "Understand state, props, JSX, component lifecycle, hooks, and basic routing.",
           duration: "3 weeks",
           difficulty: "intermediate",
           resourceCount: 5,
@@ -228,7 +250,8 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
         position: { x: 450, y: 380 },
         data: {
           title: "Tailwind CSS",
-          description: "Speed up styling with utility-first designs, responsive tags, and theme transitions.",
+          description:
+            "Speed up styling with utility-first designs, responsive tags, and theme transitions.",
           duration: "1 week",
           difficulty: "intermediate",
           resourceCount: 5,
@@ -242,7 +265,8 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
         position: { x: 300, y: 560 },
         data: {
           title: "Next.js & SSR/SSG",
-          description: "Master React framework features: dynamic routing, Server Components, API routes, and SSR fetching.",
+          description:
+            "Master React framework features: dynamic routing, Server Components, API routes, and SSR fetching.",
           duration: "3 weeks",
           difficulty: "intermediate",
           resourceCount: 5,
@@ -256,7 +280,8 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
         position: { x: 300, y: 720 },
         data: {
           title: "Web Performance Tuning",
-          description: "Optimizing bundle size, image loaders, code splitting, cumulative layout shifts, and core web vitals.",
+          description:
+            "Optimizing bundle size, image loaders, code splitting, cumulative layout shifts, and core web vitals.",
           duration: "2 weeks",
           difficulty: "advanced",
           resourceCount: 5,
@@ -271,13 +296,19 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
       { id: "e-fe-3", source: "fe-javascript", target: "fe-tailwind" },
       { id: "e-fe-4", source: "fe-react", target: "fe-nextjs" },
       { id: "e-fe-5", source: "fe-tailwind", target: "fe-nextjs" },
-      { id: "e-fe-6", source: "fe-nextjs", target: "fe-performance", animated: true },
+      {
+        id: "e-fe-6",
+        source: "fe-nextjs",
+        target: "fe-performance",
+        animated: true,
+      },
     ],
   },
   backend: {
     id: "backend",
     title: "Backend Developer",
-    description: "Pathway to database query design, API specifications, and service infrastructures.",
+    description:
+      "Pathway to database query design, API specifications, and service infrastructures.",
     category: "Backend",
     difficulty: "intermediate",
     duration: "3-4 months",
@@ -288,7 +319,8 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
         position: { x: 300, y: 50 },
         data: {
           title: "Language Basics (Go/Node/Python)",
-          description: "Learn server languages, modules, concurrency models, and standard web servers.",
+          description:
+            "Learn server languages, modules, concurrency models, and standard web servers.",
           duration: "2 weeks",
           difficulty: "beginner",
           resourceCount: 5,
@@ -302,7 +334,8 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
         position: { x: 300, y: 200 },
         data: {
           title: "Databases & Indexing",
-          description: "Master SQL (PostgreSQL), normalization, indices, transactions, and basic NoSQL (MongoDB).",
+          description:
+            "Master SQL (PostgreSQL), normalization, indices, transactions, and basic NoSQL (MongoDB).",
           duration: "3 weeks",
           difficulty: "intermediate",
           resourceCount: 5,
@@ -316,7 +349,8 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
         position: { x: 300, y: 350 },
         data: {
           title: "Caching Layers (Redis)",
-          description: "Accelerate responses via caching, pub/sub communication, rate-limiting, and memory data structures.",
+          description:
+            "Accelerate responses via caching, pub/sub communication, rate-limiting, and memory data structures.",
           duration: "2 weeks",
           difficulty: "intermediate",
           resourceCount: 5,
@@ -330,7 +364,8 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
         position: { x: 150, y: 520 },
         data: {
           title: "Microservices & gRPC",
-          description: "Architect service-oriented patterns, protocol buffers, message formats, and inter-service APIs.",
+          description:
+            "Architect service-oriented patterns, protocol buffers, message formats, and inter-service APIs.",
           duration: "3 weeks",
           difficulty: "advanced",
           resourceCount: 5,
@@ -344,7 +379,8 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
         position: { x: 450, y: 520 },
         data: {
           title: "Distributed Consensus",
-          description: "Understand Paxos, Raft, event-sourcing, eventual consistency, and network partitions (CAP theorem).",
+          description:
+            "Understand Paxos, Raft, event-sourcing, eventual consistency, and network partitions (CAP theorem).",
           duration: "4 weeks",
           difficulty: "advanced",
           resourceCount: 5,
@@ -363,7 +399,8 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
   "ai-ml": {
     id: "ai-ml",
     title: "AI / ML Engineer",
-    description: "Deep dive into model architectures, pipelines, and intelligent interfaces.",
+    description:
+      "Deep dive into model architectures, pipelines, and intelligent interfaces.",
     category: "AI / ML",
     difficulty: "advanced",
     duration: "4-6 months",
@@ -374,7 +411,8 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
         position: { x: 300, y: 50 },
         data: {
           title: "Python & Linear Algebra",
-          description: "Acquire basic mathematical building blocks: vectors, matrices, statistics, and NumPy library.",
+          description:
+            "Acquire basic mathematical building blocks: vectors, matrices, statistics, and NumPy library.",
           duration: "2 weeks",
           difficulty: "beginner",
           resourceCount: 5,
@@ -388,7 +426,8 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
         position: { x: 300, y: 200 },
         data: {
           title: "Scikit-Learn & ML Classifiers",
-          description: "Learn regression, decision trees, support vector machines, and metric validations.",
+          description:
+            "Learn regression, decision trees, support vector machines, and metric validations.",
           duration: "3 weeks",
           difficulty: "intermediate",
           resourceCount: 5,
@@ -402,7 +441,8 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
         position: { x: 300, y: 350 },
         data: {
           title: "PyTorch & Deep Neural Nets",
-          description: "Construct custom neural networks, gradients, forward/backward propagation, and GPU optimizations.",
+          description:
+            "Construct custom neural networks, gradients, forward/backward propagation, and GPU optimizations.",
           duration: "4 weeks",
           difficulty: "intermediate",
           resourceCount: 5,
@@ -416,7 +456,8 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
         position: { x: 150, y: 520 },
         data: {
           title: "Transformers & Attention",
-          description: "Examine self-attention modules, seq2seq models, encoders, and decoders (GPT, BERT architectures).",
+          description:
+            "Examine self-attention modules, seq2seq models, encoders, and decoders (GPT, BERT architectures).",
           duration: "3 weeks",
           difficulty: "advanced",
           resourceCount: 5,
@@ -430,7 +471,8 @@ export const MOCK_ROADMAPS: Record<string, Roadmap> = {
         position: { x: 450, y: 520 },
         data: {
           title: "LLM Fine-Tuning & RAG",
-          description: "Fine-tune pretrained weights with LoRA, QLoRA, and build Vector DB indexing (Retrieval Augmented Generation).",
+          description:
+            "Fine-tune pretrained weights with LoRA, QLoRA, and build Vector DB indexing (Retrieval Augmented Generation).",
           duration: "3 weeks",
           difficulty: "advanced",
           resourceCount: 5,
@@ -470,7 +512,10 @@ const populateFallbackRoadmaps = () => {
               duration: "2 weeks",
               difficulty: "beginner",
               resourceCount: 5,
-              resources: createMockResources(`Intro to ${cat.title}`, "beginner"),
+              resources: createMockResources(
+                `Intro to ${cat.title}`,
+                "beginner",
+              ),
               status: "not_started",
             },
           },
@@ -484,7 +529,10 @@ const populateFallbackRoadmaps = () => {
               duration: "4 weeks",
               difficulty: "intermediate",
               resourceCount: 5,
-              resources: createMockResources(`${cat.title} Core`, "intermediate"),
+              resources: createMockResources(
+                `${cat.title} Core`,
+                "intermediate",
+              ),
               status: "not_started",
             },
           },
@@ -498,14 +546,26 @@ const populateFallbackRoadmaps = () => {
               duration: "3 weeks",
               difficulty: "advanced",
               resourceCount: 5,
-              resources: createMockResources(`Advanced ${cat.title}`, "advanced"),
+              resources: createMockResources(
+                `Advanced ${cat.title}`,
+                "advanced",
+              ),
               status: "not_started",
             },
           },
         ],
         edges: [
-          { id: `e-${cat.id}-1`, source: `${cat.id}-node-1`, target: `${cat.id}-node-2` },
-          { id: `e-${cat.id}-2`, source: `${cat.id}-node-2`, target: `${cat.id}-node-3`, animated: true },
+          {
+            id: `e-${cat.id}-1`,
+            source: `${cat.id}-node-1`,
+            target: `${cat.id}-node-2`,
+          },
+          {
+            id: `e-${cat.id}-2`,
+            source: `${cat.id}-node-2`,
+            target: `${cat.id}-node-3`,
+            animated: true,
+          },
         ],
       };
     }
@@ -562,16 +622,25 @@ const DEFAULT_USER_PROGRESS: UserProgress = {
 };
 
 // Helper to calculate progress percentage for a roadmap
-const calculateRoadmapProgress = (roadmapId: string, completedNodes: string[]): number => {
+const calculateRoadmapProgress = (
+  roadmapId: string,
+  completedNodes: string[],
+): number => {
   const roadmap = MOCK_ROADMAPS[roadmapId];
   if (!roadmap) return 0;
   const roadmapNodeIds = roadmap.nodes.map((n) => n.id);
-  const completedRoadmapNodes = roadmapNodeIds.filter((id) => completedNodes.includes(id));
-  return Math.round((completedRoadmapNodes.length / roadmapNodeIds.length) * 100);
+  const completedRoadmapNodes = roadmapNodeIds.filter((id) =>
+    completedNodes.includes(id),
+  );
+  return Math.round(
+    (completedRoadmapNodes.length / roadmapNodeIds.length) * 100,
+  );
 };
 
 // Helper to update active roadmaps progress maps
-const updateActiveRoadmapsProgress = (completedNodes: string[]): Record<string, number> => {
+const updateActiveRoadmapsProgress = (
+  completedNodes: string[],
+): Record<string, number> => {
   const activeRoadmaps: Record<string, number> = {};
   Object.keys(MOCK_ROADMAPS).forEach((rid) => {
     const percent = calculateRoadmapProgress(rid, completedNodes);
@@ -585,7 +654,7 @@ const updateActiveRoadmapsProgress = (completedNodes: string[]): Record<string, 
 // Helper to check and unlock achievements based on progress state
 const checkAchievements = (progress: UserProgress): Achievement[] => {
   const achievements = [...ALL_ACHIEVEMENTS];
-  
+
   // ach-beginner: at least 1 completed node
   if (progress.completedNodes.length >= 1) {
     const ach = achievements.find((a) => a.id === "ach-beginner");
@@ -626,7 +695,9 @@ const checkAchievements = (progress: UserProgress): Achievement[] => {
   }
 
   // ach-master: at least one active roadmap at 100%
-  const hasFinishedRoadmap = Object.values(progress.activeRoadmaps).some((pct) => pct === 100);
+  const hasFinishedRoadmap = Object.values(progress.activeRoadmaps).some(
+    (pct) => pct === 100,
+  );
   if (hasFinishedRoadmap) {
     const ach = achievements.find((a) => a.id === "ach-master");
     if (ach && ach.status === "locked") {
@@ -646,20 +717,28 @@ const checkAchievements = (progress: UserProgress): Achievement[] => {
  */
 export const fetchRoadmapsList = createServerFn({ method: "GET" })
   .middleware([authMiddleware])
-  .handler(async ({ context: _context }): Promise<{ categories: RoadmapCategory[]; achievements: Achievement[]; progress: UserProgress }> => {
-    // BFF middleware session hook (session context available from context.session if needed)
-    
-    // Stub progress for response. In a real DB, it would read from Supabase.
-    // If not authenticated, we return default placeholders which the client hook will override with LocalStorage.
-    const progress = DEFAULT_USER_PROGRESS;
-    const achievements = ALL_ACHIEVEMENTS;
+  .handler(
+    async ({
+      context: _context,
+    }): Promise<{
+      categories: RoadmapCategory[];
+      achievements: Achievement[];
+      progress: UserProgress;
+    }> => {
+      // BFF middleware session hook (session context available from context.session if needed)
 
-    return {
-      categories: MOCK_CATEGORIES,
-      achievements,
-      progress,
-    };
-  });
+      // Stub progress for response. In a real DB, it would read from Supabase.
+      // If not authenticated, we return default placeholders which the client hook will override with LocalStorage.
+      const progress = DEFAULT_USER_PROGRESS;
+      const achievements = ALL_ACHIEVEMENTS;
+
+      return {
+        categories: MOCK_CATEGORIES,
+        achievements,
+        progress,
+      };
+    },
+  );
 
 /**
  * Fetches specific Roadmap nodes and edges.
@@ -677,73 +756,96 @@ export const fetchRoadmapDetail = createServerFn({ method: "GET" })
  * Crucial BFF design: Business logic (scoring, streak calculations) resides on the server.
  */
 export const updateNodeProgress = createServerFn({ method: "POST" })
-  .validator((data: { nodeId: string; roadmapId: string; status: "completed" | "in_progress" | "not_started"; currentProgress: UserProgress }) => data)
-  .handler(async ({ data }): Promise<{ progress: UserProgress; achievements: Achievement[]; newUnlock: boolean }> => {
-    const { nodeId, roadmapId, status, currentProgress } = data;
-    
-    // Immer-like logic applied on the server (functional updates)
-    const nextProgress = {
-      ...currentProgress,
-      completedNodes: [...currentProgress.completedNodes],
-    };
+  .validator(
+    (data: {
+      nodeId: string;
+      roadmapId: string;
+      status: "completed" | "in_progress" | "not_started";
+      currentProgress: UserProgress;
+    }) => data,
+  )
+  .handler(
+    async ({
+      data,
+    }): Promise<{
+      progress: UserProgress;
+      achievements: Achievement[];
+      newUnlock: boolean;
+    }> => {
+      const { nodeId, roadmapId, status, currentProgress } = data;
 
-    let xpDelta = 0;
-    
-    // Find node difficulty for XP delta
-    let nodeDifficulty: NodeDifficulty = "beginner";
-    const roadmap = MOCK_ROADMAPS[roadmapId];
-    if (roadmap) {
-      const node = roadmap.nodes.find((n) => n.id === nodeId);
-      if (node) {
-        nodeDifficulty = node.data.difficulty;
+      // Immer-like logic applied on the server (functional updates)
+      const nextProgress = {
+        ...currentProgress,
+        completedNodes: [...currentProgress.completedNodes],
+      };
+
+      let xpDelta = 0;
+
+      // Find node difficulty for XP delta
+      let nodeDifficulty: NodeDifficulty = "beginner";
+      const roadmap = MOCK_ROADMAPS[roadmapId];
+      if (roadmap) {
+        const node = roadmap.nodes.find((n) => n.id === nodeId);
+        if (node) {
+          nodeDifficulty = node.data.difficulty;
+        }
       }
-    }
 
-    const wasCompleted = nextProgress.completedNodes.includes(nodeId);
-    
-    if (status === "completed" && !wasCompleted) {
-      nextProgress.completedNodes.push(nodeId);
-      nextProgress.lastVisitedNode = nodeId;
-      
-      // Calculate XP addition
-      if (nodeDifficulty === "beginner") xpDelta = 10;
-      else if (nodeDifficulty === "intermediate") xpDelta = 25;
-      else if (nodeDifficulty === "advanced") xpDelta = 50;
-      
-      nextProgress.xpPoints += xpDelta;
-    } else if (status !== "completed" && wasCompleted) {
-      nextProgress.completedNodes = nextProgress.completedNodes.filter((id) => id !== nodeId);
-      
-      // Deduct XP
-      if (nodeDifficulty === "beginner") xpDelta = -10;
-      else if (nodeDifficulty === "intermediate") xpDelta = -25;
-      else if (nodeDifficulty === "advanced") xpDelta = -50;
-      
-      nextProgress.xpPoints = Math.max(0, nextProgress.xpPoints + xpDelta);
-    }
+      const wasCompleted = nextProgress.completedNodes.includes(nodeId);
 
-    // Refresh roadmap completion maps
-    nextProgress.activeRoadmaps = updateActiveRoadmapsProgress(nextProgress.completedNodes);
+      if (status === "completed" && !wasCompleted) {
+        nextProgress.completedNodes.push(nodeId);
+        nextProgress.lastVisitedNode = nodeId;
 
-    // Calculate streaks logic on server
-    // To mock streak incrementing: if user updates progress, verify activity date. 
-    // For simplicity of mock, we increment streak if XP increases up to max 10 days.
-    if (xpDelta > 0 && Math.random() > 0.7) {
-      nextProgress.learningStreak += 1;
-    }
+        // Calculate XP addition
+        if (nodeDifficulty === "beginner") xpDelta = 10;
+        else if (nodeDifficulty === "intermediate") xpDelta = 25;
+        else if (nodeDifficulty === "advanced") xpDelta = 50;
 
-    // Evaluate Achievements
-    const unlockedBefore = ALL_ACHIEVEMENTS.filter((a) => a.status === "unlocked").map((a) => a.id);
-    const achievements = checkAchievements(nextProgress);
-    const unlockedAfter = achievements.filter((a) => a.status === "unlocked").map((a) => a.id);
-    const newUnlock = unlockedAfter.length > unlockedBefore.length;
+        nextProgress.xpPoints += xpDelta;
+      } else if (status !== "completed" && wasCompleted) {
+        nextProgress.completedNodes = nextProgress.completedNodes.filter(
+          (id) => id !== nodeId,
+        );
 
-    return {
-      progress: nextProgress,
-      achievements,
-      newUnlock,
-    };
-  });
+        // Deduct XP
+        if (nodeDifficulty === "beginner") xpDelta = -10;
+        else if (nodeDifficulty === "intermediate") xpDelta = -25;
+        else if (nodeDifficulty === "advanced") xpDelta = -50;
+
+        nextProgress.xpPoints = Math.max(0, nextProgress.xpPoints + xpDelta);
+      }
+
+      // Refresh roadmap completion maps
+      nextProgress.activeRoadmaps = updateActiveRoadmapsProgress(
+        nextProgress.completedNodes,
+      );
+
+      // Calculate streaks logic on server
+      // To mock streak incrementing: if user updates progress, verify activity date.
+      // For simplicity of mock, we increment streak if XP increases up to max 10 days.
+      if (xpDelta > 0 && Math.random() > 0.7) {
+        nextProgress.learningStreak += 1;
+      }
+
+      // Evaluate Achievements
+      const unlockedBefore = ALL_ACHIEVEMENTS.filter(
+        (a) => a.status === "unlocked",
+      ).map((a) => a.id);
+      const achievements = checkAchievements(nextProgress);
+      const unlockedAfter = achievements
+        .filter((a) => a.status === "unlocked")
+        .map((a) => a.id);
+      const newUnlock = unlockedAfter.length > unlockedBefore.length;
+
+      return {
+        progress: nextProgress,
+        achievements,
+        newUnlock,
+      };
+    },
+  );
 
 /**
  * Handles toggling bookmark state on the server.
@@ -752,7 +854,7 @@ export const toggleNodeBookmark = createServerFn({ method: "POST" })
   .validator((data: { nodeId: string; currentProgress: UserProgress }) => data)
   .handler(async ({ data }): Promise<{ progress: UserProgress }> => {
     const { nodeId, currentProgress } = data;
-    
+
     const isBookmarked = currentProgress.bookmarkedNodes.includes(nodeId);
     const nextProgress = {
       ...currentProgress,
@@ -770,10 +872,12 @@ export const toggleNodeBookmark = createServerFn({ method: "POST" })
  * Handles toggling roadmap favorite state on the server.
  */
 export const toggleRoadmapFavorite = createServerFn({ method: "POST" })
-  .validator((data: { roadmapId: string; currentProgress: UserProgress }) => data)
+  .validator(
+    (data: { roadmapId: string; currentProgress: UserProgress }) => data,
+  )
   .handler(async ({ data }): Promise<{ progress: UserProgress }> => {
     const { roadmapId, currentProgress } = data;
-    
+
     const isFavorite = currentProgress.favorites?.includes(roadmapId) ?? false;
     const nextProgress = {
       ...currentProgress,
@@ -786,4 +890,3 @@ export const toggleRoadmapFavorite = createServerFn({ method: "POST" })
       progress: nextProgress,
     };
   });
-

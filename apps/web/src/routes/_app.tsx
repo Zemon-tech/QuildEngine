@@ -1,7 +1,11 @@
-import { useEffect, useState, useRef } from "react";
-import { createFileRoute, Outlet, useRouterState } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Outlet,
+  useRouterState,
+} from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
 import { AppSidebar } from "#/components/sidebar/app-sidebar";
-import { SecondarySidebar } from "#/components/sidebar/secondary-sidebar";
+import { SecondarySidebar, useAppSidebarForcedOpen } from "#/components/sidebar/secondary-sidebar";
 import { SidebarInset, SidebarProvider } from "#/components/ui/sidebar";
 import { TooltipProvider } from "#/components/ui/tooltip";
 
@@ -13,13 +17,23 @@ function AppLayout() {
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
 
+  const isLearningOrResearch =
+    currentPath.startsWith("/learn") ||
+    currentPath.startsWith("/courses") ||
+    currentPath.startsWith("/research") ||
+    currentPath.startsWith("/documentation");
+
+  const [appSidebarForcedOpen] = useAppSidebarForcedOpen();
+
+  const showAppSidebar = !isLearningOrResearch || appSidebarForcedOpen;
+
   const parts = currentPath.split("/").filter(Boolean);
   const isThirdLevelRoute = parts.length >= 3;
 
   // Read initial sidebar state from cookies or default to true
   const [open, setOpen] = useState(() => {
     if (typeof window !== "undefined") {
-      const match = document.cookie.match(new RegExp('(^| )sidebar_state=([^;]+)'));
+      const match = document.cookie.match(/(^| )sidebar_state=([^;]+)/);
       return match ? match[2] === "true" : true;
     }
     return true;
@@ -71,7 +85,7 @@ function AppLayout() {
     <SidebarProvider open={open} onOpenChange={setOpen}>
       <TooltipProvider delayDuration={400} skipDelayDuration={100}>
         <div className="flex h-screen w-screen overflow-hidden">
-          <AppSidebar />
+          {showAppSidebar && <AppSidebar />}
           <SecondarySidebar />
           <SidebarInset className="flex flex-1 flex-col overflow-hidden bg-transparent border-0 outline-none">
             {/* Scrollable Main Content or Full-Screen Workspace */}

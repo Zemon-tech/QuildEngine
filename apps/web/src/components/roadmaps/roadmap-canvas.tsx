@@ -1,19 +1,19 @@
-import { useCallback, useMemo, useEffect } from "react";
 import {
-  ReactFlow,
   Background,
   Controls,
-  MiniMap,
-  Panel,
-  useNodesState,
-  useEdgesState,
-  type Node,
   type Edge,
+  MiniMap,
+  type Node,
+  Panel,
+  ReactFlow,
+  useEdgesState,
+  useNodesState,
 } from "@xyflow/react";
+import { useCallback, useEffect, useMemo } from "react";
 import "@xyflow/react/dist/style.css";
-import { RoadmapNode } from "./roadmap-node";
-import type { Roadmap, UserProgress } from "../../types/roadmaps";
 import * as Icons from "lucide-react";
+import type { Roadmap, UserProgress } from "../../types/roadmaps";
+import { RoadmapNode } from "./roadmap-node";
 
 interface RoadmapCanvasProps {
   roadmap: Roadmap;
@@ -34,7 +34,7 @@ export function RoadmapCanvas({
     return roadmap.nodes.map((node) => {
       // Resolve dynamic node progress state from the user's progress arrays
       const isCompleted = progress.completedNodes.includes(node.id);
-      
+
       // Determine if a node should be locked
       // Lock nodes if they have inbound edges, and none of those source nodes are completed.
       // This is a great staff-engineer validation rule computed client-side for UX!
@@ -42,14 +42,20 @@ export function RoadmapCanvas({
       const inboundEdges = roadmap.edges.filter((e) => e.target === node.id);
       if (inboundEdges.length > 0) {
         const anySourceCompleted = inboundEdges.some((e) =>
-          progress.completedNodes.includes(e.source)
+          progress.completedNodes.includes(e.source),
         );
         if (!anySourceCompleted) {
           isLocked = true;
         }
       }
 
-      const status = isCompleted ? "completed" : isLocked ? "locked" : progress.lastVisitedNode === node.id ? "in_progress" : "not_started";
+      const status = isCompleted
+        ? "completed"
+        : isLocked
+          ? "locked"
+          : progress.lastVisitedNode === node.id
+            ? "in_progress"
+            : "not_started";
 
       return {
         id: node.id,
@@ -68,7 +74,7 @@ export function RoadmapCanvas({
     return roadmap.edges.map((edge) => {
       // Animate edge if source node is completed
       const isSourceCompleted = progress.completedNodes.includes(edge.source);
-      
+
       return {
         id: edge.id,
         source: edge.source,
@@ -101,7 +107,7 @@ export function RoadmapCanvas({
         onSelectNode(node.id);
       }
     },
-    [roadmap.nodes, onSelectNode]
+    [roadmap.nodes, onSelectNode],
   );
 
   return (
@@ -124,7 +130,7 @@ export function RoadmapCanvas({
         proOptions={{ hideAttribution: true }}
       >
         <Background color="var(--card-border)" gap={16} size={1} />
-        
+
         {/* Floating MiniMap */}
         <MiniMap
           zoomable
@@ -157,7 +163,9 @@ export function RoadmapCanvas({
               <Icons.GitFork size={15} />
             </span>
             <div>
-              <h3 className="text-xs font-bold text-[var(--sb-ink)]">{roadmap.title}</h3>
+              <h3 className="text-xs font-bold text-[var(--sb-ink)]">
+                {roadmap.title}
+              </h3>
               <p className="text-[10px] text-[var(--sb-ink-dim)] mt-0.5">
                 Drag to explore. Click any node to view studying guides.
               </p>

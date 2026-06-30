@@ -2,7 +2,13 @@ export type NodeDifficulty = "beginner" | "intermediate" | "advanced";
 
 export type NodeStatus = "not_started" | "in_progress" | "completed" | "locked";
 
-export type ResourceType = "article" | "documentation" | "video" | "practice" | "github" | "notes";
+export type ResourceType =
+  | "article"
+  | "documentation"
+  | "video"
+  | "practice"
+  | "github"
+  | "notes";
 
 export interface Resource {
   title: string;

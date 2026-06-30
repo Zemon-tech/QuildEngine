@@ -1,9 +1,9 @@
+import { Link } from "@tanstack/react-router";
+import * as Icons from "lucide-react";
+import { cn } from "../../lib/utils";
 import type { RoadmapCategory } from "../../types/roadmaps";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-import * as Icons from "lucide-react";
-import { Link } from "@tanstack/react-router";
-import { cn } from "../../lib/utils";
 
 interface CategoryCardProps {
   category: RoadmapCategory;
@@ -12,7 +12,12 @@ interface CategoryCardProps {
   onToggleFavorite?: (e: React.MouseEvent) => void;
 }
 
-export function CategoryCard({ category, onClick, isFavorite, onToggleFavorite }: CategoryCardProps) {
+export function CategoryCard({
+  category,
+  onClick,
+  isFavorite,
+  onToggleFavorite,
+}: CategoryCardProps) {
   // Dynamically resolve icon from name
   const IconComponent = (Icons as any)[category.iconName] || Icons.Map;
 
@@ -32,7 +37,7 @@ export function CategoryCard({ category, onClick, isFavorite, onToggleFavorite }
       className={cn(
         "group relative flex flex-col justify-between rounded-2xl p-6 transition-all duration-300",
         "bg-[var(--card-bg)] border border-[var(--card-border)] hover:border-[var(--sb-accent)]/40 hover:shadow-xl",
-        "cursor-pointer overflow-hidden transform hover:-translate-y-1"
+        "cursor-pointer overflow-hidden transform hover:-translate-y-1",
       )}
       style={{
         background: "var(--card-bg)",
@@ -65,19 +70,23 @@ export function CategoryCard({ category, onClick, isFavorite, onToggleFavorite }
                 className={cn(
                   "p-1.5 rounded-lg border transition-all cursor-pointer z-10",
                   "bg-[var(--card-bg)] hover:bg-[var(--sb-bg-hover)]",
-                  isFavorite 
-                    ? "border-amber-500/30 text-amber-500 bg-amber-500/5 hover:bg-amber-500/10" 
-                    : "border-[var(--card-border)] text-[var(--sb-ink-dim)] hover:text-[var(--sb-ink)]"
+                  isFavorite
+                    ? "border-amber-500/30 text-amber-500 bg-amber-500/5 hover:bg-amber-500/10"
+                    : "border-[var(--card-border)] text-[var(--sb-ink-dim)] hover:text-[var(--sb-ink)]",
                 )}
-                title={isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+                title={
+                  isFavorite ? "Remove from Favorites" : "Add to Favorites"
+                }
               >
-                <Icons.Star className={cn("size-3.5", isFavorite && "fill-amber-500")} />
+                <Icons.Star
+                  className={cn("size-3.5", isFavorite && "fill-amber-500")}
+                />
               </button>
             )}
             <Badge
               className={cn(
                 "px-2 py-0.5 text-[10px] font-semibold border capitalize rounded-full",
-                difficultyColors[category.difficulty]
+                difficultyColors[category.difficulty],
               )}
               variant="outline"
             >
@@ -104,7 +113,10 @@ export function CategoryCard({ category, onClick, isFavorite, onToggleFavorite }
       {/* Progress & Actions */}
       <div className="mt-auto space-y-4">
         {/* Topic & Duration Info */}
-        <div className="flex items-center gap-4 text-[11px]" style={{ color: "var(--sb-ink-dim)" }}>
+        <div
+          className="flex items-center gap-4 text-[11px]"
+          style={{ color: "var(--sb-ink-dim)" }}
+        >
           <div className="flex items-center gap-1.5">
             <Icons.BookOpen size={12} />
             <span>{category.topicsCount} Topics</span>
@@ -120,7 +132,9 @@ export function CategoryCard({ category, onClick, isFavorite, onToggleFavorite }
           <div className="space-y-1.5">
             <div className="flex justify-between items-center text-[10px] font-medium">
               <span style={{ color: "var(--sb-ink-dim)" }}>Path Progress</span>
-              <span className="text-[var(--sb-accent)]">{category.progress}%</span>
+              <span className="text-[var(--sb-accent)]">
+                {category.progress}%
+              </span>
             </div>
             <div
               className="h-1 w-full rounded-full overflow-hidden"
@@ -137,12 +151,14 @@ export function CategoryCard({ category, onClick, isFavorite, onToggleFavorite }
         {/* Button Action */}
         <Button
           asChild
-          variant={isCompleted ? "outline" : hasProgress ? "default" : "outline"}
+          variant={
+            isCompleted ? "outline" : hasProgress ? "default" : "outline"
+          }
           className={cn(
             "w-full h-9 rounded-lg font-medium text-xs border cursor-pointer select-none active:scale-97 transition-all",
             hasProgress && !isCompleted
               ? "bg-[var(--sb-accent)] text-white hover:opacity-90 border-0"
-              : "border-[var(--card-border)] hover:bg-[var(--sb-bg-hover)] text-[var(--sb-ink)]"
+              : "border-[var(--card-border)] hover:bg-[var(--sb-bg-hover)] text-[var(--sb-ink)]",
           )}
         >
           <Link to="/learn/roadmaps" search={{ id: category.id }}>

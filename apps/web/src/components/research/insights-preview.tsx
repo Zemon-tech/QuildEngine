@@ -1,9 +1,4 @@
-import {
-  AlertTriangle,
-  Lightbulb,
-  TrendingUp,
-  Brain,
-} from "lucide-react";
+import { AlertTriangle, Brain, Lightbulb, TrendingUp } from "lucide-react";
 import { GlassCard, SpotlightEffect } from "./spotlight";
 
 interface InsightItem {
@@ -28,7 +23,9 @@ export function InsightCard() {
     {
       title: "Model Drift Anomalies",
       badge: "Contradiction",
-      icon: <AlertTriangle className="w-5 h-5 text-rose-500 dark:text-rose-400" />,
+      icon: (
+        <AlertTriangle className="w-5 h-5 text-rose-500 dark:text-rose-400" />
+      ),
       text: "Recent evaluations indicate validation accuracy drops by 8% when scaling context sizes beyond 128k tokens, contradicting scaling laws.",
       borderColor: "border-rose-500/30",
       glowClass: "rgba(244, 63, 94, 0.1)",
@@ -36,7 +33,9 @@ export function InsightCard() {
     {
       title: "Retrieval Augmentation",
       badge: "Opportunity",
-      icon: <Lightbulb className="w-5 h-5 text-emerald-500 dark:text-emerald-400" />,
+      icon: (
+        <Lightbulb className="w-5 h-5 text-emerald-500 dark:text-emerald-400" />
+      ),
       text: "Implementing local sparse embeddings reduces vector lookup times to less than 12ms, paving the way for low-latency query loops.",
       borderColor: "border-emerald-500/30",
       glowClass: "rgba(16, 185, 129, 0.1)",
@@ -62,7 +61,8 @@ export function InsightCard() {
           AI Insights Preview
         </h2>
         <p className="text-[var(--sb-ink-muted)] text-sm md:text-base">
-          Real-time automated reports highlighting structural connections, anomalies, and study gaps across your archives.
+          Real-time automated reports highlighting structural connections,
+          anomalies, and study gaps across your archives.
         </p>
       </div>
 
@@ -72,7 +72,6 @@ export function InsightCard() {
           <SpotlightEffect key={idx} glowColor={ins.glowClass} glowSize={350}>
             {/* Animated card borders container */}
             <div className="relative group rounded-xl p-[1px] overflow-hidden bg-[var(--sb-border)]/60 dark:bg-zinc-800/40">
-              
               {/* Animating gradient border layer */}
               <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-cyan-500/10 dark:from-indigo-500/20 dark:via-purple-500/20 dark:to-cyan-500/20 opacity-40 group-hover:opacity-100 group-hover:scale-[1.01] transition-all duration-300 pointer-events-none" />
 
@@ -101,7 +100,12 @@ export function InsightCard() {
 
                 {/* Sub info */}
                 <div className="border-t border-[var(--sb-border)]/40 dark:border-white/5 pt-4 mt-6 flex items-center justify-between text-[10px] text-[var(--sb-ink-dim)]">
-                  <span>Confidence Score: <strong className="text-[var(--sb-ink-muted)] font-bold">98.2%</strong></span>
+                  <span>
+                    Confidence Score:{" "}
+                    <strong className="text-[var(--sb-ink-muted)] font-bold">
+                      98.2%
+                    </strong>
+                  </span>
                   <span>Extracted from 4 workspace sources</span>
                 </div>
               </GlassCard>

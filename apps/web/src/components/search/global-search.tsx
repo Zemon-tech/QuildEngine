@@ -30,12 +30,8 @@ import {
   CommandItem,
   CommandList,
 } from "#/components/ui/command";
-import { useSidebar } from "#/components/ui/sidebar";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "#/components/ui/tooltip";
+import { SidebarMenuButton, useSidebar } from "#/components/ui/sidebar";
+
 import { type SearchItem, searchDatabase } from "#/lib/search-db";
 import { cn } from "#/lib/utils.ts";
 
@@ -231,66 +227,57 @@ export function GlobalSearchTrigger() {
   };
 
   const triggerButton = (
-    <button
-      type="button"
-      onClick={handleClick}
+    <SidebarMenuButton
+      asChild
+      size="default"
+      tooltip="Search dashboard"
       className={cn(
-        "flex items-center transition-all duration-200 outline-none cursor-pointer shadow-sm border border-[var(--sb-border)] bg-[var(--card-bg)] text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)] focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60 active:scale-95",
+        "bg-[var(--card-bg)] text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)] border border-[var(--sb-border)] rounded-[10px] w-full",
         isCollapsed
-          ? "justify-center size-8 rounded-[10px] p-0"
-          : "w-full h-9 justify-between rounded-[10px] px-3 py-2 text-xs",
+          ? "justify-center p-0"
+          : "justify-between px-3 py-2 text-xs",
       )}
     >
-      <div className="flex items-center gap-2">
-        <Search
-          size={14}
-          className={cn("opacity-70 shrink-0", isCollapsed ? "mx-auto" : "")}
-        />
-        {!isCollapsed && (
-          <motion.span
-            initial={{ opacity: 0, width: 0 }}
-            animate={{ opacity: 1, width: "auto" }}
-            exit={{ opacity: 0, width: 0 }}
+      <button
+        type="button"
+        onClick={handleClick}
+        className="active:scale-95 transition-transform"
+      >
+        <div className="flex items-center gap-2">
+          <Search
+            size={14}
+            className={cn("opacity-70 shrink-0", isCollapsed ? "mx-auto" : "")}
+          />
+          {!isCollapsed && (
+            <motion.span
+              initial={{ opacity: 0, width: 0 }}
+              animate={{ opacity: 1, width: "auto" }}
+              exit={{ opacity: 0, width: 0 }}
+              transition={{ duration: 0.15 }}
+              className="whitespace-nowrap overflow-hidden text-left font-medium"
+            >
+              Search...
+            </motion.span>
+          )}
+        </div>
+        {!isCollapsed && mounted && (
+          <motion.kbd
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.15 }}
-            className="whitespace-nowrap overflow-hidden text-left font-medium"
+            className="hidden sm:inline-flex items-center gap-0.5 rounded border border-[var(--sb-border)] bg-[var(--sb-bg-active)] px-1.5 py-0.5 font-mono text-[9px] text-[var(--sb-ink-dim)] shrink-0"
           >
-            Search...
-          </motion.span>
+            {isMac ? "⌘" : "Ctrl "}K
+          </motion.kbd>
         )}
-      </div>
-      {!isCollapsed && mounted && (
-        <motion.kbd
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.15 }}
-          className="hidden sm:inline-flex items-center gap-0.5 rounded border border-[var(--sb-border)] bg-[var(--sb-bg-active)] px-1.5 py-0.5 font-mono text-[9px] text-[var(--sb-ink-dim)] shrink-0"
-        >
-          {isMac ? "⌘" : "Ctrl "}K
-        </motion.kbd>
-      )}
-    </button>
+      </button>
+    </SidebarMenuButton>
   );
 
   return (
     <>
       {/* Visual Trigger */}
-      {isCollapsed ? (
-        <Tooltip>
-          <TooltipTrigger asChild>{triggerButton}</TooltipTrigger>
-          <TooltipContent side="right" sideOffset={8}>
-            <div className="flex items-center gap-1.5">
-              <span>Search dashboard</span>
-              {mounted && (
-                <kbd className="font-mono text-[9px] text-[var(--sb-ink-dim)] bg-[var(--sb-bg-active)] px-1 rounded border border-[var(--sb-border)]">
-                  {isMac ? "⌘" : "Ctrl "}K
-                </kbd>
-              )}
-            </div>
-          </TooltipContent>
-        </Tooltip>
-      ) : (
-        triggerButton
-      )}
+      {!isCollapsed && triggerButton}
 
       {/* Command Palette Dialog */}
       <CommandDialog

@@ -1,20 +1,30 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
-import { useRoadmaps, useRoadmapDetail } from "#/hooks/use-roadmaps";
-import { SearchBar } from "#/components/roadmaps/search-bar";
-import { FilterPanel, type FilterState } from "#/components/roadmaps/filter-panel";
-import { FeaturedRoadmapCard } from "#/components/roadmaps/roadmap-card";
-import { CategoryCard } from "#/components/roadmaps/category-card";
-import { StatsCard } from "#/components/roadmaps/stats-card";
+import * as Icons from "lucide-react";
+import { useEffect, useState } from "react";
 import { AchievementCard } from "#/components/roadmaps/achievement-card";
 import { Breadcrumbs } from "#/components/roadmaps/breadcrumbs";
-import { LoadingSkeleton, CanvasSkeleton } from "#/components/roadmaps/loading-skeleton";
-import { RoadmapCanvas } from "#/components/roadmaps/roadmap-canvas";
+import { CategoryCard } from "#/components/roadmaps/category-card";
+import {
+  FilterPanel,
+  type FilterState,
+} from "#/components/roadmaps/filter-panel";
+import {
+  CanvasSkeleton,
+  LoadingSkeleton,
+} from "#/components/roadmaps/loading-skeleton";
 import { ProgressSidebar } from "#/components/roadmaps/progress-sidebar";
 import { ResourcePanel } from "#/components/roadmaps/resource-panel";
+import { RoadmapCanvas } from "#/components/roadmaps/roadmap-canvas";
+import { FeaturedRoadmapCard } from "#/components/roadmaps/roadmap-card";
+import { SearchBar } from "#/components/roadmaps/search-bar";
+import { StatsCard } from "#/components/roadmaps/stats-card";
 import { Badge } from "#/components/ui/badge";
-import * as Icons from "lucide-react";
-import type { RoadmapCategory, Achievement, RoadmapNode } from "#/types/roadmaps";
+import { useRoadmapDetail, useRoadmaps } from "#/hooks/use-roadmaps";
+import type {
+  Achievement,
+  RoadmapCategory,
+  RoadmapNode,
+} from "#/types/roadmaps";
 
 // Define search query parameters
 interface RoadmapSearch {
@@ -47,7 +57,8 @@ function RoadmapsPage() {
     toggleRoadmapFavorite,
   } = useRoadmaps();
 
-  const { data: activeRoadmap, isLoading: isRoadmapLoading } = useRoadmapDetail(activeRoadmapId);
+  const { data: activeRoadmap, isLoading: isRoadmapLoading } =
+    useRoadmapDetail(activeRoadmapId);
 
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
 
@@ -84,12 +95,18 @@ function RoadmapsPage() {
   // Filter Categories
   const filteredCategories = categories.filter((cat: RoadmapCategory) => {
     // 1. Difficulty filter
-    if (filters.difficulty.length > 0 && !filters.difficulty.includes(cat.difficulty)) {
+    if (
+      filters.difficulty.length > 0 &&
+      !filters.difficulty.includes(cat.difficulty)
+    ) {
       return false;
     }
 
     // 2. Duration filter
-    if (filters.duration.length > 0 && !filters.duration.includes(cat.duration)) {
+    if (
+      filters.duration.length > 0 &&
+      !filters.duration.includes(cat.duration)
+    ) {
       return false;
     }
 
@@ -114,16 +131,21 @@ function RoadmapsPage() {
 
   // Separate featured paths (Frontend, Backend, AI/ML)
   const featuredIds = ["frontend", "backend", "ai-ml"];
-  const featuredCategories = categories.filter((cat: RoadmapCategory) => featuredIds.includes(cat.id));
+  const featuredCategories = categories.filter((cat: RoadmapCategory) =>
+    featuredIds.includes(cat.id),
+  );
 
   // Error boundary fallback
   if (isError) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center px-4">
         <Icons.AlertTriangle className="size-12 text-rose-500 mb-4 animate-bounce" />
-        <h2 className="text-lg font-bold text-[var(--sb-ink)]">Failed to load Learning Roadmaps</h2>
+        <h2 className="text-lg font-bold text-[var(--sb-ink)]">
+          Failed to load Learning Roadmaps
+        </h2>
         <p className="text-sm text-[var(--sb-ink-dim)] mt-2 max-w-md">
-          There was an error communicating with the server functions. Please check your network and try again.
+          There was an error communicating with the server functions. Please
+          check your network and try again.
         </p>
         <button
           onClick={() => window.location.reload()}
@@ -147,7 +169,13 @@ function RoadmapsPage() {
         {/* Navigation Breadcrumbs */}
         <Breadcrumbs
           roadmapTitle={activeRoadmap.title}
-          topicTitle={selectedNodeId ? activeRoadmap.nodes.find((n: RoadmapNode) => n.id === selectedNodeId)?.data.title : undefined}
+          topicTitle={
+            selectedNodeId
+              ? activeRoadmap.nodes.find(
+                  (n: RoadmapNode) => n.id === selectedNodeId,
+                )?.data.title
+              : undefined
+          }
           onExit={() => navigate({ search: {} })}
         />
 
@@ -203,14 +231,16 @@ function RoadmapsPage() {
           Learning Roadmaps
         </h1>
         <p className="text-sm md:text-base leading-relaxed text-[var(--sb-ink-muted)]">
-          Follow guided, step-by-step learning paths to master key engineering domains.
-          Track your progress, earn XP points, and unlock achievements.
+          Follow guided, step-by-step learning paths to master key engineering
+          domains. Track your progress, earn XP points, and unlock achievements.
         </p>
       </div>
 
       {/* 2. Global Search bar */}
       <div className="max-w-xl mx-auto">
-        <SearchBar onSelectCategory={(id: string) => navigate({ search: { id } })} />
+        <SearchBar
+          onSelectCategory={(id: string) => navigate({ search: { id } })}
+        />
       </div>
 
       {/* 3. Progress Metrics statistics cards */}
@@ -230,7 +260,11 @@ function RoadmapsPage() {
           </h2>
           <div className="flex flex-col gap-4">
             {featuredCategories
-              .filter((cat: RoadmapCategory) => filteredCategories.some((fc: RoadmapCategory) => fc.id === cat.id))
+              .filter((cat: RoadmapCategory) =>
+                filteredCategories.some(
+                  (fc: RoadmapCategory) => fc.id === cat.id,
+                ),
+              )
               .map((cat: RoadmapCategory) => (
                 <FeaturedRoadmapCard
                   key={cat.id}
@@ -253,8 +287,13 @@ function RoadmapsPage() {
         </h2>
         {filteredCategories.length === 0 ? (
           <div className="text-center py-16 border border-dashed border-[var(--card-border)] rounded-2xl p-6">
-            <Icons.Layers3 size={32} className="text-[var(--sb-ink-dim)] mx-auto mb-3" />
-            <p className="text-sm font-bold text-[var(--sb-ink-muted)]">No matching paths found</p>
+            <Icons.Layers3
+              size={32}
+              className="text-[var(--sb-ink-dim)] mx-auto mb-3"
+            />
+            <p className="text-sm font-bold text-[var(--sb-ink-muted)]">
+              No matching paths found
+            </p>
             <p className="text-xs text-[var(--sb-ink-dim)] mt-1">
               Try adjusting your difficulty or duration filters.
             </p>
@@ -284,7 +323,11 @@ function RoadmapsPage() {
             My Learning Achievements
           </h2>
           <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 hover:bg-emerald-500/15 border-0 text-[10px] rounded-full">
-            {achievements.filter((a: Achievement) => a.status === "unlocked").length} Unlocked
+            {
+              achievements.filter((a: Achievement) => a.status === "unlocked")
+                .length
+            }{" "}
+            Unlocked
           </Badge>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">

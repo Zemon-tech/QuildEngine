@@ -1,7 +1,7 @@
+import { AnimatePresence, motion } from "framer-motion";
+import { BrainCircuit, Info, Network, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { BrainCircuit, Info, Sparkles, Network } from "lucide-react";
-import { SpotlightEffect, GlassCard } from "./spotlight";
+import { GlassCard, SpotlightEffect } from "./spotlight";
 
 interface GraphNode {
   id: string;
@@ -30,8 +30,10 @@ export function KnowledgeGraph() {
       size: 28,
       color: "#818cf8", // indigo
       category: "Core Engine",
-      insight: "Computes representation by comparing each word to all other words.",
-      details: "Self-attention is the key driver of the Transformer model. It enables sequence elements to interact dynamically, assigning weight scores to relevant positions across arbitrary context distances.",
+      insight:
+        "Computes representation by comparing each word to all other words.",
+      details:
+        "Self-attention is the key driver of the Transformer model. It enables sequence elements to interact dynamically, assigning weight scores to relevant positions across arbitrary context distances.",
     },
     {
       id: "multi_head",
@@ -41,8 +43,10 @@ export function KnowledgeGraph() {
       size: 20,
       color: "#22d3ee", // cyan
       category: "Feature Subspaces",
-      insight: "Allows the model to attend to multiple representation structures.",
-      details: "Splits Queries, Keys, and Values into multiple projections, performing attention computations in parallel to capture distinct relationships like grammar, semantics, and syntactic structure.",
+      insight:
+        "Allows the model to attend to multiple representation structures.",
+      details:
+        "Splits Queries, Keys, and Values into multiple projections, performing attention computations in parallel to capture distinct relationships like grammar, semantics, and syntactic structure.",
     },
     {
       id: "qkv_matrices",
@@ -52,8 +56,10 @@ export function KnowledgeGraph() {
       size: 16,
       color: "#a855f7", // purple
       category: "Mathematical Foundations",
-      insight: "Query, Key, and Value matrices mapping inputs to dynamic attention spaces.",
-      details: "Linear projections of input embeddings. Dot product of Queries and Keys outputs similarity scores, weighting Value matrices to synthesize the final output context.",
+      insight:
+        "Query, Key, and Value matrices mapping inputs to dynamic attention spaces.",
+      details:
+        "Linear projections of input embeddings. Dot product of Queries and Keys outputs similarity scores, weighting Value matrices to synthesize the final output context.",
     },
     {
       id: "ffn",
@@ -63,8 +69,10 @@ export function KnowledgeGraph() {
       size: 18,
       color: "#ec4899", // pink
       category: "Core Engine",
-      insight: "Applies two linear transformations with a ReLU/GELU activation in between.",
-      details: "Processed independently for each token position. Crucial for mapping attention outputs into deeper non-linear classification dimensions.",
+      insight:
+        "Applies two linear transformations with a ReLU/GELU activation in between.",
+      details:
+        "Processed independently for each token position. Crucial for mapping attention outputs into deeper non-linear classification dimensions.",
     },
     {
       id: "pos_encoding",
@@ -75,7 +83,8 @@ export function KnowledgeGraph() {
       color: "#10b981", // green
       category: "Input Pipeline",
       insight: "Injects sequence order coordinates directly into word vectors.",
-      details: "Since Transformers discard recurrence, positional vectors are added to input embeddings using sine/cosine functions to preserve relative word distance sequences.",
+      details:
+        "Since Transformers discard recurrence, positional vectors are added to input embeddings using sine/cosine functions to preserve relative word distance sequences.",
     },
     {
       id: "layer_norm",
@@ -85,8 +94,10 @@ export function KnowledgeGraph() {
       size: 16,
       color: "#f59e0b", // yellow
       category: "Optimization",
-      insight: "Stabilizes training by normalizing embedding columns across layers.",
-      details: "Normalization applied before feed-forward blocks, smoothing loss gradients and enabling deeper model stack sizes without gradient explosion.",
+      insight:
+        "Stabilizes training by normalizing embedding columns across layers.",
+      details:
+        "Normalization applied before feed-forward blocks, smoothing loss gradients and enabling deeper model stack sizes without gradient explosion.",
     },
     {
       id: "masked_attn",
@@ -97,7 +108,8 @@ export function KnowledgeGraph() {
       color: "#f43f5e", // red
       category: "Decoder Stack",
       insight: "Prevents positions from attending to subsequent future words.",
-      details: "Used in autoregressive decoders. Replaces downstream weight maps with negative infinity, forcing the model to generate text token-by-token predicting only future targets.",
+      details:
+        "Used in autoregressive decoders. Replaces downstream weight maps with negative infinity, forcing the model to generate text token-by-token predicting only future targets.",
     },
     {
       id: "encoder_stack",
@@ -107,8 +119,10 @@ export function KnowledgeGraph() {
       size: 22,
       color: "#0ea5e9", // sky
       category: "Structural Blocks",
-      insight: "Processes source sequences into abstract key-value attention pairs.",
-      details: "Contains layers of self-attention followed by feed-forward blocks. Resolves incoming text sequences into semantic summaries.",
+      insight:
+        "Processes source sequences into abstract key-value attention pairs.",
+      details:
+        "Contains layers of self-attention followed by feed-forward blocks. Resolves incoming text sequences into semantic summaries.",
     },
     {
       id: "decoder_stack",
@@ -119,7 +133,8 @@ export function KnowledgeGraph() {
       color: "#fb7185", // rose
       category: "Structural Blocks",
       insight: "Synthesizes final target outputs using cross-attention feeds.",
-      details: "Combines masked self-attention over target history with multi-head cross-attention over encoder output keys/values to perform text generation.",
+      details:
+        "Combines masked self-attention over target history with multi-head cross-attention over encoder output keys/values to perform text generation.",
     },
   ];
 
@@ -140,7 +155,8 @@ export function KnowledgeGraph() {
   ];
 
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
-  const [selectedNodeId, setSelectedNodeId] = useState<string>("self_attention");
+  const [selectedNodeId, setSelectedNodeId] =
+    useState<string>("self_attention");
 
   const activeNode = nodes.find((n) => n.id === selectedNodeId) || nodes[0];
   const hoveredNode = nodes.find((n) => n.id === hoveredNodeId);
@@ -160,7 +176,8 @@ export function KnowledgeGraph() {
           Interactive Knowledge Graph
         </h2>
         <p className="text-[var(--sb-ink-muted)] text-sm md:text-base">
-          Hover over nodes to trace connections and see AI insights. Click to explore deeper details of each concept.
+          Hover over nodes to trace connections and see AI insights. Click to
+          explore deeper details of each concept.
         </p>
       </div>
 
@@ -169,7 +186,7 @@ export function KnowledgeGraph() {
         <div className="lg:col-span-2 relative bg-[color-mix(in_oklab,var(--card-bg)_65%,transparent)] rounded-xl border border-[var(--sb-border)]/60 dark:border-white/[0.08] p-4 overflow-hidden h-[480px]">
           {/* Subtle Grid Pattern inside canvas */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.04),transparent)] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.08),transparent)]" />
-          
+
           <svg
             className="w-full h-full"
             viewBox="0 0 800 450"
@@ -243,18 +260,17 @@ export function KnowledgeGraph() {
                   />
 
                   {/* Tiny Node Center Dot */}
-                  <circle
-                    cx={node.x}
-                    cy={node.y}
-                    r={4}
-                    fill={node.color}
-                  />
+                  <circle cx={node.x} cy={node.y} r={4} fill={node.color} />
 
                   {/* Label */}
                   <text
                     x={node.x}
                     y={node.y + node.size + 16}
-                    fill={isHovered || isSelected ? "var(--sb-ink)" : "var(--sb-ink-muted)"}
+                    fill={
+                      isHovered || isSelected
+                        ? "var(--sb-ink)"
+                        : "var(--sb-ink-muted)"
+                    }
                     textAnchor="middle"
                     className="text-[10px] font-semibold tracking-wide font-sans select-none pointer-events-none transition-colors"
                   >
@@ -275,7 +291,10 @@ export function KnowledgeGraph() {
                 transition={{ duration: 0.15 }}
                 className="absolute pointer-events-none p-3 bg-[var(--card-bg)] border border-[var(--sb-border)] rounded-lg shadow-xl max-w-xs"
                 style={{
-                  left: hoveredNode.x > 500 ? hoveredNode.x - 220 : hoveredNode.x + 30,
+                  left:
+                    hoveredNode.x > 500
+                      ? hoveredNode.x - 220
+                      : hoveredNode.x + 30,
                   top: hoveredNode.y - 40,
                 }}
               >
@@ -301,8 +320,12 @@ export function KnowledgeGraph() {
                   <div className="flex items-center gap-2.5">
                     <BrainCircuit className="w-5 h-5 text-indigo-500 dark:text-indigo-400" />
                     <div>
-                      <h3 className="text-sm font-bold text-[var(--sb-ink)]">AI Node Analyst</h3>
-                      <p className="text-[10px] text-[var(--sb-ink-dim)] font-mono">Synchronized with paper contexts</p>
+                      <h3 className="text-sm font-bold text-[var(--sb-ink)]">
+                        AI Node Analyst
+                      </h3>
+                      <p className="text-[10px] text-[var(--sb-ink-dim)] font-mono">
+                        Synchronized with paper contexts
+                      </p>
                     </div>
                   </div>
                   <span className="text-[10px] bg-[var(--sb-pill)] border border-[var(--sb-border)]/40 text-[var(--sb-ink-muted)] px-2 py-0.5 rounded font-medium">
@@ -316,7 +339,10 @@ export function KnowledgeGraph() {
                     <span className="text-[10px] text-[var(--sb-ink-dim)] font-mono uppercase tracking-wider block">
                       Concept Title
                     </span>
-                    <h4 className="text-lg font-bold mt-1" style={{ color: activeNode.color }}>
+                    <h4
+                      className="text-lg font-bold mt-1"
+                      style={{ color: activeNode.color }}
+                    >
                       {activeNode.label}
                     </h4>
                   </div>

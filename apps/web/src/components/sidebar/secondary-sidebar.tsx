@@ -12,16 +12,23 @@ import {
   FlaskConical,
   LayoutDashboard,
   Map as MapIcon,
+  Menu,
   PanelLeftClose,
   PanelLeftOpen,
   StickyNote,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "#/components/ui/tooltip";
+  Sidebar,
+  SidebarHeader,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+} from "#/components/ui/sidebar";
 import { cn } from "#/lib/utils";
 
 interface SubItem {
@@ -60,10 +67,38 @@ export function useAiDashboardSidebarOpen() {
   return open;
 }
 
+let isAppSidebarForcedOpen = false;
+const appSidebarListeners = new Set<(val: boolean) => void>();
+
+export function toggleAppSidebarForced() {
+  isAppSidebarForcedOpen = !isAppSidebarForcedOpen;
+  for (const listener of appSidebarListeners) {
+    listener(isAppSidebarForcedOpen);
+  }
+}
+
+export function useAppSidebarForcedOpen() {
+  const [open, setOpen] = useState(isAppSidebarForcedOpen);
+  useEffect(() => {
+    appSidebarListeners.add(setOpen);
+    return () => {
+      appSidebarListeners.delete(setOpen);
+    };
+  }, []);
+  return [open, toggleAppSidebarForced] as const;
+}
+
 export function SecondarySidebar() {
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
   const [collapsed, setCollapsed] = useState(false);
+  const [appSidebarOpen, toggleAppSidebar] = useAppSidebarForcedOpen();
+
+  const isLearningOrResearch =
+    currentPath.startsWith("/learn") ||
+    currentPath.startsWith("/courses") ||
+    currentPath.startsWith("/research") ||
+    currentPath.startsWith("/documentation");
 
   const isProblemWorkspace =
     currentPath.includes("/practice/problem/") ||
@@ -132,9 +167,7 @@ export function SecondarySidebar() {
     sectionTitle = "Practice Room";
 
     // Detect if we are inside a DSA topic (for showing tab sub-nav)
-    const dsaTopicMatch = currentPath.match(
-      /^\/practice\/dsa\/([^/]+)/,
-    );
+    const dsaTopicMatch = currentPath.match(/^\/practice\/dsa\/([^/]+)/);
     const currentDsaTopic = dsaTopicMatch ? dsaTopicMatch[1] : null;
 
     if (currentDsaTopic) {
@@ -185,7 +218,6 @@ export function SecondarySidebar() {
         },
       ];
     }
-
   } else if (
     currentPath.startsWith("/research") ||
     currentPath.startsWith("/documentation")
@@ -211,240 +243,181 @@ export function SecondarySidebar() {
   };
 
   return (
-    <aside
-      className="shrink-0 border-r flex flex-col h-screen overflow-hidden select-none transition-all duration-250 ease-in-out"
+    <Sidebar
+      collapsible="none"
+      className="hidden md:flex border-r border-sb-border transition-[width] duration-200 ease-in-out"
       style={{
-        width: collapsed ? 60 : 272,
+        width: collapsed ? "3.75rem" : "17rem",
         background: "color-mix(in oklab, var(--sb-bg) 96.5%, black 3.5%)",
-        borderColor: "var(--sb-border)",
       }}
     >
       {/* Section Header */}
-      <div
-        className={cn(
-          "h-14 flex items-center border-b px-3 py-3",
-          collapsed ? "justify-center" : "justify-between gap-2",
-        )}
-        style={{
-          borderColor: "var(--sb-border)",
-        }}
-      >
-        {!collapsed && (
-          <span
-            className="text-xs font-bold tracking-wider uppercase truncate"
-            style={{
-              color: "var(--sb-ink-dim)",
-            }}
-          >
-            {sectionTitle}
-          </span>
-        )}
-        <button
-          type="button"
-          onClick={() => setCollapsed(!collapsed)}
+      <SidebarHeader className="p-0 border-b border-sb-border h-14">
+        <div
           className={cn(
-            "flex shrink-0 items-center justify-center rounded-[8px] outline-none transition-all duration-150 size-7 cursor-pointer text-[var(--sb-ink-dim)] hover:opacity-75 focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60 active:scale-95",
+            "h-full w-full flex items-center px-3 py-3 gap-2",
+            collapsed ? "justify-center" : "justify-between",
           )}
-          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
-          {collapsed ? (
-            <PanelLeftOpen size={15} />
-          ) : (
-            <PanelLeftClose size={15} />
+          {isLearningOrResearch && !collapsed && (
+            <button
+              type="button"
+              onClick={toggleAppSidebar}
+              className={cn(
+                "flex shrink-0 items-center justify-center rounded-[8px] outline-none transition-all duration-150 size-7 cursor-pointer text-[var(--sb-ink-dim)] hover:opacity-75 focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60 active:scale-95",
+              )}
+              title={appSidebarOpen ? "Hide main menu" : "Show main menu"}
+              aria-label={appSidebarOpen ? "Hide main menu" : "Show main menu"}
+            >
+              <Menu size={15} />
+            </button>
           )}
-        </button>
-      </div>
+          {!collapsed && (
+            <span
+              className="text-xs font-bold tracking-wider uppercase truncate flex-1 text-[var(--sb-ink-dim)]"
+            >
+              {sectionTitle}
+            </span>
+          )}
+          <button
+            type="button"
+            onClick={() => setCollapsed(!collapsed)}
+            className={cn(
+              "flex shrink-0 items-center justify-center rounded-[8px] outline-none transition-all duration-150 size-7 cursor-pointer text-[var(--sb-ink-dim)] hover:opacity-75 focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60 active:scale-95",
+            )}
+            title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {collapsed ? (
+              <PanelLeftOpen size={15} />
+            ) : (
+              <PanelLeftClose size={15} />
+            )}
+          </button>
+        </div>
+      </SidebarHeader>
 
-      {/* Group listings */}
-      <div className="flex-1 overflow-y-auto py-3 px-2 space-y-4 scrollbar-none">
+      {/* Sidebar Content */}
+      <SidebarContent className="px-2 py-3 gap-4">
         {groups.map((group) => {
           if (group.to) {
-            // Render group itself as a navigation trigger (e.g. Algorithms & DSA)
+            // Render single top-level item (e.g. Algorithms & DSA)
             const active = isItemActive(group.to);
             const Icon = group.icon;
 
-            return collapsed ? (
-              <Tooltip key={group.label} delayDuration={0}>
-                <TooltipTrigger asChild>
-                  <div>
+            return (
+              <SidebarMenu key={group.label}>
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={active}
+                    tooltip={group.label}
+                    className="rounded-[10px] px-2.5 py-[7px]"
+                  >
                     <Link
                       to={group.to}
                       className={cn(
-                        "flex items-center gap-2.5 px-2.5 py-1.5 text-xs font-bold tracking-wide rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative uppercase",
-                        "justify-center px-1.5",
+                        "flex items-center gap-2.5 w-full text-xs font-bold tracking-wide uppercase transition-colors",
                         active
-                          ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)]"
-                          : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]",
+                          ? "text-[var(--sb-accent)] font-bold"
+                          : "text-[var(--sb-ink-muted)] hover:text-[var(--sb-ink)]",
                       )}
                     >
-                      {Icon && (
-                        <Icon
-                          size={14}
-                          className={cn(
-                            "shrink-0",
-                            active
-                              ? "text-[var(--sb-accent)]"
-                              : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]",
+                      {Icon && <Icon size={14} className="shrink-0" />}
+                      {!collapsed && (
+                        <>
+                          <span className="flex-1 truncate">{group.label}</span>
+                          {group.badge && (
+                            <span
+                              className="text-[9px] font-semibold px-1 py-0.2 rounded-md tracking-wide border border-sb-border"
+                              style={{
+                                background:
+                                  group.badge === "Live"
+                                    ? "oklch(0.627 0.265 303.9 / 0.15)"
+                                    : "var(--sb-pill)",
+                                color:
+                                  group.badge === "Live"
+                                    ? "oklch(0.627 0.265 303.9)"
+                                    : "var(--sb-ink-dim)",
+                              }}
+                            >
+                              {group.badge}
+                            </span>
                           )}
-                        />
+                        </>
                       )}
                     </Link>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent side="right" sideOffset={8}>
-                  <span className="text-xs font-medium">{group.label}</span>
-                  {group.badge && (
-                    <span className="ml-1.5 text-[9px] font-semibold px-1 py-0.2 rounded bg-zinc-800 text-zinc-200">
-                      {group.badge}
-                    </span>
-                  )}
-                </TooltipContent>
-              </Tooltip>
-            ) : (
-              <div key={group.label}>
-                <Link
-                  to={group.to}
-                  className={cn(
-                    "flex items-center gap-2.5 px-2.5 py-1.5 text-xs font-bold tracking-wide rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative uppercase",
-                    active
-                      ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)]"
-                      : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]",
-                  )}
-                >
-                  {Icon && (
-                    <Icon
-                      size={14}
-                      className={cn(
-                        "shrink-0",
-                        active
-                          ? "text-[var(--sb-accent)]"
-                          : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]",
-                      )}
-                    />
-                  )}
-                  <span className="flex-1 truncate">{group.label}</span>
-                  {group.badge && (
-                    <span
-                      className="text-[9px] font-semibold px-1 py-0.2 rounded-md tracking-wide"
-                      style={{
-                        background:
-                          group.badge === "Live"
-                            ? "oklch(0.627 0.265 303.9 / 0.15)"
-                            : "var(--sb-pill)",
-                        color:
-                          group.badge === "Live"
-                            ? "oklch(0.627 0.265 303.9)"
-                            : "var(--sb-ink-dim)",
-                        border: "1px solid var(--sb-border)",
-                      }}
-                    >
-                      {group.badge}
-                    </span>
-                  )}
-                </Link>
-              </div>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
             );
           }
 
-          // Otherwise, render standard group with nested items
+          // Otherwise render group with nested items
           return (
-            <div key={group.label} className="space-y-1">
+            <SidebarGroup key={group.label} className="p-0 flex flex-col gap-1.5">
               {!collapsed && (
-                <span className="px-2.5 text-[10px] font-bold tracking-wide text-zinc-400 dark:text-zinc-500 block uppercase">
+                <SidebarGroupLabel className="px-2.5 text-[10px] font-bold tracking-wide text-zinc-400 dark:text-zinc-500 uppercase h-auto mb-1">
                   {group.label}
-                </span>
+                </SidebarGroupLabel>
               )}
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {group.items?.map((item) => {
+                    const active = isItemActive(item.to);
+                    const Icon = item.icon;
 
-              <div className="space-y-0.5">
-                {group.items?.map((item) => {
-                  const active = isItemActive(item.to);
-
-                  return collapsed ? (
-                    <Tooltip key={item.label} delayDuration={0}>
-                      <TooltipTrigger asChild>
-                        <div>
+                    return (
+                      <SidebarMenuItem key={item.label}>
+                        <SidebarMenuButton
+                          asChild
+                          isActive={active}
+                          tooltip={item.label}
+                          className="rounded-[10px] px-2.5 py-[7px]"
+                        >
                           <Link
                             to={item.to}
                             className={cn(
-                              "flex items-center gap-2.5 px-2.5 py-1.5 text-xs font-medium rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative",
-                              "justify-center px-1.5",
+                              "flex items-center gap-2.5 w-full text-xs font-medium transition-colors",
                               active
-                                ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)] font-semibold"
-                                : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]",
+                                ? "text-[var(--sb-accent)] font-semibold"
+                                : "text-[var(--sb-ink-muted)] hover:text-[var(--sb-ink)]",
                             )}
                           >
-                            <item.icon
-                              size={14}
-                              className={cn(
-                                "shrink-0",
-                                active
-                                  ? "text-[var(--sb-accent)]"
-                                  : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]",
-                              )}
-                            />
+                            <Icon size={14} className="shrink-0" />
+                            {!collapsed && (
+                              <>
+                                <span className="flex-1 truncate">{item.label}</span>
+                                {item.badge && (
+                                  <span
+                                    className="text-[9px] font-semibold px-1 py-0.2 rounded-md tracking-wide border border-sb-border"
+                                    style={{
+                                      background:
+                                        item.badge === "Live"
+                                          ? "oklch(0.627 0.265 303.9 / 0.15)"
+                                          : "var(--sb-pill)",
+                                      color:
+                                        item.badge === "Live"
+                                          ? "oklch(0.627 0.265 303.9)"
+                                          : "var(--sb-ink-dim)",
+                                    }}
+                                  >
+                                    {item.badge}
+                                  </span>
+                                )}
+                              </>
+                            )}
                           </Link>
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent side="right" sideOffset={8}>
-                        <span className="text-xs font-medium">
-                          {item.label}
-                        </span>
-                        {item.badge && (
-                          <span className="ml-1.5 text-[9px] font-semibold px-1 py-0.2 rounded bg-zinc-800 text-zinc-200">
-                            {item.badge}
-                          </span>
-                        )}
-                      </TooltipContent>
-                    </Tooltip>
-                  ) : (
-                    <div key={item.label}>
-                      <Link
-                        to={item.to}
-                        className={cn(
-                          "flex items-center gap-2.5 px-2.5 py-1.5 text-xs font-medium rounded-lg transition-all duration-150 cursor-pointer active:scale-[0.97] relative",
-                          active
-                            ? "bg-[color-mix(in oklab,var(--sb-ink)_6%,transparent)] text-[var(--sb-accent)] font-semibold"
-                            : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)]",
-                        )}
-                      >
-                        <item.icon
-                          size={14}
-                          className={cn(
-                            "shrink-0",
-                            active
-                              ? "text-[var(--sb-accent)]"
-                              : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]",
-                          )}
-                        />
-                        <span className="flex-1 truncate">{item.label}</span>
-                        {item.badge && (
-                          <span
-                            className="text-[9px] font-semibold px-1 py-0.2 rounded-md tracking-wide"
-                            style={{
-                              background:
-                                item.badge === "Live"
-                                  ? "oklch(0.627 0.265 303.9 / 0.15)"
-                                  : "var(--sb-pill)",
-                              color:
-                                item.badge === "Live"
-                                  ? "oklch(0.627 0.265 303.9)"
-                                  : "var(--sb-ink-dim)",
-                              border: "1px solid var(--sb-border)",
-                            }}
-                          >
-                            {item.badge}
-                          </span>
-                        )}
-                      </Link>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    );
+                  })}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
           );
         })}
-      </div>
-    </aside>
+      </SidebarContent>
+    </Sidebar>
   );
 }

@@ -1,7 +1,7 @@
 import { Handle, Position } from "@xyflow/react";
 import * as Icons from "lucide-react";
-import type { RoadmapNodeData } from "../../types/roadmaps";
 import { cn } from "../../lib/utils";
+import type { RoadmapNodeData } from "../../types/roadmaps";
 
 interface RoadmapNodeProps {
   data: RoadmapNodeData;
@@ -17,7 +17,8 @@ export function RoadmapNode({ data, selected }: RoadmapNodeProps) {
       bg: "bg-emerald-500/5 group-hover:bg-emerald-500/10",
       completedBg: "bg-emerald-500 text-white",
       completedBorder: "border-emerald-600",
-      badge: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
+      badge:
+        "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
       glow: "shadow-[0_0_15px_rgba(16,185,129,0.15)]",
     },
     intermediate: {
@@ -26,7 +27,8 @@ export function RoadmapNode({ data, selected }: RoadmapNodeProps) {
       bg: "bg-blue-500/5 group-hover:bg-blue-500/10",
       completedBg: "bg-blue-500 text-white",
       completedBorder: "border-blue-600",
-      badge: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
+      badge:
+        "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
       glow: "shadow-[0_0_15px_rgba(59,130,246,0.15)]",
     },
     advanced: {
@@ -35,7 +37,8 @@ export function RoadmapNode({ data, selected }: RoadmapNodeProps) {
       bg: "bg-purple-500/5 group-hover:bg-purple-500/10",
       completedBg: "bg-purple-500 text-white",
       completedBorder: "border-purple-600",
-      badge: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
+      badge:
+        "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
       glow: "shadow-[0_0_15px_rgba(168,85,247,0.15)]",
     },
   };
@@ -62,18 +65,23 @@ export function RoadmapNode({ data, selected }: RoadmapNodeProps) {
           isLocked
             ? "bg-[var(--card-bg)]/40 border-[var(--card-border)]/50 opacity-50 cursor-not-allowed"
             : isCompleted
-            ? cn("border-[var(--sb-accent)]", colors.glow)
-            : isInProgress
-            ? cn("border-[var(--sb-accent)] border-dashed bg-[var(--sb-accent)]/5 shadow-md", colors.glow)
-            : cn("bg-[var(--card-bg)]", colors.border),
-          selected && !isLocked && "ring-2 ring-[var(--sb-accent)] border-[var(--sb-accent)]"
+              ? cn("border-[var(--sb-accent)]", colors.glow)
+              : isInProgress
+                ? cn(
+                    "border-[var(--sb-accent)] border-dashed bg-[var(--sb-accent)]/5 shadow-md",
+                    colors.glow,
+                  )
+                : cn("bg-[var(--card-bg)]", colors.border),
+          selected &&
+            !isLocked &&
+            "ring-2 ring-[var(--sb-accent)] border-[var(--sb-accent)]",
         )}
         style={{
           background: isLocked
             ? "rgba(var(--card-bg-rgb), 0.4)"
             : isCompleted || isInProgress
-            ? undefined
-            : "var(--card-bg)",
+              ? undefined
+              : "var(--card-bg)",
           borderColor: selected ? "var(--sb-accent)" : undefined,
         }}
       >
@@ -87,7 +95,7 @@ export function RoadmapNode({ data, selected }: RoadmapNodeProps) {
           <span
             className={cn(
               "text-[9px] font-bold px-1.5 py-0.5 rounded-full border uppercase tracking-wider",
-              colors.badge
+              colors.badge,
             )}
           >
             {data.difficulty}
@@ -95,7 +103,9 @@ export function RoadmapNode({ data, selected }: RoadmapNodeProps) {
 
           {/* Status Icon */}
           <span className="flex size-5 items-center justify-center rounded-full text-xs">
-            {isLocked && <Icons.Lock size={11} className="text-[var(--sb-ink-dim)]" />}
+            {isLocked && (
+              <Icons.Lock size={11} className="text-[var(--sb-ink-dim)]" />
+            )}
             {isCompleted && (
               <span className="flex size-5 items-center justify-center rounded-full bg-emerald-500 text-white shadow-sm">
                 <Icons.Check size={10} strokeWidth={3} />
@@ -107,7 +117,10 @@ export function RoadmapNode({ data, selected }: RoadmapNodeProps) {
               </span>
             )}
             {!isLocked && !isCompleted && !isInProgress && (
-              <Icons.Circle size={12} className="text-[var(--sb-ink-dim)] group-hover:text-[var(--sb-accent)] transition-colors" />
+              <Icons.Circle
+                size={12}
+                className="text-[var(--sb-ink-dim)] group-hover:text-[var(--sb-accent)] transition-colors"
+              />
             )}
           </span>
         </div>
@@ -116,7 +129,7 @@ export function RoadmapNode({ data, selected }: RoadmapNodeProps) {
         <h4
           className={cn(
             "text-xs font-bold leading-snug line-clamp-2",
-            isLocked ? "text-[var(--sb-ink-muted)]" : "text-[var(--sb-ink)]"
+            isLocked ? "text-[var(--sb-ink-muted)]" : "text-[var(--sb-ink)]",
           )}
         >
           {data.title}

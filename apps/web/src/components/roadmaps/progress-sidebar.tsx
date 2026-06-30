@@ -16,16 +16,16 @@ export function ProgressSidebar({
   // Calculate completed nodes inside this active roadmap
   const roadmapNodeIds = roadmap.nodes.map((n) => n.id);
   const completedInRoadmap = roadmapNodeIds.filter((id) =>
-    progress.completedNodes.includes(id)
+    progress.completedNodes.includes(id),
   );
-  
+
   const completionPercentage = roadmapNodeIds.length
     ? Math.round((completedInRoadmap.length / roadmapNodeIds.length) * 100)
     : 0;
 
   // Filter bookmarks belonging to this roadmap
   const bookmarks = roadmap.nodes.filter((n) =>
-    progress.bookmarkedNodes.includes(n.id)
+    progress.bookmarkedNodes.includes(n.id),
   );
 
   // Suggest "Next Chapter to Study"
@@ -39,7 +39,7 @@ export function ProgressSidebar({
       const inboundEdges = roadmap.edges.filter((e) => e.target === node.id);
       if (inboundEdges.length > 0) {
         const anySourceCompleted = inboundEdges.some((e) =>
-          progress.completedNodes.includes(e.source)
+          progress.completedNodes.includes(e.source),
         );
         return anySourceCompleted;
       }
@@ -83,7 +83,9 @@ export function ProgressSidebar({
               r="24"
               className="fill-none stroke-[var(--sb-accent)] stroke-[3.5] transition-all duration-700"
               strokeDasharray={2 * Math.PI * 24}
-              strokeDashoffset={2 * Math.PI * 24 * (1 - completionPercentage / 100)}
+              strokeDashoffset={
+                2 * Math.PI * 24 * (1 - completionPercentage / 100)
+              }
               strokeLinecap="round"
             />
           </svg>
@@ -156,7 +158,10 @@ export function ProgressSidebar({
 
         {bookmarks.length === 0 ? (
           <div className="flex-1 border border-dashed border-[var(--card-border)] rounded-xl flex flex-col items-center justify-center p-4 text-center">
-            <Icons.BookmarkMinus size={16} className="text-[var(--sb-ink-dim)] mb-1.5" />
+            <Icons.BookmarkMinus
+              size={16}
+              className="text-[var(--sb-ink-dim)] mb-1.5"
+            />
             <p className="text-[10px] text-[var(--sb-ink-dim)] max-w-[150px] leading-snug">
               Bookmark resources or chapters for quick reviews.
             </p>
@@ -177,7 +182,10 @@ export function ProgressSidebar({
                     {n.data.difficulty} · {n.data.duration}
                   </p>
                 </div>
-                <Icons.ChevronRight size={11} className="text-[var(--sb-ink-dim)] group-hover:text-[var(--sb-accent)] transition-transform group-hover:translate-x-0.5 shrink-0" />
+                <Icons.ChevronRight
+                  size={11}
+                  className="text-[var(--sb-ink-dim)] group-hover:text-[var(--sb-accent)] transition-transform group-hover:translate-x-0.5 shrink-0"
+                />
               </button>
             ))}
           </div>

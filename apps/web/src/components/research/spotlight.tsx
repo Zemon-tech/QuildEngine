@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import type React from "react";
+import { useRef, useState } from "react";
 import { cn } from "#/lib/utils";
 
 interface SpotlightProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -58,7 +59,7 @@ export function GlassCard({
     <div
       className={cn(
         "rounded-xl border border-[var(--sb-border)]/40 dark:border-white/[0.08] bg-[color-mix(in_oklab,var(--card-bg)_40%,transparent)] backdrop-blur-md shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-all duration-300 hover:border-[var(--sb-border)]/80 dark:hover:border-white/[0.15]",
-        className
+        className,
       )}
       {...props}
     >

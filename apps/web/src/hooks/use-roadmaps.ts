@@ -1,8 +1,19 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchRoadmapsList, fetchRoadmapDetail, updateNodeProgress, toggleNodeBookmark, toggleRoadmapFavorite } from "../lib/server-fns/roadmaps";
-import type { UserProgress, NodeStatus, RoadmapCategory, Achievement } from "../types/roadmaps";
-import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { produce } from "immer";
+import { useEffect, useState } from "react";
+import {
+  fetchRoadmapDetail,
+  fetchRoadmapsList,
+  toggleNodeBookmark,
+  toggleRoadmapFavorite,
+  updateNodeProgress,
+} from "../lib/server-fns/roadmaps";
+import type {
+  Achievement,
+  NodeStatus,
+  RoadmapCategory,
+  UserProgress,
+} from "../types/roadmaps";
 
 const LOCAL_STORAGE_KEY = "quild_roadmap_progress";
 
@@ -40,7 +51,8 @@ const saveLocalProgress = (progress: UserProgress) => {
 
 export function useRoadmaps() {
   const queryClient = useQueryClient();
-  const [localProgress, setLocalProgress] = useState<UserProgress>(loadLocalProgress);
+  const [localProgress, setLocalProgress] =
+    useState<UserProgress>(loadLocalProgress);
 
   // Sync state with LocalStorage inside client
   useEffect(() => {
@@ -63,13 +75,15 @@ export function useRoadmaps() {
     : localProgress;
 
   // Derived categories: maps category progression percentages
-  const categories: RoadmapCategory[] = (indexQuery.data?.categories ?? []).map((cat) => {
-    const percent = progress.activeRoadmaps[cat.id] ?? 0;
-    return {
-      ...cat,
-      progress: percent,
-    };
-  });
+  const categories: RoadmapCategory[] = (indexQuery.data?.categories ?? []).map(
+    (cat) => {
+      const percent = progress.activeRoadmaps[cat.id] ?? 0;
+      return {
+        ...cat,
+        progress: percent,
+      };
+    },
+  );
 
   // Derived achievements: maps achievements unlock statuses
   const achievements: Achievement[] = indexQuery.data?.achievements ?? [];
@@ -100,7 +114,7 @@ export function useRoadmaps() {
     onMutate: async (variables) => {
       // Optimistic updates inside query cache using Immer
       await queryClient.cancelQueries({ queryKey: ["roadmaps", "index"] });
-      
+
       const previousIndex = queryClient.getQueryData(["roadmaps", "index"]);
 
       // Update LocalStorage optimistically
@@ -111,14 +125,21 @@ export function useRoadmaps() {
             draft.completedNodes.push(variables.nodeId);
             draft.lastVisitedNode = variables.nodeId;
           } else if (variables.status !== "completed" && wasCompleted) {
-            draft.completedNodes = draft.completedNodes.filter((id) => id !== variables.nodeId);
+            draft.completedNodes = draft.completedNodes.filter(
+              (id) => id !== variables.nodeId,
+            );
           }
-          
+
           // Basic local estimation of active roadmap percentage
           // Detail calculations will sync accurately with the server response
-          const count = draft.completedNodes.filter((id) => id.startsWith(variables.roadmapId.substring(0, 3))).length;
-          draft.activeRoadmaps[variables.roadmapId] = Math.min(100, Math.round(count * 15));
-        })
+          const count = draft.completedNodes.filter((id) =>
+            id.startsWith(variables.roadmapId.substring(0, 3)),
+          ).length;
+          draft.activeRoadmaps[variables.roadmapId] = Math.min(
+            100,
+            Math.round(count * 15),
+          );
+        }),
       );
 
       return { previousIndex };
@@ -126,7 +147,7 @@ export function useRoadmaps() {
     onSuccess: (data) => {
       // Server returned updated computed progress and achievements
       setLocalProgress(data.progress);
-      
+
       // Update TanStack Query cache with latest validated server values
       queryClient.setQueryData(["roadmaps", "index"], (prev: any) => {
         if (!prev) return prev;
@@ -161,11 +182,13 @@ export function useRoadmaps() {
         produce(prev, (draft) => {
           const isBookmarked = draft.bookmarkedNodes.includes(variables.nodeId);
           if (isBookmarked) {
-            draft.bookmarkedNodes = draft.bookmarkedNodes.filter((id) => id !== variables.nodeId);
+            draft.bookmarkedNodes = draft.bookmarkedNodes.filter(
+              (id) => id !== variables.nodeId,
+            );
           } else {
             draft.bookmarkedNodes.push(variables.nodeId);
           }
-        })
+        }),
       );
 
       return { previousIndex };
@@ -207,11 +230,13 @@ export function useRoadmaps() {
           }
           const isFavorite = draft.favorites.includes(variables.roadmapId);
           if (isFavorite) {
-            draft.favorites = draft.favorites.filter((id) => id !== variables.roadmapId);
+            draft.favorites = draft.favorites.filter(
+              (id) => id !== variables.roadmapId,
+            );
           } else {
             draft.favorites.push(variables.roadmapId);
           }
-        })
+        }),
       );
 
       return { previousIndex };
@@ -237,7 +262,11 @@ export function useRoadmaps() {
     categories,
     achievements,
     progress,
-    toggleNodeCompletion: (nodeId: string, roadmapId: string, status: NodeStatus) => {
+    toggleNodeCompletion: (
+      nodeId: string,
+      roadmapId: string,
+      status: NodeStatus,
+    ) => {
       completeNodeMutation.mutate({ nodeId, roadmapId, status });
     },
     toggleNodeBookmark: (nodeId: string) => {

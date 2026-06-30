@@ -7,6 +7,7 @@ import {
   type LayoutDashboard,
   TrendingUp,
 } from "lucide-react";
+import { Card } from "#/components/ui/card";
 import {
   useDashboardStats,
   useLearningProgress,
@@ -29,31 +30,20 @@ function StatCard({
   color: string;
 }) {
   return (
-    <div
-      className="stagger-item flex flex-col gap-2 rounded-xl p-4"
-      style={{
-        background: "var(--card-bg)",
-        border: "1px solid var(--card-border)",
-      }}
-    >
-      <div
-        className="flex size-9 items-center justify-center rounded-lg"
-        style={{ background: `${color}18` }}
-      >
-        <Icon size={18} style={{ color }} />
+    <Card className="stagger-item flex flex-col gap-3 rounded-xl p-4.5 border border-card-border bg-card-bg shadow-none hover:border-sb-accent/30 transition-colors">
+      <div className="flex items-center justify-between">
+        <span className="text-xs font-medium text-sb-ink-muted">{label}</span>
+        <div
+          className="flex size-7 items-center justify-center rounded-md"
+          style={{ background: `${color}14` }}
+        >
+          <Icon size={14} style={{ color }} />
+        </div>
       </div>
       <div>
-        <p
-          className="text-2xl font-bold tracking-tight"
-          style={{ color: "var(--sb-ink)" }}
-        >
-          {value}
-        </p>
-        <p className="mt-0.5 text-sm" style={{ color: "var(--sb-ink-muted)" }}>
-          {label}
-        </p>
+        <p className="text-2xl font-bold tracking-tight text-sb-ink">{value}</p>
       </div>
-    </div>
+    </Card>
   );
 }
 
@@ -66,16 +56,10 @@ function Dashboard() {
     <div className="mx-auto max-w-4xl">
       {/* Header */}
       <div className="mb-8">
-        <h1
-          className="text-2xl font-bold tracking-tight"
-          style={{
-            color: "var(--sb-ink)",
-            fontFamily: "'Fraunces', Georgia, serif",
-          }}
-        >
+        <h1 className="text-2xl font-bold tracking-tight text-sb-ink font-serif">
           Good morning 👋
         </h1>
-        <p className="mt-1 text-sm" style={{ color: "var(--sb-ink-muted)" }}>
+        <p className="mt-1 text-sm text-sb-ink-muted">
           Here's what's happening in your learning journey today.
         </p>
       </div>
@@ -110,99 +94,64 @@ function Dashboard() {
 
       {/* Continue Learning */}
       {progress && (
-        <div
-          className="stagger-item mb-6 rounded-xl p-5"
-          style={{
-            background: "var(--card-bg)",
-            border: "1px solid var(--card-border)",
-          }}
-        >
+        <Card className="stagger-item mb-6 rounded-xl p-5 border border-card-border bg-card-bg shadow-none">
           <div className="mb-3 flex items-center justify-between">
             <div>
-              <p
-                className="text-xs font-medium uppercase tracking-wider"
-                style={{ color: "var(--sb-ink-dim)" }}
-              >
+              <p className="text-xs font-medium text-sb-ink-dim">
                 Continue Learning
               </p>
-              <h2
-                className="mt-0.5 text-base font-semibold"
-                style={{ color: "var(--sb-ink)" }}
-              >
+              <h2 className="mt-0.5 text-base font-semibold text-sb-ink">
                 {progress.currentLesson}
               </h2>
-              <p className="text-sm" style={{ color: "var(--sb-ink-muted)" }}>
+              <p className="text-sm text-sb-ink-muted">
                 {progress.currentCourse}
               </p>
             </div>
-            <span
-              className="text-lg font-bold"
-              style={{ color: "var(--sb-accent)" }}
-            >
+            <span className="text-lg font-bold text-sb-accent">
               {progress.progressPercent}%
             </span>
           </div>
 
           {/* Progress bar */}
-          <div
-            className="h-1.5 w-full overflow-hidden rounded-full"
-            style={{ background: "var(--page-bg)" }}
-          >
+          <div className="h-1.5 w-full overflow-hidden rounded-full bg-page-bg">
             <div
-              className="h-full rounded-full transition-all duration-700"
+              className="h-full rounded-full transition-all duration-700 bg-sb-accent"
               style={{
                 width: `${progress.progressPercent}%`,
-                background: "var(--sb-accent)",
               }}
             />
           </div>
-          <p className="mt-2 text-xs" style={{ color: "var(--sb-ink-dim)" }}>
+          <p className="mt-2 text-xs text-sb-ink-dim">
             Next: {progress.nextMilestone}
           </p>
-        </div>
+        </Card>
       )}
 
       {/* Upcoming Events */}
       {events && events.length > 0 && (
-        <div
-          className="stagger-item rounded-xl p-5"
-          style={{
-            background: "var(--card-bg)",
-            border: "1px solid var(--card-border)",
-          }}
-        >
-          <p
-            className="mb-3 text-xs font-medium uppercase tracking-wider"
-            style={{ color: "var(--sb-ink-dim)" }}
-          >
+        <Card className="stagger-item rounded-xl p-5 border border-card-border bg-card-bg shadow-none">
+          <p className="mb-3 text-xs font-medium text-sb-ink-dim">
             Upcoming Events
           </p>
           <div className="flex flex-col gap-2">
             {events.map((event) => (
               <div
                 key={event.id}
-                className="flex items-center gap-3 rounded-lg px-3 py-2.5"
-                style={{ background: "var(--page-bg)" }}
+                className="flex items-center gap-3 rounded-lg px-3 py-2.5 bg-page-bg"
               >
-                <TrendingUp size={15} style={{ color: "var(--sb-accent)" }} />
+                <TrendingUp size={15} className="text-sb-accent" />
                 <div className="flex-1">
-                  <p
-                    className="text-sm font-medium"
-                    style={{ color: "var(--sb-ink)" }}
-                  >
+                  <p className="text-sm font-medium text-sb-ink">
                     {event.title}
                   </p>
-                  <p
-                    className="text-xs capitalize"
-                    style={{ color: "var(--sb-ink-muted)" }}
-                  >
+                  <p className="text-xs capitalize text-sb-ink-muted">
                     {event.type} · {event.date}
                   </p>
                 </div>
               </div>
             ))}
           </div>
-        </div>
+        </Card>
       )}
     </div>
   );

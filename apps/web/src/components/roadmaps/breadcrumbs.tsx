@@ -1,5 +1,5 @@
-import * as Icons from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import * as Icons from "lucide-react";
 
 interface BreadcrumbsProps {
   roadmapTitle?: string;
@@ -7,7 +7,11 @@ interface BreadcrumbsProps {
   onExit?: () => void;
 }
 
-export function Breadcrumbs({ roadmapTitle, topicTitle, onExit }: BreadcrumbsProps) {
+export function Breadcrumbs({
+  roadmapTitle,
+  topicTitle,
+  onExit,
+}: BreadcrumbsProps) {
   return (
     <div className="flex items-center justify-between border-b border-[var(--card-border)]/40 pb-4 mb-6 select-none">
       <nav className="flex items-center gap-2 text-xs font-semibold">
@@ -21,10 +25,17 @@ export function Breadcrumbs({ roadmapTitle, topicTitle, onExit }: BreadcrumbsPro
 
         {roadmapTitle && (
           <>
-            <Icons.ChevronRight size={12} className="text-[var(--sb-ink-dim)]" />
+            <Icons.ChevronRight
+              size={12}
+              className="text-[var(--sb-ink-dim)]"
+            />
             <Link
               to="/learn/roadmaps"
-              search={{ id: roadmapTitle.toLowerCase().replace(/ developer| engineer/g, "") }}
+              search={{
+                id: roadmapTitle
+                  .toLowerCase()
+                  .replace(/ developer| engineer/g, ""),
+              }}
               className="text-[var(--sb-ink-muted)] hover:text-[var(--sb-accent)] transition-colors duration-150 truncate max-w-[120px] sm:max-w-none"
             >
               {roadmapTitle}
@@ -34,7 +45,10 @@ export function Breadcrumbs({ roadmapTitle, topicTitle, onExit }: BreadcrumbsPro
 
         {topicTitle && (
           <>
-            <Icons.ChevronRight size={12} className="text-[var(--sb-ink-dim)]" />
+            <Icons.ChevronRight
+              size={12}
+              className="text-[var(--sb-ink-dim)]"
+            />
             <span className="text-[var(--sb-ink)] font-bold truncate max-w-[150px] sm:max-w-none">
               {topicTitle}
             </span>

@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
+  BookOpen,
   Calendar,
-  User,
-  ExternalLink,
-  Copy,
   Check,
   ChevronRight,
-  BookOpen,
+  Copy,
+  ExternalLink,
+  User,
 } from "lucide-react";
-import { SpotlightEffect, GlassCard } from "./spotlight";
+import { useState } from "react";
+import { GlassCard, SpotlightEffect } from "./spotlight";
 
 interface Publication {
   id: string;
@@ -29,7 +29,8 @@ export function PublicationCard() {
     {
       id: "scaling_laws",
       title: "Scaling Laws for Autoregressive Generative Models",
-      abstract: "We study the empirical scaling laws for language model performance on cross-entropy loss. Loss scales as a power-law with parameter count, dataset size, and compute budgets, showing minimal dependence on hyper-parameters.",
+      abstract:
+        "We study the empirical scaling laws for language model performance on cross-entropy loss. Loss scales as a power-law with parameter count, dataset size, and compute budgets, showing minimal dependence on hyper-parameters.",
       authors: ["J. Kaplan", "S. McCandlish", "T. Henighan", "D. Amodei"],
       date: "Jan 2020",
       category: "LLMs & Scaling",
@@ -44,21 +45,40 @@ export function PublicationCard() {
       fullBody: (
         <div className="space-y-6 text-[var(--sb-ink-muted)] text-sm leading-relaxed">
           <div>
-            <h4 className="text-[var(--sb-ink)] font-bold mb-2">Introduction & Overview</h4>
+            <h4 className="text-[var(--sb-ink)] font-bold mb-2">
+              Introduction & Overview
+            </h4>
             <p>
-              We investigate empirical scaling laws for the cross-entropy loss of language models. We find that the loss scales smoothly as a power-law with parameter counts, dataset sizes, and total training compute budgets over ranges spanning up to seven orders of magnitude.
+              We investigate empirical scaling laws for the cross-entropy loss
+              of language models. We find that the loss scales smoothly as a
+              power-law with parameter counts, dataset sizes, and total training
+              compute budgets over ranges spanning up to seven orders of
+              magnitude.
             </p>
           </div>
           <div>
-            <h4 className="text-[var(--sb-ink)] font-bold mb-2">Key Scaling Empirical Rules</h4>
+            <h4 className="text-[var(--sb-ink)] font-bold mb-2">
+              Key Scaling Empirical Rules
+            </h4>
             <ul className="list-disc pl-5 space-y-1.5 text-[var(--sb-ink-muted)]">
-              <li>Performance scales primarily as a power-law with model size $N$, dataset size $D$, and training compute $C$.</li>
-              <li>Network width or depth changes yield negligible performance impacts when model capacity is held constant.</li>
-              <li>Overfitting is avoided predictably if parameters $N$ scale in tandem with token counts $D$.</li>
+              <li>
+                Performance scales primarily as a power-law with model size $N$,
+                dataset size $D$, and training compute $C$.
+              </li>
+              <li>
+                Network width or depth changes yield negligible performance
+                impacts when model capacity is held constant.
+              </li>
+              <li>
+                Overfitting is avoided predictably if parameters $N$ scale in
+                tandem with token counts $D$.
+              </li>
             </ul>
           </div>
           <div className="bg-[var(--bg-base)] p-4 border border-[var(--sb-border)]/40 rounded-lg">
-            <h5 className="text-[var(--sb-ink)] text-xs font-bold mb-2">Core Equation</h5>
+            <h5 className="text-[var(--sb-ink)] text-xs font-bold mb-2">
+              Core Equation
+            </h5>
             <code className="text-purple-600 dark:text-purple-400 text-xs block font-mono">
               {"L(N, D) \\approx (N_c/N)^{\\alpha_N} + (D_c/D)^{\\alpha_D}"}
             </code>
@@ -69,7 +89,8 @@ export function PublicationCard() {
     {
       id: "emergent_abilities",
       title: "Emergent Abilities of Large Language Models",
-      abstract: "Emergence represents abilities that are absent in smaller models but appear dramatically in large parameter scales. We document emergent capabilities across multiple prompting benchmarks and discuss model scaling implications.",
+      abstract:
+        "Emergence represents abilities that are absent in smaller models but appear dramatically in large parameter scales. We document emergent capabilities across multiple prompting benchmarks and discuss model scaling implications.",
       authors: ["J. Wei", "Y. Tay", "R. Bommasani", "C. Raffel", "Q. Le"],
       date: "Jun 2022",
       category: "Cognitive Emergence",
@@ -86,15 +107,26 @@ export function PublicationCard() {
       fullBody: (
         <div className="space-y-6 text-[var(--sb-ink-muted)] text-sm leading-relaxed">
           <div>
-            <h4 className="text-[var(--sb-ink)] font-bold mb-2">What is Emergence?</h4>
+            <h4 className="text-[var(--sb-ink)] font-bold mb-2">
+              What is Emergence?
+            </h4>
             <p>
-              An ability is emergent if it is not present in smaller models but is present in larger models. We define emergent abilities mathematically as when a scale parameter (like parameter count or FLOPs) shifts model prediction performance from random guess to high accuracy abruptly.
+              An ability is emergent if it is not present in smaller models but
+              is present in larger models. We define emergent abilities
+              mathematically as when a scale parameter (like parameter count or
+              FLOPs) shifts model prediction performance from random guess to
+              high accuracy abruptly.
             </p>
           </div>
           <div>
-            <h4 className="text-[var(--sb-ink)] font-bold mb-2">Primary Findings</h4>
+            <h4 className="text-[var(--sb-ink)] font-bold mb-2">
+              Primary Findings
+            </h4>
             <p>
-              We analyze performance across task libraries like BIG-bench. Emergent benchmarks include multi-step reasoning, mathematical word problems, symbol translation, and instruction following, which often manifest above 10^22 FLOPs of scale.
+              We analyze performance across task libraries like BIG-bench.
+              Emergent benchmarks include multi-step reasoning, mathematical
+              word problems, symbol translation, and instruction following,
+              which often manifest above 10^22 FLOPs of scale.
             </p>
           </div>
         </div>
@@ -103,7 +135,8 @@ export function PublicationCard() {
     {
       id: "deep_residual",
       title: "Deep Residual Learning for Image Recognition",
-      abstract: "Presents a residual learning framework to ease training of deep neural networks. We reformulate layers as learning residual functions with reference to inputs, achieving state-of-the-art accuracy at 152 layers.",
+      abstract:
+        "Presents a residual learning framework to ease training of deep neural networks. We reformulate layers as learning residual functions with reference to inputs, achieving state-of-the-art accuracy at 152 layers.",
       authors: ["K. He", "X. Zhang", "S. Ren", "J. Sun"],
       date: "Dec 2015",
       category: "Computer Vision",
@@ -119,15 +152,25 @@ export function PublicationCard() {
       fullBody: (
         <div className="space-y-6 text-[var(--sb-ink-muted)] text-sm leading-relaxed">
           <div>
-            <h4 className="text-[var(--sb-ink)] font-bold mb-2">The Degradation Problem</h4>
+            <h4 className="text-[var(--sb-ink)] font-bold mb-2">
+              The Degradation Problem
+            </h4>
             <p>
-              When deeper networks start converging, an accuracy degradation problem is exposed: with network depth increasing, accuracy saturates and then degrades rapidly. This is not caused by overfitting, and adding more layers leads to higher training errors.
+              When deeper networks start converging, an accuracy degradation
+              problem is exposed: with network depth increasing, accuracy
+              saturates and then degrades rapidly. This is not caused by
+              overfitting, and adding more layers leads to higher training
+              errors.
             </p>
           </div>
           <div>
-            <h4 className="text-[var(--sb-ink)] font-bold mb-2">Residual Learning Framework</h4>
+            <h4 className="text-[var(--sb-ink)] font-bold mb-2">
+              Residual Learning Framework
+            </h4>
             <p>
-              {"Instead of hoping stacked layers fit a desired underlying mapping $\\mathcal{H}(x)$, we explicitly let these layers fit a residual mapping $\\mathcal{F}(x) := \\mathcal{H}(x) - x$. The original mapping is reformulated into $\\mathcal{F}(x) + x$, realized via feed-forward skip connections."}
+              {
+                "Instead of hoping stacked layers fit a desired underlying mapping $\\mathcal{H}(x)$, we explicitly let these layers fit a residual mapping $\\mathcal{F}(x) := \\mathcal{H}(x) - x$. The original mapping is reformulated into $\\mathcal{F}(x) + x$, realized via feed-forward skip connections."
+              }
             </p>
           </div>
         </div>
@@ -154,14 +197,19 @@ export function PublicationCard() {
           Featured Research Publications
         </h2>
         <p className="text-[var(--sb-ink-muted)] text-sm md:text-base">
-          Academic findings and engineering articles compiled by our core research laboratories.
+          Academic findings and engineering articles compiled by our core
+          research laboratories.
         </p>
       </div>
 
       {/* Publications Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {publications.map((pub) => (
-          <SpotlightEffect key={pub.id} glowColor="rgba(99,102,241,0.1)" glowSize={350}>
+          <SpotlightEffect
+            key={pub.id}
+            glowColor="rgba(99,102,241,0.1)"
+            glowSize={350}
+          >
             <GlassCard className="p-6 h-[340px] flex flex-col justify-between border-[var(--sb-border)]/40 dark:border-white/[0.06] hover:border-[var(--sb-border)]/85 dark:hover:border-white/[0.12] group">
               <div>
                 {/* Meta details */}
@@ -196,7 +244,9 @@ export function PublicationCard() {
 
               {/* Action row */}
               <div className="border-t border-[var(--sb-border)]/40 dark:border-white/5 pt-4 flex items-center justify-between">
-                <span className="text-[10px] text-[var(--sb-ink-dim)] font-mono">{pub.readTime}</span>
+                <span className="text-[10px] text-[var(--sb-ink-dim)] font-mono">
+                  {pub.readTime}
+                </span>
                 <button
                   onClick={() => setActivePubId(pub.id)}
                   className="py-1.5 px-3 bg-[var(--card-bg)] hover:bg-[var(--sb-bg-hover)] border border-[var(--sb-border)] text-xs font-bold text-[var(--sb-ink-muted)] hover:text-[var(--sb-ink)] rounded-lg flex items-center gap-1 cursor-pointer transition-all duration-200"
@@ -297,7 +347,9 @@ export function PublicationCard() {
                       {activePub.bibtex}
                     </pre>
                     <button
-                      onClick={() => handleCopyBibtex(activePub.bibtex, activePub.id)}
+                      onClick={() =>
+                        handleCopyBibtex(activePub.bibtex, activePub.id)
+                      }
                       className="p-1.5 bg-[var(--card-bg)] border border-[var(--sb-border)] hover:border-zinc-400 dark:hover:border-zinc-700 text-[var(--sb-ink-muted)] hover:text-[var(--sb-ink)] rounded-md shrink-0 cursor-pointer ml-3 transition-colors"
                       title="Copy to clipboard"
                     >
@@ -313,7 +365,9 @@ export function PublicationCard() {
 
               {/* Footer inside drawer */}
               <div className="border-t border-[var(--sb-border)]/40 dark:border-white/5 pt-6 mt-12 flex justify-between items-center text-xs">
-                <span className="text-[var(--sb-ink-dim)]">Read time: {activePub.readTime}</span>
+                <span className="text-[var(--sb-ink-dim)]">
+                  Read time: {activePub.readTime}
+                </span>
                 <a
                   href={`https://doi.org/${activePub.doi}`}
                   target="_blank"

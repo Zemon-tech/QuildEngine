@@ -114,7 +114,11 @@ export function AdminSecondarySidebar() {
       {
         label: "Overview",
         items: [
-          { label: "Dashboard", to: "/learning/dashboard", icon: LayoutDashboard },
+          {
+            label: "Dashboard",
+            to: "/learning/dashboard",
+            icon: LayoutDashboard,
+          },
         ],
       },
       {
@@ -130,7 +134,11 @@ export function AdminSecondarySidebar() {
       {
         label: "Assessment",
         items: [
-          { label: "Assignments", to: "/learning/assignments", icon: ClipboardList },
+          {
+            label: "Assignments",
+            to: "/learning/assignments",
+            icon: ClipboardList,
+          },
           { label: "Quizzes", to: "/learning/quizzes", icon: BrainCircuit },
           { label: "Certificates", to: "/learning/certificates", icon: Award },
         ],
@@ -138,7 +146,11 @@ export function AdminSecondarySidebar() {
       {
         label: "People",
         items: [
-          { label: "Instructors", to: "/learning/instructors", icon: GraduationCap },
+          {
+            label: "Instructors",
+            to: "/learning/instructors",
+            icon: GraduationCap,
+          },
         ],
       },
       {

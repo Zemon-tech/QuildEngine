@@ -12,20 +12,26 @@ interface WorkspaceHeaderProps {
 function stripTypes(code: string): string {
   let cleaned = code;
   // Remove types from parameters (e.g. `nums: number[]` -> `nums`)
-  cleaned = cleaned.replace(/:\s*(number\[\]|string\[\]|string|boolean|number|void|int|int\[\]|vector<int>|bool|\[\]int|Vec<i32>)/g, "");
+  cleaned = cleaned.replace(
+    /:\s*(number\[\]|string\[\]|string|boolean|number|void|int|int\[\]|vector<int>|bool|\[\]int|Vec<i32>)/g,
+    "",
+  );
   // Remove return type annotations (e.g. `): number[]` -> `)`)
-  cleaned = cleaned.replace(/\)\s*:\s*(number\[\]|string\[\]|string|boolean|number|void|int|int\[\]|vector<int>|bool|\[\]int|Vec<i32>)/g, ")");
+  cleaned = cleaned.replace(
+    /\)\s*:\s*(number\[\]|string\[\]|string|boolean|number|void|int|int\[\]|vector<int>|bool|\[\]int|Vec<i32>)/g,
+    ")",
+  );
   return cleaned;
 }
 
 // Helper to run code against test cases
 function runTestCase(userFunc: any, inputStr: string, expectedOutput: string) {
-  let varNames: string[] = [];
+  const varNames: string[] = [];
   const matches = inputStr.matchAll(/([a-zA-Z_][a-zA-Z0-9_]*)\s*=/g);
   for (const match of matches) {
     varNames.push(match[1]);
   }
-  const parseBody = `let ${inputStr}; return [${varNames.join(',')}];`;
+  const parseBody = `let ${inputStr}; return [${varNames.join(",")}];`;
   let args: any[] = [];
   try {
     args = new Function(parseBody)();
@@ -113,7 +119,9 @@ export function WorkspaceHeader({ problemId }: WorkspaceHeaderProps) {
     }
 
     // Check bracket balance
-    let braces = 0, brackets = 0, parens = 0;
+    let braces = 0,
+      brackets = 0,
+      parens = 0;
     for (const char of userCode) {
       if (char === "{") braces++;
       if (char === "}") braces--;
@@ -137,17 +145,29 @@ export function WorkspaceHeader({ problemId }: WorkspaceHeaderProps) {
       const logs: string[] = [];
       const originalLog = console.log;
       console.log = (...args) => {
-        logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' '));
+        logs.push(
+          args
+            .map((a) => (typeof a === "object" ? JSON.stringify(a) : String(a)))
+            .join(" "),
+        );
       };
 
       try {
         const cleanedCode = stripTypes(userCode);
         const userFunc = new Function(`${cleanedCode}; return ${funcName};`)();
         if (typeof userFunc !== "function") {
-          throw new Error(`Function ${funcName} is not defined. Make sure you declare 'function ${funcName}(...)'.`);
+          throw new Error(
+            `Function ${funcName} is not defined. Make sure you declare 'function ${funcName}(...)'.`,
+          );
         }
 
-        const activeCases = customTestCases[problemId] || problem?.examples.map(ex => ({ input: ex.input, expected: ex.output })) || [];
+        const activeCases =
+          customTestCases[problemId] ||
+          problem?.examples.map((ex) => ({
+            input: ex.input,
+            expected: ex.output,
+          })) ||
+          [];
         const testCaseResults = [];
         let allPassed = true;
         for (const tc of activeCases) {
@@ -158,8 +178,13 @@ export function WorkspaceHeader({ problemId }: WorkspaceHeaderProps) {
 
         setRunResult({
           status: allPassed ? "success" : "wrong_answer",
-          output: allPassed ? "All basic test cases passed!" : "Some test cases failed.",
-          console: logs.length > 0 ? logs.join("\n") : "Execution completed with no console logs.",
+          output: allPassed
+            ? "All basic test cases passed!"
+            : "Some test cases failed.",
+          console:
+            logs.length > 0
+              ? logs.join("\n")
+              : "Execution completed with no console logs.",
           testCases: testCaseResults,
         });
         setOutputActiveTab("results");
@@ -174,7 +199,13 @@ export function WorkspaceHeader({ problemId }: WorkspaceHeaderProps) {
         console.log = originalLog;
       }
     } else {
-      const activeCases: { input: string; expected: string }[] = customTestCases[problemId] || problem?.examples.map(ex => ({ input: ex.input, expected: ex.output })) || [];
+      const activeCases: { input: string; expected: string }[] =
+        customTestCases[problemId] ||
+        problem?.examples.map((ex) => ({
+          input: ex.input,
+          expected: ex.output,
+        })) ||
+        [];
       const testCases = activeCases.map((tc) => ({
         input: tc.input,
         expected: tc.expected,
@@ -217,7 +248,9 @@ export function WorkspaceHeader({ problemId }: WorkspaceHeaderProps) {
     }
 
     // Check bracket balance
-    let braces = 0, brackets = 0, parens = 0;
+    let braces = 0,
+      brackets = 0,
+      parens = 0;
     for (const char of userCode) {
       if (char === "{") braces++;
       if (char === "}") braces--;
@@ -241,7 +274,11 @@ export function WorkspaceHeader({ problemId }: WorkspaceHeaderProps) {
       const logs: string[] = [];
       const originalLog = console.log;
       console.log = (...args) => {
-        logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' '));
+        logs.push(
+          args
+            .map((a) => (typeof a === "object" ? JSON.stringify(a) : String(a)))
+            .join(" "),
+        );
       };
 
       try {
@@ -251,7 +288,13 @@ export function WorkspaceHeader({ problemId }: WorkspaceHeaderProps) {
           throw new Error(`Function ${funcName} is not defined.`);
         }
 
-        const activeCases = customTestCases[problemId] || problem?.examples.map(ex => ({ input: ex.input, expected: ex.output })) || [];
+        const activeCases =
+          customTestCases[problemId] ||
+          problem?.examples.map((ex) => ({
+            input: ex.input,
+            expected: ex.output,
+          })) ||
+          [];
         const testCaseResults = [];
         let allPassed = true;
         for (const tc of activeCases) {
@@ -262,8 +305,13 @@ export function WorkspaceHeader({ problemId }: WorkspaceHeaderProps) {
 
         setSubmitResult({
           status: allPassed ? "accepted" : "wrong_answer",
-          output: allPassed ? "Submission Accepted! All tests passed." : "Wrong Answer. Some test cases failed.",
-          console: logs.length > 0 ? logs.join("\n") : "Submission completed successfully.",
+          output: allPassed
+            ? "Submission Accepted! All tests passed."
+            : "Wrong Answer. Some test cases failed.",
+          console:
+            logs.length > 0
+              ? logs.join("\n")
+              : "Submission completed successfully.",
           testCases: testCaseResults,
         });
         setOutputActiveTab("results");
@@ -278,7 +326,13 @@ export function WorkspaceHeader({ problemId }: WorkspaceHeaderProps) {
         console.log = originalLog;
       }
     } else {
-      const activeCases: { input: string; expected: string }[] = customTestCases[problemId] || problem?.examples.map(ex => ({ input: ex.input, expected: ex.output })) || [];
+      const activeCases: { input: string; expected: string }[] =
+        customTestCases[problemId] ||
+        problem?.examples.map((ex) => ({
+          input: ex.input,
+          expected: ex.output,
+        })) ||
+        [];
       const testCases = activeCases.map((tc) => ({
         input: tc.input,
         expected: tc.expected,

@@ -1,5 +1,11 @@
 import { motion } from "framer-motion";
-import { Sparkles, FileText, BrainCircuit, Share2, LineChart } from "lucide-react";
+import {
+  BrainCircuit,
+  FileText,
+  LineChart,
+  Share2,
+  Sparkles,
+} from "lucide-react";
 import { GlowButton } from "./glow-button";
 import { GlassCard, SpotlightEffect } from "./spotlight";
 
@@ -35,11 +41,19 @@ export function FloatingResearchCards() {
                 <FileText className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="text-xs font-semibold text-[var(--sb-ink)] truncate">Attention Is All You Need</h4>
-                <p className="text-[10px] text-[var(--sb-ink-muted)] mt-1">Vaswani et al. • PDF</p>
+                <h4 className="text-xs font-semibold text-[var(--sb-ink)] truncate">
+                  Attention Is All You Need
+                </h4>
+                <p className="text-[10px] text-[var(--sb-ink-muted)] mt-1">
+                  Vaswani et al. • PDF
+                </p>
                 <div className="mt-3 flex items-center gap-1.5">
-                  <span className="text-[9px] bg-indigo-500/20 text-indigo-600 dark:text-indigo-300 px-1.5 py-0.5 rounded">Transformer</span>
-                  <span className="text-[9px] bg-[var(--sb-pill)] text-[var(--sb-ink-muted)] px-1.5 py-0.5 rounded">8 Sources</span>
+                  <span className="text-[9px] bg-indigo-500/20 text-indigo-600 dark:text-indigo-300 px-1.5 py-0.5 rounded">
+                    Transformer
+                  </span>
+                  <span className="text-[9px] bg-[var(--sb-pill)] text-[var(--sb-ink-muted)] px-1.5 py-0.5 rounded">
+                    8 Sources
+                  </span>
                 </div>
               </div>
             </div>
@@ -60,15 +74,22 @@ export function FloatingResearchCards() {
                 <Sparkles className="w-5 h-5" />
               </div>
               <div className="flex-1">
-                <h4 className="text-xs font-semibold text-[var(--sb-ink)]">AI Synthesized Findings</h4>
+                <h4 className="text-xs font-semibold text-[var(--sb-ink)]">
+                  AI Synthesized Findings
+                </h4>
                 <p className="text-[10px] text-[var(--sb-ink-muted)] mt-1 line-clamp-2">
-                  Cross-reference confirms a 42% latency improvement using sparse embeddings.
+                  Cross-reference confirms a 42% latency improvement using
+                  sparse embeddings.
                 </p>
                 <div className="mt-3 h-1.5 w-full bg-[var(--sb-pill)] rounded-full overflow-hidden">
-                  <motion.div 
-                    className="h-full bg-pink-500" 
-                    animate={{ width: ["30%", "85%", "30%"] }} 
-                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                  <motion.div
+                    className="h-full bg-pink-500"
+                    animate={{ width: ["30%", "85%", "30%"] }}
+                    transition={{
+                      duration: 8,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                   />
                 </div>
               </div>
@@ -90,9 +111,15 @@ export function FloatingResearchCards() {
                 <LineChart className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="text-xs font-semibold text-[var(--sb-ink)]">Quantum Computing</h4>
-                <p className="text-[10px] text-[var(--sb-ink-muted)] mt-1">Workspace Notes</p>
-                <p className="text-[9px] text-[var(--sb-ink-dim)] mt-2 italic">Updated 2m ago</p>
+                <h4 className="text-xs font-semibold text-[var(--sb-ink)]">
+                  Quantum Computing
+                </h4>
+                <p className="text-[10px] text-[var(--sb-ink-muted)] mt-1">
+                  Workspace Notes
+                </p>
+                <p className="text-[9px] text-[var(--sb-ink-dim)] mt-2 italic">
+                  Updated 2m ago
+                </p>
               </div>
             </div>
           </GlassCard>
@@ -109,22 +136,46 @@ export function FloatingResearchCards() {
           <GlassCard className="p-3 border-purple-500/30 dark:border-purple-500/20">
             <div className="flex items-center gap-2">
               <Share2 className="w-4 h-4 text-purple-500 dark:text-purple-400" />
-              <span className="text-xs font-medium text-[var(--sb-ink)] truncate">Connected Graph</span>
+              <span className="text-xs font-medium text-[var(--sb-ink)] truncate">
+                Connected Graph
+              </span>
             </div>
             <div className="mt-2 text-[10px] text-[var(--sb-ink-muted)] flex justify-between">
               <span>12 Nodes</span>
-              <span className="text-purple-500 dark:text-purple-400 font-medium">Synced</span>
+              <span className="text-purple-500 dark:text-purple-400 font-medium">
+                Synced
+              </span>
             </div>
           </GlassCard>
         </SpotlightEffect>
       </motion.div>
 
       {/* Futuristic Orbit Rings & SVG Connectors */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         {/* Orbital circles */}
-        <circle cx="50%" cy="50%" r="140" fill="none" stroke="var(--sb-border)" strokeWidth="1" className="opacity-20 dark:opacity-5" />
-        <circle cx="50%" cy="50%" r="220" fill="none" stroke="var(--sb-border)" strokeWidth="1" strokeDasharray="5 5" className="opacity-15 dark:opacity-5" />
-        
+        <circle
+          cx="50%"
+          cy="50%"
+          r="140"
+          fill="none"
+          stroke="var(--sb-border)"
+          strokeWidth="1"
+          className="opacity-20 dark:opacity-5"
+        />
+        <circle
+          cx="50%"
+          cy="50%"
+          r="220"
+          fill="none"
+          stroke="var(--sb-border)"
+          strokeWidth="1"
+          strokeDasharray="5 5"
+          className="opacity-15 dark:opacity-5"
+        />
+
         {/* Animated connection lines */}
         <motion.path
           d="M 120 100 Q 300 200 450 250"
@@ -147,7 +198,13 @@ export function FloatingResearchCards() {
             <stop offset="50%" stopColor="#22d3ee" stopOpacity="1" />
             <stop offset="100%" stopColor="#818cf8" stopOpacity="0" />
           </linearGradient>
-          <linearGradient id="line-glow-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient
+            id="line-glow-purple"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="100%"
+          >
             <stop offset="0%" stopColor="#d946ef" stopOpacity="0" />
             <stop offset="50%" stopColor="#a855f7" stopOpacity="1" />
             <stop offset="100%" stopColor="#d946ef" stopOpacity="0" />
@@ -201,7 +258,8 @@ export function HeroResearchSection({
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-base sm:text-lg text-[var(--sb-ink-muted)] mb-8 max-w-lg leading-relaxed font-sans"
         >
-          Transform documents, articles, notes, videos, and datasets into connected knowledge using AI-powered research workflows.
+          Transform documents, articles, notes, videos, and datasets into
+          connected knowledge using AI-powered research workflows.
         </motion.p>
 
         {/* CTA Buttons */}

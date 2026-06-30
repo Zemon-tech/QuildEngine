@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from "react";
-import * as Icons from "lucide-react";
-import { Input } from "../ui/input";
 import { Link } from "@tanstack/react-router";
+import * as Icons from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "../../lib/utils";
+import { Input } from "../ui/input";
 
 interface SearchBarProps {
   onSelectCategory?: (id: string) => void;
@@ -19,25 +19,127 @@ interface SuggestionItem {
 
 // Global Static search dictionary of topics/resources from MOCK data
 const SEARCH_DATABASE: SuggestionItem[] = [
-  { id: "frontend", title: "Frontend Developer Roadmap", type: "roadmap", categoryName: "Frontend", urlParams: { id: "frontend" } },
-  { id: "backend", title: "Backend Developer Roadmap", type: "roadmap", categoryName: "Backend", urlParams: { id: "backend" } },
-  { id: "ai-ml", title: "AI / ML Engineer Roadmap", type: "roadmap", categoryName: "AI / ML", urlParams: { id: "ai-ml" } },
-  
+  {
+    id: "frontend",
+    title: "Frontend Developer Roadmap",
+    type: "roadmap",
+    categoryName: "Frontend",
+    urlParams: { id: "frontend" },
+  },
+  {
+    id: "backend",
+    title: "Backend Developer Roadmap",
+    type: "roadmap",
+    categoryName: "Backend",
+    urlParams: { id: "backend" },
+  },
+  {
+    id: "ai-ml",
+    title: "AI / ML Engineer Roadmap",
+    type: "roadmap",
+    categoryName: "AI / ML",
+    urlParams: { id: "ai-ml" },
+  },
+
   // Topics & chapters
-  { id: "fe-html-css", title: "HTML & CSS Basics", type: "topic", categoryName: "Frontend", urlParams: { id: "frontend" }, nodeId: "fe-html-css" },
-  { id: "fe-javascript", title: "JavaScript ES6+ and Async Core", type: "topic", categoryName: "Frontend", urlParams: { id: "frontend" }, nodeId: "fe-javascript" },
-  { id: "fe-react", title: "React Fundamentals & Hooks", type: "topic", categoryName: "Frontend", urlParams: { id: "frontend" }, nodeId: "fe-react" },
-  { id: "fe-nextjs", title: "Next.js SSR/SSG App Router", type: "topic", categoryName: "Frontend", urlParams: { id: "frontend" }, nodeId: "fe-nextjs" },
-  { id: "be-db", title: "Databases, Schema Design, and Indexing", type: "topic", categoryName: "Backend", urlParams: { id: "backend" }, nodeId: "be-db" },
-  { id: "be-cache", title: "Caching Layers & Redis Architecture", type: "topic", categoryName: "Backend", urlParams: { id: "backend" }, nodeId: "be-cache" },
-  { id: "ai-pytorch", title: "PyTorch & Deep Neural Networks", type: "topic", categoryName: "AI / ML", urlParams: { id: "ai-ml" }, nodeId: "ai-pytorch" },
-  { id: "ai-transformers", title: "Transformers, Self-Attention & LLMs", type: "topic", categoryName: "AI / ML", urlParams: { id: "ai-ml" }, nodeId: "ai-transformers" },
-  
+  {
+    id: "fe-html-css",
+    title: "HTML & CSS Basics",
+    type: "topic",
+    categoryName: "Frontend",
+    urlParams: { id: "frontend" },
+    nodeId: "fe-html-css",
+  },
+  {
+    id: "fe-javascript",
+    title: "JavaScript ES6+ and Async Core",
+    type: "topic",
+    categoryName: "Frontend",
+    urlParams: { id: "frontend" },
+    nodeId: "fe-javascript",
+  },
+  {
+    id: "fe-react",
+    title: "React Fundamentals & Hooks",
+    type: "topic",
+    categoryName: "Frontend",
+    urlParams: { id: "frontend" },
+    nodeId: "fe-react",
+  },
+  {
+    id: "fe-nextjs",
+    title: "Next.js SSR/SSG App Router",
+    type: "topic",
+    categoryName: "Frontend",
+    urlParams: { id: "frontend" },
+    nodeId: "fe-nextjs",
+  },
+  {
+    id: "be-db",
+    title: "Databases, Schema Design, and Indexing",
+    type: "topic",
+    categoryName: "Backend",
+    urlParams: { id: "backend" },
+    nodeId: "be-db",
+  },
+  {
+    id: "be-cache",
+    title: "Caching Layers & Redis Architecture",
+    type: "topic",
+    categoryName: "Backend",
+    urlParams: { id: "backend" },
+    nodeId: "be-cache",
+  },
+  {
+    id: "ai-pytorch",
+    title: "PyTorch & Deep Neural Networks",
+    type: "topic",
+    categoryName: "AI / ML",
+    urlParams: { id: "ai-ml" },
+    nodeId: "ai-pytorch",
+  },
+  {
+    id: "ai-transformers",
+    title: "Transformers, Self-Attention & LLMs",
+    type: "topic",
+    categoryName: "AI / ML",
+    urlParams: { id: "ai-ml" },
+    nodeId: "ai-transformers",
+  },
+
   // Resources
-  { id: "res-1", title: "Official React Hooks Documentation", type: "resource", categoryName: "Frontend", urlParams: { id: "frontend" }, nodeId: "fe-react" },
-  { id: "res-2", title: "Next.js Server Actions Guide", type: "resource", categoryName: "Frontend", urlParams: { id: "frontend" }, nodeId: "fe-nextjs" },
-  { id: "res-3", title: "Redis Pub/Sub & Memory Structures Guide", type: "resource", categoryName: "Backend", urlParams: { id: "backend" }, nodeId: "be-cache" },
-  { id: "res-4", title: "LLM Fine-Tuning with LoRA & QLoRA Lab", type: "resource", categoryName: "AI / ML", urlParams: { id: "ai-ml" }, nodeId: "ai-finetune" },
+  {
+    id: "res-1",
+    title: "Official React Hooks Documentation",
+    type: "resource",
+    categoryName: "Frontend",
+    urlParams: { id: "frontend" },
+    nodeId: "fe-react",
+  },
+  {
+    id: "res-2",
+    title: "Next.js Server Actions Guide",
+    type: "resource",
+    categoryName: "Frontend",
+    urlParams: { id: "frontend" },
+    nodeId: "fe-nextjs",
+  },
+  {
+    id: "res-3",
+    title: "Redis Pub/Sub & Memory Structures Guide",
+    type: "resource",
+    categoryName: "Backend",
+    urlParams: { id: "backend" },
+    nodeId: "be-cache",
+  },
+  {
+    id: "res-4",
+    title: "LLM Fine-Tuning with LoRA & QLoRA Lab",
+    type: "resource",
+    categoryName: "AI / ML",
+    urlParams: { id: "ai-ml" },
+    nodeId: "ai-finetune",
+  },
 ];
 
 export function SearchBar({ onSelectCategory }: SearchBarProps) {
@@ -71,7 +173,7 @@ export function SearchBar({ onSelectCategory }: SearchBarProps) {
       const filtered = SEARCH_DATABASE.filter(
         (item) =>
           item.title.toLowerCase().includes(lower) ||
-          item.categoryName.toLowerCase().includes(lower)
+          item.categoryName.toLowerCase().includes(lower),
       ).slice(0, 5); // limit to 5 matches
       setSuggestions(filtered);
     }, 150); // 150ms debounce
@@ -82,7 +184,10 @@ export function SearchBar({ onSelectCategory }: SearchBarProps) {
   // Click outside listener to close search
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
         setShowSuggestions(false);
       }
     };
@@ -92,9 +197,15 @@ export function SearchBar({ onSelectCategory }: SearchBarProps) {
 
   const addRecentSearch = (searchText: string) => {
     if (!searchText.trim()) return;
-    const filtered = [searchText, ...recentSearches.filter((s) => s !== searchText)].slice(0, 3);
+    const filtered = [
+      searchText,
+      ...recentSearches.filter((s) => s !== searchText),
+    ].slice(0, 3);
     setRecentSearches(filtered);
-    localStorage.setItem("quild_roadmap_recent_searches", JSON.stringify(filtered));
+    localStorage.setItem(
+      "quild_roadmap_recent_searches",
+      JSON.stringify(filtered),
+    );
   };
 
   const handleSuggestionClick = (item: SuggestionItem) => {
@@ -113,12 +224,15 @@ export function SearchBar({ onSelectCategory }: SearchBarProps) {
       <span>
         {parts.map((part, i) =>
           part.toLowerCase() === sub.toLowerCase() ? (
-            <span key={i} className="text-[var(--sb-accent)] font-bold bg-[var(--sb-accent)]/10 px-0.5 rounded">
+            <span
+              key={i}
+              className="text-[var(--sb-accent)] font-bold bg-[var(--sb-accent)]/10 px-0.5 rounded"
+            >
               {part}
             </span>
           ) : (
             part
-          )
+          ),
         )}
       </span>
     );
@@ -139,7 +253,7 @@ export function SearchBar({ onSelectCategory }: SearchBarProps) {
           onFocus={() => setShowSuggestions(true)}
           className={cn(
             "w-full h-11 pl-10 pr-4 text-sm rounded-xl transition-all duration-200 bg-[var(--card-bg)] border border-[var(--card-border)]",
-            "focus-visible:ring-1 focus-visible:ring-[var(--sb-accent)] focus-visible:border-[var(--sb-accent)] focus-visible:outline-none"
+            "focus-visible:ring-1 focus-visible:ring-[var(--sb-accent)] focus-visible:border-[var(--sb-accent)] focus-visible:outline-none",
           )}
           style={{
             background: "var(--card-bg)",
@@ -202,8 +316,10 @@ export function SearchBar({ onSelectCategory }: SearchBarProps) {
                 Suggested Matches
               </span>
               {suggestions.map((item) => {
-                const linkSearch = item.nodeId ? { id: item.id, node: item.nodeId } : { id: item.id };
-                
+                const linkSearch = item.nodeId
+                  ? { id: item.id, node: item.nodeId }
+                  : { id: item.id };
+
                 return (
                   <Link
                     key={item.id}
@@ -216,7 +332,9 @@ export function SearchBar({ onSelectCategory }: SearchBarProps) {
                       <span className="flex size-7 items-center justify-center rounded-lg bg-[var(--page-bg)] border border-[var(--card-border)] text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-accent)] transition-colors">
                         {item.type === "roadmap" && <Icons.Map size={13} />}
                         {item.type === "topic" && <Icons.Layers size={13} />}
-                        {item.type === "resource" && <Icons.ExternalLink size={13} />}
+                        {item.type === "resource" && (
+                          <Icons.ExternalLink size={13} />
+                        )}
                       </span>
                       <div className="min-w-0">
                         <p className="text-xs font-semibold truncate text-[var(--sb-ink)] group-hover:text-[var(--sb-accent)] transition-colors">
@@ -227,7 +345,10 @@ export function SearchBar({ onSelectCategory }: SearchBarProps) {
                         </p>
                       </div>
                     </div>
-                    <Icons.ChevronRight size={13} className="text-[var(--sb-ink-dim)] opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <Icons.ChevronRight
+                      size={13}
+                      className="text-[var(--sb-ink-dim)] opacity-0 group-hover:opacity-100 transition-opacity"
+                    />
                   </Link>
                 );
               })}

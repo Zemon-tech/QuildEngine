@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 // ==========================================
 // Interfaces & Types
@@ -154,40 +154,69 @@ const INITIAL_DB: PracticeDatabase = {
       id: "prob-1",
       title: "Two Sum",
       slug: "two-sum",
-      statement: "Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`.",
-      description: "You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order.",
-      constraints: "- 2 <= nums.length <= 10^4\n- -10^9 <= nums[i] <= 10^9\n- -10^9 <= target <= 10^9",
+      statement:
+        "Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`.",
+      description:
+        "You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order.",
+      constraints:
+        "- 2 <= nums.length <= 10^4\n- -10^9 <= nums[i] <= 10^9\n- -10^9 <= target <= 10^9",
       inputFormat: "An integer array nums and a target integer.",
       outputFormat: "Indices of the two numbers that sum to target.",
       sampleInput: "nums = [2,7,11,15], target = 9",
       sampleOutput: "[0,1]",
       explanation: "Because nums[0] + nums[1] == 9, we return [0, 1].",
-      notes: "A hash map provides an O(n) solution instead of the O(n^2) brute force search.",
-      hints: ["Try using a hash map to look up targets in O(1) time.", "Iterate once: check if (target - num) exists in map."],
+      notes:
+        "A hash map provides an O(n) solution instead of the O(n^2) brute force search.",
+      hints: [
+        "Try using a hash map to look up targets in O(1) time.",
+        "Iterate once: check if (target - num) exists in map.",
+      ],
       difficulty: "Easy",
       topics: ["Arrays", "Hash Table", "Two Pointer"],
       tags: ["Amazon", "Google", "Standard"],
       timeComplexity: "O(N)",
       spaceComplexity: "O(N)",
       testCases: [
-        { id: "tc-1", input: "[2,7,11,15]\n9", expectedOutput: "[0,1]", isSample: true, isHidden: false },
-        { id: "tc-2", input: "[3,2,4]\n6", expectedOutput: "[1,2]", isSample: true, isHidden: false },
-        { id: "tc-3", input: "[3,3]\n6", expectedOutput: "[0,1]", isSample: false, isHidden: true },
+        {
+          id: "tc-1",
+          input: "[2,7,11,15]\n9",
+          expectedOutput: "[0,1]",
+          isSample: true,
+          isHidden: false,
+        },
+        {
+          id: "tc-2",
+          input: "[3,2,4]\n6",
+          expectedOutput: "[1,2]",
+          isSample: true,
+          isHidden: false,
+        },
+        {
+          id: "tc-3",
+          input: "[3,3]\n6",
+          expectedOutput: "[0,1]",
+          isSample: false,
+          isHidden: true,
+        },
       ],
       solutions: [
         {
           id: "sol-1",
           title: "One-pass Hash Map",
-          description: "We use a hash map to keep track of elements and their indices as we iterate.",
+          description:
+            "We use a hash map to keep track of elements and their indices as we iterate.",
           code: "function twoSum(nums: number[], target: number[]): number[] {\n  const map = new Map<number, number>();\n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    if (map.has(complement)) {\n      return [map.get(complement)!, i];\n    }\n    map.set(nums[i], i);\n  }\n  return [];\n}",
           language: "TypeScript",
           isOptimized: true,
         },
       ],
       templates: {
-        "TypeScript": "function twoSum(nums: number[], target: number): number[] {\n    // Write your code here\n};",
-        "Python": "class Solution:\n    def twoSum(self, nums: List[int], target: int) -> List[int]:\n        pass",
-        "C++": "class Solution {\npublic:\n    vector<int> twoSum(vector<int>& nums, int target) {\n        \n    }\n};",
+        TypeScript:
+          "function twoSum(nums: number[], target: number): number[] {\n    // Write your code here\n};",
+        Python:
+          "class Solution:\n    def twoSum(self, nums: List[int], target: int) -> List[int]:\n        pass",
+        "C++":
+          "class Solution {\npublic:\n    vector<int> twoSum(vector<int>& nums, int target) {\n        \n    }\n};",
       },
       status: "published",
       solvesCount: 14820,
@@ -198,28 +227,46 @@ const INITIAL_DB: PracticeDatabase = {
       id: "prob-2",
       title: "Valid Parentheses",
       slug: "valid-parentheses",
-      statement: "Given a string `s` containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.",
-      description: "An input string is valid if open brackets are closed by the same type of brackets, and closed in the correct order.",
+      statement:
+        "Given a string `s` containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.",
+      description:
+        "An input string is valid if open brackets are closed by the same type of brackets, and closed in the correct order.",
       constraints: "1 <= s.length <= 10^4\ns consists of parentheses only.",
       inputFormat: "A single string containing brackets.",
       outputFormat: "boolean (true if valid, false otherwise)",
-      sampleInput: "s = \"()[]{}\"",
+      sampleInput: 's = "()[]{}"',
       sampleOutput: "true",
-      explanation: "Each opening bracket is closed immediately in correct matching order.",
+      explanation:
+        "Each opening bracket is closed immediately in correct matching order.",
       notes: "Using a stack is the optimal way to match brackets.",
-      hints: ["Use a stack to keep track of opening brackets.", "When a closing bracket is found, pop and check if it matches."],
+      hints: [
+        "Use a stack to keep track of opening brackets.",
+        "When a closing bracket is found, pop and check if it matches.",
+      ],
       difficulty: "Easy",
       topics: ["Stack", "Strings"],
       tags: ["Microsoft", "Facebook"],
       timeComplexity: "O(N)",
       spaceComplexity: "O(N)",
       testCases: [
-        { id: "tc-4", input: "\"()\"", expectedOutput: "true", isSample: true, isHidden: false },
-        { id: "tc-5", input: "\"(]\"", expectedOutput: "false", isSample: true, isHidden: false },
+        {
+          id: "tc-4",
+          input: '"()"',
+          expectedOutput: "true",
+          isSample: true,
+          isHidden: false,
+        },
+        {
+          id: "tc-5",
+          input: '"(]"',
+          expectedOutput: "false",
+          isSample: true,
+          isHidden: false,
+        },
       ],
       solutions: [],
       templates: {
-        "TypeScript": "function isValid(s: string): boolean {\n    \n};",
+        TypeScript: "function isValid(s: string): boolean {\n    \n};",
       },
       status: "published",
       solvesCount: 9480,
@@ -230,16 +277,23 @@ const INITIAL_DB: PracticeDatabase = {
       id: "prob-3",
       title: "Merge K Sorted Lists",
       slug: "merge-k-sorted-lists",
-      statement: "You are given an array of `k` linked-lists `lists`, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it.",
-      description: "Convert list array nodes into a single consolidated, sorted output list.",
-      constraints: "k == lists.length\n0 <= k <= 10^4\n0 <= lists[i].length <= 500",
+      statement:
+        "You are given an array of `k` linked-lists `lists`, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it.",
+      description:
+        "Convert list array nodes into a single consolidated, sorted output list.",
+      constraints:
+        "k == lists.length\n0 <= k <= 10^4\n0 <= lists[i].length <= 500",
       inputFormat: "An array of linked list head pointers.",
       outputFormat: "Merged sorted list head.",
       sampleInput: "lists = [[1,4,5],[1,3,4],[2,6]]",
       sampleOutput: "[1,1,2,3,4,4,5,6]",
       explanation: "Merged and sorted into 1->1->2->3->4->4->5->6.",
-      notes: "Min heap is optimal to poll elements dynamically in O(N log k) time.",
-      hints: ["Divide and conquer or a priority queue/min-heap can be used.", "Compare heads of lists and push into a min heap."],
+      notes:
+        "Min heap is optimal to poll elements dynamically in O(N log k) time.",
+      hints: [
+        "Divide and conquer or a priority queue/min-heap can be used.",
+        "Compare heads of lists and push into a min heap.",
+      ],
       difficulty: "Hard",
       topics: ["Linked List", "Divide and Conquer", "Heap", "Merge Sort"],
       tags: ["Google", "Uber", "Apple"],
@@ -259,7 +313,8 @@ const INITIAL_DB: PracticeDatabase = {
       id: "qa-1",
       title: "Why does closures cause memory leaks in JavaScript?",
       slug: "js-closures-memory-leaks",
-      content: "I understand closures hold references to parent scopes. But under what conditions do modern engines fail to garbage collect them?",
+      content:
+        "I understand closures hold references to parent scopes. But under what conditions do modern engines fail to garbage collect them?",
       category: "technical",
       author: "sarah_94",
       status: "approved",
@@ -270,7 +325,8 @@ const INITIAL_DB: PracticeDatabase = {
       answers: [
         {
           id: "ans-1",
-          content: "In modern engines like V8, memory leaks usually happen when closures are attached to long-lived objects (like event listeners or globals) that reference large variables in their parent lexical environments. If the listener is never removed, the entire lexical environment is retained.",
+          content:
+            "In modern engines like V8, memory leaks usually happen when closures are attached to long-lived objects (like event listeners or globals) that reference large variables in their parent lexical environments. If the listener is never removed, the entire lexical environment is retained.",
           author: "lexical_master",
           votes: 18,
           isAccepted: true,
@@ -282,7 +338,8 @@ const INITIAL_DB: PracticeDatabase = {
       id: "qa-2",
       title: "How to safely prevent CORS errors on a serverless backend?",
       slug: "cors-errors-serverless",
-      content: "I keep getting preflight CORS issues when invoking AWS Lambda endpoints. How should headers be mapped in API Gateway?",
+      content:
+        "I keep getting preflight CORS issues when invoking AWS Lambda endpoints. How should headers be mapped in API Gateway?",
       category: "technical",
       author: "backend_dev",
       status: "pending",
@@ -296,7 +353,8 @@ const INITIAL_DB: PracticeDatabase = {
       id: "qa-3",
       title: "Is it okay to use Tailwind for an enterprise library?",
       slug: "tailwind-enterprise-library",
-      content: "We are designing a shared components library. Will Tailwind classes conflict with client applications?",
+      content:
+        "We are designing a shared components library. Will Tailwind classes conflict with client applications?",
       category: "product",
       author: "ui_architect",
       status: "approved",
@@ -312,32 +370,52 @@ const INITIAL_DB: PracticeDatabase = {
       id: "cs-1",
       title: "E-Commerce Cart Optimization",
       category: "Product",
-      overview: "An analysis of friction in checkout funnels for a high-traffic retail app.",
-      problemStatement: "The mobile app experienced a 48% checkout drop-off at the payment methods step.",
-      analysis: "User session audits showed confusion around saved cards and heavy latency fetching validation keys.",
-      solutions: "Implemented progressive profiling, single-click saved options, and DNS pre-caching for gateways.",
-      outcomes: "Conversion rates increased by 14.2%, and checkout load times dropped by 340ms.",
+      overview:
+        "An analysis of friction in checkout funnels for a high-traffic retail app.",
+      problemStatement:
+        "The mobile app experienced a 48% checkout drop-off at the payment methods step.",
+      analysis:
+        "User session audits showed confusion around saved cards and heavy latency fetching validation keys.",
+      solutions:
+        "Implemented progressive profiling, single-click saved options, and DNS pre-caching for gateways.",
+      outcomes:
+        "Conversion rates increased by 14.2%, and checkout load times dropped by 340ms.",
       resources: ["Checkout friction PDF", "Heatmap analysis sheets"],
       tags: ["Ecommerce", "UX Research", "Conversion Optimization"],
       status: "published",
       versionHistory: [
-        { version: 1, date: "2026-05-10", author: "Sarah Jane", changes: "Initial publication" },
+        {
+          version: 1,
+          date: "2026-05-10",
+          author: "Sarah Jane",
+          changes: "Initial publication",
+        },
       ],
     },
     {
       id: "cs-2",
       title: "WhatsApp Scale Chat Service",
       category: "Technical",
-      overview: "Architecting a web-socket based concurrent messaging topology for 10M active connections.",
-      problemStatement: "High connection churn rates and state sync delays on mobile nodes during network transitions.",
-      analysis: "Connection multiplexing limits on API gateways and thread allocation blocks under Node.js.",
-      solutions: "Switched to Erlang/Elixir nodes running on distributed actor nodes with Redis Pub/Sub buffers.",
-      outcomes: "Average delay dropped to <50ms and resource footprints decreased by 60%.",
+      overview:
+        "Architecting a web-socket based concurrent messaging topology for 10M active connections.",
+      problemStatement:
+        "High connection churn rates and state sync delays on mobile nodes during network transitions.",
+      analysis:
+        "Connection multiplexing limits on API gateways and thread allocation blocks under Node.js.",
+      solutions:
+        "Switched to Erlang/Elixir nodes running on distributed actor nodes with Redis Pub/Sub buffers.",
+      outcomes:
+        "Average delay dropped to <50ms and resource footprints decreased by 60%.",
       resources: ["Distributed actor whitepaper", "Benchmarking graphs"],
       tags: ["WebSockets", "Elixir", "System Design"],
       status: "draft",
       versionHistory: [
-        { version: 1, date: "2026-06-15", author: "Alex Chen", changes: "Draft outline" },
+        {
+          version: 1,
+          date: "2026-06-15",
+          author: "Alex Chen",
+          changes: "Draft outline",
+        },
       ],
     },
   ],
@@ -358,8 +436,22 @@ const INITIAL_DB: PracticeDatabase = {
       questionPoolSize: 12,
       status: "published",
       recentAttempts: [
-        { id: "att-1", user: "dev_john", scorePercent: 82, timeTakenMinutes: 135, date: "2h ago", status: "passed" },
-        { id: "att-2", user: "code_jennifer", scorePercent: 55, timeTakenMinutes: 172, date: "5h ago", status: "failed" },
+        {
+          id: "att-1",
+          user: "dev_john",
+          scorePercent: 82,
+          timeTakenMinutes: 135,
+          date: "2h ago",
+          status: "passed",
+        },
+        {
+          id: "att-2",
+          user: "code_jennifer",
+          scorePercent: 55,
+          timeTakenMinutes: 172,
+          date: "5h ago",
+          status: "failed",
+        },
       ],
     },
     {
@@ -462,7 +554,9 @@ export function useSaveDsaProblem() {
       return problem;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "practice", "problems"] });
+      queryClient.invalidateQueries({
+        queryKey: ["admin", "practice", "problems"],
+      });
     },
   });
 }
@@ -477,7 +571,9 @@ export function useDeleteDsaProblem() {
       return id;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "practice", "problems"] });
+      queryClient.invalidateQueries({
+        queryKey: ["admin", "practice", "problems"],
+      });
     },
   });
 }
@@ -508,7 +604,9 @@ export function useUpdateQaQuestion() {
       return question;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "practice", "questions"] });
+      queryClient.invalidateQueries({
+        queryKey: ["admin", "practice", "questions"],
+      });
     },
   });
 }
@@ -523,7 +621,9 @@ export function useDeleteQaQuestion() {
       return id;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "practice", "questions"] });
+      queryClient.invalidateQueries({
+        queryKey: ["admin", "practice", "questions"],
+      });
     },
   });
 }
@@ -554,7 +654,9 @@ export function useSaveCaseStudy() {
       return caseStudy;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "practice", "caseStudies"] });
+      queryClient.invalidateQueries({
+        queryKey: ["admin", "practice", "caseStudies"],
+      });
     },
   });
 }
@@ -569,7 +671,9 @@ export function useDeleteCaseStudy() {
       return id;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "practice", "caseStudies"] });
+      queryClient.invalidateQueries({
+        queryKey: ["admin", "practice", "caseStudies"],
+      });
     },
   });
 }
@@ -604,7 +708,9 @@ export function useSaveTest() {
       return test;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "practice", "testsContests"] });
+      queryClient.invalidateQueries({
+        queryKey: ["admin", "practice", "testsContests"],
+      });
     },
   });
 }
@@ -619,7 +725,9 @@ export function useDeleteTest() {
       return id;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "practice", "testsContests"] });
+      queryClient.invalidateQueries({
+        queryKey: ["admin", "practice", "testsContests"],
+      });
     },
   });
 }
@@ -639,7 +747,9 @@ export function useSaveContest() {
       return contest;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "practice", "testsContests"] });
+      queryClient.invalidateQueries({
+        queryKey: ["admin", "practice", "testsContests"],
+      });
     },
   });
 }
@@ -654,7 +764,9 @@ export function useDeleteContest() {
       return id;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["admin", "practice", "testsContests"] });
+      queryClient.invalidateQueries({
+        queryKey: ["admin", "practice", "testsContests"],
+      });
     },
   });
 }

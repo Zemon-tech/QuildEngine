@@ -1,7 +1,7 @@
-import { useState } from "react";
 import * as Icons from "lucide-react";
-import { Badge } from "../ui/badge";
+import { useState } from "react";
 import { cn } from "../../lib/utils";
+import { Badge } from "../ui/badge";
 
 export interface FilterState {
   difficulty: string[];
@@ -59,7 +59,7 @@ export function FilterPanel({ filters, onChange }: FilterPanelProps) {
               "flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold select-none cursor-pointer transition-all active:scale-95",
               isOpen
                 ? "bg-[var(--sb-accent)]/10 border-[var(--sb-accent)]/30 text-[var(--sb-accent)]"
-                : "border-[var(--card-border)] bg-[var(--card-bg)] text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)]"
+                : "border-[var(--card-border)] bg-[var(--card-bg)] text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)]",
             )}
           >
             <Icons.SlidersHorizontal size={13} />
@@ -141,15 +141,23 @@ export function FilterPanel({ filters, onChange }: FilterPanelProps) {
                       "flex items-center gap-2 w-full text-left px-2.5 py-1.5 rounded-lg text-xs transition-all active:scale-97 select-none cursor-pointer",
                       isSelected
                         ? "bg-[var(--sb-accent)]/10 text-[var(--sb-accent)] font-semibold"
-                        : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)]"
+                        : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)]",
                     )}
                   >
-                    <span className={cn(
-                      "size-2 rounded-full",
-                      diff === "beginner" ? "bg-emerald-500" : diff === "intermediate" ? "bg-blue-500" : "bg-purple-500"
-                    )} />
+                    <span
+                      className={cn(
+                        "size-2 rounded-full",
+                        diff === "beginner"
+                          ? "bg-emerald-500"
+                          : diff === "intermediate"
+                            ? "bg-blue-500"
+                            : "bg-purple-500",
+                      )}
+                    />
                     <span className="capitalize">{diff}</span>
-                    {isSelected && <Icons.Check size={12} className="ml-auto" />}
+                    {isSelected && (
+                      <Icons.Check size={12} className="ml-auto" />
+                    )}
                   </button>
                 );
               })}
@@ -176,14 +184,28 @@ export function FilterPanel({ filters, onChange }: FilterPanelProps) {
                       "flex items-center gap-2 w-full text-left px-2.5 py-1.5 rounded-lg text-xs transition-all active:scale-97 select-none cursor-pointer",
                       isSelected
                         ? "bg-[var(--sb-accent)]/10 text-[var(--sb-accent)] font-semibold"
-                        : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)]"
+                        : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)]",
                     )}
                   >
-                    {stat.key === "completed" && <Icons.CheckCircle2 size={12} className="text-emerald-500" />}
-                    {stat.key === "in_progress" && <Icons.Flame size={12} className="text-amber-500" />}
-                    {stat.key === "not_started" && <Icons.Circle size={12} className="text-[var(--sb-ink-dim)]" />}
+                    {stat.key === "completed" && (
+                      <Icons.CheckCircle2
+                        size={12}
+                        className="text-emerald-500"
+                      />
+                    )}
+                    {stat.key === "in_progress" && (
+                      <Icons.Flame size={12} className="text-amber-500" />
+                    )}
+                    {stat.key === "not_started" && (
+                      <Icons.Circle
+                        size={12}
+                        className="text-[var(--sb-ink-dim)]"
+                      />
+                    )}
                     <span>{stat.label}</span>
-                    {isSelected && <Icons.Check size={12} className="ml-auto" />}
+                    {isSelected && (
+                      <Icons.Check size={12} className="ml-auto" />
+                    )}
                   </button>
                 );
               })}
@@ -196,25 +218,32 @@ export function FilterPanel({ filters, onChange }: FilterPanelProps) {
               Estimated Duration
             </span>
             <div className="flex flex-col gap-1.5">
-              {["1-2 months", "2-3 months", "3-4 months", "4-6 months"].map((dur) => {
-                const isSelected = filters.duration.includes(dur);
-                return (
-                  <button
-                    key={dur}
-                    onClick={() => toggleDuration(dur)}
-                    className={cn(
-                      "flex items-center gap-2 w-full text-left px-2.5 py-1.5 rounded-lg text-xs transition-all active:scale-97 select-none cursor-pointer",
-                      isSelected
-                        ? "bg-[var(--sb-accent)]/10 text-[var(--sb-accent)] font-semibold"
-                        : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)]"
-                    )}
-                  >
-                    <Icons.Clock size={12} className="text-[var(--sb-ink-muted)]" />
-                    <span>{dur}</span>
-                    {isSelected && <Icons.Check size={12} className="ml-auto" />}
-                  </button>
-                );
-              })}
+              {["1-2 months", "2-3 months", "3-4 months", "4-6 months"].map(
+                (dur) => {
+                  const isSelected = filters.duration.includes(dur);
+                  return (
+                    <button
+                      key={dur}
+                      onClick={() => toggleDuration(dur)}
+                      className={cn(
+                        "flex items-center gap-2 w-full text-left px-2.5 py-1.5 rounded-lg text-xs transition-all active:scale-97 select-none cursor-pointer",
+                        isSelected
+                          ? "bg-[var(--sb-accent)]/10 text-[var(--sb-accent)] font-semibold"
+                          : "text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)]",
+                      )}
+                    >
+                      <Icons.Clock
+                        size={12}
+                        className="text-[var(--sb-ink-muted)]"
+                      />
+                      <span>{dur}</span>
+                      {isSelected && (
+                        <Icons.Check size={12} className="ml-auto" />
+                      )}
+                    </button>
+                  );
+                },
+              )}
             </div>
           </div>
         </div>

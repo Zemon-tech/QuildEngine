@@ -7,6 +7,13 @@ import {
   Trophy,
   Zap,
 } from "lucide-react";
+import { Card } from "#/components/ui/card";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyIcon,
+  EmptyTitle,
+} from "#/components/ui/empty";
 
 export interface ActivityEvent {
   id: string;
@@ -63,117 +70,66 @@ export function ProfileAnalytics({
       {/* KPI Cards Grid */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {/* Courses */}
-        <div
-          className="flex flex-col gap-2 rounded-xl p-4 border"
-          style={{
-            background: "var(--card-bg)",
-            borderColor: "var(--card-border)",
-          }}
-        >
-          <div className="flex size-8 items-center justify-center rounded-lg bg-[var(--sb-bg-hover)]">
-            <BookOpen size={16} className="text-[var(--sb-accent)]" />
+        <Card className="flex flex-col gap-2 rounded-xl p-4 border border-card-border bg-card-bg shadow-none">
+          <div className="flex size-8 items-center justify-center rounded-lg bg-sb-bg-hover">
+            <BookOpen size={16} className="text-sb-accent" />
           </div>
           <div>
-            <p
-              className="text-xl font-bold tracking-tight"
-              style={{ color: "var(--sb-ink)" }}
-            >
+            <p className="text-xl font-bold tracking-tight text-sb-ink">
               {stats.coursesCompleted}
             </p>
-            <p className="text-[11px] text-[var(--sb-ink-muted)]">
-              Courses Completed
-            </p>
+            <p className="text-[11px] text-sb-ink-muted">Courses Completed</p>
           </div>
-        </div>
+        </Card>
 
         {/* DSA Problems */}
-        <div
-          className="flex flex-col gap-2 rounded-xl p-4 border"
-          style={{
-            background: "var(--card-bg)",
-            borderColor: "var(--card-border)",
-          }}
-        >
-          <div className="flex size-8 items-center justify-center rounded-lg bg-[var(--sb-bg-hover)]">
-            <Code size={16} className="text-[var(--sb-accent)]" />
+        <Card className="flex flex-col gap-2 rounded-xl p-4 border border-card-border bg-card-bg shadow-none">
+          <div className="flex size-8 items-center justify-center rounded-lg bg-sb-bg-hover">
+            <Code size={16} className="text-sb-accent" />
           </div>
           <div>
-            <p
-              className="text-xl font-bold tracking-tight"
-              style={{ color: "var(--sb-ink)" }}
-            >
+            <p className="text-xl font-bold tracking-tight text-sb-ink">
               {stats.dsaSolved}
             </p>
-            <p className="text-[11px] text-[var(--sb-ink-muted)]">DSA Solved</p>
+            <p className="text-[11px] text-sb-ink-muted">DSA Solved</p>
           </div>
-        </div>
+        </Card>
 
         {/* Hours Learned */}
-        <div
-          className="flex flex-col gap-2 rounded-xl p-4 border"
-          style={{
-            background: "var(--card-bg)",
-            borderColor: "var(--card-border)",
-          }}
-        >
-          <div className="flex size-8 items-center justify-center rounded-lg bg-[var(--sb-bg-hover)]">
-            <Clock size={16} className="text-[var(--sb-accent)]" />
+        <Card className="flex flex-col gap-2 rounded-xl p-4 border border-card-border bg-card-bg shadow-none">
+          <div className="flex size-8 items-center justify-center rounded-lg bg-sb-bg-hover">
+            <Clock size={16} className="text-sb-accent" />
           </div>
           <div>
-            <p
-              className="text-xl font-bold tracking-tight"
-              style={{ color: "var(--sb-ink)" }}
-            >
+            <p className="text-xl font-bold tracking-tight text-sb-ink">
               {stats.hoursLearned}h
             </p>
-            <p className="text-[11px] text-[var(--sb-ink-muted)]">
-              Hours Learned
-            </p>
+            <p className="text-[11px] text-sb-ink-muted">Hours Learned</p>
           </div>
-        </div>
+        </Card>
 
         {/* Streak */}
-        <div
-          className="flex flex-col gap-2 rounded-xl p-4 border"
-          style={{
-            background: "var(--card-bg)",
-            borderColor: "var(--card-border)",
-          }}
-        >
-          <div className="flex size-8 items-center justify-center rounded-lg bg-[var(--sb-bg-hover)]">
-            <Flame size={16} className="text-[var(--sb-accent)]" />
+        <Card className="flex flex-col gap-2 rounded-xl p-4 border border-card-border bg-card-bg shadow-none">
+          <div className="flex size-8 items-center justify-center rounded-lg bg-sb-bg-hover">
+            <Flame size={16} className="text-sb-accent" />
           </div>
           <div>
-            <p
-              className="text-xl font-bold tracking-tight"
-              style={{ color: "var(--sb-ink)" }}
-            >
+            <p className="text-xl font-bold tracking-tight text-sb-ink">
               {stats.streakDays}d
             </p>
-            <p className="text-[11px] text-[var(--sb-ink-muted)]">
-              Learning Streak
-            </p>
+            <p className="text-[11px] text-sb-ink-muted">Learning Streak</p>
           </div>
-        </div>
+        </Card>
       </div>
 
       {/* GitHub-style Learning Grid */}
-      <div
-        className="p-6 rounded-2xl border flex flex-col gap-4"
-        style={{
-          background: "var(--card-bg)",
-          borderColor: "var(--card-border)",
-        }}
-      >
+      <Card className="p-6 rounded-2xl border border-card-border bg-card-bg shadow-none flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <h3
-            className="text-sm font-semibold flex items-center gap-2"
-            style={{ color: "var(--page-ink)" }}
-          >
-            <Zap size={15} className="text-[var(--sb-accent)]" />
+          <h3 className="text-sm font-semibold flex items-center gap-2 text-page-ink">
+            <Zap size={15} className="text-sb-accent" />
             Learning Activity Grid
           </h3>
-          <span className="text-[10px] text-[var(--sb-ink-dim)]">
+          <span className="text-[10px] text-sb-ink-dim">
             Last {totalWeeks} weeks of practice
           </span>
         </div>
@@ -198,61 +154,51 @@ export function ProfileAnalytics({
         </div>
 
         {/* Legend */}
-        <div className="flex items-center justify-end gap-1.5 text-[9px] text-[var(--sb-ink-dim)]">
+        <div className="flex items-center justify-end gap-1.5 text-[9px] text-sb-ink-dim">
           <span>Less</span>
-          <div className="size-2 bg-[var(--card-border)]/40 rounded-[1px]" />
-          <div className="size-2 bg-[var(--sb-accent)]/20 rounded-[1px]" />
-          <div className="size-2 bg-[var(--sb-accent)]/50 rounded-[1px]" />
-          <div className="size-2 bg-[var(--sb-accent)] rounded-[1px]" />
+          <div className="size-2 bg-card-border/40 rounded-[1px]" />
+          <div className="size-2 bg-sb-accent/20 rounded-[1px]" />
+          <div className="size-2 bg-sb-accent/50 rounded-[1px]" />
+          <div className="size-2 bg-sb-accent rounded-[1px]" />
           <span>More</span>
         </div>
-      </div>
+      </Card>
 
       {/* Two column lists for activity feed and achievements */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Achievements Card */}
-        <div
-          className="p-5 rounded-2xl border flex flex-col gap-4"
-          style={{
-            background: "var(--card-bg)",
-            borderColor: "var(--card-border)",
-          }}
-        >
-          <h3
-            className="text-sm font-semibold flex items-center gap-2"
-            style={{ color: "var(--page-ink)" }}
-          >
-            <Trophy size={15} className="text-[var(--sb-accent)]" />
+        <Card className="p-5 rounded-2xl border border-card-border bg-card-bg shadow-none flex flex-col gap-4">
+          <h3 className="text-sm font-semibold flex items-center gap-2 text-page-ink">
+            <Trophy size={15} className="text-sb-accent" />
             Achievements & Awards
           </h3>
 
           <div className="flex flex-col gap-3 text-[13px]">
             {achievements.length === 0 ? (
-              <p className="text-xs text-[var(--sb-ink-muted)] py-4 text-center">
-                No achievements listed yet.
-              </p>
+              <Empty className="py-6 bg-transparent border-dashed border-card-border">
+                <EmptyIcon className="bg-sb-bg-hover size-8 mb-2">
+                  <Trophy size={14} className="text-sb-accent" />
+                </EmptyIcon>
+                <EmptyTitle className="text-xs">No Achievements</EmptyTitle>
+                <EmptyDescription className="text-[10px]">
+                  No achievements listed yet.
+                </EmptyDescription>
+              </Empty>
             ) : (
               achievements.map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-start gap-2.5 p-2.5 rounded-lg border bg-[var(--page-bg)]"
-                  style={{ borderColor: "var(--card-border)" }}
+                  className="flex items-start gap-2.5 p-2.5 rounded-lg border border-card-border bg-page-bg"
                 >
-                  <Zap
-                    size={14}
-                    className="text-[var(--sb-accent)] mt-0.5 shrink-0"
-                  />
+                  <Zap size={14} className="text-sb-accent mt-0.5 shrink-0" />
                   <div>
-                    <h4
-                      className="font-semibold text-xs"
-                      style={{ color: "var(--sb-ink)" }}
-                    >
+                    <h4 className="font-semibold text-xs text-sb-ink">
                       {item.title}
                     </h4>
-                    <p className="text-[11px] text-[var(--sb-ink-muted)] mt-0.5">
+                    <p className="text-[11px] text-sb-ink-muted mt-0.5">
                       {item.event} {item.rank && `· Rank: ${item.rank}`}
                     </p>
-                    <p className="text-[10px] text-[var(--sb-ink-dim)] mt-0.5">
+                    <p className="text-[10px] text-sb-ink-dim mt-0.5">
                       {item.date}
                     </p>
                   </div>
@@ -260,55 +206,43 @@ export function ProfileAnalytics({
               ))
             )}
           </div>
-        </div>
+        </Card>
 
         {/* Activity Feed Card */}
-        <div
-          className="p-5 rounded-2xl border flex flex-col gap-4"
-          style={{
-            background: "var(--card-bg)",
-            borderColor: "var(--card-border)",
-          }}
-        >
-          <h3
-            className="text-sm font-semibold flex items-center gap-2"
-            style={{ color: "var(--page-ink)" }}
-          >
-            <BarChart3 size={15} className="text-[var(--sb-accent)]" />
+        <Card className="p-5 rounded-2xl border border-card-border bg-card-bg shadow-none flex flex-col gap-4">
+          <h3 className="text-sm font-semibold flex items-center gap-2 text-page-ink">
+            <BarChart3 size={15} className="text-sb-accent" />
             Recent Activity Feed
           </h3>
 
-          <div
-            className="flex flex-col gap-3 text-[13px] relative pl-3 border-l"
-            style={{ borderColor: "var(--card-border)" }}
-          >
+          <div className="flex flex-col gap-3 text-[13px] relative pl-3 border-l border-card-border">
             {activities.length === 0 ? (
-              <p className="text-xs text-[var(--sb-ink-muted)] py-4 text-center">
-                No recent activities.
-              </p>
+              <Empty className="py-6 bg-transparent border-dashed border-card-border">
+                <EmptyIcon className="bg-sb-bg-hover size-8 mb-2">
+                  <Zap size={14} className="text-sb-accent" />
+                </EmptyIcon>
+                <EmptyTitle className="text-xs">No Activity</EmptyTitle>
+                <EmptyDescription className="text-[10px]">
+                  No recent activities logged.
+                </EmptyDescription>
+              </Empty>
             ) : (
               activities.map((act) => (
                 <div key={act.id} className="relative flex flex-col gap-0.5">
                   {/* node */}
-                  <div className="absolute -left-[18px] top-1.5 size-2 rounded-full bg-[var(--sb-accent)]" />
+                  <div className="absolute -left-[18px] top-1.5 size-2 rounded-full bg-sb-accent" />
 
-                  <p
-                    className="font-medium text-xs"
-                    style={{ color: "var(--sb-ink)" }}
-                  >
+                  <p className="font-medium text-xs text-sb-ink">
                     {act.content}
                   </p>
-                  <span
-                    className="text-[10px]"
-                    style={{ color: "var(--sb-ink-dim)" }}
-                  >
+                  <span className="text-[10px] text-sb-ink-dim">
                     {act.date}
                   </span>
                 </div>
               ))
             )}
           </div>
-        </div>
+        </Card>
       </div>
     </div>
   );

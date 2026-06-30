@@ -421,7 +421,9 @@ interface DashboardTabProps {
   >;
 }
 
-function DashboardTab({ setActiveTab }: DashboardTabProps & { setActiveTab: (tab: string) => void }) {
+function DashboardTab({
+  setActiveTab,
+}: DashboardTabProps & { setActiveTab: (tab: string) => void }) {
   return (
     <div className="flex flex-col gap-6 animate-in fade-in duration-200">
       {/* Operations Dashboard Content */}
@@ -435,96 +437,160 @@ function DashboardTab({ setActiveTab }: DashboardTabProps & { setActiveTab: (tab
             {/* Card 1: Active Agents */}
             <div className="island-shell rounded-xl p-4 flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-all active:scale-[0.98]">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold text-muted-foreground">Active AI Agents</span>
-                <span className="p-1 rounded bg-indigo-500/10 text-indigo-400"><Bot size={13} /></span>
+                <span className="text-[10px] font-bold text-muted-foreground">
+                  Active AI Agents
+                </span>
+                <span className="p-1 rounded bg-indigo-500/10 text-indigo-400">
+                  <Bot size={13} />
+                </span>
               </div>
               <div className="flex items-baseline justify-between mt-1">
-                <span className="text-xl font-bold text-[var(--sb-ink)]">8 Running</span>
-                <span className="text-[9px] font-bold text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded-md">Healthy</span>
+                <span className="text-xl font-bold text-[var(--sb-ink)]">
+                  8 Running
+                </span>
+                <span className="text-[9px] font-bold text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded-md">
+                  Healthy
+                </span>
               </div>
             </div>
 
             {/* Card 2: Active Models */}
             <div className="island-shell rounded-xl p-4 flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-all active:scale-[0.98]">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold text-muted-foreground">Active Models</span>
-                <span className="p-1 rounded bg-purple-500/10 text-purple-400"><Cpu size={13} /></span>
+                <span className="text-[10px] font-bold text-muted-foreground">
+                  Active Models
+                </span>
+                <span className="p-1 rounded bg-purple-500/10 text-purple-400">
+                  <Cpu size={13} />
+                </span>
               </div>
               <div className="flex items-baseline justify-between mt-1">
-                <span className="text-xl font-bold text-[var(--sb-ink)]">5 Configured</span>
-                <span className="text-[9px] text-muted-foreground">Across 3 hosts</span>
+                <span className="text-xl font-bold text-[var(--sb-ink)]">
+                  5 Configured
+                </span>
+                <span className="text-[9px] text-muted-foreground">
+                  Across 3 hosts
+                </span>
               </div>
             </div>
 
             {/* Card 3: API Requests */}
             <div className="island-shell rounded-xl p-4 flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-all active:scale-[0.98]">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold text-muted-foreground">API Requests (Weekly)</span>
-                <span className="p-1 rounded bg-blue-500/10 text-blue-400"><Activity size={13} /></span>
+                <span className="text-[10px] font-bold text-muted-foreground">
+                  API Requests (Weekly)
+                </span>
+                <span className="p-1 rounded bg-blue-500/10 text-blue-400">
+                  <Activity size={13} />
+                </span>
               </div>
               <div className="flex items-baseline justify-between mt-1">
-                <span className="text-xl font-bold text-[var(--sb-ink)]">48,291</span>
-                <span className="text-[9px] font-bold text-emerald-500">↑ 12.4%</span>
+                <span className="text-xl font-bold text-[var(--sb-ink)]">
+                  48,291
+                </span>
+                <span className="text-[9px] font-bold text-emerald-500">
+                  ↑ 12.4%
+                </span>
               </div>
             </div>
 
             {/* Card 4: Token Usage */}
             <div className="island-shell rounded-xl p-4 flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-all active:scale-[0.98]">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold text-muted-foreground">Completions Token Volume</span>
-                <span className="p-1 rounded bg-violet-500/10 text-violet-400"><Binary size={13} /></span>
+                <span className="text-[10px] font-bold text-muted-foreground">
+                  Completions Token Volume
+                </span>
+                <span className="p-1 rounded bg-violet-500/10 text-violet-400">
+                  <Binary size={13} />
+                </span>
               </div>
               <div className="flex items-baseline justify-between mt-1">
-                <span className="text-xl font-bold text-[var(--sb-ink)]">42.9M</span>
-                <span className="text-[9px] font-bold text-emerald-500">↑ 41.2%</span>
+                <span className="text-xl font-bold text-[var(--sb-ink)]">
+                  42.9M
+                </span>
+                <span className="text-[9px] font-bold text-emerald-500">
+                  ↑ 41.2%
+                </span>
               </div>
             </div>
 
             {/* Card 5: Response Latency */}
             <div className="island-shell rounded-xl p-4 flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-all active:scale-[0.98]">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold text-muted-foreground">Average Response Latency</span>
-                <span className="p-1 rounded bg-teal-500/10 text-teal-400"><Clock size={13} /></span>
+                <span className="text-[10px] font-bold text-muted-foreground">
+                  Average Response Latency
+                </span>
+                <span className="p-1 rounded bg-teal-500/10 text-teal-400">
+                  <Clock size={13} />
+                </span>
               </div>
               <div className="flex items-baseline justify-between mt-1">
-                <span className="text-xl font-bold text-[var(--sb-ink)]">312 ms</span>
-                <span className="text-[9px] font-bold text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded-md">Excellent</span>
+                <span className="text-xl font-bold text-[var(--sb-ink)]">
+                  312 ms
+                </span>
+                <span className="text-[9px] font-bold text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded-md">
+                  Excellent
+                </span>
               </div>
             </div>
 
             {/* Card 6: Cost Savings */}
             <div className="island-shell rounded-xl p-4 flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-all active:scale-[0.98]">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold text-muted-foreground">Calculated Cost Saved</span>
-                <span className="p-1 rounded bg-emerald-500/10 text-emerald-400"><DatabaseZap size={13} /></span>
+                <span className="text-[10px] font-bold text-muted-foreground">
+                  Calculated Cost Saved
+                </span>
+                <span className="p-1 rounded bg-emerald-500/10 text-emerald-400">
+                  <DatabaseZap size={13} />
+                </span>
               </div>
               <div className="flex items-baseline justify-between mt-1">
-                <span className="text-xl font-bold text-[var(--sb-ink)]">$342.90</span>
-                <span className="text-[9px] text-muted-foreground">Via prompt cache</span>
+                <span className="text-xl font-bold text-[var(--sb-ink)]">
+                  $342.90
+                </span>
+                <span className="text-[9px] text-muted-foreground">
+                  Via prompt cache
+                </span>
               </div>
             </div>
 
             {/* Card 7: Running Jobs */}
             <div className="island-shell rounded-xl p-4 flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-all active:scale-[0.98]">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold text-muted-foreground">Queued Sync Jobs</span>
-                <span className="p-1 rounded bg-amber-500/10 text-amber-400"><Layers size={13} /></span>
+                <span className="text-[10px] font-bold text-muted-foreground">
+                  Queued Sync Jobs
+                </span>
+                <span className="p-1 rounded bg-amber-500/10 text-amber-400">
+                  <Layers size={13} />
+                </span>
               </div>
               <div className="flex items-baseline justify-between mt-1">
-                <span className="text-xl font-bold text-[var(--sb-ink)]">2 Pending</span>
-                <span className="text-[9px] font-bold text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded-md">Processing</span>
+                <span className="text-xl font-bold text-[var(--sb-ink)]">
+                  2 Pending
+                </span>
+                <span className="text-[9px] font-bold text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded-md">
+                  Processing
+                </span>
               </div>
             </div>
 
             {/* Card 8: Success Rate */}
             <div className="island-shell rounded-xl p-4 flex flex-col gap-2 relative overflow-hidden group hover:shadow-md transition-all active:scale-[0.98]">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold text-muted-foreground">API Success Rate</span>
-                <span className="p-1 rounded bg-rose-500/10 text-rose-400"><CheckCircle size={13} /></span>
+                <span className="text-[10px] font-bold text-muted-foreground">
+                  API Success Rate
+                </span>
+                <span className="p-1 rounded bg-rose-500/10 text-rose-400">
+                  <CheckCircle size={13} />
+                </span>
               </div>
               <div className="flex items-baseline justify-between mt-1">
-                <span className="text-xl font-bold text-[var(--sb-ink)]">99.85%</span>
-                <span className="text-[9px] font-bold text-emerald-500">Nominal</span>
+                <span className="text-xl font-bold text-[var(--sb-ink)]">
+                  99.85%
+                </span>
+                <span className="text-[9px] font-bold text-emerald-500">
+                  Nominal
+                </span>
               </div>
             </div>
           </div>
@@ -535,28 +601,69 @@ function DashboardTab({ setActiveTab }: DashboardTabProps & { setActiveTab: (tab
           {/* Active AI Agents List (2/3 width) */}
           <div className="lg:col-span-2 island-shell rounded-xl p-5 flex flex-col gap-4">
             <div>
-              <h3 className="text-sm font-bold text-[var(--sb-ink)]">Active Orchestration Agents</h3>
-              <p className="text-[11px] text-muted-foreground">AI agents actively executing background jobs and audits</p>
+              <h3 className="text-sm font-bold text-[var(--sb-ink)]">
+                Active Orchestration Agents
+              </h3>
+              <p className="text-[11px] text-muted-foreground">
+                AI agents actively executing background jobs and audits
+              </p>
             </div>
             <div className="flex flex-col divide-y divide-[var(--sb-border)]">
               {[
-                { name: "DSA Code Reviewer", trigger: "On submission", status: "idle", usage: "24.1k runs", color: "bg-emerald-500" },
-                { name: "Course Outline Generator", trigger: "On demand", status: "running", usage: "11.2k runs", color: "bg-amber-500" },
-                { name: "Semantic RAG Search Optimizer", trigger: "Cron (hourly)", status: "idle", usage: "9.4k runs", color: "bg-emerald-500" },
-                { name: "Customer Support Assistant", trigger: "Chat initiated", status: "idle", usage: "3.4k runs", color: "bg-emerald-500" }
+                {
+                  name: "DSA Code Reviewer",
+                  trigger: "On submission",
+                  status: "idle",
+                  usage: "24.1k runs",
+                  color: "bg-emerald-500",
+                },
+                {
+                  name: "Course Outline Generator",
+                  trigger: "On demand",
+                  status: "running",
+                  usage: "11.2k runs",
+                  color: "bg-amber-500",
+                },
+                {
+                  name: "Semantic RAG Search Optimizer",
+                  trigger: "Cron (hourly)",
+                  status: "idle",
+                  usage: "9.4k runs",
+                  color: "bg-emerald-500",
+                },
+                {
+                  name: "Customer Support Assistant",
+                  trigger: "Chat initiated",
+                  status: "idle",
+                  usage: "3.4k runs",
+                  color: "bg-emerald-500",
+                },
               ].map((agent, i) => (
-                <div key={i} className="py-3 flex items-center justify-between gap-4">
+                <div
+                  key={i}
+                  className="py-3 flex items-center justify-between gap-4"
+                >
                   <div className="flex items-center gap-3">
-                    <span className="p-2 rounded-lg bg-indigo-500/5 text-indigo-400 border border-[var(--sb-border)]"><Bot size={14} /></span>
+                    <span className="p-2 rounded-lg bg-indigo-500/5 text-indigo-400 border border-[var(--sb-border)]">
+                      <Bot size={14} />
+                    </span>
                     <div className="min-w-0">
-                      <p className="text-xs font-semibold text-[var(--sb-ink)] truncate">{agent.name}</p>
-                      <span className="text-[10px] text-muted-foreground flex items-center gap-1"><Clock size={9} /> {agent.trigger}</span>
+                      <p className="text-xs font-semibold text-[var(--sb-ink)] truncate">
+                        {agent.name}
+                      </p>
+                      <span className="text-[10px] text-muted-foreground flex items-center gap-1">
+                        <Clock size={9} /> {agent.trigger}
+                      </span>
                     </div>
                   </div>
                   <div className="flex items-center gap-4 text-xs font-medium">
-                    <span className="text-muted-foreground text-[10px]">{agent.usage}</span>
+                    <span className="text-muted-foreground text-[10px]">
+                      {agent.usage}
+                    </span>
                     <span className="flex items-center gap-1.5 bg-muted/40 px-2 py-0.5 rounded text-[10px] font-bold">
-                      <span className={cn("size-1.5 rounded-full", agent.color)} />
+                      <span
+                        className={cn("size-1.5 rounded-full", agent.color)}
+                      />
                       {agent.status}
                     </span>
                   </div>
@@ -569,13 +676,19 @@ function DashboardTab({ setActiveTab }: DashboardTabProps & { setActiveTab: (tab
           <div className="flex flex-col gap-6">
             {/* Quick Actions */}
             <div className="island-shell rounded-xl p-5 flex flex-col gap-4">
-              <h3 className="text-xs font-bold text-muted-foreground tracking-wider">Quick Actions</h3>
+              <h3 className="text-xs font-bold text-muted-foreground tracking-wider">
+                Quick Actions
+              </h3>
               <div className="flex flex-col gap-2">
                 {[
                   { label: "New Agent", icon: Bot, to: "agents" },
-                  { label: "Upload Documents", icon: Database, to: "knowledge" },
+                  {
+                    label: "Upload Documents",
+                    icon: Database,
+                    to: "knowledge",
+                  },
                   { label: "Create Prompt", icon: Terminal, to: "prompts" },
-                  { label: "Configure Models", icon: Cpu, to: "models" }
+                  { label: "Configure Models", icon: Cpu, to: "models" },
                 ].map((act, i) => (
                   <button
                     key={i}
@@ -583,8 +696,12 @@ function DashboardTab({ setActiveTab }: DashboardTabProps & { setActiveTab: (tab
                     onClick={() => setActiveTab(act.to)}
                     className="flex items-center gap-3 px-3.5 py-2 rounded-lg text-left text-xs font-semibold border border-[var(--sb-border)] hover:bg-[var(--sb-bg-hover)] active:scale-[0.98] transition-all cursor-pointer bg-[color-mix(in_oklab,var(--sb-ink)_1%,transparent)]"
                   >
-                    <span className="text-muted-foreground"><act.icon size={13} /></span>
-                    <span className="text-[var(--sb-ink)] flex-1">{act.label}</span>
+                    <span className="text-muted-foreground">
+                      <act.icon size={13} />
+                    </span>
+                    <span className="text-[var(--sb-ink)] flex-1">
+                      {act.label}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -592,7 +709,9 @@ function DashboardTab({ setActiveTab }: DashboardTabProps & { setActiveTab: (tab
 
             {/* Diagnostics Preview */}
             <div className="island-shell rounded-xl p-5 flex flex-col gap-3.5">
-              <h3 className="text-xs font-bold text-muted-foreground tracking-wider">System Latency (P90)</h3>
+              <h3 className="text-xs font-bold text-muted-foreground tracking-wider">
+                System Latency (P90)
+              </h3>
               <div className="space-y-2 text-[10px]">
                 <div className="space-y-1">
                   <div className="flex justify-between font-semibold">
@@ -600,7 +719,10 @@ function DashboardTab({ setActiveTab }: DashboardTabProps & { setActiveTab: (tab
                     <span>240ms</span>
                   </div>
                   <div className="h-1 w-full bg-[var(--sb-border)] rounded-full overflow-hidden">
-                    <div className="h-full bg-violet-500" style={{ width: "48%" }} />
+                    <div
+                      className="h-full bg-violet-500"
+                      style={{ width: "48%" }}
+                    />
                   </div>
                 </div>
                 <div className="space-y-1">
@@ -609,7 +731,10 @@ function DashboardTab({ setActiveTab }: DashboardTabProps & { setActiveTab: (tab
                     <span>390ms</span>
                   </div>
                   <div className="h-1 w-full bg-[var(--sb-border)] rounded-full overflow-hidden">
-                    <div className="h-full bg-blue-500" style={{ width: "78%" }} />
+                    <div
+                      className="h-full bg-blue-500"
+                      style={{ width: "78%" }}
+                    />
                   </div>
                 </div>
                 <div className="space-y-1">
@@ -618,15 +743,18 @@ function DashboardTab({ setActiveTab }: DashboardTabProps & { setActiveTab: (tab
                     <span>310ms</span>
                   </div>
                   <div className="h-1 w-full bg-[var(--sb-border)] rounded-full overflow-hidden">
-                    <div className="h-full bg-emerald-500" style={{ width: "62%" }} />
+                    <div
+                      className="h-full bg-emerald-500"
+                      style={{ width: "62%" }}
+                    />
                   </div>
                 </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   );
 }
 
@@ -1513,24 +1641,12 @@ function TokensTab() {
                 color: "var(--sb-ink-muted)",
               }}
             >
-              <th className="pb-3 font-semibold">
-                Provider
-              </th>
-              <th className="pb-3 font-semibold">
-                Input Tokens
-              </th>
-              <th className="pb-3 font-semibold">
-                Output Tokens
-              </th>
-              <th className="pb-3 font-semibold">
-                Input Cost
-              </th>
-              <th className="pb-3 font-semibold">
-                Output Cost
-              </th>
-              <th className="pb-3 font-semibold text-right">
-                Total Billing
-              </th>
+              <th className="pb-3 font-semibold">Provider</th>
+              <th className="pb-3 font-semibold">Input Tokens</th>
+              <th className="pb-3 font-semibold">Output Tokens</th>
+              <th className="pb-3 font-semibold">Input Cost</th>
+              <th className="pb-3 font-semibold">Output Cost</th>
+              <th className="pb-3 font-semibold text-right">Total Billing</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-(--sb-border)">
@@ -1659,12 +1775,8 @@ function ModelsTab() {
               {models.map((m) => (
                 <tr key={m.name} style={{ color: "var(--sb-ink)" }}>
                   <td className="py-3 font-semibold">{m.name}</td>
-                  <td className="py-3 text-(--sb-ink-muted)">
-                    {m.provider}
-                  </td>
-                  <td className="py-3 text-(--sb-ink-muted)">
-                    {m.latency}
-                  </td>
+                  <td className="py-3 text-(--sb-ink-muted)">{m.provider}</td>
+                  <td className="py-3 text-(--sb-ink-muted)">{m.latency}</td>
                   <td className="py-3 text-emerald-500 font-semibold">
                     {m.reliability}
                   </td>
@@ -2547,10 +2659,7 @@ function APITab() {
             </span>
           </div>
           <div className="h-2 w-full bg-(--sb-border) rounded-full overflow-hidden mt-2">
-            <div
-              className="h-full bg-(--sb-accent)"
-              style={{ width: "12%" }}
-            />
+            <div className="h-full bg-(--sb-accent)" style={{ width: "12%" }} />
           </div>
         </div>
 
@@ -2577,21 +2686,11 @@ function APITab() {
                 color: "var(--sb-ink-muted)",
               }}
             >
-              <th className="pb-3 font-semibold">
-                Key Label Name
-              </th>
-              <th className="pb-3 font-semibold">
-                Security Token
-              </th>
-              <th className="pb-3 font-semibold">
-                Created Date
-              </th>
-              <th className="pb-3 font-semibold">
-                Status
-              </th>
-              <th className="pb-3 font-semibold text-right">
-                Actions
-              </th>
+              <th className="pb-3 font-semibold">Key Label Name</th>
+              <th className="pb-3 font-semibold">Security Token</th>
+              <th className="pb-3 font-semibold">Created Date</th>
+              <th className="pb-3 font-semibold">Status</th>
+              <th className="pb-3 font-semibold text-right">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-(--sb-border)">

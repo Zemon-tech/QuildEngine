@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { GlowButton } from "./glow-button";
 
 interface CTASectionProps {
@@ -7,10 +7,12 @@ interface CTASectionProps {
   onRequestDemo: () => void;
 }
 
-export function CTASection({ onStartResearch, onRequestDemo }: CTASectionProps) {
+export function CTASection({
+  onStartResearch,
+  onRequestDemo,
+}: CTASectionProps) {
   return (
     <section className="relative w-full max-w-5xl mx-auto px-6 py-16 md:py-20 overflow-hidden rounded-2xl border border-[var(--sb-border)]/60 dark:border-white/[0.08] bg-[color-mix(in_oklab,var(--card-bg)_80%,transparent)] backdrop-blur-md text-center">
-      
       {/* Background Gradient Mesh for the CTA card itself */}
       <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
         <motion.div
@@ -49,7 +51,8 @@ export function CTASection({ onStartResearch, onRequestDemo }: CTASectionProps) 
 
         {/* Subtitle */}
         <p className="text-xs sm:text-sm text-[var(--sb-ink-muted)] max-w-md mx-auto leading-relaxed font-sans">
-          Unlock structured semantic maps, automatic citations, and multi-document synthesis inside our modern productivity platform.
+          Unlock structured semantic maps, automatic citations, and
+          multi-document synthesis inside our modern productivity platform.
         </p>
 
         {/* Buttons */}

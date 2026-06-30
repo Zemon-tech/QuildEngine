@@ -84,10 +84,7 @@ export function AdminAppSidebar() {
         <Menu size={16} />
       </button>
 
-      <Sidebar
-        collapsible="icon"
-        className="border-r border-(--sb-border)"
-      >
+      <Sidebar collapsible="icon" className="border-r border-(--sb-border)">
         <SidebarHeader className="p-0">
           <AdminSidebarHeader collapsed={collapsed} onToggle={toggleSidebar} />
         </SidebarHeader>

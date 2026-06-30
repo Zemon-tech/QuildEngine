@@ -16,8 +16,8 @@ export function SidebarHeader({ collapsed, onToggle }: SidebarHeaderProps) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={cn(
-        "flex items-center border-b px-3 py-3 h-14 transition-colors duration-150",
-        collapsed ? "justify-center" : "justify-between gap-2",
+        "flex items-center border-b h-14 transition-colors duration-150",
+        collapsed ? "justify-center px-2" : "justify-between gap-2 px-3 py-3",
       )}
       style={{ borderColor: "var(--sb-border)" }}
     >

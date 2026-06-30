@@ -25,7 +25,10 @@ export function LoadingSkeleton() {
         <Skeleton className="h-5 w-44 bg-[var(--card-border)]/40" />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
           {Array.from({ length: 6 }).map((_, idx) => (
-            <Skeleton key={idx} className="h-64 rounded-2xl bg-[var(--card-border)]/40" />
+            <Skeleton
+              key={idx}
+              className="h-64 rounded-2xl bg-[var(--card-border)]/40"
+            />
           ))}
         </div>
       </div>

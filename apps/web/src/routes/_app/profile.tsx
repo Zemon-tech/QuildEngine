@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { motion } from "framer-motion";
 import {
   BarChart3,
   Download,
@@ -9,7 +8,6 @@ import {
   Printer,
   Settings,
   User,
-  X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ProfileAbout } from "#/components/profile/profile-about";
@@ -33,6 +31,8 @@ import { ProfileSettings } from "#/components/profile/profile-settings";
 import type { CertItem } from "#/components/profile/profile-skills";
 import { ProfileSkills } from "#/components/profile/profile-skills";
 import { Button } from "#/components/ui/button";
+import { Dialog, DialogContent, DialogTitle } from "#/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
 
 export const Route = createFileRoute("/_app/profile")({
   validateSearch: (search: Record<string, unknown>) => {
@@ -281,40 +281,31 @@ function ProfilePage() {
 
   return (
     <div className="mx-auto max-w-4xl pb-16">
-      {/* Tabs Header */}
-      <div
-        className="flex border-b mb-6 overflow-x-auto whitespace-nowrap scrollbar-none"
-        style={{ borderColor: "var(--card-border)" }}
+      <Tabs
+        value={activeTab}
+        onValueChange={(v) => setActiveTab(v as TabType)}
+        className="w-full"
       >
-        {tabs.map((tab) => {
-          const isActive = activeTab === tab.id;
-          return (
-            <button
+        {/* Tabs Header */}
+        <TabsList className="flex border-b mb-6 overflow-x-auto whitespace-nowrap scrollbar-none bg-transparent border-card-border p-0 gap-1 rounded-none justify-start w-full">
+          {tabs.map((tab) => (
+            <TabsTrigger
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className="relative flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors outline-none cursor-pointer"
-              style={{
-                color: isActive ? "var(--sb-accent)" : "var(--sb-ink-muted)",
-              }}
+              value={tab.id}
+              className="relative flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors outline-none cursor-pointer rounded-none border-b-2 border-transparent data-[state=active]:border-sb-accent data-[state=active]:text-sb-accent text-sb-ink-muted hover:text-sb-ink data-[state=active]:bg-transparent"
             >
-              {isActive && (
-                <motion.span
-                  layoutId="profile-tab-bar"
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--sb-accent)]"
-                  transition={{ type: "spring", duration: 0.3, bounce: 0.1 }}
-                />
-              )}
               <tab.icon size={15} />
               <span>{tab.label}</span>
-            </button>
-          );
-        })}
-      </div>
+            </TabsTrigger>
+          ))}
+        </TabsList>
 
-      {/* Tab Panels */}
-      <div className="flex flex-col gap-6">
-        {activeTab === "profile" && (
-          <>
+        {/* Tab Panels */}
+        <div className="flex flex-col gap-6 mt-6">
+          <TabsContent
+            value="profile"
+            className="flex flex-col gap-6 outline-none"
+          >
             <ProfileHeader
               data={profile.header}
               onUpdate={(fields) =>
@@ -344,239 +335,186 @@ function ProfilePage() {
                 updateProfile({ ...profile, education: edu })
               }
             />
-          </>
-        )}
+          </TabsContent>
 
-        {activeTab === "analytics" && (
-          <ProfileAnalytics
-            stats={profile.stats}
-            activities={profile.activities}
-            achievements={profile.achievements}
-          />
-        )}
+          <TabsContent value="analytics" className="outline-none">
+            <ProfileAnalytics
+              stats={profile.stats}
+              activities={profile.activities}
+              achievements={profile.achievements}
+            />
+          </TabsContent>
 
-        {activeTab === "projects" && (
-          <ProfileProjects
-            projects={profile.projects}
-            research={profile.research}
-            onUpdateProjects={(projs) =>
-              updateProfile({ ...profile, projects: projs })
-            }
-            onUpdateResearch={(res) =>
-              updateProfile({ ...profile, research: res })
-            }
-          />
-        )}
+          <TabsContent value="projects" className="outline-none">
+            <ProfileProjects
+              projects={profile.projects}
+              research={profile.research}
+              onUpdateProjects={(projs) =>
+                updateProfile({ ...profile, projects: projs })
+              }
+              onUpdateResearch={(res) =>
+                updateProfile({ ...profile, research: res })
+              }
+            />
+          </TabsContent>
 
-        {activeTab === "skills" && (
-          <ProfileSkills
-            skills={profile.skills}
-            certifications={profile.certifications}
-            onUpdateSkills={(sk) => updateProfile({ ...profile, skills: sk })}
-            onUpdateCertifications={(certs) =>
-              updateProfile({ ...profile, certifications: certs })
-            }
-          />
-        )}
+          <TabsContent value="skills" className="outline-none">
+            <ProfileSkills
+              skills={profile.skills}
+              certifications={profile.certifications}
+              onUpdateSkills={(sk) => updateProfile({ ...profile, skills: sk })}
+              onUpdateCertifications={(certs) =>
+                updateProfile({ ...profile, certifications: certs })
+              }
+            />
+          </TabsContent>
 
-        {activeTab === "settings" && (
-          <ProfileSettings
-            settings={profile.settings}
-            onUpdateSettings={(sett) =>
-              updateProfile({ ...profile, settings: sett })
-            }
-          />
-        )}
-      </div>
+          <TabsContent value="settings" className="outline-none">
+            <ProfileSettings
+              settings={profile.settings}
+              onUpdateSettings={(sett) =>
+                updateProfile({ ...profile, settings: sett })
+              }
+            />
+          </TabsContent>
+        </div>
+      </Tabs>
 
       {/* Print-style Resume Preview Modal */}
-      {showResumePreview && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-[2px] p-4 overflow-y-auto">
-          <div
-            className="w-full max-w-2xl rounded-2xl border p-5 flex flex-col gap-4 shadow-2xl relative my-8 max-h-[90vh]"
-            style={{
-              background: "var(--card-bg)",
-              borderColor: "var(--card-border)",
-            }}
-          >
-            {/* Header Actions */}
-            <div className="flex items-center justify-between shrink-0">
-              <div className="flex items-center gap-2">
-                <FileText size={16} className="text-[var(--sb-accent)]" />
-                <span
-                  className="font-bold text-sm"
-                  style={{
-                    color: "var(--page-ink)",
-                    fontFamily: "'Fraunces', Georgia, serif",
-                  }}
-                >
-                  Resume Document Preview
-                </span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Button
-                  size="xs"
-                  variant="outline"
-                  onClick={() => alert("Connecting to print device...")}
-                  className="gap-1.5 h-7 px-2 text-[11px]"
-                >
-                  <Printer size={12} />
-                  Print
-                </Button>
-                <Button
-                  size="xs"
-                  variant="outline"
-                  onClick={() =>
-                    alert(`Simulating download of ${profile.header.resumeName}`)
-                  }
-                  className="gap-1.5 h-7 px-2 text-[11px]"
-                >
-                  <Download size={12} />
-                  Download PDF
-                </Button>
-                <button
-                  type="button"
-                  onClick={() => setShowResumePreview(false)}
-                  className="p-1 rounded-md hover:bg-[var(--sb-bg-hover)] text-[var(--sb-ink-muted)] hover:text-[var(--sb-ink)]"
-                >
-                  <X size={15} />
-                </button>
-              </div>
+      <Dialog open={showResumePreview} onOpenChange={setShowResumePreview}>
+        <DialogContent className="w-full max-w-2xl p-5 flex flex-col gap-4 max-h-[90vh] bg-card border-card-border text-page-ink shadow-2xl">
+          <div className="flex items-center justify-between shrink-0">
+            <div className="flex items-center gap-2">
+              <FileText size={16} className="text-sb-accent" />
+              <DialogTitle className="font-bold text-sm text-page-ink font-serif">
+                Resume Document Preview
+              </DialogTitle>
             </div>
-
-            {/* Resume Sheet Content (Simulating A4 print layout) */}
-            <div className="flex-1 overflow-y-auto pr-1">
-              <div
-                className="w-full rounded-lg border p-8 flex flex-col gap-6 text-[12px] leading-relaxed shadow-sm font-sans"
-                style={{
-                  background: "var(--page-bg)",
-                  borderColor: "var(--card-border)",
-                  color: "var(--page-ink)",
-                }}
+            <div className="flex items-center gap-1.5 pr-6">
+              <Button
+                size="xs"
+                variant="outline"
+                onClick={() => alert("Connecting to print device...")}
+                className="gap-1.5 h-7 px-2 text-[11px]"
               >
-                {/* Header */}
-                <div
-                  className="flex flex-col gap-1 border-b pb-4 text-center"
-                  style={{ borderColor: "var(--card-border)" }}
-                >
-                  <h2
-                    className="text-xl font-bold tracking-tight"
-                    style={{ fontFamily: "'Fraunces', Georgia, serif" }}
-                  >
-                    {profile.header.name}
-                  </h2>
-                  <p className="font-semibold text-xs text-[var(--sb-accent)]">
-                    {profile.header.headline}
-                  </p>
-                  <p className="text-[10px] text-[var(--sb-ink-muted)] mt-1">
-                    {profile.header.location} · {profile.header.email} ·{" "}
-                    {profile.header.website}
-                  </p>
-                </div>
+                <Printer size={12} />
+                Print
+              </Button>
+              <Button
+                size="xs"
+                variant="outline"
+                onClick={() =>
+                  alert(`Simulating download of ${profile.header.resumeName}`)
+                }
+                className="gap-1.5 h-7 px-2 text-[11px]"
+              >
+                <Download size={12} />
+                Download PDF
+              </Button>
+            </div>
+          </div>
 
-                {/* Summary */}
-                <div className="flex flex-col gap-1">
-                  <h4 className="font-bold uppercase tracking-wider text-[10px] text-[var(--sb-accent)]">
-                    Professional Summary
-                  </h4>
-                  <p style={{ color: "var(--sb-ink)" }}>
-                    {profile.about.summary}
-                  </p>
-                </div>
+          {/* Resume Sheet Content (Simulating A4 print layout) */}
+          <div className="flex-1 overflow-y-auto pr-1">
+            <div className="w-full rounded-lg border border-card-border p-8 flex flex-col gap-6 text-[12px] leading-relaxed bg-page-bg text-page-ink shadow-sm font-sans">
+              {/* Header */}
+              <div className="flex flex-col gap-1 border-b border-card-border pb-4 text-center">
+                <h2 className="text-xl font-bold tracking-tight font-serif">
+                  {profile.header.name}
+                </h2>
+                <p className="font-semibold text-xs text-sb-accent">
+                  {profile.header.headline}
+                </p>
+                <p className="text-[10px] text-sb-ink-muted mt-1">
+                  {profile.header.location} · {profile.header.email} ·{" "}
+                  {profile.header.website}
+                </p>
+              </div>
 
-                {/* Experience */}
-                <div className="flex flex-col gap-2">
-                  <h4
-                    className="font-bold uppercase tracking-wider text-[10px] text-[var(--sb-accent)] border-b pb-0.5"
-                    style={{ borderColor: "var(--card-border)" }}
-                  >
-                    Professional Experience
-                  </h4>
-                  <div className="flex flex-col gap-4">
-                    {profile.experience.map((item, index) => (
-                      <div key={index} className="flex flex-col gap-1">
-                        <div className="flex items-center justify-between font-semibold">
-                          <span style={{ color: "var(--sb-ink)" }}>
-                            {item.role} @ {item.company}
-                          </span>
-                          <span className="text-[10px] text-[var(--sb-ink-dim)]">
-                            {item.duration}
-                          </span>
-                        </div>
-                        <p style={{ color: "var(--sb-ink-muted)" }}>
-                          {item.description}
-                        </p>
-                        {item.tech && item.tech.length > 0 && (
-                          <p className="text-[10px] text-[var(--sb-ink-dim)] mt-0.5">
-                            <b>Technologies:</b> {item.tech.join(", ")}
-                          </p>
-                        )}
+              {/* Summary */}
+              <div className="flex flex-col gap-1">
+                <h4 className="font-bold uppercase tracking-wider text-[10px] text-sb-accent">
+                  Professional Summary
+                </h4>
+                <p className="text-sb-ink">{profile.about.summary}</p>
+              </div>
+
+              {/* Experience */}
+              <div className="flex flex-col gap-2">
+                <h4 className="font-bold uppercase tracking-wider text-[10px] text-sb-accent border-b border-card-border pb-0.5">
+                  Professional Experience
+                </h4>
+                <div className="flex flex-col gap-4">
+                  {profile.experience.map((item, index) => (
+                    <div key={index} className="flex flex-col gap-1">
+                      <div className="flex items-center justify-between font-semibold">
+                        <span className="text-sb-ink">
+                          {item.role} @ {item.company}
+                        </span>
+                        <span className="text-[10px] text-sb-ink-dim">
+                          {item.duration}
+                        </span>
                       </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Education */}
-                <div className="flex flex-col gap-2">
-                  <h4
-                    className="font-bold uppercase tracking-wider text-[10px] text-[var(--sb-accent)] border-b pb-0.5"
-                    style={{ borderColor: "var(--card-border)" }}
-                  >
-                    Education
-                  </h4>
-                  <div className="flex flex-col gap-3">
-                    {profile.education.map((item, index) => (
-                      <div key={index} className="flex flex-col gap-1">
-                        <div className="flex items-center justify-between font-semibold">
-                          <span style={{ color: "var(--sb-ink)" }}>
-                            {item.school}
-                          </span>
-                          <span className="text-[10px] text-[var(--sb-ink-dim)]">
-                            {item.duration}
-                          </span>
-                        </div>
-                        <p style={{ color: "var(--sb-ink-muted)" }}>
-                          {item.degree} {item.gpa && `· GPA: ${item.gpa}`}
+                      <p className="text-sb-ink-muted">{item.description}</p>
+                      {item.tech && item.tech.length > 0 && (
+                        <p className="text-[10px] text-sb-ink-dim mt-0.5">
+                          <b>Technologies:</b> {item.tech.join(", ")}
                         </p>
-                        {item.courses && (
-                          <p className="text-[10px] text-[var(--sb-ink-dim)]">
-                            <b>Selected Coursework:</b> {item.courses}
-                          </p>
-                        )}
-                      </div>
-                    ))}
-                  </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
+              </div>
 
-                {/* Skills */}
-                <div className="flex flex-col gap-2">
-                  <h4
-                    className="font-bold uppercase tracking-wider text-[10px] text-[var(--sb-accent)] border-b pb-0.5"
-                    style={{ borderColor: "var(--card-border)" }}
-                  >
-                    Skills & Tooling
-                  </h4>
-                  <div
-                    className="flex flex-col gap-1 text-[11px]"
-                    style={{ color: "var(--sb-ink)" }}
-                  >
-                    <p>
-                      <b>Technical Skills:</b>{" "}
-                      {profile.skills.technical.join(", ")}
-                    </p>
-                    <p>
-                      <b>Tools & DevOps:</b> {profile.skills.tooling.join(", ")}
-                    </p>
-                    <p>
-                      <b>Soft Skills:</b> {profile.skills.soft.join(", ")}
-                    </p>
-                  </div>
+              {/* Education */}
+              <div className="flex flex-col gap-2">
+                <h4 className="font-bold uppercase tracking-wider text-[10px] text-sb-accent border-b border-card-border pb-0.5">
+                  Education
+                </h4>
+                <div className="flex flex-col gap-3">
+                  {profile.education.map((item, index) => (
+                    <div key={index} className="flex flex-col gap-1">
+                      <div className="flex items-center justify-between font-semibold">
+                        <span className="text-sb-ink">{item.school}</span>
+                        <span className="text-[10px] text-sb-ink-dim">
+                          {item.duration}
+                        </span>
+                      </div>
+                      <p className="text-sb-ink-muted">
+                        {item.degree} {item.gpa && `· GPA: ${item.gpa}`}
+                      </p>
+                      {item.courses && (
+                        <p className="text-[10px] text-sb-ink-dim">
+                          <b>Selected Coursework:</b> {item.courses}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Skills */}
+              <div className="flex flex-col gap-2">
+                <h4 className="font-bold uppercase tracking-wider text-[10px] text-sb-accent border-b border-card-border pb-0.5">
+                  Skills & Tooling
+                </h4>
+                <div className="flex flex-col gap-1 text-[11px] text-sb-ink">
+                  <p>
+                    <b>Technical Skills:</b>{" "}
+                    {profile.skills.technical.join(", ")}
+                  </p>
+                  <p>
+                    <b>Tools & DevOps:</b> {profile.skills.tooling.join(", ")}
+                  </p>
+                  <p>
+                    <b>Soft Skills:</b> {profile.skills.soft.join(", ")}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

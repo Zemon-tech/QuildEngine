@@ -671,21 +671,11 @@ function AssessmentsPage() {
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
                     <tr className="border-b border-[var(--sb-border)]/50 text-[10px] text-muted-foreground">
-                      <th className="pb-2 font-bold">
-                        Candidate User
-                      </th>
-                      <th className="pb-2 font-bold">
-                        Assessment Module
-                      </th>
-                      <th className="pb-2 font-bold text-center">
-                        Score %
-                      </th>
-                      <th className="pb-2 font-bold text-center">
-                        Duration
-                      </th>
-                      <th className="pb-2 font-bold text-right">
-                        Status
-                      </th>
+                      <th className="pb-2 font-bold">Candidate User</th>
+                      <th className="pb-2 font-bold">Assessment Module</th>
+                      <th className="pb-2 font-bold text-center">Score %</th>
+                      <th className="pb-2 font-bold text-center">Duration</th>
+                      <th className="pb-2 font-bold text-right">Status</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-(--sb-border)/40">
@@ -729,7 +719,8 @@ function AssessmentsPage() {
                               ) : (
                                 <XCircle size={9} />
                               )}
-                              {attempt.status.charAt(0).toUpperCase() + attempt.status.slice(1)}
+                              {attempt.status.charAt(0).toUpperCase() +
+                                attempt.status.slice(1)}
                             </span>
                           </td>
                         </tr>

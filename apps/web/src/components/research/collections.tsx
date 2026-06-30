@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
 import {
-  Binary,
-  FolderLock,
-  Cpu,
-  Stethoscope,
-  GraduationCap,
   Banknote,
+  Binary,
   Bot,
+  Cpu,
+  FolderLock,
+  GraduationCap,
+  Stethoscope,
 } from "lucide-react";
-import { SpotlightEffect, GlassCard } from "./spotlight";
+import { GlassCard, SpotlightEffect } from "./spotlight";
 
 interface CollectionItem {
   title: string;
@@ -42,7 +42,9 @@ export function ResearchCollectionCard() {
       papersCount: 154,
       datasetsCount: 12,
       activeWorkspaces: 3,
-      icon: <Stethoscope className="w-6 h-6 text-emerald-500 dark:text-emerald-400" />,
+      icon: (
+        <Stethoscope className="w-6 h-6 text-emerald-500 dark:text-emerald-400" />
+      ),
       glowColor: "rgba(16,185,129,0.1)",
     },
     {
@@ -66,7 +68,9 @@ export function ResearchCollectionCard() {
       papersCount: 86,
       datasetsCount: 6,
       activeWorkspaces: 2,
-      icon: <GraduationCap className="w-6 h-6 text-sky-500 dark:text-sky-400" />,
+      icon: (
+        <GraduationCap className="w-6 h-6 text-sky-500 dark:text-sky-400" />
+      ),
       glowColor: "rgba(14,165,233,0.1)",
     },
     {
@@ -87,7 +91,8 @@ export function ResearchCollectionCard() {
           Research Collections
         </h2>
         <p className="text-[var(--sb-ink-muted)] text-sm md:text-base">
-          Browse indexed literature and datasets organized by core science domains.
+          Browse indexed literature and datasets organized by core science
+          domains.
         </p>
       </div>
 
@@ -105,21 +110,35 @@ export function ResearchCollectionCard() {
                   <div className="p-2.5 bg-[var(--sb-pill)] border border-[var(--sb-border)]/40 rounded-lg">
                     {col.icon}
                   </div>
-                  <h3 className="text-sm font-bold text-[var(--sb-ink)]">{col.title}</h3>
+                  <h3 className="text-sm font-bold text-[var(--sb-ink)]">
+                    {col.title}
+                  </h3>
                 </div>
 
                 <div className="mt-4 grid grid-cols-3 gap-2 border-t border-[var(--sb-border)]/40 dark:border-white/5 pt-4">
                   <div>
-                    <span className="text-[10px] text-[var(--sb-ink-dim)] font-mono block">Papers</span>
-                    <span className="text-xs font-bold text-[var(--sb-ink)]">{col.papersCount}</span>
+                    <span className="text-[10px] text-[var(--sb-ink-dim)] font-mono block">
+                      Papers
+                    </span>
+                    <span className="text-xs font-bold text-[var(--sb-ink)]">
+                      {col.papersCount}
+                    </span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-[var(--sb-ink-dim)] font-mono block">Data</span>
-                    <span className="text-xs font-bold text-[var(--sb-ink)]">{col.datasetsCount}</span>
+                    <span className="text-[10px] text-[var(--sb-ink-dim)] font-mono block">
+                      Data
+                    </span>
+                    <span className="text-xs font-bold text-[var(--sb-ink)]">
+                      {col.datasetsCount}
+                    </span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-[var(--sb-ink-dim)] font-mono block">Active</span>
-                    <span className="text-xs font-bold text-[var(--sb-ink)]">{col.activeWorkspaces}</span>
+                    <span className="text-[10px] text-[var(--sb-ink-dim)] font-mono block">
+                      Active
+                    </span>
+                    <span className="text-xs font-bold text-[var(--sb-ink)]">
+                      {col.activeWorkspaces}
+                    </span>
                   </div>
                 </div>
               </GlassCard>

@@ -1,11 +1,27 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { 
-  ChevronRight, Play, BookOpen, Clock, Star, ArrowLeft, CheckCircle2, Circle, Bookmark,
-  X, Sparkles, FileText
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  ArrowLeft,
+  Bookmark,
+  BookOpen,
+  CheckCircle2,
+  ChevronRight,
+  Circle,
+  Clock,
+  FileText,
+  Play,
+  Sparkles,
+  Star,
+  X,
 } from "lucide-react";
-import { useCourse, useEnrollInCourse, useToggleLessonCompletion, useBookmarks, useToggleLessonBookmark } from "#/hooks/use-courses";
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import {
+  useBookmarks,
+  useCourse,
+  useEnrollInCourse,
+  useToggleLessonBookmark,
+  useToggleLessonCompletion,
+} from "#/hooks/use-courses";
 
 interface CourseArticle {
   id: string;
@@ -26,7 +42,8 @@ const initialCourseArticlesDb: Record<string, CourseArticle[]> = {
       id: "amortized-analysis",
       moduleId: "arrays-strings",
       title: "Amortized Cost Analysis in Dynamic Vectors",
-      description: "Understand the mathematical proof of amortized O(1) performance during capacity expansion in dynamic arrays like vector or ArrayList.",
+      description:
+        "Understand the mathematical proof of amortized O(1) performance during capacity expansion in dynamic arrays like vector or ArrayList.",
       readTime: "8 min read",
       publishedAt: "June 20, 2026",
       author: "Shivansh Kumar",
@@ -51,13 +68,14 @@ For N elements, the number of copies is:
 
 Total cost for N insertions = N (insertions) + N - 1 (copies) ≈ 2N.
 Amortized cost per insertion = 2N / N = O(1) constant time!
-`
+`,
     },
     {
       id: "hash-collision-strategies",
       moduleId: "arrays-strings",
       title: "Advanced Collision Resolution in Hash Tables",
-      description: "Inspect linear probing, quadratic probing, and robin hood hashing. Analyze memory caches and cache-line lookups.",
+      description:
+        "Inspect linear probing, quadratic probing, and robin hood hashing. Analyze memory caches and cache-line lookups.",
       readTime: "11 min read",
       publishedAt: "June 12, 2026",
       author: "Shivansh Kumar",
@@ -73,15 +91,16 @@ Every bucket contains a linked list of entries. Easy to implement, but poor CPU 
 Store all entries directly in the table array.
 - **Linear Probing**: If bucket is occupied, check the next bucket sequentially. Excellent CPU cache locality, but suffers from primary clustering.
 - **Robin Hood Hashing**: A variation of linear probing where rich keys (keys close to their home bucket) yield their spot to poor keys (keys far from home). Reduces variance in probe lengths.
-`
-    }
+`,
+    },
   ],
   "system-design": [
     {
       id: "distributed-caching-scalability",
       moduleId: "caching-layer",
       title: "Distributed Caching: Consistent Hashing Ring & Eviction Policies",
-      description: "How to scale your distributed caching clusters using consistent hashing rings. Mitigate cache stampedes and hotspotting.",
+      description:
+        "How to scale your distributed caching clusters using consistent hashing rings. Mitigate cache stampedes and hotspotting.",
       readTime: "14 min read",
       publishedAt: "June 18, 2026",
       author: "Shivansh Kumar",
@@ -97,9 +116,9 @@ In a standard modulo caching cluster (\`hash(key) % N\`), adding or removing a n
 
 ### Preventing Hotspots with Virtual Nodes
 If servers are not evenly distributed, some carry double the load. Consistent hashing mitigates this by mapping multiple virtual nodes per physical server to achieve uniform load distributions.
-`
-    }
-  ]
+`,
+    },
+  ],
 };
 
 const defaultArticles: CourseArticle[] = [
@@ -107,7 +126,8 @@ const defaultArticles: CourseArticle[] = [
     id: "v8-compiler-optimizations",
     moduleId: "general",
     title: "V8 Compiler Optimization Loops",
-    description: "Deep dive into JIT compilation, inlining, and inline cache mechanisms in Javascript runtimes.",
+    description:
+      "Deep dive into JIT compilation, inlining, and inline cache mechanisms in Javascript runtimes.",
     readTime: "9 min read",
     publishedAt: "June 08, 2026",
     author: "Shivansh Kumar",
@@ -118,8 +138,8 @@ Google's V8 JIT compiler optimizes code dynamically. When code is identified as 
 
 ### Inline Caching
 Inline caching remembers the shapes of objects passed to a function. If the shape doesn't change, V8 skips the slow lookup of property locations in memory.
-`
-  }
+`,
+  },
 ];
 
 export const Route = createFileRoute("/_app/courses/$courseId/")({
@@ -135,7 +155,9 @@ function CourseDetailPage() {
   const toggleLessonBookmark = useToggleLessonBookmark();
   const navigate = useNavigate();
 
-  const [expandedModules, setExpandedModules] = useState<Record<string, boolean>>({
+  const [expandedModules, setExpandedModules] = useState<
+    Record<string, boolean>
+  >({
     "arrays-strings": true,
     "load-balancers": true,
     "react-fiber": true,
@@ -143,7 +165,9 @@ function CourseDetailPage() {
   });
 
   // Articles States
-  const [selectedArticle, setSelectedArticle] = useState<CourseArticle | null>(null);
+  const [selectedArticle, setSelectedArticle] = useState<CourseArticle | null>(
+    null,
+  );
   const [localArticles, setLocalArticles] = useState<CourseArticle[]>([]);
 
   // Load from local storage or initial DB
@@ -160,14 +184,23 @@ function CourseDetailPage() {
   }, [courseId]);
 
   if (isLoading) {
-    return <div className="mx-auto max-w-4xl p-12 text-center animate-pulse">Loading course details...</div>;
+    return (
+      <div className="mx-auto max-w-4xl p-12 text-center animate-pulse">
+        Loading course details...
+      </div>
+    );
   }
 
   if (error || !course) {
     return (
       <div className="mx-auto max-w-4xl p-12 text-center">
         <h2 className="text-xl font-bold text-red-500">Error loading course</h2>
-        <Link to="/courses" className="mt-4 inline-block text-xs font-bold underline">Back to Catalog</Link>
+        <Link
+          to="/courses"
+          className="mt-4 inline-block text-xs font-bold underline"
+        >
+          Back to Catalog
+        </Link>
       </div>
     );
   }
@@ -177,8 +210,12 @@ function CourseDetailPage() {
   };
 
   // Find first uncompleted lesson
-  const allLessons = course.modules.flatMap(m => m.lessons.map(l => ({ ...l, moduleId: m.id })));
-  const firstUncompleted = allLessons.find(l => !course.completedLessonIds.includes(l.id)) || allLessons[0];
+  const allLessons = course.modules.flatMap((m) =>
+    m.lessons.map((l) => ({ ...l, moduleId: m.id })),
+  );
+  const firstUncompleted =
+    allLessons.find((l) => !course.completedLessonIds.includes(l.id)) ||
+    allLessons[0];
 
   const handleStartResume = () => {
     if (!course.enrolled) {
@@ -189,7 +226,7 @@ function CourseDetailPage() {
               to: `/courses/${course.id}/modules/${firstUncompleted.moduleId}/lessons/${firstUncompleted.id}`,
             });
           }
-        }
+        },
       });
     } else if (firstUncompleted) {
       navigate({
@@ -212,9 +249,11 @@ function CourseDetailPage() {
       <div
         className="stagger-item rounded-2xl p-6 md:p-8 border relative overflow-hidden"
         style={{
-          background: "linear-gradient(135deg, var(--surface-strong), var(--surface))",
+          background:
+            "linear-gradient(135deg, var(--surface-strong), var(--surface))",
           borderColor: "var(--line)",
-          boxShadow: "0 1px 0 var(--inset-glint) inset, 0 10px 30px rgba(0,0,0,0.02)"
+          boxShadow:
+            "0 1px 0 var(--inset-glint) inset, 0 10px 30px rgba(0,0,0,0.02)",
         }}
       >
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -228,11 +267,17 @@ function CourseDetailPage() {
             >
               {course.title}
             </h1>
-            <p className="text-sm max-w-xl leading-relaxed" style={{ color: "var(--sb-ink-muted)" }}>
+            <p
+              className="text-sm max-w-xl leading-relaxed"
+              style={{ color: "var(--sb-ink-muted)" }}
+            >
               {course.description}
             </p>
 
-            <div className="flex flex-wrap items-center gap-4 text-xs pt-2" style={{ color: "var(--sb-ink-dim)" }}>
+            <div
+              className="flex flex-wrap items-center gap-4 text-xs pt-2"
+              style={{ color: "var(--sb-ink-dim)" }}
+            >
               <span className="flex items-center gap-1">
                 <Clock size={14} />
                 {course.totalHours}
@@ -246,7 +291,12 @@ function CourseDetailPage() {
                 {course.rating} Rating
               </span>
               <span className="flex items-center gap-2">
-                <span>Instructed by <strong className="text-[var(--sb-ink)]">{course.author}</strong></span>
+                <span>
+                  Instructed by{" "}
+                  <strong className="text-[var(--sb-ink)]">
+                    {course.author}
+                  </strong>
+                </span>
               </span>
             </div>
           </div>
@@ -256,21 +306,27 @@ function CourseDetailPage() {
             {course.enrolled ? (
               <div className="space-y-2">
                 <div className="flex justify-between text-xs">
-                  <span className="font-semibold text-[var(--sb-ink-muted)]">Progress</span>
-                  <span className="font-bold text-[var(--sb-accent)]">{course.progress}%</span>
+                  <span className="font-semibold text-[var(--sb-ink-muted)]">
+                    Progress
+                  </span>
+                  <span className="font-bold text-[var(--sb-accent)]">
+                    {course.progress}%
+                  </span>
                 </div>
                 <div className="h-2 w-full bg-[var(--sb-bg)] rounded-full overflow-hidden border border-[var(--sb-border)]">
                   <div
                     className="h-full rounded-full"
                     style={{
                       width: `${course.progress}%`,
-                      background: "var(--sb-accent)"
+                      background: "var(--sb-accent)",
                     }}
                   />
                 </div>
               </div>
             ) : (
-              <p className="text-xs text-[var(--sb-ink-muted)]">Get full lifetime access to curriculum resources and lessons.</p>
+              <p className="text-xs text-[var(--sb-ink-muted)]">
+                Get full lifetime access to curriculum resources and lessons.
+              </p>
             )}
 
             <button
@@ -278,13 +334,17 @@ function CourseDetailPage() {
               className="w-full py-2.5 text-xs font-bold rounded-lg cursor-pointer transition-opacity flex items-center justify-center gap-2 text-white"
               style={{
                 background: "var(--sb-accent)",
-                color: "var(--sb-accent-foreground)"
+                color: "var(--sb-accent-foreground)",
               }}
             >
               <Play size={14} className="fill-current" />
-              {course.enrolled 
-                ? (course.progress === 0 ? "Start Learning" : "Resume Learning") 
-                : (enrollMutation.isPending ? "Enrolling..." : "Enroll & Start")}
+              {course.enrolled
+                ? course.progress === 0
+                  ? "Start Learning"
+                  : "Resume Learning"
+                : enrollMutation.isPending
+                  ? "Enrolling..."
+                  : "Enroll & Start"}
             </button>
           </div>
         </div>
@@ -292,7 +352,10 @@ function CourseDetailPage() {
 
       {/* Curriculum Syllabus Section */}
       <div className="space-y-4">
-        <h2 className="text-xl font-bold display-title" style={{ color: "var(--sb-ink)" }}>
+        <h2
+          className="text-xl font-bold display-title"
+          style={{ color: "var(--sb-ink)" }}
+        >
           Course Syllabus
         </h2>
 
@@ -310,9 +373,7 @@ function CourseDetailPage() {
                 }}
               >
                 {/* Module Header */}
-                <div
-                  className="w-full flex items-center justify-between p-4 bg-[var(--sb-pill)] text-left border-b border-[var(--sb-border)]/40"
-                >
+                <div className="w-full flex items-center justify-between p-4 bg-[var(--sb-pill)] text-left border-b border-[var(--sb-border)]/40">
                   <div
                     onClick={() => toggleModule(module.id)}
                     className="flex items-center gap-3 cursor-pointer flex-1"
@@ -322,7 +383,7 @@ function CourseDetailPage() {
                       style={{
                         background: "var(--sb-bg)",
                         color: "var(--sb-accent)",
-                        border: "1px solid var(--sb-border)"
+                        border: "1px solid var(--sb-border)",
                       }}
                     >
                       {i + 1}
@@ -350,12 +411,17 @@ function CourseDetailPage() {
                 {isExpanded && (
                   <div className="divide-y divide-[var(--sb-border)]">
                     {module.lessons.map((lesson) => {
-                      const isCompleted = course.completedLessonIds.includes(lesson.id);
+                      const isCompleted = course.completedLessonIds.includes(
+                        lesson.id,
+                      );
 
                       const handleCheckboxClick = (e: React.MouseEvent) => {
                         e.stopPropagation();
                         if (!course.enrolled) return;
-                        toggleLessonMutation.mutate({ courseId: course.id, lessonId: lesson.id });
+                        toggleLessonMutation.mutate({
+                          courseId: course.id,
+                          lessonId: lesson.id,
+                        });
                       };
 
                       return (
@@ -368,7 +434,9 @@ function CourseDetailPage() {
                             });
                           }}
                           className={`flex items-center justify-between p-4 text-xs transition-colors ${
-                            course.enrolled ? "hover:bg-[var(--sb-bg-hover)] cursor-pointer" : "opacity-60 cursor-not-allowed"
+                            course.enrolled
+                              ? "hover:bg-[var(--sb-bg-hover)] cursor-pointer"
+                              : "opacity-60 cursor-not-allowed"
                           }`}
                         >
                           <div className="flex items-center gap-3">
@@ -378,12 +446,21 @@ function CourseDetailPage() {
                               disabled={!course.enrolled}
                             >
                               {isCompleted ? (
-                                <CheckCircle2 size={16} className="fill-[var(--sb-accent)] text-[var(--sb-bg)]" />
+                                <CheckCircle2
+                                  size={16}
+                                  className="fill-[var(--sb-accent)] text-[var(--sb-bg)]"
+                                />
                               ) : (
-                                <Circle size={16} className="text-[var(--sb-ink-dim)]" />
+                                <Circle
+                                  size={16}
+                                  className="text-[var(--sb-ink-dim)]"
+                                />
                               )}
                             </button>
-                            <span className="font-medium" style={{ color: "var(--sb-ink)" }}>
+                            <span
+                              className="font-medium"
+                              style={{ color: "var(--sb-ink)" }}
+                            >
                               {lesson.title}
                             </span>
                           </div>
@@ -403,7 +480,16 @@ function CourseDetailPage() {
                                 }}
                                 className="p-1 rounded hover:bg-[var(--sb-bg-active)] hover:text-[var(--sb-accent)] transition-colors cursor-pointer text-[var(--sb-ink-dim)]"
                               >
-                                <Bookmark size={13} className={bookmarks?.lessons.some(l => l.lessonId === lesson.id) ? "fill-[var(--sb-accent)] text-[var(--sb-accent)]" : ""} />
+                                <Bookmark
+                                  size={13}
+                                  className={
+                                    bookmarks?.lessons.some(
+                                      (l) => l.lessonId === lesson.id,
+                                    )
+                                      ? "fill-[var(--sb-accent)] text-[var(--sb-accent)]"
+                                      : ""
+                                  }
+                                />
                               </button>
                             )}
                             <div className="flex items-center gap-1">
@@ -417,7 +503,11 @@ function CourseDetailPage() {
 
                     {/* Render articles under this module */}
                     {localArticles
-                      .filter((art) => art.moduleId === module.id || (i === 0 && art.moduleId === "general"))
+                      .filter(
+                        (art) =>
+                          art.moduleId === module.id ||
+                          (i === 0 && art.moduleId === "general"),
+                      )
                       .map((article) => {
                         return (
                           <div
@@ -426,7 +516,10 @@ function CourseDetailPage() {
                             className="flex items-center justify-between p-4 text-xs hover:bg-[var(--sb-bg-hover)] cursor-pointer transition-colors border-l-2 border-indigo-500/80 bg-indigo-500/5"
                           >
                             <div className="flex items-center gap-3">
-                              <FileText size={16} className="text-indigo-500 shrink-0" />
+                              <FileText
+                                size={16}
+                                className="text-indigo-500 shrink-0"
+                              />
                               <div>
                                 <span className="font-semibold text-[var(--sb-ink)]">
                                   {article.title}
@@ -438,7 +531,9 @@ function CourseDetailPage() {
                             </div>
 
                             <div className="flex items-center gap-4 text-[var(--sb-ink-dim)]">
-                              <span className="text-[10px]">By {article.author}</span>
+                              <span className="text-[10px]">
+                                By {article.author}
+                              </span>
                               <div className="flex items-center gap-1">
                                 <Clock size={12} />
                                 <span>{article.readTime}</span>
@@ -459,7 +554,7 @@ function CourseDetailPage() {
       <AnimatePresence>
         {selectedArticle && (
           <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
@@ -485,11 +580,18 @@ function CourseDetailPage() {
                     {selectedArticle.title}
                   </h2>
                   <div className="flex items-center gap-4 text-[10px] text-[var(--sb-ink-dim)]">
-                    <span>Written by <strong className="text-[var(--sb-ink)]">{selectedArticle.author}</strong></span>
+                    <span>
+                      Written by{" "}
+                      <strong className="text-[var(--sb-ink)]">
+                        {selectedArticle.author}
+                      </strong>
+                    </span>
                     <span>·</span>
                     <span>{selectedArticle.publishedAt}</span>
                     <span>·</span>
-                    <span className="flex items-center gap-1"><Clock size={11} /> {selectedArticle.readTime}</span>
+                    <span className="flex items-center gap-1">
+                      <Clock size={11} /> {selectedArticle.readTime}
+                    </span>
                   </div>
                 </div>
 
@@ -497,14 +599,31 @@ function CourseDetailPage() {
                   <div className="whitespace-pre-wrap font-sans space-y-4">
                     {selectedArticle.content.split("\n\n").map((para, k) => {
                       if (para.startsWith("## ")) {
-                        return <h3 key={k} className="text-base font-bold display-title mt-4 border-b border-[var(--sb-border)] pb-1">{para.replace("## ", "")}</h3>;
+                        return (
+                          <h3
+                            key={k}
+                            className="text-base font-bold display-title mt-4 border-b border-[var(--sb-border)] pb-1"
+                          >
+                            {para.replace("## ", "")}
+                          </h3>
+                        );
                       }
                       if (para.startsWith("### ")) {
-                        return <h4 key={k} className="text-sm font-bold display-title mt-3">{para.replace("### ", "")}</h4>;
+                        return (
+                          <h4
+                            key={k}
+                            className="text-sm font-bold display-title mt-3"
+                          >
+                            {para.replace("### ", "")}
+                          </h4>
+                        );
                       }
                       if (para.startsWith("1. ")) {
                         return (
-                          <ol key={k} className="list-decimal pl-5 space-y-1 my-2">
+                          <ol
+                            key={k}
+                            className="list-decimal pl-5 space-y-1 my-2"
+                          >
                             {para.split("\n").map((li, idx) => (
                               <li key={idx}>{li.replace(/^\d+\.\s+/, "")}</li>
                             ))}
@@ -517,8 +636,13 @@ function CourseDetailPage() {
                 </div>
               </div>
 
-              <div className="p-4 border-t border-[var(--sb-border)] flex items-center justify-between text-[10px]" style={{ color: "var(--sb-ink-dim)" }}>
-                <span className="flex items-center gap-1 font-semibold">❤️ {selectedArticle.likes} Likes</span>
+              <div
+                className="p-4 border-t border-[var(--sb-border)] flex items-center justify-between text-[10px]"
+                style={{ color: "var(--sb-ink-dim)" }}
+              >
+                <span className="flex items-center gap-1 font-semibold">
+                  ❤️ {selectedArticle.likes} Likes
+                </span>
                 <span>Click close or press ESC to exit</span>
               </div>
             </motion.div>

@@ -1,19 +1,40 @@
 import { motion } from "framer-motion";
 import {
-  Users,
-  MessageSquare,
-  Send,
-  MousePointer2,
   FileEdit,
+  MessageSquare,
+  MousePointer2,
+  Send,
+  Users,
 } from "lucide-react";
-import { SpotlightEffect, GlassCard } from "./spotlight";
+import { GlassCard, SpotlightEffect } from "./spotlight";
 
 export function CollaborationPreview() {
   // Members list
   const activeMembers = [
-    { name: "Elena Chen", color: "bg-indigo-500", border: "border-indigo-400", x: "12%", y: "24%", text: "Elena is formatting abstract" },
-    { name: "Marcus Thorne", color: "bg-pink-500", border: "border-pink-400", x: "65%", y: "42%", text: "Marcus is reviewing citations" },
-    { name: "Siddharth Sen", color: "bg-cyan-500", border: "border-cyan-400", x: "42%", y: "82%", text: "Siddharth is updating math formulas" },
+    {
+      name: "Elena Chen",
+      color: "bg-indigo-500",
+      border: "border-indigo-400",
+      x: "12%",
+      y: "24%",
+      text: "Elena is formatting abstract",
+    },
+    {
+      name: "Marcus Thorne",
+      color: "bg-pink-500",
+      border: "border-pink-400",
+      x: "65%",
+      y: "42%",
+      text: "Marcus is reviewing citations",
+    },
+    {
+      name: "Siddharth Sen",
+      color: "bg-cyan-500",
+      border: "border-cyan-400",
+      x: "42%",
+      y: "82%",
+      text: "Siddharth is updating math formulas",
+    },
   ];
 
   const comments = [
@@ -42,15 +63,14 @@ export function CollaborationPreview() {
           Real-time Collaboration
         </h2>
         <p className="text-[var(--sb-ink-muted)] text-sm md:text-base">
-          Accelerate discoveries in shared workspaces with real-time editing, context pooling, and automated citations.
+          Accelerate discoveries in shared workspaces with real-time editing,
+          context pooling, and automated citations.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-        
         {/* Left/Center: multiplayer document editor */}
         <div className="lg:col-span-2 relative bg-[color-mix(in_oklab,var(--card-bg)_65%,transparent)] rounded-xl border border-[var(--sb-border)]/40 dark:border-white/[0.08] p-6 h-[480px] flex flex-col justify-between overflow-hidden">
-          
           {/* Editor Header */}
           <div className="flex justify-between items-center border-b border-[var(--sb-border)]/40 dark:border-white/5 pb-4 mb-4 select-none">
             <div className="flex items-center gap-2">
@@ -59,7 +79,7 @@ export function CollaborationPreview() {
                 Draft: Quantum-ML-Convergence.md
               </span>
             </div>
-            
+
             {/* Active User Avatars */}
             <div className="flex items-center -space-x-2">
               {activeMembers.map((m, idx) => (
@@ -68,7 +88,10 @@ export function CollaborationPreview() {
                   className={`w-6 h-6 rounded-full ${m.color} text-zinc-950 font-bold border border-zinc-950 flex items-center justify-center text-[10px] select-none cursor-help`}
                   title={m.name}
                 >
-                  {m.name.split(" ").map((n) => n[0]).join("")}
+                  {m.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")}
                 </div>
               ))}
               <div className="w-6 h-6 rounded-full bg-[var(--sb-pill)] border border-[var(--sb-border)]/40 text-[var(--sb-ink-muted)] text-[10px] flex items-center justify-center font-mono font-bold">
@@ -80,13 +103,20 @@ export function CollaborationPreview() {
           {/* Document Content Workspace with mock cursors */}
           <div className="flex-1 relative font-sans text-[var(--sb-ink-muted)] text-xs sm:text-sm leading-relaxed overflow-y-auto space-y-4 pr-2">
             <p>
-              We formulate a hybrid model blending superconducting tensor logic with classical feed-forward circuits. By partitioning local quantum arrays into modular attention channels, we eliminate gate delay ceilings.
+              We formulate a hybrid model blending superconducting tensor logic
+              with classical feed-forward circuits. By partitioning local
+              quantum arrays into modular attention channels, we eliminate gate
+              delay ceilings.
             </p>
             <p className="border-l-2 border-[var(--sb-border)] pl-3 italic text-[var(--sb-ink-dim)] bg-[var(--sb-pill)]/50 py-1.5 rounded-r">
-              "Convergence benchmarks demonstrate that the quantum attention model scales linearly with qubit configurations, resolving cross-entropy bounds in under 4 minutes."
+              "Convergence benchmarks demonstrate that the quantum attention
+              model scales linearly with qubit configurations, resolving
+              cross-entropy bounds in under 4 minutes."
             </p>
             <p>
-              Further structural adjustments seek to map sparse embeddings over localized grids, allowing parallel compilation passes directly on the device registers.
+              Further structural adjustments seek to map sparse embeddings over
+              localized grids, allowing parallel compilation passes directly on
+              the device registers.
             </p>
 
             {/* Mock Floating multiplayer Cursors */}
@@ -105,8 +135,13 @@ export function CollaborationPreview() {
                   ease: "easeInOut",
                 }}
               >
-                <MousePointer2 className="w-4 h-4 text-white fill-current shrink-0 transform -rotate-90 drop-shadow-md" style={{ color: m.color.replace("bg-", "") }} />
-                <span className={`px-2 py-0.5 text-[9px] font-semibold rounded text-zinc-950 shadow-lg ${m.color}`}>
+                <MousePointer2
+                  className="w-4 h-4 text-white fill-current shrink-0 transform -rotate-90 drop-shadow-md"
+                  style={{ color: m.color.replace("bg-", "") }}
+                />
+                <span
+                  className={`px-2 py-0.5 text-[9px] font-semibold rounded text-zinc-950 shadow-lg ${m.color}`}
+                >
                   {m.name.split(" ")[0]}
                 </span>
               </motion.div>
@@ -121,7 +156,6 @@ export function CollaborationPreview() {
               Elena, Marcus, and 5 others active
             </span>
           </div>
-
         </div>
 
         {/* Right Sidebar: Active Discussion / Review Threads */}
@@ -133,18 +167,29 @@ export function CollaborationPreview() {
                 <div className="flex items-center gap-2 border-b border-[var(--sb-border)]/40 dark:border-white/5 pb-4">
                   <MessageSquare className="w-5 h-5 text-indigo-500 dark:text-indigo-400" />
                   <div>
-                    <h3 className="text-sm font-bold text-[var(--sb-ink)]">Discussions</h3>
-                    <p className="text-[10px] text-[var(--sb-ink-dim)] font-mono">Linked to Section 3: Empirical Formulas</p>
+                    <h3 className="text-sm font-bold text-[var(--sb-ink)]">
+                      Discussions
+                    </h3>
+                    <p className="text-[10px] text-[var(--sb-ink-dim)] font-mono">
+                      Linked to Section 3: Empirical Formulas
+                    </p>
                   </div>
                 </div>
 
                 {/* Comment thread */}
                 <div className="space-y-4">
                   {comments.map((c, idx) => (
-                    <div key={idx} className="p-3 bg-[var(--sb-pill)]/50 rounded-lg border border-[var(--sb-border)]/40 space-y-2">
+                    <div
+                      key={idx}
+                      className="p-3 bg-[var(--sb-pill)]/50 rounded-lg border border-[var(--sb-border)]/40 space-y-2"
+                    >
                       <div className="flex justify-between items-center text-[10px]">
-                        <span className="font-bold text-[var(--sb-ink)]">{c.author}</span>
-                        <span className="text-[var(--sb-ink-dim)]">{c.time}</span>
+                        <span className="font-bold text-[var(--sb-ink)]">
+                          {c.author}
+                        </span>
+                        <span className="text-[var(--sb-ink-dim)]">
+                          {c.time}
+                        </span>
                       </div>
                       <p className="text-[11px] text-[var(--sb-ink-muted)] leading-relaxed">
                         {c.text}
@@ -169,7 +214,6 @@ export function CollaborationPreview() {
             </GlassCard>
           </SpotlightEffect>
         </div>
-
       </div>
     </section>
   );

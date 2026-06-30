@@ -11,7 +11,12 @@ export interface TestRunCaseResult {
 }
 
 export interface ExecutionResult {
-  status: "success" | "compile_error" | "runtime_error" | "accepted" | "wrong_answer";
+  status:
+    | "success"
+    | "compile_error"
+    | "runtime_error"
+    | "accepted"
+    | "wrong_answer";
   output: string;
   console: string;
   testCases: TestRunCaseResult[];
@@ -57,7 +62,10 @@ interface WorkspaceState {
 
   // Custom Test Cases
   customTestCases: Record<string, { input: string; expected: string }[]>;
-  setCustomTestCases: (problemId: string, cases: { input: string; expected: string }[]) => void;
+  setCustomTestCases: (
+    problemId: string,
+    cases: { input: string; expected: string }[],
+  ) => void;
 }
 
 export const useWorkspaceStore = create<WorkspaceState>()(

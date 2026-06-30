@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
 import type { HTMLMotionProps } from "framer-motion";
+import { motion } from "framer-motion";
 import { cn } from "#/lib/utils";
 
 interface GlowButtonProps extends Omit<HTMLMotionProps<"button">, "children"> {
@@ -34,7 +34,7 @@ export function GlowButton({
       className={cn(
         "relative inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-purple-500/50 cursor-pointer overflow-hidden group",
         getVariantStyles(),
-        className
+        className,
       )}
       {...props}
     >

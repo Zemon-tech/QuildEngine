@@ -1,5 +1,11 @@
+import {
+  AlertCircle,
+  CheckCircle2,
+  FileCode,
+  PlaySquare,
+  Terminal,
+} from "lucide-react";
 import { useState } from "react";
-import { Terminal, PlaySquare, FileCode, CheckCircle2, AlertCircle } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#/components/ui/tabs";
 
 export function OutputPanel() {
@@ -36,7 +42,10 @@ export function OutputPanel() {
       {/* Tab Contents */}
       <div className="flex-1 overflow-y-auto p-5 bg-[#0A0A0A]">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
-          <TabsContent value="testcases" className="m-0 h-full space-y-4 outline-none">
+          <TabsContent
+            value="testcases"
+            className="m-0 h-full space-y-4 outline-none"
+          >
             <div className="flex space-x-2">
               <button className="px-3 py-1 text-xs font-semibold rounded-md bg-[#171717] text-[#FAFAFA] border border-[#262626] active:scale-[0.95] transition-all">
                 Case 1
@@ -51,17 +60,19 @@ export function OutputPanel() {
 
             <div className="space-y-4">
               <div>
-                <div className="text-[10px] uppercase tracking-wider text-[#A3A3A3] font-bold mb-1.5">Input:</div>
+                <div className="text-[10px] uppercase tracking-wider text-[#A3A3A3] font-bold mb-1.5">
+                  Input:
+                </div>
                 <div className="bg-[#111111] px-4 py-3 rounded-lg font-mono text-xs border border-[#262626] text-[#FAFAFA] leading-relaxed">
                   arr = [1,2,3,4,5]
-                  <br />
-                  k = 4
-                  <br />
-                  x = 3
+                  <br />k = 4
+                  <br />x = 3
                 </div>
               </div>
               <div>
-                <div className="text-[10px] uppercase tracking-wider text-[#A3A3A3] font-bold mb-1.5">Expected:</div>
+                <div className="text-[10px] uppercase tracking-wider text-[#A3A3A3] font-bold mb-1.5">
+                  Expected:
+                </div>
                 <div className="bg-[#111111] px-4 py-3 rounded-lg font-mono text-xs border border-[#262626] text-[#FAFAFA] leading-relaxed">
                   [1,2,3,4]
                 </div>
@@ -69,10 +80,18 @@ export function OutputPanel() {
             </div>
           </TabsContent>
 
-          <TabsContent value="output" className="m-0 h-full outline-none flex flex-col justify-center items-center text-center py-10 space-y-3">
+          <TabsContent
+            value="output"
+            className="m-0 h-full outline-none flex flex-col justify-center items-center text-center py-10 space-y-3"
+          >
             <PlaySquare className="h-8 w-8 text-[#262626]" />
-            <h4 className="text-xs font-semibold text-[#FAFAFA]">No compilation output</h4>
-            <p className="text-[11px] text-[#A3A3A3] max-w-xs">Run your solution to generate compiler execution results and debugging logs.</p>
+            <h4 className="text-xs font-semibold text-[#FAFAFA]">
+              No compilation output
+            </h4>
+            <p className="text-[11px] text-[#A3A3A3] max-w-xs">
+              Run your solution to generate compiler execution results and
+              debugging logs.
+            </p>
           </TabsContent>
 
           <TabsContent value="console" className="m-0 h-full outline-none">
@@ -81,10 +100,18 @@ export function OutputPanel() {
             </div>
           </TabsContent>
 
-          <TabsContent value="results" className="m-0 h-full outline-none flex flex-col justify-center items-center text-center py-10 space-y-3">
+          <TabsContent
+            value="results"
+            className="m-0 h-full outline-none flex flex-col justify-center items-center text-center py-10 space-y-3"
+          >
             <AlertCircle className="h-8 w-8 text-[#262626]" />
-            <h4 className="text-xs font-semibold text-[#FAFAFA]">No Results Yet</h4>
-            <p className="text-[11px] text-[#A3A3A3] max-w-xs">Submit your solution to run against all automated test suites and check performance metrics.</p>
+            <h4 className="text-xs font-semibold text-[#FAFAFA]">
+              No Results Yet
+            </h4>
+            <p className="text-[11px] text-[#A3A3A3] max-w-xs">
+              Submit your solution to run against all automated test suites and
+              check performance metrics.
+            </p>
           </TabsContent>
         </Tabs>
       </div>

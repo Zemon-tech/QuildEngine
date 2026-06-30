@@ -1,15 +1,15 @@
 import { motion } from "framer-motion";
 import {
-  FileSearch,
   BookOpen,
   Cpu,
-  Layers,
-  GitCompare,
-  TrendingUp,
+  FileSearch,
   Fingerprint,
+  GitCompare,
+  Layers,
   Search,
+  TrendingUp,
 } from "lucide-react";
-import { SpotlightEffect, GlassCard } from "./spotlight";
+import { GlassCard, SpotlightEffect } from "./spotlight";
 
 interface FeatureItem {
   title: string;
@@ -22,49 +22,65 @@ export function FeatureCard() {
   const features: FeatureItem[] = [
     {
       title: "Source Analysis",
-      description: "Extract semantics, core claims, and methodologies from PDFs, articles, and documentation feeds.",
-      icon: <FileSearch className="w-8 h-8 text-indigo-500 dark:text-indigo-400" />,
+      description:
+        "Extract semantics, core claims, and methodologies from PDFs, articles, and documentation feeds.",
+      icon: (
+        <FileSearch className="w-8 h-8 text-indigo-500 dark:text-indigo-400" />
+      ),
       glowColor: "rgba(99,102,241,0.1)",
     },
     {
       title: "Smart Citations",
-      description: "Generate instant, verified context-linked citations across thousands of documents simultaneously.",
+      description:
+        "Generate instant, verified context-linked citations across thousands of documents simultaneously.",
       icon: <BookOpen className="w-8 h-8 text-cyan-500 dark:text-cyan-400" />,
       glowColor: "rgba(6,182,212,0.1)",
     },
     {
       title: "AI Summaries",
-      description: "Review synthesis sheets detailing study gaps, contradictions, and primary findings within seconds.",
+      description:
+        "Review synthesis sheets detailing study gaps, contradictions, and primary findings within seconds.",
       icon: <Cpu className="w-8 h-8 text-purple-500 dark:text-purple-400" />,
       glowColor: "rgba(168,85,247,0.1)",
     },
     {
       title: "Knowledge Extraction",
-      description: "Convert dense charts, raw spreadsheets, and nested JSON schemas into structured human-readable nodes.",
+      description:
+        "Convert dense charts, raw spreadsheets, and nested JSON schemas into structured human-readable nodes.",
       icon: <Layers className="w-8 h-8 text-pink-500 dark:text-pink-400" />,
       glowColor: "rgba(236,72,153,0.1)",
     },
     {
       title: "Document Comparison",
-      description: "Align multiple clinical trials or engineering papers to automatically point out contradicting data.",
-      icon: <GitCompare className="w-8 h-8 text-emerald-500 dark:text-emerald-400" />,
+      description:
+        "Align multiple clinical trials or engineering papers to automatically point out contradicting data.",
+      icon: (
+        <GitCompare className="w-8 h-8 text-emerald-500 dark:text-emerald-400" />
+      ),
       glowColor: "rgba(16,185,129,0.1)",
     },
     {
       title: "Research Automation",
-      description: "Deploy autonomous bots to monitor arXiv repositories and aggregate new findings into your workspace.",
-      icon: <TrendingUp className="w-8 h-8 text-amber-500 dark:text-amber-400" />,
+      description:
+        "Deploy autonomous bots to monitor arXiv repositories and aggregate new findings into your workspace.",
+      icon: (
+        <TrendingUp className="w-8 h-8 text-amber-500 dark:text-amber-400" />
+      ),
       glowColor: "rgba(245,158,11,0.1)",
     },
     {
       title: "Context Discovery",
-      description: "Unveil non-obvious correlations between unrelated papers based on matching mathematical models.",
-      icon: <Fingerprint className="w-8 h-8 text-rose-500 dark:text-rose-400" />,
+      description:
+        "Unveil non-obvious correlations between unrelated papers based on matching mathematical models.",
+      icon: (
+        <Fingerprint className="w-8 h-8 text-rose-500 dark:text-rose-400" />
+      ),
       glowColor: "rgba(244,63,94,0.1)",
     },
     {
       title: "Semantic Search",
-      description: "Query your library with conversational queries rather than rigid keyword configurations.",
+      description:
+        "Query your library with conversational queries rather than rigid keyword configurations.",
       icon: <Search className="w-8 h-8 text-sky-500 dark:text-sky-400" />,
       glowColor: "rgba(14,165,233,0.1)",
     },
@@ -82,7 +98,11 @@ export function FeatureCard() {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 15 },
-    show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 300, damping: 20 } },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring" as const, stiffness: 300, damping: 20 },
+    },
   };
 
   return (
@@ -93,7 +113,8 @@ export function FeatureCard() {
           Built For Advanced AI Discovery
         </h2>
         <p className="text-[var(--sb-ink-muted)] text-sm md:text-base">
-          Powering research workflows with tools engineered for cognitive enhancement and knowledge connectivity.
+          Powering research workflows with tools engineered for cognitive
+          enhancement and knowledge connectivity.
         </p>
       </div>
 

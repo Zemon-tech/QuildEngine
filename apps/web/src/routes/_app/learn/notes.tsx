@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
-import { StickyNote, Plus, Trash2 } from "lucide-react";
+import { Plus, StickyNote, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
 
 // Guard imports for server-side rendering (SSR)
 let useCreateBlockNote: any = null;
@@ -12,7 +12,7 @@ if (typeof window !== "undefined") {
   const blocknoteMantine = await import("@blocknote/mantine");
   await import("@blocknote/core/fonts/inter.css");
   await import("@blocknote/mantine/style.css");
-  
+
   useCreateBlockNote = blocknoteReact.useCreateBlockNote;
   BlockNoteView = blocknoteMantine.BlockNoteView;
 }
@@ -37,20 +37,25 @@ function NotesPage() {
 
   useEffect(() => {
     setMounted(true);
-    
+
     // Detect theme mode
     if (typeof window !== "undefined") {
-      const isDark = document.documentElement.classList.contains("dark") || 
-                     document.documentElement.getAttribute("data-theme") === "dark";
+      const isDark =
+        document.documentElement.classList.contains("dark") ||
+        document.documentElement.getAttribute("data-theme") === "dark";
       setThemeMode(isDark ? "dark" : "light");
-      
+
       const observer = new MutationObserver(() => {
-        const dark = document.documentElement.classList.contains("dark") || 
-                     document.documentElement.getAttribute("data-theme") === "dark";
+        const dark =
+          document.documentElement.classList.contains("dark") ||
+          document.documentElement.getAttribute("data-theme") === "dark";
         setThemeMode(dark ? "dark" : "light");
       });
-      observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "data-theme"] });
-      
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["class", "data-theme"],
+      });
+
       // Load saved notes
       const saved = localStorage.getItem("quild_notes");
       if (saved) {
@@ -61,7 +66,10 @@ function NotesPage() {
             let content = note.content;
             let isJSON = false;
             try {
-              if (content && (content.startsWith("[") || content.startsWith("{"))) {
+              if (
+                content &&
+                (content.startsWith("[") || content.startsWith("{"))
+              ) {
                 JSON.parse(content);
                 isJSON = true;
               }
@@ -75,24 +83,36 @@ function NotesPage() {
                     blocks.push({
                       type: "heading",
                       props: { level: 1 },
-                      content: [{ type: "text", text: b.value || "", styles: {} }]
+                      content: [
+                        { type: "text", text: b.value || "", styles: {} },
+                      ],
                     });
                   } else if (b.type === "h2") {
                     blocks.push({
                       type: "heading",
                       props: { level: 2 },
-                      content: [{ type: "text", text: b.value || "", styles: {} }]
+                      content: [
+                        { type: "text", text: b.value || "", styles: {} },
+                      ],
                     });
                   } else if (b.type === "todo") {
                     blocks.push({
                       type: "checkListItem",
                       props: { checked: !!b.completed },
-                      content: [{ type: "text", text: b.value || "", styles: {} }]
+                      content: [
+                        { type: "text", text: b.value || "", styles: {} },
+                      ],
                     });
                   } else {
                     blocks.push({
                       type: "paragraph",
-                      content: [{ type: "text", text: b.value || b.content || "", styles: {} }]
+                      content: [
+                        {
+                          type: "text",
+                          text: b.value || b.content || "",
+                          styles: {},
+                        },
+                      ],
                     });
                   }
                 }
@@ -100,7 +120,9 @@ function NotesPage() {
                 const text = note.content.replace(/<[^>]*>/g, "");
                 blocks.push({
                   type: "paragraph",
-                  content: [{ type: "text", text: text || "Empty note...", styles: {} }]
+                  content: [
+                    { type: "text", text: text || "Empty note...", styles: {} },
+                  ],
                 });
               }
               content = JSON.stringify(blocks);
@@ -110,7 +132,7 @@ function NotesPage() {
               id: note.id || Math.random().toString(),
               title: note.title || "Untitled Note",
               content: content || "[]",
-              updatedAt: note.updatedAt || new Date().toLocaleDateString()
+              updatedAt: note.updatedAt || new Date().toLocaleDateString(),
             };
           });
 
@@ -139,26 +161,42 @@ function NotesPage() {
           {
             type: "heading",
             props: { level: 1 },
-            content: [{ type: "text", text: "Kernel Bootstrapping", styles: {} }]
+            content: [
+              { type: "text", text: "Kernel Bootstrapping", styles: {} },
+            ],
           },
           {
             type: "paragraph",
-            content: [{ type: "text", text: "During boot, the BIOS initializes the system hardware and hands over control to the GRUB bootloader.", styles: {} }]
+            content: [
+              {
+                type: "text",
+                text: "During boot, the BIOS initializes the system hardware and hands over control to the GRUB bootloader.",
+                styles: {},
+              },
+            ],
           },
           {
             type: "paragraph",
-            content: [{ type: "text", text: "cli  # Clear interrupts\nlgdt [gdt_descriptor] # Load Global Descriptor Table", styles: { code: true } }]
+            content: [
+              {
+                type: "text",
+                text: "cli  # Clear interrupts\nlgdt [gdt_descriptor] # Load Global Descriptor Table",
+                styles: { code: true },
+              },
+            ],
           },
           {
             type: "checkListItem",
             props: { checked: true },
-            content: [{ type: "text", text: "Implement GDT layout in C", styles: {} }]
+            content: [
+              { type: "text", text: "Implement GDT layout in C", styles: {} },
+            ],
           },
           {
             type: "checkListItem",
             props: { checked: false },
-            content: [{ type: "text", text: "Map memory pages", styles: {} }]
-          }
+            content: [{ type: "text", text: "Map memory pages", styles: {} }],
+          },
         ]),
         updatedAt: new Date().toLocaleDateString(),
       },
@@ -169,15 +207,27 @@ function NotesPage() {
           {
             type: "heading",
             props: { level: 2 },
-            content: [{ type: "text", text: "Concurrency Features in React Fiber", styles: {} }]
+            content: [
+              {
+                type: "text",
+                text: "Concurrency Features in React Fiber",
+                styles: {},
+              },
+            ],
           },
           {
             type: "paragraph",
-            content: [{ type: "text", text: "React Fiber splits rendering into render/reconciliation (which can be paused) and commit (which changes DOM, must be synchronous). useTransition helps keep the UI responsive by deprioritizing heavy computations.", styles: {} }]
-          }
+            content: [
+              {
+                type: "text",
+                text: "React Fiber splits rendering into render/reconciliation (which can be paused) and commit (which changes DOM, must be synchronous). useTransition helps keep the UI responsive by deprioritizing heavy computations.",
+                styles: {},
+              },
+            ],
+          },
         ]),
         updatedAt: new Date().toLocaleDateString(),
-      }
+      },
     ];
     setNotes(defaultNotes);
     if (typeof window !== "undefined") {
@@ -193,7 +243,7 @@ function NotesPage() {
     }
   };
 
-  const activeNote = notes.find(n => n.id === activeNoteId);
+  const activeNote = notes.find((n) => n.id === activeNoteId);
 
   const handleCreateNote = () => {
     const newNote: Note = {
@@ -202,10 +252,12 @@ function NotesPage() {
       content: JSON.stringify([
         {
           type: "paragraph",
-          content: [{ type: "text", text: "Start writing here...", styles: {} }]
-        }
+          content: [
+            { type: "text", text: "Start writing here...", styles: {} },
+          ],
+        },
       ]),
-      updatedAt: new Date().toLocaleDateString()
+      updatedAt: new Date().toLocaleDateString(),
     };
     const updated = [newNote, ...notes];
     saveNotes(updated);
@@ -213,7 +265,7 @@ function NotesPage() {
   };
 
   const handleDeleteNote = (id: string) => {
-    const updated = notes.filter(n => n.id !== id);
+    const updated = notes.filter((n) => n.id !== id);
     saveNotes(updated);
     if (activeNoteId === id) {
       setActiveNoteId(updated.length > 0 ? updated[0].id : null);
@@ -222,7 +274,7 @@ function NotesPage() {
 
   const handleUpdateActiveNote = (fields: Partial<Note>) => {
     if (!activeNoteId) return;
-    const updated = notes.map(n => {
+    const updated = notes.map((n) => {
       if (n.id === activeNoteId) {
         return { ...n, ...fields, updatedAt: new Date().toLocaleDateString() };
       }
@@ -231,12 +283,16 @@ function NotesPage() {
     saveNotes(updated);
   };
 
-  const filteredNotes = notes.filter(n => 
-    n.title.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredNotes = notes.filter((n) =>
+    n.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   if (!mounted) {
-    return <div className="p-12 text-center text-sm text-[var(--sb-ink-dim)]">Loading workspace...</div>;
+    return (
+      <div className="p-12 text-center text-sm text-[var(--sb-ink-dim)]">
+        Loading workspace...
+      </div>
+    );
   }
 
   return (
@@ -244,7 +300,10 @@ function NotesPage() {
       {/* Left Pane: Notes List */}
       <div className="w-80 border-r border-[var(--sb-border)] flex flex-col bg-[var(--sb-bg)] shrink-0">
         <div className="p-4 border-b border-[var(--sb-border)] flex items-center justify-between gap-2">
-          <h2 className="font-bold text-sm display-title flex items-center gap-1.5" style={{ color: "var(--sb-ink)" }}>
+          <h2
+            className="font-bold text-sm display-title flex items-center gap-1.5"
+            style={{ color: "var(--sb-ink)" }}
+          >
             <StickyNote size={16} className="text-[var(--sb-accent)]" /> Notes
           </h2>
           <button
@@ -270,20 +329,24 @@ function NotesPage() {
         {/* Note List Scroll */}
         <div className="flex-1 overflow-y-auto divide-y divide-[var(--sb-border)] scrollbar-none">
           {filteredNotes.length === 0 ? (
-            <p className="text-center text-xs text-[var(--sb-ink-dim)] py-8">No notes found.</p>
+            <p className="text-center text-xs text-[var(--sb-ink-dim)] py-8">
+              No notes found.
+            </p>
           ) : (
             filteredNotes.map((note) => (
               <div
                 key={note.id}
                 onClick={() => setActiveNoteId(note.id)}
                 className={`p-4 cursor-pointer text-xs transition-colors flex flex-col gap-1.5 group ${
-                  activeNoteId === note.id 
-                    ? "bg-[var(--sb-pill)] font-semibold" 
+                  activeNoteId === note.id
+                    ? "bg-[var(--sb-pill)] font-semibold"
                     : "hover:bg-[var(--sb-bg-hover)]/40"
                 }`}
               >
                 <div className="flex justify-between items-center">
-                  <span className="font-bold truncate text-[var(--sb-ink)] max-w-[80%]">{note.title}</span>
+                  <span className="font-bold truncate text-[var(--sb-ink)] max-w-[80%]">
+                    {note.title}
+                  </span>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -313,7 +376,9 @@ function NotesPage() {
               <input
                 type="text"
                 value={activeNote.title}
-                onChange={(e) => handleUpdateActiveNote({ title: e.target.value })}
+                onChange={(e) =>
+                  handleUpdateActiveNote({ title: e.target.value })
+                }
                 className="bg-transparent font-bold text-base focus:outline-none border-b border-transparent hover:border-[var(--sb-border)] focus:border-[var(--sb-accent)] pb-0.5 text-[var(--sb-ink)] w-full max-w-md"
               />
             </div>
@@ -347,14 +412,20 @@ interface BlockNoteEditorProps {
   themeMode: "light" | "dark";
 }
 
-function BlockNoteEditorWrapper({ initialContent, onChange, themeMode }: BlockNoteEditorProps) {
+function BlockNoteEditorWrapper({
+  initialContent,
+  onChange,
+  themeMode,
+}: BlockNoteEditorProps) {
   const isLoaded = useCreateBlockNote && BlockNoteView;
 
   if (!isLoaded) {
-    return <div className="text-xs text-[var(--sb-ink-dim)]">Loading editor...</div>;
+    return (
+      <div className="text-xs text-[var(--sb-ink-dim)]">Loading editor...</div>
+    );
   }
 
-  let parsed: any = undefined;
+  let parsed: any;
   try {
     if (initialContent) {
       parsed = JSON.parse(initialContent);

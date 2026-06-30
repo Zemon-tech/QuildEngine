@@ -1,6 +1,6 @@
 import * as Icons from "lucide-react";
-import type { UserProgress } from "../../types/roadmaps";
 import { cn } from "../../lib/utils";
+import type { UserProgress } from "../../types/roadmaps";
 
 interface StatsCardProps {
   progress: UserProgress;
@@ -34,7 +34,8 @@ export function StatsCard({ progress }: StatsCardProps) {
         </span>
         <div>
           <p className="text-xl font-bold tracking-tight text-[var(--sb-ink)]">
-            {progress.xpPoints} <span className="text-xs font-semibold text-purple-500">XP</span>
+            {progress.xpPoints}{" "}
+            <span className="text-xs font-semibold text-purple-500">XP</span>
           </p>
           <p className="text-[11px] font-semibold text-[var(--sb-ink-dim)] uppercase tracking-wider mt-0.5">
             Total Points Earned
@@ -55,7 +56,8 @@ export function StatsCard({ progress }: StatsCardProps) {
         </span>
         <div>
           <p className="text-xl font-bold tracking-tight text-[var(--sb-ink)]">
-            {progress.learningStreak} <span className="text-xs font-semibold text-orange-500">Days</span>
+            {progress.learningStreak}{" "}
+            <span className="text-xs font-semibold text-orange-500">Days</span>
           </p>
           <p className="text-[11px] font-semibold text-[var(--sb-ink-dim)] uppercase tracking-wider mt-0.5">
             Current Learning Streak
@@ -81,17 +83,24 @@ export function StatsCard({ progress }: StatsCardProps) {
         </div>
         <div className="flex items-center justify-between gap-1.5 mt-3">
           {weekDays.map((wd, index) => (
-            <div key={index} className="flex flex-col items-center gap-1 flex-1">
-              <span className="text-[9px] font-bold text-[var(--sb-ink-muted)]">{wd.day}</span>
+            <div
+              key={index}
+              className="flex flex-col items-center gap-1 flex-1"
+            >
+              <span className="text-[9px] font-bold text-[var(--sb-ink-muted)]">
+                {wd.day}
+              </span>
               <div
                 className={cn(
                   "size-5 rounded-md border flex items-center justify-center transition-all duration-300",
                   wd.completed
                     ? "bg-[var(--sb-accent)] border-[var(--sb-accent)]/20 shadow-[0_0_8px_rgba(var(--sb-accent-rgb),0.2)]"
-                    : "bg-[var(--page-bg)] border-[var(--card-border)]"
+                    : "bg-[var(--page-bg)] border-[var(--card-border)]",
                 )}
               >
-                {wd.completed && <Icons.Check size={10} className="text-white" />}
+                {wd.completed && (
+                  <Icons.Check size={10} className="text-white" />
+                )}
               </div>
             </div>
           ))}

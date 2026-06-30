@@ -1,47 +1,47 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { z } from "zod";
-import { useState } from "react";
 import {
-  Code2,
-  Plus,
-  Search,
-  Filter,
-  Trash2,
-  Copy,
+  AlertCircle,
   Archive,
+  BarChart3,
+  Binary,
+  BookOpen,
+  Bot,
+  Brain,
+  Check,
+  Clock,
+  Code2,
+  Copy,
+  Database,
+  Edit2,
   Eye,
   EyeOff,
-  Edit2,
-  Clock,
-  BookOpen,
-  HelpCircle,
   FileText,
-  TrendingUp,
-  Brain,
-  ListFilter,
-  RefreshCw,
-  LayoutDashboard,
+  Filter,
+  HelpCircle,
   Layers,
-  Database,
-  Binary,
-  Terminal,
-  BarChart3,
-  Bot,
-  AlertCircle,
-  Check,
+  LayoutDashboard,
+  ListFilter,
+  Plus,
+  RefreshCw,
+  Search,
   Settings,
+  Terminal,
+  Trash2,
+  TrendingUp,
 } from "lucide-react";
-import { PageHeader } from "#/components/admin/page-header";
-import { MetricCard } from "#/components/admin/metric-card";
+import { useState } from "react";
+import { z } from "zod";
 import { DashboardChart } from "#/components/admin/dashboard-chart";
+import { MetricCard } from "#/components/admin/metric-card";
+import { PageHeader } from "#/components/admin/page-header";
 import { StatusBadge } from "#/components/admin/status-badge";
 import {
+  type DsaProblem,
+  type ProblemSolution,
+  type TestCase,
+  useDeleteDsaProblem,
   useDsaProblems,
   useSaveDsaProblem,
-  useDeleteDsaProblem,
-  type DsaProblem,
-  type TestCase,
-  type ProblemSolution,
 } from "#/hooks/use-practice-state";
 
 const dsaSearchSchema = z.object({
@@ -77,7 +77,7 @@ function DsaPage() {
       | "tags"
       | "difficulty"
       | "languages"
-      | "analytics"
+      | "analytics",
   ) => {
     navigate({ search: (prev) => ({ ...prev, tab: newTab }) });
   };
@@ -100,7 +100,9 @@ function DsaPage() {
 
   // Form Fields State
   const [formTitle, setFormTitle] = useState("");
-  const [formDifficulty, setFormDifficulty] = useState<"Easy" | "Medium" | "Hard" | "Expert">("Easy");
+  const [formDifficulty, setFormDifficulty] = useState<
+    "Easy" | "Medium" | "Hard" | "Expert"
+  >("Easy");
   const [formStatement, setFormStatement] = useState("");
   const [formDescription, setFormDescription] = useState("");
   const [formConstraints, setFormConstraints] = useState("");
@@ -111,7 +113,9 @@ function DsaPage() {
   const [formExplanation, setFormExplanation] = useState("");
   const [formTimeComplexity, setFormTimeComplexity] = useState("O(N)");
   const [formSpaceComplexity, setFormSpaceComplexity] = useState("O(1)");
-  const [formStatus, setFormStatus] = useState<"published" | "draft" | "archived">("draft");
+  const [formStatus, setFormStatus] = useState<
+    "published" | "draft" | "archived"
+  >("draft");
   const [formTopics, setFormTopics] = useState<string[]>([]);
   const [formTags, setFormTags] = useState<string[]>([]);
 
@@ -128,8 +132,27 @@ function DsaPage() {
   const [newSolLang, setNewSolLang] = useState("TypeScript");
 
   // Helper lists
-  const ALL_TOPICS = ["Arrays", "Strings", "Stack", "Queue", "Linked List", "Trees", "Graphs", "DP", "Greedy", "Binary Search", "Heap"];
-  const ALL_TAGS = ["Amazon", "Google", "Facebook", "Microsoft", "Uber", "Apple"];
+  const ALL_TOPICS = [
+    "Arrays",
+    "Strings",
+    "Stack",
+    "Queue",
+    "Linked List",
+    "Trees",
+    "Graphs",
+    "DP",
+    "Greedy",
+    "Binary Search",
+    "Heap",
+  ];
+  const ALL_TAGS = [
+    "Amazon",
+    "Google",
+    "Facebook",
+    "Microsoft",
+    "Uber",
+    "Apple",
+  ];
 
   // Open Form for Create
   const handleOpenCreate = () => {
@@ -192,7 +215,10 @@ function DsaPage() {
   };
 
   // Archive / Publish Toggles
-  const handleToggleStatus = (prob: DsaProblem, newStatus: "published" | "draft" | "archived") => {
+  const handleToggleStatus = (
+    prob: DsaProblem,
+    newStatus: "published" | "draft" | "archived",
+  ) => {
     saveProblemMutation.mutate({
       ...prob,
       status: newStatus,
@@ -207,7 +233,9 @@ function DsaPage() {
   };
 
   // Bulk actions
-  const handleBulkStatusChange = (status: "published" | "draft" | "archived") => {
+  const handleBulkStatusChange = (
+    status: "published" | "draft" | "archived",
+  ) => {
     selectedProblems.forEach((id) => {
       const prob = problems.find((p) => p.id === id);
       if (prob) {
@@ -218,7 +246,11 @@ function DsaPage() {
   };
 
   const handleBulkDelete = () => {
-    if (confirm(`Are you sure you want to delete ${selectedProblems.length} problems?`)) {
+    if (
+      confirm(
+        `Are you sure you want to delete ${selectedProblems.length} problems?`,
+      )
+    ) {
       selectedProblems.forEach((id) => deleteProblemMutation.mutate(id));
       setSelectedProblems([]);
     }
@@ -312,21 +344,26 @@ function DsaPage() {
     const matchesSearch =
       prob.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       prob.statement.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesDifficulty = difficultyFilter === "All" || prob.difficulty === difficultyFilter;
-    const matchesStatus = statusFilter === "All" || prob.status === statusFilter;
-    const matchesTopic = topicFilter === "All" || prob.topics.includes(topicFilter);
+    const matchesDifficulty =
+      difficultyFilter === "All" || prob.difficulty === difficultyFilter;
+    const matchesStatus =
+      statusFilter === "All" || prob.status === statusFilter;
+    const matchesTopic =
+      topicFilter === "All" || prob.topics.includes(topicFilter);
     return matchesSearch && matchesDifficulty && matchesStatus && matchesTopic;
   });
 
   const toggleSelectProblem = (id: string) => {
     setSelectedProblems((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
     );
   };
 
   // Analytics helper variables
   const totalCount = problems.length;
-  const publishedCount = problems.filter((p) => p.status === "published").length;
+  const publishedCount = problems.filter(
+    (p) => p.status === "published",
+  ).length;
   const draftCount = problems.filter((p) => p.status === "draft").length;
 
   const easyCount = problems.filter((p) => p.difficulty === "Easy").length;
@@ -340,7 +377,11 @@ function DsaPage() {
         title="Practice Workspace"
         description="Configure algorithms, coding challenges, categories, templates, Q&A boards, and live assessment criteria."
         icon={Code2}
-        breadcrumbs={[{ label: "Admin" }, { label: "Practice" }, { label: activeTab.toUpperCase() }]}
+        breadcrumbs={[
+          { label: "Admin" },
+          { label: "Practice" },
+          { label: activeTab.toUpperCase() },
+        ]}
         actions={
           activeTab === "problems"
             ? [
@@ -373,7 +414,8 @@ function DsaPage() {
             onClick={() => setActiveTab(t.id)}
             className="flex items-center gap-2 px-4 py-2.5 text-xs font-semibold border-b-2 transition-all relative active:scale-[0.98]"
             style={{
-              borderColor: activeTab === t.id ? "var(--sb-accent)" : "transparent",
+              borderColor:
+                activeTab === t.id ? "var(--sb-accent)" : "transparent",
               color: activeTab === t.id ? "var(--sb-ink)" : "var(--sb-ink-dim)",
             }}
           >
@@ -424,7 +466,10 @@ function DsaPage() {
             {/* Chart section */}
             <div className="lg:col-span-2 island-shell rounded-xl p-5 space-y-4">
               <div>
-                <h3 className="text-sm font-bold" style={{ color: "var(--sb-ink)" }}>
+                <h3
+                  className="text-sm font-bold"
+                  style={{ color: "var(--sb-ink)" }}
+                >
                   Daily Submissions Flow
                 </h3>
                 <p className="text-[11px] text-muted-foreground mt-0.5">
@@ -451,7 +496,10 @@ function DsaPage() {
             {/* Quick stats distribution panel */}
             <div className="island-shell rounded-xl p-5 space-y-4">
               <div>
-                <h3 className="text-sm font-bold" style={{ color: "var(--sb-ink)" }}>
+                <h3
+                  className="text-sm font-bold"
+                  style={{ color: "var(--sb-ink)" }}
+                >
                   Difficulty Weight Distribution
                 </h3>
                 <p className="text-[11px] text-muted-foreground mt-0.5">
@@ -460,20 +508,45 @@ function DsaPage() {
               </div>
               <div className="space-y-3.5">
                 {[
-                  { label: "Easy Challenges", count: easyCount, pct: totalCount ? (easyCount / totalCount) * 100 : 0, color: "bg-emerald-500" },
-                  { label: "Medium Challenges", count: mediumCount, pct: totalCount ? (mediumCount / totalCount) * 100 : 0, color: "bg-amber-500" },
-                  { label: "Hard Challenges", count: hardCount, pct: totalCount ? (hardCount / totalCount) * 100 : 0, color: "bg-rose-500" },
-                  { label: "Expert Challenges", count: expertCount, pct: totalCount ? (expertCount / totalCount) * 100 : 0, color: "bg-purple-500" },
+                  {
+                    label: "Easy Challenges",
+                    count: easyCount,
+                    pct: totalCount ? (easyCount / totalCount) * 100 : 0,
+                    color: "bg-emerald-500",
+                  },
+                  {
+                    label: "Medium Challenges",
+                    count: mediumCount,
+                    pct: totalCount ? (mediumCount / totalCount) * 100 : 0,
+                    color: "bg-amber-500",
+                  },
+                  {
+                    label: "Hard Challenges",
+                    count: hardCount,
+                    pct: totalCount ? (hardCount / totalCount) * 100 : 0,
+                    color: "bg-rose-500",
+                  },
+                  {
+                    label: "Expert Challenges",
+                    count: expertCount,
+                    pct: totalCount ? (expertCount / totalCount) * 100 : 0,
+                    color: "bg-purple-500",
+                  },
                 ].map((item) => (
                   <div key={item.label} className="space-y-1 text-xs">
                     <div className="flex justify-between font-semibold">
-                      <span style={{ color: "var(--sb-ink)" }}>{item.label}</span>
+                      <span style={{ color: "var(--sb-ink)" }}>
+                        {item.label}
+                      </span>
                       <span style={{ color: "var(--sb-ink-dim)" }}>
                         {item.count} ({Math.round(item.pct)}%)
                       </span>
                     </div>
                     <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
-                      <div className={`h-full ${item.color}`} style={{ width: `${item.pct}%` }} />
+                      <div
+                        className={`h-full ${item.color}`}
+                        style={{ width: `${item.pct}%` }}
+                      />
                     </div>
                   </div>
                 ))}
@@ -498,7 +571,11 @@ function DsaPage() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-9 pr-4 py-2 border rounded-lg text-xs outline-none focus:border-ring"
-                style={{ background: "transparent", borderColor: "var(--sb-border)", color: "var(--sb-ink)" }}
+                style={{
+                  background: "transparent",
+                  borderColor: "var(--sb-border)",
+                  color: "var(--sb-ink)",
+                }}
               />
             </div>
 
@@ -511,7 +588,11 @@ function DsaPage() {
                 value={difficultyFilter}
                 onChange={(e) => setDifficultyFilter(e.target.value)}
                 className="px-2.5 py-1.5 border rounded-lg text-xs outline-none"
-                style={{ borderColor: "var(--sb-border)", background: "var(--card-bg)", color: "var(--sb-ink)" }}
+                style={{
+                  borderColor: "var(--sb-border)",
+                  background: "var(--card-bg)",
+                  color: "var(--sb-ink)",
+                }}
               >
                 <option value="All">Difficulty (All)</option>
                 <option value="Easy">Easy</option>
@@ -524,7 +605,11 @@ function DsaPage() {
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
                 className="px-2.5 py-1.5 border rounded-lg text-xs outline-none"
-                style={{ borderColor: "var(--sb-border)", background: "var(--card-bg)", color: "var(--sb-ink)" }}
+                style={{
+                  borderColor: "var(--sb-border)",
+                  background: "var(--card-bg)",
+                  color: "var(--sb-ink)",
+                }}
               >
                 <option value="All">Status (All)</option>
                 <option value="published">Published</option>
@@ -536,7 +621,11 @@ function DsaPage() {
                 value={topicFilter}
                 onChange={(e) => setTopicFilter(e.target.value)}
                 className="px-2.5 py-1.5 border rounded-lg text-xs outline-none"
-                style={{ borderColor: "var(--sb-border)", background: "var(--card-bg)", color: "var(--sb-ink)" }}
+                style={{
+                  borderColor: "var(--sb-border)",
+                  background: "var(--card-bg)",
+                  color: "var(--sb-ink)",
+                }}
               >
                 <option value="All">Topics (All)</option>
                 {ALL_TOPICS.map((topic) => (
@@ -553,7 +642,10 @@ function DsaPage() {
                 style={{ borderColor: "var(--sb-border)" }}
                 title="Reload dataset"
               >
-                <RefreshCw size={12} className={isLoading ? "animate-spin" : ""} />
+                <RefreshCw
+                  size={12}
+                  className={isLoading ? "animate-spin" : ""}
+                />
               </button>
             </div>
           </div>
@@ -595,16 +687,26 @@ function DsaPage() {
             <div className="overflow-x-auto w-full">
               <table className="w-full text-xs text-left">
                 <thead>
-                  <tr className="border-b border-(--sb-border) bg-muted/40" style={{ color: "var(--sb-ink-dim)" }}>
+                  <tr
+                    className="border-b border-(--sb-border) bg-muted/40"
+                    style={{ color: "var(--sb-ink-dim)" }}
+                  >
                     <th className="p-4 w-10">
                       <input
                         type="checkbox"
-                        checked={selectedProblems.length === filteredProblems.length && filteredProblems.length > 0}
+                        checked={
+                          selectedProblems.length === filteredProblems.length &&
+                          filteredProblems.length > 0
+                        }
                         onChange={() => {
-                          if (selectedProblems.length === filteredProblems.length) {
+                          if (
+                            selectedProblems.length === filteredProblems.length
+                          ) {
                             setSelectedProblems([]);
                           } else {
-                            setSelectedProblems(filteredProblems.map((p) => p.id));
+                            setSelectedProblems(
+                              filteredProblems.map((p) => p.id),
+                            );
                           }
                         }}
                       />
@@ -622,20 +724,29 @@ function DsaPage() {
                   {isLoading ? (
                     [1, 2, 3].map((n) => (
                       <tr key={n} className="animate-pulse h-12 bg-card">
-                        <td colSpan={8} className="p-4 text-center text-muted-foreground">
+                        <td
+                          colSpan={8}
+                          className="p-4 text-center text-muted-foreground"
+                        >
                           Loading problem metrics...
                         </td>
                       </tr>
                     ))
                   ) : filteredProblems.length === 0 ? (
                     <tr>
-                      <td colSpan={8} className="p-8 text-center text-muted-foreground">
+                      <td
+                        colSpan={8}
+                        className="p-8 text-center text-muted-foreground"
+                      >
                         No problems found matching filters.
                       </td>
                     </tr>
                   ) : (
                     filteredProblems.map((prob) => (
-                      <tr key={prob.id} className="hover:bg-muted/10 transition-colors bg-card">
+                      <tr
+                        key={prob.id}
+                        className="hover:bg-muted/10 transition-colors bg-card"
+                      >
                         <td className="p-4">
                           <input
                             type="checkbox"
@@ -643,7 +754,10 @@ function DsaPage() {
                             onChange={() => toggleSelectProblem(prob.id)}
                           />
                         </td>
-                        <td className="p-4 font-semibold text-[13px]" style={{ color: "var(--sb-ink)" }}>
+                        <td
+                          className="p-4 font-semibold text-[13px]"
+                          style={{ color: "var(--sb-ink)" }}
+                        >
                           <div>{prob.title}</div>
                           <span className="text-[10px] text-muted-foreground font-medium truncate block max-w-xs mt-0.5">
                             {prob.statement}
@@ -677,20 +791,29 @@ function DsaPage() {
                         <td className="p-4 max-w-[150px]">
                           <div className="flex flex-wrap gap-1">
                             {prob.topics.slice(0, 2).map((t) => (
-                              <span key={t} className="px-1.5 py-0.5 bg-muted rounded text-[10px] text-muted-foreground">
+                              <span
+                                key={t}
+                                className="px-1.5 py-0.5 bg-muted rounded text-[10px] text-muted-foreground"
+                              >
                                 {t}
                               </span>
                             ))}
                             {prob.topics.length > 2 && (
-                              <span className="text-[10px] font-bold text-muted-foreground">+{prob.topics.length - 2}</span>
+                              <span className="text-[10px] font-bold text-muted-foreground">
+                                +{prob.topics.length - 2}
+                              </span>
                             )}
                           </div>
                         </td>
                         <td className="p-4 font-medium text-muted-foreground">
                           {prob.timeComplexity} / {prob.spaceComplexity}
                         </td>
-                        <td className="p-4 font-semibold tabular-nums" style={{ color: "var(--sb-ink-muted)" }}>
-                          {prob.solvesCount.toLocaleString()} solves ({prob.acceptanceRate}%)
+                        <td
+                          className="p-4 font-semibold tabular-nums"
+                          style={{ color: "var(--sb-ink-muted)" }}
+                        >
+                          {prob.solvesCount.toLocaleString()} solves (
+                          {prob.acceptanceRate}%)
                         </td>
                         <td className="p-4">
                           <StatusBadge
@@ -727,13 +850,23 @@ function DsaPage() {
                               onClick={() =>
                                 handleToggleStatus(
                                   prob,
-                                  prob.status === "published" ? "draft" : "published"
+                                  prob.status === "published"
+                                    ? "draft"
+                                    : "published",
                                 )
                               }
                               className="p-1.5 border rounded hover:bg-muted transition text-muted-foreground active:scale-95"
-                              title={prob.status === "published" ? "Unpublish problem" : "Publish problem"}
+                              title={
+                                prob.status === "published"
+                                  ? "Unpublish problem"
+                                  : "Publish problem"
+                              }
                             >
-                              {prob.status === "published" ? <EyeOff size={12} /> : <Eye size={12} />}
+                              {prob.status === "published" ? (
+                                <EyeOff size={12} />
+                              ) : (
+                                <Eye size={12} />
+                              )}
                             </button>
                             <button
                               type="button"
@@ -758,12 +891,17 @@ function DsaPage() {
       {/* ==========================================
           METADATA CONFIGS TABS (STUBS/MOCKS FOR CONFIGURATION METRICS)
           ========================================== */}
-      {["categories", "tags", "difficulty", "languages", "analytics"].includes(activeTab) && (
+      {["categories", "tags", "difficulty", "languages", "analytics"].includes(
+        activeTab,
+      ) && (
         <div className="island-shell rounded-xl p-6 stagger-item space-y-4">
           <div className="flex items-center gap-3">
             <Settings className="text-(--sb-accent)" size={18} />
             <div>
-              <h3 className="text-sm font-bold capitalize" style={{ color: "var(--sb-ink)" }}>
+              <h3
+                className="text-sm font-bold capitalize"
+                style={{ color: "var(--sb-ink)" }}
+              >
                 {activeTab} Management Panel
               </h3>
               <p className="text-[11px] text-muted-foreground mt-0.5">
@@ -775,18 +913,26 @@ function DsaPage() {
           <div className="border border-dashed rounded-lg p-10 text-center flex flex-col items-center justify-center space-y-4 min-h-[300px]">
             <Layers size={36} className="text-muted-foreground opacity-60" />
             <div className="space-y-1.5 max-w-sm">
-              <span className="text-xs font-bold block" style={{ color: "var(--sb-ink)" }}>
+              <span
+                className="text-xs font-bold block"
+                style={{ color: "var(--sb-ink)" }}
+              >
                 Dynamic Metadata Customization
               </span>
               <span className="text-[11px] text-muted-foreground leading-relaxed block">
-                Manage global difficulty definitions, editorial compiler languages, tags, and category taxonomies. Edits here propagate to all DSA curation cards.
+                Manage global difficulty definitions, editorial compiler
+                languages, tags, and category taxonomies. Edits here propagate
+                to all DSA curation cards.
               </span>
             </div>
             <div className="flex gap-3">
               <button
                 type="button"
                 className="px-3.5 py-1.5 rounded-lg border text-xs font-bold hover:bg-muted/40 transition active:scale-95"
-                style={{ borderColor: "var(--sb-border)", color: "var(--sb-ink)" }}
+                style={{
+                  borderColor: "var(--sb-border)",
+                  color: "var(--sb-ink)",
+                }}
               >
                 Add New Config Option
               </button>
@@ -802,16 +948,25 @@ function DsaPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/40 backdrop-blur-xs select-none">
           <div
             className="w-full max-w-4xl h-full bg-card border-l flex flex-col justify-between shadow-2xl animate-in slide-in-from-right duration-250 ease-drawer"
-            style={{ borderColor: "var(--sb-border)", background: "var(--card-bg)" }}
+            style={{
+              borderColor: "var(--sb-border)",
+              background: "var(--card-bg)",
+            }}
           >
             {/* Drawer Header */}
             <div className="p-5 border-b border-(--sb-border) flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-bold" style={{ color: "var(--sb-ink)" }}>
-                  {editingProblem ? `Edit Problem: ${editingProblem.title}` : "Create New DSA Problem"}
+                <h3
+                  className="text-sm font-bold"
+                  style={{ color: "var(--sb-ink)" }}
+                >
+                  {editingProblem
+                    ? `Edit Problem: ${editingProblem.title}`
+                    : "Create New DSA Problem"}
                 </h3>
                 <p className="text-[11px] text-muted-foreground mt-0.5">
-                  Fill in problem statements, complexity limits, templates, and editorial content.
+                  Fill in problem statements, complexity limits, templates, and
+                  editorial content.
                 </p>
               </div>
               <button
@@ -824,11 +979,17 @@ function DsaPage() {
             </div>
 
             {/* Drawer Body (Scrollable form) */}
-            <form onSubmit={handleSave} className="flex-1 overflow-y-auto p-5 space-y-6 text-xs">
+            <form
+              onSubmit={handleSave}
+              className="flex-1 overflow-y-auto p-5 space-y-6 text-xs"
+            >
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* Title */}
                 <div className="md:col-span-2 space-y-1.5">
-                  <label className="font-bold" style={{ color: "var(--sb-ink-dim)" }}>
+                  <label
+                    className="font-bold"
+                    style={{ color: "var(--sb-ink-dim)" }}
+                  >
                     Problem Title *
                   </label>
                   <input
@@ -838,20 +999,31 @@ function DsaPage() {
                     onChange={(e) => setFormTitle(e.target.value)}
                     placeholder="e.g. Find Median of Matrix"
                     className="w-full p-2 border rounded-lg outline-none focus:border-ring"
-                    style={{ background: "transparent", borderColor: "var(--sb-border)", color: "var(--sb-ink)" }}
+                    style={{
+                      background: "transparent",
+                      borderColor: "var(--sb-border)",
+                      color: "var(--sb-ink)",
+                    }}
                   />
                 </div>
 
                 {/* Difficulty */}
                 <div className="space-y-1.5">
-                  <label className="font-bold" style={{ color: "var(--sb-ink-dim)" }}>
+                  <label
+                    className="font-bold"
+                    style={{ color: "var(--sb-ink-dim)" }}
+                  >
                     Difficulty *
                   </label>
                   <select
                     value={formDifficulty}
                     onChange={(e) => setFormDifficulty(e.target.value as any)}
                     className="w-full p-2 border rounded-lg outline-none"
-                    style={{ borderColor: "var(--sb-border)", background: "var(--card-bg)", color: "var(--sb-ink)" }}
+                    style={{
+                      borderColor: "var(--sb-border)",
+                      background: "var(--card-bg)",
+                      color: "var(--sb-ink)",
+                    }}
                   >
                     <option value="Easy">Easy</option>
                     <option value="Medium">Medium</option>
@@ -863,7 +1035,10 @@ function DsaPage() {
 
               {/* Statement */}
               <div className="space-y-1.5">
-                <label className="font-bold" style={{ color: "var(--sb-ink-dim)" }}>
+                <label
+                  className="font-bold"
+                  style={{ color: "var(--sb-ink-dim)" }}
+                >
                   Problem Statement (Summary) *
                 </label>
                 <textarea
@@ -873,13 +1048,20 @@ function DsaPage() {
                   onChange={(e) => setFormStatement(e.target.value)}
                   placeholder="Short description shown in list views..."
                   className="w-full p-2 border rounded-lg outline-none focus:border-ring resize-y"
-                  style={{ background: "transparent", borderColor: "var(--sb-border)", color: "var(--sb-ink)" }}
+                  style={{
+                    background: "transparent",
+                    borderColor: "var(--sb-border)",
+                    color: "var(--sb-ink)",
+                  }}
                 />
               </div>
 
               {/* Description */}
               <div className="space-y-1.5">
-                <label className="font-bold" style={{ color: "var(--sb-ink-dim)" }}>
+                <label
+                  className="font-bold"
+                  style={{ color: "var(--sb-ink-dim)" }}
+                >
                   Rich Description / Examples *
                 </label>
                 <textarea
@@ -889,14 +1071,21 @@ function DsaPage() {
                   onChange={(e) => setFormDescription(e.target.value)}
                   placeholder="Detailed explanation, markdown friendly..."
                   className="w-full p-2 border rounded-lg outline-none focus:border-ring resize-y font-mono text-[11px]"
-                  style={{ background: "transparent", borderColor: "var(--sb-border)", color: "var(--sb-ink)" }}
+                  style={{
+                    background: "transparent",
+                    borderColor: "var(--sb-border)",
+                    color: "var(--sb-ink)",
+                  }}
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Constraints */}
                 <div className="space-y-1.5">
-                  <label className="font-bold" style={{ color: "var(--sb-ink-dim)" }}>
+                  <label
+                    className="font-bold"
+                    style={{ color: "var(--sb-ink-dim)" }}
+                  >
                     Constraints
                   </label>
                   <textarea
@@ -905,13 +1094,20 @@ function DsaPage() {
                     onChange={(e) => setFormConstraints(e.target.value)}
                     placeholder="e.g. - 1 <= nums.length <= 10^5"
                     className="w-full p-2 border rounded-lg outline-none focus:border-ring font-mono text-[11px]"
-                    style={{ background: "transparent", borderColor: "var(--sb-border)", color: "var(--sb-ink)" }}
+                    style={{
+                      background: "transparent",
+                      borderColor: "var(--sb-border)",
+                      color: "var(--sb-ink)",
+                    }}
                   />
                 </div>
 
                 {/* Hints */}
                 <div className="space-y-1.5">
-                  <label className="font-bold" style={{ color: "var(--sb-ink-dim)" }}>
+                  <label
+                    className="font-bold"
+                    style={{ color: "var(--sb-ink-dim)" }}
+                  >
                     Complexity Budgets
                   </label>
                   <div className="grid grid-cols-2 gap-2 mt-1">
@@ -921,7 +1117,11 @@ function DsaPage() {
                       onChange={(e) => setFormTimeComplexity(e.target.value)}
                       placeholder="Time Complexity"
                       className="p-2 border rounded-lg outline-none"
-                      style={{ background: "transparent", borderColor: "var(--sb-border)", color: "var(--sb-ink)" }}
+                      style={{
+                        background: "transparent",
+                        borderColor: "var(--sb-border)",
+                        color: "var(--sb-ink)",
+                      }}
                     />
                     <input
                       type="text"
@@ -929,7 +1129,11 @@ function DsaPage() {
                       onChange={(e) => setFormSpaceComplexity(e.target.value)}
                       placeholder="Space Complexity"
                       className="p-2 border rounded-lg outline-none"
-                      style={{ background: "transparent", borderColor: "var(--sb-border)", color: "var(--sb-ink)" }}
+                      style={{
+                        background: "transparent",
+                        borderColor: "var(--sb-border)",
+                        color: "var(--sb-ink)",
+                      }}
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-2 mt-2">
@@ -937,7 +1141,11 @@ function DsaPage() {
                       value={formStatus}
                       onChange={(e) => setFormStatus(e.target.value as any)}
                       className="p-2 border rounded-lg outline-none"
-                      style={{ borderColor: "var(--sb-border)", background: "var(--card-bg)", color: "var(--sb-ink)" }}
+                      style={{
+                        borderColor: "var(--sb-border)",
+                        background: "var(--card-bg)",
+                        color: "var(--sb-ink)",
+                      }}
                     >
                       <option value="draft">Draft</option>
                       <option value="published">Published</option>
@@ -950,10 +1158,16 @@ function DsaPage() {
               {/* Topics / Tags Assignments */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="font-bold block" style={{ color: "var(--sb-ink-dim)" }}>
+                  <label
+                    className="font-bold block"
+                    style={{ color: "var(--sb-ink-dim)" }}
+                  >
                     Topics assignment
                   </label>
-                  <div className="flex flex-wrap gap-1.5 border p-2 rounded-lg max-h-32 overflow-y-auto" style={{ borderColor: "var(--sb-border)" }}>
+                  <div
+                    className="flex flex-wrap gap-1.5 border p-2 rounded-lg max-h-32 overflow-y-auto"
+                    style={{ borderColor: "var(--sb-border)" }}
+                  >
                     {ALL_TOPICS.map((topic) => {
                       const selected = formTopics.includes(topic);
                       return (
@@ -962,13 +1176,19 @@ function DsaPage() {
                           type="button"
                           onClick={() =>
                             setFormTopics((prev) =>
-                              selected ? prev.filter((t) => t !== topic) : [...prev, topic]
+                              selected
+                                ? prev.filter((t) => t !== topic)
+                                : [...prev, topic],
                             )
                           }
                           className="px-2 py-0.5 rounded text-[10px] font-bold border transition active:scale-95"
                           style={{
-                            backgroundColor: selected ? "var(--sb-accent)" : "transparent",
-                            color: selected ? "var(--sb-accent-foreground)" : "var(--sb-ink-dim)",
+                            backgroundColor: selected
+                              ? "var(--sb-accent)"
+                              : "transparent",
+                            color: selected
+                              ? "var(--sb-accent-foreground)"
+                              : "var(--sb-ink-dim)",
                             borderColor: "var(--sb-border)",
                           }}
                         >
@@ -980,10 +1200,16 @@ function DsaPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="font-bold block" style={{ color: "var(--sb-ink-dim)" }}>
+                  <label
+                    className="font-bold block"
+                    style={{ color: "var(--sb-ink-dim)" }}
+                  >
                     Tags assignment
                   </label>
-                  <div className="flex flex-wrap gap-1.5 border p-2 rounded-lg max-h-32 overflow-y-auto" style={{ borderColor: "var(--sb-border)" }}>
+                  <div
+                    className="flex flex-wrap gap-1.5 border p-2 rounded-lg max-h-32 overflow-y-auto"
+                    style={{ borderColor: "var(--sb-border)" }}
+                  >
                     {ALL_TAGS.map((tag) => {
                       const selected = formTags.includes(tag);
                       return (
@@ -992,13 +1218,19 @@ function DsaPage() {
                           type="button"
                           onClick={() =>
                             setFormTags((prev) =>
-                              selected ? prev.filter((t) => t !== tag) : [...prev, tag]
+                              selected
+                                ? prev.filter((t) => t !== tag)
+                                : [...prev, tag],
                             )
                           }
                           className="px-2 py-0.5 rounded text-[10px] font-bold border transition active:scale-95"
                           style={{
-                            backgroundColor: selected ? "var(--sb-accent)" : "transparent",
-                            color: selected ? "var(--sb-accent-foreground)" : "var(--sb-ink-dim)",
+                            backgroundColor: selected
+                              ? "var(--sb-accent)"
+                              : "transparent",
+                            color: selected
+                              ? "var(--sb-accent-foreground)"
+                              : "var(--sb-ink-dim)",
                             borderColor: "var(--sb-border)",
                           }}
                         >
@@ -1017,25 +1249,37 @@ function DsaPage() {
                 </h4>
                 <div className="flex gap-2 items-end">
                   <div className="flex-1 space-y-1">
-                    <label className="font-semibold text-muted-foreground text-[10px]">Test Input</label>
+                    <label className="font-semibold text-muted-foreground text-[10px]">
+                      Test Input
+                    </label>
                     <input
                       type="text"
                       value={newTcInput}
                       onChange={(e) => setNewTcInput(e.target.value)}
                       placeholder="e.g. [1,2,3]\n4"
                       className="w-full p-1.5 border rounded"
-                      style={{ background: "transparent", borderColor: "var(--sb-border)", color: "var(--sb-ink)" }}
+                      style={{
+                        background: "transparent",
+                        borderColor: "var(--sb-border)",
+                        color: "var(--sb-ink)",
+                      }}
                     />
                   </div>
                   <div className="flex-1 space-y-1">
-                    <label className="font-semibold text-muted-foreground text-[10px]">Expected Output</label>
+                    <label className="font-semibold text-muted-foreground text-[10px]">
+                      Expected Output
+                    </label>
                     <input
                       type="text"
                       value={newTcOutput}
                       onChange={(e) => setNewTcOutput(e.target.value)}
                       placeholder="e.g. 5"
                       className="w-full p-1.5 border rounded"
-                      style={{ background: "transparent", borderColor: "var(--sb-border)", color: "var(--sb-ink)" }}
+                      style={{
+                        background: "transparent",
+                        borderColor: "var(--sb-border)",
+                        color: "var(--sb-ink)",
+                      }}
                     />
                   </div>
                   <div className="flex flex-col gap-1 pb-1">
@@ -1066,20 +1310,38 @@ function DsaPage() {
                 </div>
 
                 {formTestCases.length > 0 ? (
-                  <div className="border rounded overflow-hidden divide-y" style={{ borderColor: "var(--sb-border)" }}>
+                  <div
+                    className="border rounded overflow-hidden divide-y"
+                    style={{ borderColor: "var(--sb-border)" }}
+                  >
                     {formTestCases.map((tc, index) => (
-                      <div key={tc.id} className="p-2 flex items-center justify-between bg-muted/20">
+                      <div
+                        key={tc.id}
+                        className="p-2 flex items-center justify-between bg-muted/20"
+                      >
                         <div className="font-mono text-[10px] space-y-0.5">
                           <div>Input: {tc.input}</div>
                           <div>Expected: {tc.expectedOutput}</div>
                           <div className="text-[9px] text-muted-foreground font-semibold flex gap-2">
-                            {tc.isSample && <span className="text-emerald-600">Sample case</span>}
-                            {tc.isHidden && <span className="text-amber-600">Hidden case</span>}
+                            {tc.isSample && (
+                              <span className="text-emerald-600">
+                                Sample case
+                              </span>
+                            )}
+                            {tc.isHidden && (
+                              <span className="text-amber-600">
+                                Hidden case
+                              </span>
+                            )}
                           </div>
                         </div>
                         <button
                           type="button"
-                          onClick={() => setFormTestCases(formTestCases.filter((t) => t.id !== tc.id))}
+                          onClick={() =>
+                            setFormTestCases(
+                              formTestCases.filter((t) => t.id !== tc.id),
+                            )
+                          }
                           className="text-destructive hover:opacity-80 transition"
                         >
                           Remove
@@ -1101,23 +1363,35 @@ function DsaPage() {
                 </h4>
                 <div className="flex gap-2 items-end">
                   <div className="flex-1 space-y-1">
-                    <label className="font-semibold text-muted-foreground text-[10px]">Solution Title</label>
+                    <label className="font-semibold text-muted-foreground text-[10px]">
+                      Solution Title
+                    </label>
                     <input
                       type="text"
                       value={newSolTitle}
                       onChange={(e) => setNewSolTitle(e.target.value)}
                       placeholder="e.g. Iterative stack solution"
                       className="w-full p-1.5 border rounded"
-                      style={{ background: "transparent", borderColor: "var(--sb-border)", color: "var(--sb-ink)" }}
+                      style={{
+                        background: "transparent",
+                        borderColor: "var(--sb-border)",
+                        color: "var(--sb-ink)",
+                      }}
                     />
                   </div>
                   <div className="w-32 space-y-1">
-                    <label className="font-semibold text-muted-foreground text-[10px]">Language</label>
+                    <label className="font-semibold text-muted-foreground text-[10px]">
+                      Language
+                    </label>
                     <select
                       value={newSolLang}
                       onChange={(e) => setNewSolLang(e.target.value)}
                       className="w-full p-1.5 border rounded"
-                      style={{ borderColor: "var(--sb-border)", background: "var(--card-bg)", color: "var(--sb-ink)" }}
+                      style={{
+                        borderColor: "var(--sb-border)",
+                        background: "var(--card-bg)",
+                        color: "var(--sb-ink)",
+                      }}
                     >
                       <option value="TypeScript">TypeScript</option>
                       <option value="Python">Python</option>
@@ -1127,14 +1401,20 @@ function DsaPage() {
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <label className="font-semibold text-muted-foreground text-[10px]">Solution Code</label>
+                  <label className="font-semibold text-muted-foreground text-[10px]">
+                    Solution Code
+                  </label>
                   <textarea
                     rows={4}
                     value={newSolCode}
                     onChange={(e) => setNewSolCode(e.target.value)}
                     placeholder="class Solution {\n  ...\n}"
                     className="w-full p-2 border rounded font-mono text-[11px]"
-                    style={{ background: "transparent", borderColor: "var(--sb-border)", color: "var(--sb-ink)" }}
+                    style={{
+                      background: "transparent",
+                      borderColor: "var(--sb-border)",
+                      color: "var(--sb-ink)",
+                    }}
                   />
                 </div>
                 <button
@@ -1146,18 +1426,29 @@ function DsaPage() {
                 </button>
 
                 {formSolutions.length > 0 ? (
-                  <div className="border rounded overflow-hidden divide-y" style={{ borderColor: "var(--sb-border)" }}>
+                  <div
+                    className="border rounded overflow-hidden divide-y"
+                    style={{ borderColor: "var(--sb-border)" }}
+                  >
                     {formSolutions.map((sol) => (
-                      <div key={sol.id} className="p-2.5 flex items-center justify-between bg-muted/20">
+                      <div
+                        key={sol.id}
+                        className="p-2.5 flex items-center justify-between bg-muted/20"
+                      >
                         <div>
                           <div className="font-bold">{sol.title}</div>
                           <span className="text-[10px] text-muted-foreground font-semibold">
-                            Language: {sol.language} {sol.isOptimized && "(Optimized)"}
+                            Language: {sol.language}{" "}
+                            {sol.isOptimized && "(Optimized)"}
                           </span>
                         </div>
                         <button
                           type="button"
-                          onClick={() => setFormSolutions(formSolutions.filter((s) => s.id !== sol.id))}
+                          onClick={() =>
+                            setFormSolutions(
+                              formSolutions.filter((s) => s.id !== sol.id),
+                            )
+                          }
                           className="text-destructive hover:opacity-80 transition"
                         >
                           Remove
@@ -1179,7 +1470,10 @@ function DsaPage() {
                 type="button"
                 onClick={() => setIsDrawerOpen(false)}
                 className="px-4 py-2 border rounded-lg font-semibold hover:bg-muted transition active:scale-95"
-                style={{ borderColor: "var(--sb-border)", color: "var(--sb-ink)" }}
+                style={{
+                  borderColor: "var(--sb-border)",
+                  color: "var(--sb-ink)",
+                }}
               >
                 Cancel
               </button>

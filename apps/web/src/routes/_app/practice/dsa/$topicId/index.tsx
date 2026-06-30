@@ -1,31 +1,31 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
-  Check,
-  Terminal,
-  Lightbulb,
-  FileText,
-  History,
-  Play,
-  Code,
   BookOpen,
-  Settings,
-  UserPlus,
-  List,
-  ThumbsUp,
-  ThumbsDown,
-  MessageSquare,
-  Star,
-  Share2,
-  HelpCircle,
+  Check,
   ChevronDown,
+  Code,
+  FileText,
   FlaskConical,
+  HelpCircle,
+  History,
+  Lightbulb,
+  List,
+  MessageSquare,
+  Play,
+  Settings,
+  Share2,
+  Star,
+  Terminal,
+  ThumbsDown,
+  ThumbsUp,
+  UserPlus,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { type DSAProblem, dsaProblems } from "#/lib/dsa-problems-db";
 import { ProblemFilters } from "#/components/dsa/problem-filters";
 import { ProblemTable } from "#/components/dsa/problem-table";
 import { TopicStats } from "#/components/dsa/topic-stats";
+import { type DSAProblem, dsaProblems } from "#/lib/dsa-problems-db";
 
 // ─── Emil easing curves (animations.dev) ─────────────────────────────────────
 // iOS-like drawer curve (from Ionic Framework)
@@ -85,7 +85,11 @@ export function HintCard({ hint, index }: { hint: string; index: number }) {
 type DrawerTabId = "description" | "editorial" | "solutions" | "submissions";
 type BottomTabId = "testcase" | "testresult";
 
-const LEFT_PANEL_TABS: { id: DrawerTabId; label: string; icon: React.ReactNode }[] = [
+const LEFT_PANEL_TABS: {
+  id: DrawerTabId;
+  label: string;
+  icon: React.ReactNode;
+}[] = [
   { id: "description", label: "Description", icon: <FileText size={13} /> },
   { id: "editorial", label: "Editorial", icon: <BookOpen size={13} /> },
   { id: "solutions", label: "Solutions", icon: <FlaskConical size={13} /> },
@@ -128,7 +132,9 @@ function AnimatedTabBar({
       {tabs.map((tab) => (
         <button
           key={tab.id}
-          ref={(el) => { tabRefs.current[tab.id] = el; }}
+          ref={(el) => {
+            tabRefs.current[tab.id] = el;
+          }}
           type="button"
           onClick={() => onChange(tab.id)}
           className={`flex items-center gap-1.5 px-3 py-2.5 text-xs font-semibold transition-colors duration-150 cursor-pointer ${
@@ -162,12 +168,16 @@ function PracticeBoardTab() {
   const shouldReduceMotion = useReducedMotion();
 
   const [localProblems, setLocalProblems] = useState<DSAProblem[]>([]);
-  const [selectedProblem, setSelectedProblem] = useState<DSAProblem | null>(null);
+  const [selectedProblem, setSelectedProblem] = useState<DSAProblem | null>(
+    null,
+  );
 
   // Tab views within problem drawer
   const [drawerTab, setDrawerTab] = useState<DrawerTabId>("description");
   const [bottomTab, setBottomTab] = useState<BottomTabId>("testcase");
-  if (bottomTab) { /* no-op */ }
+  if (bottomTab) {
+    /* no-op */
+  }
   const [codeSolution, setCodeSolution] = useState("");
   const [editorLanguage, setEditorLanguage] = useState("typescript");
 
@@ -179,7 +189,6 @@ function PracticeBoardTab() {
   const [isSubmitSuccessful, setIsSubmitSuccessful] = useState<boolean | null>(
     null,
   );
-
 
   // Code template generation
   const getCodeTemplate = useCallback(
@@ -557,8 +566,7 @@ function PracticeBoardTab() {
             {/* ── Top Header Bar ─────────────────────────────────────────────────── */}
             <div className="flex items-center justify-between px-4 py-2.5 bg-[#242424] border-b border-[#333] shrink-0 text-white select-none">
               {/* Left Section */}
-              <div className="flex items-center gap-6">
-              </div>
+              <div className="flex items-center gap-6"></div>
 
               {/* Center Section (Submit & Run) */}
               <div className="flex items-center gap-2.5">
@@ -583,8 +591,7 @@ function PracticeBoardTab() {
               </div>
 
               {/* Right Section (Empty spacer) */}
-              <div className="flex items-center gap-4">
-              </div>
+              <div className="flex items-center gap-4"></div>
             </div>
 
             {/* ── Split Screen Body ─────────────────────────────────────────────────── */}
@@ -601,264 +608,299 @@ function PracticeBoardTab() {
                 {/* Tab Body */}
                 <div className="flex-1 overflow-y-auto p-5 bg-[#242424]">
                   <AnimatePresence mode="wait">
-                  {drawerTab === "description" && (
-                    <motion.div
-                      key="description"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.15 }}
-                      className="space-y-6"
-                    >
-                      {/* Prompt */}
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between">
-                          <h1 className="text-xl font-bold tracking-tight text-white select-text">
-                            {selectedProblem.name}
-                          </h1>
-                          {selectedProblem.status === "completed" && (
-                            <span className="flex items-center gap-1 text-xs text-emerald-500 font-semibold">
-                              <Check size={14} className="stroke-[3px]" />
-                              Solved
-                            </span>
-                          )}
-                        </div>
-
-                        <div className="flex flex-wrap items-center gap-2 text-xs select-none">
-                          <span
-                            className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold border`}
-                            style={{
-                              backgroundColor:
-                                selectedProblem.difficulty === "Easy"
-                                  ? "rgba(46, 191, 191, 0.15)"
-                                  : selectedProblem.difficulty === "Medium"
-                                    ? "rgba(255, 184, 0, 0.15)"
-                                    : "rgba(255, 45, 85, 0.15)",
-                              color:
-                                selectedProblem.difficulty === "Easy"
-                                  ? "#2ebfbf"
-                                  : selectedProblem.difficulty === "Medium"
-                                    ? "#ffb800"
-                                    : "#ff2d55",
-                              borderColor:
-                                selectedProblem.difficulty === "Easy"
-                                  ? "rgba(46, 191, 191, 0.3)"
-                                  : selectedProblem.difficulty === "Medium"
-                                    ? "rgba(255, 184, 0, 0.3)"
-                                    : "rgba(255, 45, 85, 0.3)",
-                            }}
-                          >
-                            {selectedProblem.difficulty}
-                          </span>
-                          <span className="rounded-full px-2.5 py-0.5 text-[10px] bg-[#333] text-zinc-400 hover:text-white transition-colors cursor-pointer flex items-center gap-1">
-                            <List size={10} /> Topics
-                          </span>
-                          <span className="rounded-full px-2.5 py-0.5 text-[10px] bg-[#333] text-zinc-400 hover:text-white transition-colors cursor-pointer flex items-center gap-1">
-                            <UserPlus size={10} /> Companies
-                          </span>
-                          <span className="rounded-full px-2.5 py-0.5 text-[10px] bg-[#333] text-zinc-400 hover:text-white transition-colors cursor-pointer flex items-center gap-1">
-                            <Lightbulb size={10} /> Hint
-                          </span>
-                        </div>
-
-                        <div className="text-[13px] leading-relaxed text-zinc-300 select-text whitespace-pre-line pt-2">
-                          {selectedProblem.description}
-                        </div>
-                      </div>
-
-                      {/* Company Tags & Related Topics */}
-                      <div
-                        className="flex flex-col gap-3.5 py-3.5 border-y select-text"
-                        style={{ borderColor: "#383838" }}
+                    {drawerTab === "description" && (
+                      <motion.div
+                        key="description"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.15 }}
+                        className="space-y-6"
                       >
-                        {selectedProblem.companies &&
-                          selectedProblem.companies.length > 0 && (
-                            <div className="space-y-1.5">
-                              <h5 className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
-                                Companies
-                              </h5>
-                              <div className="flex flex-wrap gap-1.5 select-none">
-                                {selectedProblem.companies.map((comp) => {
-                                  const colors: Record<
-                                    string,
-                                    {
-                                      bg: string;
-                                      text: string;
-                                      border: string;
-                                    }
-                                  > = {
-                                    Google: {
-                                      bg: "oklch(0.9 0.05 240 / 0.1)",
-                                      text: "oklch(0.65 0.15 240)",
-                                      border: "oklch(0.65 0.15 240 / 0.2)",
-                                    },
-                                    Amazon: {
-                                      bg: "oklch(0.9 0.05 70 / 0.1)",
-                                      text: "oklch(0.65 0.15 70)",
-                                      border: "oklch(0.65 0.15 70 / 0.2)",
-                                    },
-                                    Meta: {
-                                      bg: "oklch(0.9 0.05 250 / 0.1)",
-                                      text: "oklch(0.65 0.15 250)",
-                                      border: "oklch(0.65 0.15 250 / 0.2)",
-                                    },
-                                    Microsoft: {
-                                      bg: "oklch(0.9 0.05 180 / 0.1)",
-                                      text: "oklch(0.65 0.15 180)",
-                                      border: "oklch(0.65 0.15 180 / 0.2)",
-                                    },
-                                    Uber: {
-                                      bg: "oklch(0.9 0 0 / 0.1)",
-                                      text: "oklch(0.7 0 0)",
-                                      border: "oklch(0.7 0 0 / 0.2)",
-                                    },
-                                    Atlassian: {
-                                      bg: "oklch(0.9 0.05 220 / 0.1)",
-                                      text: "oklch(0.65 0.15 220)",
-                                      border: "oklch(0.65 0.15 220 / 0.2)",
-                                    },
-                                  };
-                                  const style = colors[comp] || {
-                                    bg: "oklch(1 0 0 / 0.04)",
-                                    text: "var(--sb-ink-dim)",
-                                    border: "oklch(1 0 0 / 0.08)",
-                                  };
-                                  return (
-                                    <span
-                                      key={comp}
-                                      className="rounded px-2 py-0.5 text-[10px] font-semibold border animate-in fade-in duration-200"
-                                      style={{
-                                        backgroundColor: style.bg,
-                                        color: style.text,
-                                        borderColor: style.border,
-                                      }}
-                                    >
-                                      {comp}
-                                    </span>
-                                  );
-                                })}
-                              </div>
-                            </div>
-                          )}
+                        {/* Prompt */}
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <h1 className="text-xl font-bold tracking-tight text-white select-text">
+                              {selectedProblem.name}
+                            </h1>
+                            {selectedProblem.status === "completed" && (
+                              <span className="flex items-center gap-1 text-xs text-emerald-500 font-semibold">
+                                <Check size={14} className="stroke-[3px]" />
+                                Solved
+                              </span>
+                            )}
+                          </div>
 
-                        {selectedProblem.relatedTopics &&
-                          selectedProblem.relatedTopics.length > 0 && (
-                            <div className="space-y-1.5">
-                              <h5 className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
-                                Related Topics
+                          <div className="flex flex-wrap items-center gap-2 text-xs select-none">
+                            <span
+                              className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold border`}
+                              style={{
+                                backgroundColor:
+                                  selectedProblem.difficulty === "Easy"
+                                    ? "rgba(46, 191, 191, 0.15)"
+                                    : selectedProblem.difficulty === "Medium"
+                                      ? "rgba(255, 184, 0, 0.15)"
+                                      : "rgba(255, 45, 85, 0.15)",
+                                color:
+                                  selectedProblem.difficulty === "Easy"
+                                    ? "#2ebfbf"
+                                    : selectedProblem.difficulty === "Medium"
+                                      ? "#ffb800"
+                                      : "#ff2d55",
+                                borderColor:
+                                  selectedProblem.difficulty === "Easy"
+                                    ? "rgba(46, 191, 191, 0.3)"
+                                    : selectedProblem.difficulty === "Medium"
+                                      ? "rgba(255, 184, 0, 0.3)"
+                                      : "rgba(255, 45, 85, 0.3)",
+                              }}
+                            >
+                              {selectedProblem.difficulty}
+                            </span>
+                            <span className="rounded-full px-2.5 py-0.5 text-[10px] bg-[#333] text-zinc-400 hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+                              <List size={10} /> Topics
+                            </span>
+                            <span className="rounded-full px-2.5 py-0.5 text-[10px] bg-[#333] text-zinc-400 hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+                              <UserPlus size={10} /> Companies
+                            </span>
+                            <span className="rounded-full px-2.5 py-0.5 text-[10px] bg-[#333] text-zinc-400 hover:text-white transition-colors cursor-pointer flex items-center gap-1">
+                              <Lightbulb size={10} /> Hint
+                            </span>
+                          </div>
+
+                          <div className="text-[13px] leading-relaxed text-zinc-300 select-text whitespace-pre-line pt-2">
+                            {selectedProblem.description}
+                          </div>
+                        </div>
+
+                        {/* Company Tags & Related Topics */}
+                        <div
+                          className="flex flex-col gap-3.5 py-3.5 border-y select-text"
+                          style={{ borderColor: "#383838" }}
+                        >
+                          {selectedProblem.companies &&
+                            selectedProblem.companies.length > 0 && (
+                              <div className="space-y-1.5">
+                                <h5 className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
+                                  Companies
+                                </h5>
+                                <div className="flex flex-wrap gap-1.5 select-none">
+                                  {selectedProblem.companies.map((comp) => {
+                                    const colors: Record<
+                                      string,
+                                      {
+                                        bg: string;
+                                        text: string;
+                                        border: string;
+                                      }
+                                    > = {
+                                      Google: {
+                                        bg: "oklch(0.9 0.05 240 / 0.1)",
+                                        text: "oklch(0.65 0.15 240)",
+                                        border: "oklch(0.65 0.15 240 / 0.2)",
+                                      },
+                                      Amazon: {
+                                        bg: "oklch(0.9 0.05 70 / 0.1)",
+                                        text: "oklch(0.65 0.15 70)",
+                                        border: "oklch(0.65 0.15 70 / 0.2)",
+                                      },
+                                      Meta: {
+                                        bg: "oklch(0.9 0.05 250 / 0.1)",
+                                        text: "oklch(0.65 0.15 250)",
+                                        border: "oklch(0.65 0.15 250 / 0.2)",
+                                      },
+                                      Microsoft: {
+                                        bg: "oklch(0.9 0.05 180 / 0.1)",
+                                        text: "oklch(0.65 0.15 180)",
+                                        border: "oklch(0.65 0.15 180 / 0.2)",
+                                      },
+                                      Uber: {
+                                        bg: "oklch(0.9 0 0 / 0.1)",
+                                        text: "oklch(0.7 0 0)",
+                                        border: "oklch(0.7 0 0 / 0.2)",
+                                      },
+                                      Atlassian: {
+                                        bg: "oklch(0.9 0.05 220 / 0.1)",
+                                        text: "oklch(0.65 0.15 220)",
+                                        border: "oklch(0.65 0.15 220 / 0.2)",
+                                      },
+                                    };
+                                    const style = colors[comp] || {
+                                      bg: "oklch(1 0 0 / 0.04)",
+                                      text: "var(--sb-ink-dim)",
+                                      border: "oklch(1 0 0 / 0.08)",
+                                    };
+                                    return (
+                                      <span
+                                        key={comp}
+                                        className="rounded px-2 py-0.5 text-[10px] font-semibold border animate-in fade-in duration-200"
+                                        style={{
+                                          backgroundColor: style.bg,
+                                          color: style.text,
+                                          borderColor: style.border,
+                                        }}
+                                      >
+                                        {comp}
+                                      </span>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            )}
+
+                          {selectedProblem.relatedTopics &&
+                            selectedProblem.relatedTopics.length > 0 && (
+                              <div className="space-y-1.5">
+                                <h5 className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
+                                  Related Topics
+                                </h5>
+                                <div className="flex flex-wrap gap-1.5 select-none">
+                                  {selectedProblem.relatedTopics.map(
+                                    (topic) => (
+                                      <span
+                                        key={topic}
+                                        className="rounded px-2 py-0.5 text-[10px] font-semibold border"
+                                        style={{
+                                          background:
+                                            "rgba(255, 255, 255, 0.04)",
+                                          borderColor: "#383838",
+                                          color: "zinc-400",
+                                        }}
+                                      >
+                                        {topic}
+                                      </span>
+                                    ),
+                                  )}
+                                </div>
+                              </div>
+                            )}
+                        </div>
+
+                        {/* Examples */}
+                        <div className="space-y-4 select-text">
+                          {selectedProblem.examples.map((ex, idx) => (
+                            <div key={`ex-${idx}`} className="space-y-2">
+                              <h5 className="text-xs font-bold text-zinc-200">
+                                Example {idx + 1}:
                               </h5>
-                              <div className="flex flex-wrap gap-1.5 select-none">
-                                {selectedProblem.relatedTopics.map(
-                                  (topic) => (
-                                    <span
-                                      key={topic}
-                                      className="rounded px-2 py-0.5 text-[10px] font-semibold border"
-                                      style={{
-                                        background: "rgba(255, 255, 255, 0.04)",
-                                        borderColor: "#383838",
-                                        color: "zinc-400",
-                                      }}
-                                    >
-                                      {topic}
-                                    </span>
-                                  ),
+                              <div className="bg-[#2d2d2d] rounded-lg p-3 font-mono text-[11px] leading-relaxed text-zinc-300 border border-[#3c3c3c]">
+                                <div>
+                                  <span className="font-bold text-zinc-400">
+                                    Input:
+                                  </span>{" "}
+                                  {ex.input}
+                                </div>
+                                <div>
+                                  <span className="font-bold text-zinc-400">
+                                    Output:
+                                  </span>{" "}
+                                  {ex.output}
+                                </div>
+                                {ex.explanation && (
+                                  <div className="mt-2 text-zinc-400 italic">
+                                    <span className="font-bold text-zinc-400 not-italic">
+                                      Explanation:
+                                    </span>{" "}
+                                    {ex.explanation}
+                                  </div>
                                 )}
                               </div>
                             </div>
-                          )}
-                      </div>
-
-                      {/* Examples */}
-                      <div className="space-y-4 select-text">
-                        {selectedProblem.examples.map((ex, idx) => (
-                          <div key={`ex-${idx}`} className="space-y-2">
-                            <h5 className="text-xs font-bold text-zinc-200">
-                              Example {idx + 1}:
-                            </h5>
-                            <div className="bg-[#2d2d2d] rounded-lg p-3 font-mono text-[11px] leading-relaxed text-zinc-300 border border-[#3c3c3c]">
-                              <div>
-                                <span className="font-bold text-zinc-400">Input:</span> {ex.input}
-                              </div>
-                              <div>
-                                <span className="font-bold text-zinc-400">Output:</span> {ex.output}
-                              </div>
-                              {ex.explanation && (
-                                <div className="mt-2 text-zinc-400 italic">
-                                  <span className="font-bold text-zinc-400 not-italic">Explanation:</span> {ex.explanation}
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Constraints */}
-                      <div className="space-y-2 select-text pt-2">
-                        <h4 className="text-xs font-bold text-zinc-200">
-                          Constraints:
-                        </h4>
-                        <ul className="list-disc pl-4 space-y-1.5 text-xs text-zinc-400 font-mono">
-                          {selectedProblem.constraints.map((c) => (
-                            <li key={`const-${c}`} className="leading-relaxed">
-                              {c}
-                            </li>
                           ))}
-                        </ul>
-                      </div>
-                    </motion.div>
-                  )}
+                        </div>
 
-                  {drawerTab === "editorial" && (
-                    <motion.div
-                      key="editorial"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.15 }}
-                      className="flex flex-col items-center justify-center py-12 text-center gap-3 text-zinc-400"
-                    >
-                      <BookOpen size={32} className="opacity-50" />
-                      <p className="text-xs">Editorial content will be displayed here.</p>
-                    </motion.div>
-                  )}
+                        {/* Constraints */}
+                        <div className="space-y-2 select-text pt-2">
+                          <h4 className="text-xs font-bold text-zinc-200">
+                            Constraints:
+                          </h4>
+                          <ul className="list-disc pl-4 space-y-1.5 text-xs text-zinc-400 font-mono">
+                            {selectedProblem.constraints.map((c) => (
+                              <li
+                                key={`const-${c}`}
+                                className="leading-relaxed"
+                              >
+                                {c}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </motion.div>
+                    )}
 
-                  {drawerTab === "solutions" && (
-                    <motion.div
-                      key="solutions"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.15 }}
-                      className="flex flex-col items-center justify-center py-12 text-center gap-3 text-zinc-400"
-                    >
-                      <FlaskConical size={32} className="opacity-50" />
-                      <p className="text-xs">Community solutions will be displayed here.</p>
-                    </motion.div>
-                  )}
+                    {drawerTab === "editorial" && (
+                      <motion.div
+                        key="editorial"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.15 }}
+                        className="flex flex-col items-center justify-center py-12 text-center gap-3 text-zinc-400"
+                      >
+                        <BookOpen size={32} className="opacity-50" />
+                        <p className="text-xs">
+                          Editorial content will be displayed here.
+                        </p>
+                      </motion.div>
+                    )}
+
+                    {drawerTab === "solutions" && (
+                      <motion.div
+                        key="solutions"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.15 }}
+                        className="flex flex-col items-center justify-center py-12 text-center gap-3 text-zinc-400"
+                      >
+                        <FlaskConical size={32} className="opacity-50" />
+                        <p className="text-xs">
+                          Community solutions will be displayed here.
+                        </p>
+                      </motion.div>
+                    )}
                   </AnimatePresence>
                 </div>
 
                 {/* Left Panel Footer Row */}
                 <div className="flex items-center justify-between px-4 py-2 border-t border-[#333] bg-[#242424] text-xs text-zinc-500 shrink-0 select-none">
                   <div className="flex items-center gap-3.5">
-                    <button type="button" className="flex items-center gap-1 hover:text-zinc-300 transition-colors cursor-pointer active:scale-[0.94] transition-transform">
+                    <button
+                      type="button"
+                      className="flex items-center gap-1 hover:text-zinc-300 transition-colors cursor-pointer active:scale-[0.94] transition-transform"
+                    >
                       <ThumbsUp size={13} />
                       <span>69.1K</span>
                     </button>
-                    <button type="button" className="flex items-center gap-1 hover:text-zinc-300 transition-colors cursor-pointer active:scale-[0.94] transition-transform">
+                    <button
+                      type="button"
+                      className="flex items-center gap-1 hover:text-zinc-300 transition-colors cursor-pointer active:scale-[0.94] transition-transform"
+                    >
                       <ThumbsDown size={13} />
                     </button>
-                    <button type="button" className="flex items-center gap-1 hover:text-zinc-300 transition-colors cursor-pointer active:scale-[0.94] transition-transform">
+                    <button
+                      type="button"
+                      className="flex items-center gap-1 hover:text-zinc-300 transition-colors cursor-pointer active:scale-[0.94] transition-transform"
+                    >
                       <MessageSquare size={13} />
                       <span>2K</span>
                     </button>
-                    <button type="button" className="hover:text-amber-400 transition-colors cursor-pointer active:scale-[0.94] transition-transform">
+                    <button
+                      type="button"
+                      className="hover:text-amber-400 transition-colors cursor-pointer active:scale-[0.94] transition-transform"
+                    >
                       <Star size={13} />
                     </button>
-                    <button type="button" className="hover:text-zinc-300 transition-colors cursor-pointer active:scale-[0.94] transition-transform">
+                    <button
+                      type="button"
+                      className="hover:text-zinc-300 transition-colors cursor-pointer active:scale-[0.94] transition-transform"
+                    >
                       <Share2 size={13} />
                     </button>
-                    <button type="button" className="hover:text-zinc-300 transition-colors cursor-pointer active:scale-[0.94] transition-transform">
+                    <button
+                      type="button"
+                      className="hover:text-zinc-300 transition-colors cursor-pointer active:scale-[0.94] transition-transform"
+                    >
                       <HelpCircle size={13} />
                     </button>
                   </div>
@@ -922,7 +964,12 @@ function PracticeBoardTab() {
                     {/* Gutter */}
                     <div className="w-10 shrink-0 select-none text-right pr-3 pt-4 text-zinc-600 text-[11px] border-r border-[#2a2a2a]">
                       {Array.from(
-                        { length: Math.max(20, codeSolution.split("\n").length + 2) },
+                        {
+                          length: Math.max(
+                            20,
+                            codeSolution.split("\n").length + 2,
+                          ),
+                        },
                         (_, i) => i + 1,
                       ).map((num) => (
                         <div key={`line-${num}`} className="h-5">
@@ -956,26 +1003,34 @@ function PracticeBoardTab() {
                   <div className="flex-1 flex flex-col border-r border-[#333]">
                     <div className="flex items-center gap-2 px-4 py-2 border-b border-[#333] bg-[#2a2a2a] shrink-0">
                       <Terminal size={13} className="text-zinc-400" />
-                      <span className="text-xs font-semibold text-zinc-300">Testcase</span>
+                      <span className="text-xs font-semibold text-zinc-300">
+                        Testcase
+                      </span>
                     </div>
                     <div className="flex-1 p-4 overflow-y-auto space-y-5 bg-[#1e1e1e]">
                       {selectedProblem.examples.map((ex, idx) => (
                         <div key={idx} className="space-y-3 select-text">
                           <div className="space-y-1.5">
-                            <div className="text-[11px] font-bold text-zinc-200">Input</div>
+                            <div className="text-[11px] font-bold text-zinc-200">
+                              Input
+                            </div>
                             <div className="px-3 py-2 bg-[#2a2a2a] rounded-lg border border-[#3c3c3c] font-mono text-[11px] text-zinc-300">
                               {ex.input}
                             </div>
                           </div>
                           <div className="space-y-1.5">
-                            <div className="text-[11px] font-bold text-zinc-200">Output</div>
+                            <div className="text-[11px] font-bold text-zinc-200">
+                              Output
+                            </div>
                             <div className="px-3 py-2 bg-[#2a2a2a] rounded-lg border border-[#3c3c3c] font-mono text-[11px] text-zinc-300">
                               {ex.output}
                             </div>
                           </div>
                           {ex.explanation && (
                             <div className="space-y-1.5">
-                              <div className="text-[11px] font-bold text-zinc-200">Explanation</div>
+                              <div className="text-[11px] font-bold text-zinc-200">
+                                Explanation
+                              </div>
                               <div className="px-3 py-2 bg-[#2a2a2a] rounded-lg border border-[#3c3c3c] font-mono text-[11px] text-zinc-300">
                                 {ex.explanation}
                               </div>
@@ -990,13 +1045,17 @@ function PracticeBoardTab() {
                   <div className="flex-1 flex flex-col">
                     <div className="flex items-center gap-2 px-4 py-2 border-b border-[#333] bg-[#2a2a2a] shrink-0">
                       <Check size={13} className="text-zinc-400" />
-                      <span className="text-xs font-semibold text-zinc-300">Test Result</span>
+                      <span className="text-xs font-semibold text-zinc-300">
+                        Test Result
+                      </span>
                     </div>
                     <div className="flex-1 p-4 overflow-y-auto text-xs flex flex-col justify-center items-center bg-[#1e1e1e]">
                       {isCompiling ? (
                         <div className="space-y-2 text-center select-none">
                           <div className="size-4 animate-spin rounded-full border-2 border-blue-500 border-t-transparent mx-auto" />
-                          <div className="text-zinc-500 text-[11px]">Running your code...</div>
+                          <div className="text-zinc-500 text-[11px]">
+                            Running your code...
+                          </div>
                         </div>
                       ) : consoleLogs.length > 0 ? (
                         <div className="w-full font-mono text-[11px] leading-relaxed space-y-1 text-left select-text h-full flex flex-col justify-start">
@@ -1004,9 +1063,11 @@ function PracticeBoardTab() {
                             <div
                               key={log.id}
                               className={
-                                log.text.includes("ACCEPTED") || log.text.includes("All test cases passed")
+                                log.text.includes("ACCEPTED") ||
+                                log.text.includes("All test cases passed")
                                   ? "text-emerald-400 font-bold"
-                                  : log.text.includes("Wrong Answer") || log.text.includes("Error")
+                                  : log.text.includes("Wrong Answer") ||
+                                      log.text.includes("Error")
                                     ? "text-rose-400 font-bold"
                                     : "text-zinc-400"
                               }

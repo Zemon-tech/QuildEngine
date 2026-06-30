@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "#/components/ui/resizable";
-import { ProblemPanel } from "./problem-panel";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "#/components/ui/resizable";
+import { useWorkspaceStore } from "#/store/use-workspace-store";
 import { EditorPanel } from "./editor-panel";
 import { OutputPanel } from "./output-panel";
+import { ProblemPanel } from "./problem-panel";
 import { WorkspaceHeader } from "./workspace-header";
-import { useWorkspaceStore } from "#/store/use-workspace-store";
 
 interface WorkspaceLayoutProps {
   problemId: string;
@@ -12,7 +16,8 @@ interface WorkspaceLayoutProps {
 
 export function WorkspaceLayout({ problemId }: WorkspaceLayoutProps) {
   const [isClient, setIsClient] = useState(false);
-  const { editorWidth, setEditorWidth, outputHeight, setOutputHeight } = useWorkspaceStore();
+  const { editorWidth, setEditorWidth, outputHeight, setOutputHeight } =
+    useWorkspaceStore();
 
   useEffect(() => {
     setIsClient(true);

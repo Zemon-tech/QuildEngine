@@ -63,9 +63,7 @@ export function MetricCard({
         )}
       >
         <div className="flex items-center justify-between text-destructive">
-          <span className="text-xs font-semibold tracking-wider">
-            {title}
-          </span>
+          <span className="text-xs font-semibold tracking-wider">{title}</span>
           <AlertCircle size={15} />
         </div>
         <div className="text-xs text-muted-foreground my-2">

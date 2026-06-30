@@ -12,21 +12,24 @@ interface Testimonial {
 export function TestimonialCard() {
   const testimonials: Testimonial[] = [
     {
-      quote: "The knowledge graph mapping drastically accelerated my literature review process. The connections and correlation discoveries it flagged across 140 papers led to our team's main thesis validation.",
+      quote:
+        "The knowledge graph mapping drastically accelerated my literature review process. The connections and correlation discoveries it flagged across 140 papers led to our team's main thesis validation.",
       name: "Dr. Sarah Jenkins",
       role: "PhD Candidate",
       institution: "Stanford University",
       glow: "rgba(99, 102, 241, 0.1)",
     },
     {
-      quote: "Structuring complex biochemical data and papers is finally seamless. AlphaFold coordinates compile accurately, and the citations matching tool is incredibly precise. Worth every penny.",
+      quote:
+        "Structuring complex biochemical data and papers is finally seamless. AlphaFold coordinates compile accurately, and the citations matching tool is incredibly precise. Worth every penny.",
       name: "Prof. David Miller",
       role: "Senior AI Researcher",
       institution: "MIT CSAIL",
       glow: "rgba(6, 182, 212, 0.1)",
     },
     {
-      quote: "Collaborating with our global engineering nodes in real-time while the AI structures notes, links definitions, and lists contradictions has slashed compile and report times by 60%.",
+      quote:
+        "Collaborating with our global engineering nodes in real-time while the AI structures notes, links definitions, and lists contradictions has slashed compile and report times by 60%.",
       name: "Dr. Lisa Wong",
       role: "Principal Scientist",
       institution: "DeepMind Labs",
@@ -43,7 +46,8 @@ export function TestimonialCard() {
           Endorsed by Leading Minds
         </h2>
         <p className="text-[var(--sb-ink-muted)] text-sm md:text-base">
-          Powering breakthroughs in academic institutions, commercial labs, and engineering collectives globally.
+          Powering breakthroughs in academic institutions, commercial labs, and
+          engineering collectives globally.
         </p>
       </div>
 
@@ -63,13 +67,24 @@ export function TestimonialCard() {
               <div className="border-t border-[var(--sb-border)]/40 dark:border-white/5 pt-4 mt-6 flex items-center gap-3 relative z-10">
                 {/* Visual Avatar */}
                 <div className="w-10 h-10 rounded-full bg-[var(--sb-pill)] border border-[var(--sb-border)]/60 flex items-center justify-center font-bold text-[var(--sb-ink-muted)] font-mono text-xs select-none">
-                  {test.name.split(" ").map((n) => n.replace("Dr.", "").replace("Prof.", "").trim()[0]).join("")}
+                  {test.name
+                    .split(" ")
+                    .map(
+                      (n) =>
+                        n.replace("Dr.", "").replace("Prof.", "").trim()[0],
+                    )
+                    .join("")}
                 </div>
 
                 <div>
-                  <h4 className="text-xs font-bold text-[var(--sb-ink)]">{test.name}</h4>
+                  <h4 className="text-xs font-bold text-[var(--sb-ink)]">
+                    {test.name}
+                  </h4>
                   <p className="text-[10px] text-[var(--sb-ink-dim)] font-mono">
-                    {test.role} • <span className="text-[var(--sb-ink-muted)] font-medium">{test.institution}</span>
+                    {test.role} •{" "}
+                    <span className="text-[var(--sb-ink-muted)] font-medium">
+                      {test.institution}
+                    </span>
                   </p>
                 </div>
               </div>

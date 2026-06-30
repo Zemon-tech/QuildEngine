@@ -759,7 +759,7 @@ function QaPage() {
                   className="space-y-3 pt-3 border-t border-(--sb-border) mt-auto"
                 >
                   <div className="flex items-center gap-3">
-                     <span className="text-[10px] font-bold text-muted-foreground">
+                    <span className="text-[10px] font-bold text-muted-foreground">
                       Write Answer as:
                     </span>
                     <input

@@ -1,13 +1,13 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import {
+  BookOpenCheck,
+  Brain,
+  ChevronRight,
   FileUp,
   LineChart,
-  Brain,
   Network,
-  BookOpenCheck,
-  ChevronRight,
 } from "lucide-react";
+import { useState } from "react";
 import { GlassCard, SpotlightEffect } from "./spotlight";
 
 interface WorkflowStep {
@@ -25,7 +25,8 @@ export function WorkflowTimeline() {
       step: 1,
       title: "Collect Sources",
       shortDesc: "Upload docs & connect feeds.",
-      detailedDesc: "Upload PDFs, sync Youtube videos, input URLs, or connect data repositories. The AI parser processes raw material, preparing clean embeddings.",
+      detailedDesc:
+        "Upload PDFs, sync Youtube videos, input URLs, or connect data repositories. The AI parser processes raw material, preparing clean embeddings.",
       icon: <FileUp className="w-5 h-5 text-indigo-500 dark:text-indigo-400" />,
       color: "rgba(99, 102, 241, 1)",
     },
@@ -33,7 +34,8 @@ export function WorkflowTimeline() {
       step: 2,
       title: "Analyze Content",
       shortDesc: "Semantic mapping.",
-      detailedDesc: "The parsing engine runs localized LLMs to analyze text, identify vocabulary definitions, structure mathematical formulas, and highlight arguments.",
+      detailedDesc:
+        "The parsing engine runs localized LLMs to analyze text, identify vocabulary definitions, structure mathematical formulas, and highlight arguments.",
       icon: <LineChart className="w-5 h-5 text-cyan-500 dark:text-cyan-400" />,
       color: "rgba(6, 182, 212, 1)",
     },
@@ -41,7 +43,8 @@ export function WorkflowTimeline() {
       step: 3,
       title: "Generate Insights",
       shortDesc: "Automatic summaries.",
-      detailedDesc: "Our AI notes module synthesizes cross-referenced summaries, highlights citations, checks contradictions between papers, and maps key findings.",
+      detailedDesc:
+        "Our AI notes module synthesizes cross-referenced summaries, highlights citations, checks contradictions between papers, and maps key findings.",
       icon: <Brain className="w-5 h-5 text-purple-500 dark:text-purple-400" />,
       color: "rgba(168, 85, 247, 1)",
     },
@@ -49,7 +52,8 @@ export function WorkflowTimeline() {
       step: 4,
       title: "Connect Knowledge",
       shortDesc: "Visual graph links.",
-      detailedDesc: "Concepts are automatically structured into an interactive knowledge map, revealing latent relations and correlation bridges across works.",
+      detailedDesc:
+        "Concepts are automatically structured into an interactive knowledge map, revealing latent relations and correlation bridges across works.",
       icon: <Network className="w-5 h-5 text-pink-500 dark:text-pink-400" />,
       color: "rgba(236, 72, 153, 1)",
     },
@@ -57,8 +61,11 @@ export function WorkflowTimeline() {
       step: 5,
       title: "Publish Findings",
       shortDesc: "Generate reports.",
-      detailedDesc: "Compile verified insights, generated citations, and structured notes directly into formats ready for papers, articles, or team distribution.",
-      icon: <BookOpenCheck className="w-5 h-5 text-emerald-500 dark:text-emerald-400" />,
+      detailedDesc:
+        "Compile verified insights, generated citations, and structured notes directly into formats ready for papers, articles, or team distribution.",
+      icon: (
+        <BookOpenCheck className="w-5 h-5 text-emerald-500 dark:text-emerald-400" />
+      ),
       color: "rgba(16, 185, 129, 1)",
     },
   ];
@@ -73,19 +80,18 @@ export function WorkflowTimeline() {
           Research Methodology
         </h2>
         <p className="text-[var(--sb-ink-muted)] text-sm md:text-base">
-          Our structured pipeline translates raw, disconnected datasets into a cohesive, structured map of discoveries.
+          Our structured pipeline translates raw, disconnected datasets into a
+          cohesive, structured map of discoveries.
         </p>
       </div>
 
       {/* Timeline Layout */}
       <div className="flex flex-col gap-10">
-        
         {/* Step Nodes Row */}
         <div className="relative flex flex-col md:flex-row justify-between items-center gap-8 md:gap-4 max-w-5xl mx-auto w-full px-4">
-          
           {/* Background Connecting Line (Desktop) */}
           <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[var(--sb-border)]/60 -translate-y-1/2 -z-10 hidden md:block" />
-          
+
           {/* Active Progress Bar (Desktop) */}
           <motion.div
             className="absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 -translate-y-1/2 -z-10 hidden md:block origin-left"
@@ -109,10 +115,16 @@ export function WorkflowTimeline() {
                 <motion.div
                   animate={{
                     scale: isActive ? 1.15 : 1,
-                    borderColor: isActive ? step.color : isCompleted ? "rgba(128,128,128,0.4)" : "var(--sb-border)",
+                    borderColor: isActive
+                      ? step.color
+                      : isCompleted
+                        ? "rgba(128,128,128,0.4)"
+                        : "var(--sb-border)",
                   }}
                   className={`w-12 h-12 rounded-full border-2 bg-[var(--card-bg)] flex items-center justify-center relative transition-all duration-300 ${
-                    isActive ? "shadow-[0_0_20px_rgba(139,92,246,0.2)]" : "group-hover:border-zinc-400 dark:group-hover:border-zinc-500"
+                    isActive
+                      ? "shadow-[0_0_20px_rgba(139,92,246,0.2)]"
+                      : "group-hover:border-zinc-400 dark:group-hover:border-zinc-500"
                   }`}
                   style={{
                     boxShadow: isActive ? `0 0 25px ${step.color}30` : "",
@@ -122,13 +134,15 @@ export function WorkflowTimeline() {
                   <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[var(--sb-pill)] border border-[var(--sb-border)]/60 text-[9px] font-bold text-[var(--sb-ink-muted)] flex items-center justify-center font-mono">
                     {step.step}
                   </span>
-                  
+
                   {step.icon}
                 </motion.div>
 
                 {/* Text summary below bubble */}
                 <div className="text-left md:text-center">
-                  <p className={`text-xs font-bold transition-colors duration-200 ${isActive ? "text-[var(--sb-ink)]" : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]"}`}>
+                  <p
+                    className={`text-xs font-bold transition-colors duration-200 ${isActive ? "text-[var(--sb-ink)]" : "text-[var(--sb-ink-muted)] group-hover:text-[var(--sb-ink)]"}`}
+                  >
                     {step.title}
                   </p>
                   <p className="text-[10px] text-[var(--sb-ink-dim)] hidden md:block mt-0.5 max-w-[140px] truncate">
@@ -142,7 +156,10 @@ export function WorkflowTimeline() {
 
         {/* Detailed Explanation Panel */}
         <div className="max-w-3xl mx-auto w-full mt-4">
-          <SpotlightEffect glowColor={steps[activeStep - 1].color.replace("1)", "0.06)")} glowSize={350}>
+          <SpotlightEffect
+            glowColor={steps[activeStep - 1].color.replace("1)", "0.06)")}
+            glowSize={350}
+          >
             <GlassCard className="p-6 md:p-8 border-[var(--sb-border)]/60 dark:border-white/[0.08]">
               <div className="flex flex-col sm:flex-row gap-6 items-start">
                 {/* Visual Step Number */}
@@ -152,7 +169,10 @@ export function WorkflowTimeline() {
 
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] uppercase font-bold tracking-wider font-mono" style={{ color: steps[activeStep - 1].color }}>
+                    <span
+                      className="text-[10px] uppercase font-bold tracking-wider font-mono"
+                      style={{ color: steps[activeStep - 1].color }}
+                    >
                       Active Stage
                     </span>
                     <ChevronRight className="w-3.5 h-3.5 text-[var(--sb-ink-dim)]" />
@@ -169,7 +189,6 @@ export function WorkflowTimeline() {
             </GlassCard>
           </SpotlightEffect>
         </div>
-
       </div>
     </section>
   );

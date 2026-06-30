@@ -2,26 +2,36 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   BookOpen,
   Calendar,
+  CheckCircle2,
   Code2,
   FlaskConical,
   LayoutDashboard,
+  Mail,
   Menu,
   Monitor,
   Moon,
   Sparkles,
   Sun,
-  Mail,
-  CheckCircle2,
 } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { GlobalSearchTrigger } from "#/components/search/global-search";
+import { Button } from "#/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "#/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "#/components/ui/dropdown-menu";
+import { Input } from "#/components/ui/input";
 import {
   Sidebar,
   SidebarContent,
@@ -41,16 +51,6 @@ import { cn } from "#/lib/utils";
 import { AIAssistant } from "./ai-assistant";
 import { SidebarHeader as CustomSidebarHeader } from "./sidebar-header";
 import { UserNav } from "./user-nav";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "#/components/ui/dialog";
-import { Input } from "#/components/ui/input";
-import { Button } from "#/components/ui/button";
 
 export function AppSidebar() {
   const { state, toggleSidebar, setOpenMobile } = useSidebar();
@@ -65,7 +65,8 @@ export function AppSidebar() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const isSubscribed = localStorage.getItem("quild_newsletter_subscribed") === "true";
+      const isSubscribed =
+        localStorage.getItem("quild_newsletter_subscribed") === "true";
       setSubscribed(isSubscribed);
     }
   }, []);
@@ -101,21 +102,14 @@ export function AppSidebar() {
           "fixed left-4 top-4 z-40 flex size-9 items-center justify-center rounded-[10px] md:hidden",
           "transition-opacity duration-150 hover:opacity-70 cursor-pointer",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sb-accent)]/60",
+          "bg-sb-bg border border-sb-border text-sb-ink-muted",
         )}
-        style={{
-          background: "var(--sb-bg)",
-          border: "1px solid var(--sb-border)",
-          color: "var(--sb-ink-muted)",
-        }}
       >
         <Menu size={16} />
       </button>
 
       {/* Main Sidebar */}
-      <Sidebar
-        collapsible="icon"
-        className="border-r border-[var(--sb-border)]"
-      >
+      <Sidebar collapsible="icon" className="border-r border-sb-border">
         <SidebarHeader className="p-0">
           <CustomSidebarHeader
             collapsed={state === "collapsed"}
@@ -123,12 +117,12 @@ export function AppSidebar() {
           />
         </SidebarHeader>
 
-        <SidebarContent className="px-2 py-2 flex flex-col justify-between h-[calc(100vh-8rem)]">
-          <div className="space-y-4">
-            <div className="mb-2">
-              <GlobalSearchTrigger />
-            </div>
+        <SidebarContent className="px-2 py-2 flex flex-col justify-between">
+          <div className="flex flex-col gap-4">
             <SidebarMenu>
+              <SidebarMenuItem className="mb-2">
+                <GlobalSearchTrigger />
+              </SidebarMenuItem>
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.label}>
                   <SidebarMenuButton
@@ -159,21 +153,25 @@ export function AppSidebar() {
                   <Tooltip delayDuration={0}>
                     <TooltipTrigger asChild>
                       {subscribed ? (
-                        <div className="flex size-9 items-center justify-center rounded-[10px] text-emerald-600 dark:text-emerald-500 bg-emerald-500/5">
+                        <div className="flex size-8 items-center justify-center rounded-[10px] text-emerald-600 dark:text-emerald-500 bg-emerald-500/5">
                           <CheckCircle2 size={16} />
                         </div>
                       ) : (
                         <button
                           type="button"
                           onClick={() => setNewsletterDialogOpen(true)}
-                          className="flex size-9 items-center justify-center rounded-[10px] text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)] outline-none transition-all cursor-pointer"
+                          className="flex size-8 items-center justify-center rounded-[10px] text-[var(--sb-ink-muted)] hover:bg-[var(--sb-bg-hover)] hover:text-[var(--sb-ink)] outline-none transition-all cursor-pointer"
                         >
                           <Mail size={16} />
                         </button>
                       )}
                     </TooltipTrigger>
                     <TooltipContent side="right" sideOffset={8}>
-                      <span>{subscribed ? "Subscribed to Newsletter" : "Subscribe to Newsletter"}</span>
+                      <span>
+                        {subscribed
+                          ? "Subscribed to Newsletter"
+                          : "Subscribe to Newsletter"}
+                      </span>
                     </TooltipContent>
                   </Tooltip>
                 </SidebarMenuItem>
@@ -183,34 +181,39 @@ export function AppSidebar() {
 
           {/* Expanded state newsletter card at bottom of Content */}
           {state !== "collapsed" && (
-            <div className="mt-auto p-3 rounded-xl border border-[var(--sb-border)]/60 bg-[var(--sb-bg-hover)]/30 mx-1 mb-2 space-y-2.5">
-              <div className="space-y-1">
-                <h4 className="text-xs font-semibold text-[var(--sb-ink)] flex items-center gap-1.5">
-                  <Mail size={14} className="text-[var(--sb-accent)]" />
+            <div className="mt-auto p-3 rounded-xl border border-sb-border/60 bg-sb-bg-hover/30 mx-1 mb-2 flex flex-col gap-2.5">
+              <div className="flex flex-col gap-1">
+                <h4 className="text-xs font-semibold text-sb-ink flex items-center gap-1.5">
+                  <Mail size={14} className="text-sb-accent" />
                   Join Newsletter
                 </h4>
-                <p className="text-[11px] leading-relaxed text-[var(--sb-ink-dim)]">
+                <p className="text-[11px] leading-relaxed text-sb-ink-dim">
                   Get deep tech tutorials, roadmaps, and event updates.
                 </p>
               </div>
               {subscribed ? (
                 <div className="flex items-center gap-2 p-2 rounded-lg bg-emerald-500/5 border border-emerald-500/10 text-emerald-600 dark:text-emerald-500 text-xs">
                   <CheckCircle2 size={14} className="shrink-0" />
-                  <span className="truncate font-medium">Subscribed to Quild</span>
+                  <span className="truncate font-medium">
+                    Subscribed to Quild
+                  </span>
                 </div>
               ) : (
-                <form onSubmit={handleSubscribe} className="space-y-2">
+                <form
+                  onSubmit={handleSubscribe}
+                  className="flex flex-col gap-2"
+                >
                   <Input
                     type="email"
                     required
                     placeholder="email@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="h-8 text-xs rounded-lg px-2 bg-transparent border-[var(--sb-border)] focus-visible:ring-[var(--sb-accent)]/20"
+                    className="h-8 text-xs rounded-lg px-2 bg-transparent border-sb-border focus-visible:ring-sb-accent/20"
                   />
                   <Button
                     type="submit"
-                    className="w-full text-xs h-8 bg-[var(--sb-accent)] hover:opacity-90 text-white rounded-lg transition-all border-0 shadow-none font-medium cursor-pointer"
+                    className="w-full text-xs h-8 bg-sb-accent hover:opacity-90 text-white rounded-lg transition-all border-0 shadow-none font-medium cursor-pointer"
                   >
                     Subscribe
                   </Button>
@@ -235,11 +238,11 @@ export function AppSidebar() {
                   type="button"
                   onClick={() => setAiOpen(!aiOpen)}
                   className={cn(
-                    "relative flex items-center justify-center rounded-[10px] size-9 outline-none transition-all duration-150 cursor-pointer active:scale-95",
-                    "hover:bg-[var(--sb-bg-hover)]",
+                    "relative flex items-center justify-center rounded-[10px] size-8 outline-none transition-all duration-150 cursor-pointer active:scale-95",
+                    "hover:bg-sb-bg-hover",
                     aiOpen
-                      ? "bg-[var(--sb-pill)] text-[var(--sb-accent)]"
-                      : "text-[var(--sb-ink-muted)]",
+                      ? "bg-[var(--sb-pill)] text-sb-accent"
+                      : "text-sb-ink-muted",
                   )}
                 >
                   <Sparkles size={16} />
@@ -249,7 +252,7 @@ export function AppSidebar() {
                 <span>AI Assistant</span>
               </TooltipContent>
             </Tooltip>
-
+ 
             {/* Theme Toggle */}
             <DropdownMenu>
               <Tooltip delayDuration={0}>
@@ -258,8 +261,8 @@ export function AppSidebar() {
                     <button
                       type="button"
                       className={cn(
-                        "relative flex items-center justify-center rounded-[10px] size-9 outline-none transition-all duration-150 cursor-pointer active:scale-95",
-                        "hover:bg-[var(--sb-bg-hover)] text-[var(--sb-ink-muted)]",
+                        "relative flex items-center justify-center rounded-[10px] size-8 outline-none transition-all duration-150 cursor-pointer active:scale-95",
+                        "hover:bg-sb-bg-hover text-sb-ink-muted",
                       )}
                     >
                       {theme === "light" ? (
@@ -285,12 +288,7 @@ export function AppSidebar() {
                 side="right"
                 align="end"
                 sideOffset={8}
-                className="w-36"
-                style={{
-                  background: "var(--sb-bg)",
-                  border: "1px solid var(--sb-border)",
-                  color: "var(--sb-ink)",
-                }}
+                className="w-36 bg-sb-bg border border-sb-border text-sb-ink shadow-lg"
               >
                 <DropdownMenuItem
                   onClick={() => setTheme("light")}
@@ -325,7 +323,10 @@ export function AppSidebar() {
       <AIAssistant open={aiOpen} onClose={() => setAiOpen(false)} />
 
       {/* Newsletter Subscription Dialog for collapsed state */}
-      <Dialog open={newsletterDialogOpen} onOpenChange={setNewsletterDialogOpen}>
+      <Dialog
+        open={newsletterDialogOpen}
+        onOpenChange={setNewsletterDialogOpen}
+      >
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
@@ -333,12 +334,13 @@ export function AppSidebar() {
               Subscribe to Quild Newsletter
             </DialogTitle>
             <DialogDescription>
-              Get the latest deep tech tutorials, roadmaps, and event notifications delivered directly to your inbox.
+              Get the latest deep tech tutorials, roadmaps, and event
+              notifications delivered directly to your inbox.
             </DialogDescription>
           </DialogHeader>
-          <form onSubmit={handleSubscribe} className="space-y-4 py-2">
-            <div className="space-y-2">
-              <label className="text-xs font-semibold text-[var(--sb-ink)]">
+          <form onSubmit={handleSubscribe} className="flex flex-col gap-4 py-2">
+            <div className="flex flex-col gap-2">
+              <label className="text-xs font-semibold text-sb-ink">
                 Email Address
               </label>
               <Input
@@ -347,7 +349,7 @@ export function AppSidebar() {
                 placeholder="email@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="focus-visible:ring-[var(--sb-accent)]/20"
+                className="focus-visible:ring-sb-accent/20"
               />
             </div>
             <DialogFooter className="pt-2">
@@ -360,7 +362,7 @@ export function AppSidebar() {
               </Button>
               <Button
                 type="submit"
-                className="bg-[var(--sb-accent)] text-white hover:opacity-90 border-0"
+                className="bg-sb-accent text-sb-accent-foreground hover:opacity-90 border-0"
               >
                 Subscribe
               </Button>
