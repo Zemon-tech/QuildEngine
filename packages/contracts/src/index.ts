@@ -1,16 +1,9 @@
 import { z } from "zod";
 
 export type Role =
-  | "super_admin"
   | "admin"
   | "moderator"
-  | "mentor"
-  | "instructor"
-  | "researcher"
-  | "content_manager"
-  | "student"
-  | "professional"
-  | "guest";
+  | "user";
 
 export type Permission =
   | "research.read"
@@ -30,20 +23,13 @@ export type Permission =
   | "settings.manage";
 
 export const ROLE_LABELS: Record<Role, string> = {
-  super_admin: "Super Admin",
   admin: "Admin",
   moderator: "Moderator",
-  mentor: "Mentor",
-  instructor: "Instructor",
-  researcher: "Researcher",
-  content_manager: "Content Manager",
-  student: "Student",
-  professional: "Professional",
-  guest: "Guest",
+  user: "User",
 };
 
 export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
-  super_admin: [
+  admin: [
     "research.read",
     "research.write",
     "research.publish",
@@ -60,22 +46,6 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     "analytics.view",
     "settings.manage",
   ],
-  admin: [
-    "research.read",
-    "research.write",
-    "research.publish",
-    "course.read",
-    "course.write",
-    "course.publish",
-    "roadmap.read",
-    "roadmap.edit",
-    "practice.manage",
-    "events.manage",
-    "newsletter.manage",
-    "users.manage",
-    "analytics.view",
-    "settings.manage",
-  ],
   moderator: [
     "research.read",
     "course.read",
@@ -84,32 +54,11 @@ export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     "events.manage",
     "newsletter.manage",
   ],
-  mentor: [
+  user: [
+    "course.read",
+    "roadmap.read",
     "research.read",
-    "course.read",
-    "course.write",
-    "roadmap.read",
-    "roadmap.edit",
   ],
-  instructor: [
-    "research.read",
-    "course.read",
-    "course.write",
-    "course.publish",
-    "roadmap.read",
-  ],
-  researcher: ["research.read", "research.write", "research.publish"],
-  content_manager: [
-    "course.read",
-    "course.write",
-    "course.publish",
-    "roadmap.read",
-    "roadmap.edit",
-    "newsletter.manage",
-  ],
-  student: ["course.read", "roadmap.read"],
-  professional: ["course.read", "roadmap.read", "research.read"],
-  guest: ["course.read"],
 };
 
 /**
@@ -126,9 +75,9 @@ export function hasPermission(role: string, permission: Permission): boolean {
  * Validates role input and returns fallback if invalid.
  */
 export function normalizeRole(role: string | null | undefined): Role {
-  if (!role) return "guest";
+  if (!role) return "user";
   const normalized = role.toLowerCase().replace(" ", "_") as Role;
-  return normalized in ROLE_PERMISSIONS ? normalized : "guest";
+  return normalized in ROLE_PERMISSIONS ? normalized : "user";
 }
 
 // Zod Login Schema

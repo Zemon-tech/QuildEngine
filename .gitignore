@@ -5,36 +5,73 @@ node_modules
 .pnp
 .pnp.js
 
-# Local env files
+# Environment files — NEVER commit real env files
 .env
 .env.local
+.env.development
 .env.development.local
+.env.test
 .env.test.local
+.env.production
 .env.production.local
 
-# Testing
-coverage
+# Secrets & keys
+*.pem
+*.key
+*.p12
+*.pfx
 
-# Turbo
-.turbo
-
-# Vercel
-.vercel
-
-# Build Outputs
+# Build outputs
 .next/
 out/
-build
-dist
+build/
+dist/
+dist-ssr/
+.output/
+.vinxi/
+.nitro/
 
+# Cloudflare / Wrangler
+.wrangler/
+.dev.vars
 
-# Debug
+# TanStack
+.tanstack/
+
+# Turbo
+.turbo/
+
+# Testing
+coverage/
+
+# Vercel
+.vercel/
+
+# Logs
+logs/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # Misc
-.DS_Store
-*.pem
-
 .kiro/
+__unconfig*
+todos.json

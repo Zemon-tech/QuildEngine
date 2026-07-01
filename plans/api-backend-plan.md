@@ -18,7 +18,7 @@ Backend for `@quild/web` and `@quild/admin`. Phase 1 covers auth, profile, and d
 - **Auth:** Supabase Auth. Users authenticate via Supabase client-side SDK. Supabase sets HttpOnly cookies. BFF reads token from cookie and forwards as `Authorization: Bearer <jwt>`.
 - **Database:** Supabase Postgres accessed via `@supabase/supabase-js` with the secret key (`sb_secret_...`). Single admin client instance, no RLS — access control is in application code.
 - **Schema management:** Raw SQL files stored in `apps/api/sql/`, applied manually against Supabase.
-- **Roles:** Multiple roles supported: `learner` (default) for the public portal, and operator roles (`super_admin`, `admin`, `moderator`, `content_manager`) for the administrative portal. The role claim is securely resolved from the JWT payload by checking `app_metadata.role` with fallback to `user_metadata.role` (or `raw_user_meta_data.role`) to accommodate registration sync latency.
+- **Roles:** Simplified to three roles: `user` (default) for the public portal, and `admin`, `moderator` for the administrative portal. The role claim is securely resolved from the JWT payload by checking `app_metadata.role` with fallback to `user_metadata.role`.
 - **Shared package:** `@quild/contracts` — API response types, shared enums, shared Zod schemas. Used by both `apps/web` and `apps/api`.
 
 ---
@@ -40,7 +40,7 @@ Backend for `@quild/web` and `@quild/admin`. Phase 1 covers auth, profile, and d
   { "data": T[], "pagination": {...}, "meta": {...} }
   { "error": { "code": "...", "message": "...", "details": [...] }, "meta": { "timestamp": "...", "requestId": "..." } }
   ```
-- Learner routes: `/api/v1/...`
+- User routes: `/api/v1/...`
 - Admin routes: `/api/v1/admin/...` (guarded by `requireRole("admin")`)
 - Pagination: offset-based (`?page=1&limit=20`)
 - Comments required on all modules, middleware, and service methods.
@@ -70,16 +70,16 @@ apps/api/src/
 │   │   ├── auth.service.ts
 │   │   ├── auth.types.ts
 │   │   └── auth.validation.ts
-│   ├── profile/
+│   ├── profile/                # ← NOT YET CREATED
 │   │   ├── profile.controller.ts
 │   │   ├── profile.service.ts
 │   │   ├── profile.types.ts
 │   │   └── profile.validation.ts
-│   ├── dashboard/
+│   ├── dashboard/              # ← NOT YET CREATED
 │   │   ├── dashboard.controller.ts
 │   │   ├── dashboard.service.ts
 │   │   └── dashboard.types.ts
-│   └── activity/
+│   └── activity/               # ← NOT YET CREATED
 │       ├── activity.controller.ts
 │       ├── activity.service.ts
 │       ├── activity.types.ts
@@ -87,19 +87,19 @@ apps/api/src/
 ├── routes/
 │   └── v1/
 │       ├── index.ts            # Mounts all v1 routes
-│       └── admin.ts            # Mounts all admin routes (role-guarded)
+│       └── admin.ts            # Mounts all admin routes (role-guarded) ← NOT YET CREATED
 ├── utils/
 │   ├── api-error.ts            # ApiError class (exists)
 │   ├── api-response.ts         # Response helpers (exists)
-│   └── pagination.ts           # Pagination param parsing & meta builder
+│   └── pagination.ts           # Pagination param parsing & meta builder ← NOT YET CREATED
 ├── sql/
-│   ├── 001-profiles.sql
-│   ├── 002-activity-events.sql
-│   └── 003-user-stats.sql
+│   ├── 001-profiles.sql        # ✅ Done
+│   ├── 002-activity-events.sql # ← NOT YET CREATED
+│   └── 003-user-stats.sql      # ← NOT YET CREATED
 └── tests/
-    ├── setup.ts                # Vitest global setup
+    ├── setup.ts                # Vitest global setup ← NOT YET CREATED
     ├── helpers/
-    │   └── test-app.ts         # Creates test Express instance
+    │   └── test-app.ts         # Creates test Express instance ← NOT YET CREATED
     ├── unit/
     │   ├── auth.service.test.ts
     │   ├── profile.service.test.ts
@@ -119,11 +119,16 @@ apps/api/src/
 | Column               | Type        | Notes                                   |
 | -------------------- | ----------- | --------------------------------------- |
 | id                   | uuid        | PK, FK → auth.users.id                  |
+| email                | text        | UNIQUE, mirrored from auth.users        |
+| username             | text        | UNIQUE, used for public profile URL     |
 | display_name         | text        | nullable                                |
 | avatar_url           | text        | nullable                                |
+| role                 | text        | CHECK IN ('admin','moderator','user')   |
+| status               | text        | CHECK IN ('active','suspended','pending')|
 | timezone             | text        | default 'UTC'                           |
 | social_links         | jsonb       | `{ github?, linkedin?, behance?, ... }` |
 | onboarding_completed | boolean     | default false                           |
+| last_active_at       | timestamptz | nullable                                |
 | created_at           | timestamptz | default now()                           |
 | updated_at           | timestamptz | default now()                           |
 
@@ -161,8 +166,8 @@ apps/api/src/
 
 - [x] Update `apps/api/config/env.ts` — add `SUPABASE_URL`, `SUPABASE_SECRET_KEY`, `JWT_SECRET` with Zod validation. Remove legacy key names.
 - [x] Create `apps/api/src/lib/supabase.ts` — singleton admin client using `sb_secret_...` key.
-- [x] Create `apps/api/src/middleware/auth.ts` — verify JWT locally using `jsonwebtoken` or `jose`, extract `user_id` and `role` (checking `app_metadata.role` with fallbacks for `user_metadata.role` and `raw_user_meta_data.role`) from claims, attach to `req.user`.
-- [x] Create `apps/api/src/middleware/require-role.ts` — factory function `requireRole(...)` supporting multiple operator roles (`super_admin`, `admin`, `moderator`, `content_manager`).
+- [x] Create `apps/api/src/middleware/auth.ts` — verify JWT locally using `jsonwebtoken`, extract `user_id` and `role` (checking `app_metadata.role` with fallbacks), attach to `req.user`.
+- [x] Create `apps/api/src/middleware/require-role.ts` — factory function `requireRole(...)` supporting `admin` and `moderator`.
 - [ ] Create `apps/api/src/utils/pagination.ts` — parse `page`/`limit` from query, compute offset, build pagination meta from total count.
 - [x] Add `@quild/contracts` package to `packages/contracts/` with shared types and Zod schemas.
 - [ ] Add Dockerfile to `apps/api/`.
@@ -172,36 +177,36 @@ apps/api/src/
 
 ### Auth Module
 
-- [x] `auth.controller.ts` — POST `/api/v1/auth/me` (returns current user from JWT, optional `auth.getUser()` for fresh data).
-- [x] `auth.service.ts` — verify token, extract role fallback claims (app_metadata / user_metadata), get user from Supabase if needed, ensure profile exists (create on first login).
-- [x] `auth.validation.ts` — Zod schemas for any auth-related request bodies.
+- [x] `auth.controller.ts` — `GET /api/v1/auth/me` returns current user from JWT.
+- [x] `auth.service.ts` — verify token, extract role fallback claims, get user from Supabase, ensure profile exists (create on first login).
+- [x] `auth.validation.ts` — Zod schemas for auth-related request bodies.
 
 ### Profile Module
 
-- [ ] `profile.controller.ts` — GET/PATCH `/api/v1/profile` (learner's own profile). GET/PATCH `/api/v1/admin/users/:id/profile` (admin access).
+- [ ] `profile.controller.ts` — `GET/PATCH /api/v1/profile` (user's own profile). `GET /api/v1/admin/users/:id/profile` (admin access).
 - [ ] `profile.service.ts` — get profile by user_id, update profile, handle social_links JSONB merge.
 - [ ] `profile.validation.ts` — Zod schemas for profile update payload (display_name, avatar_url, timezone, social_links).
 
 ### Dashboard Module
 
-- [ ] `dashboard.controller.ts` — GET `/api/v1/dashboard` (returns aggregated stats for the authenticated user).
+- [ ] `dashboard.controller.ts` — `GET /api/v1/dashboard` (returns aggregated stats for the authenticated user).
 - [ ] `dashboard.service.ts` — read from `user_stats` table, compute streak freshness, return dashboard data.
 
 ### Activity Module
 
-- [ ] `activity.controller.ts` — POST `/api/v1/activity` (log an activity event).
+- [ ] `activity.controller.ts` — `POST /api/v1/activity` (log an activity event).
 - [ ] `activity.service.ts` — insert into `activity_events`, update denormalized counters in `user_stats`, recalculate streak.
 - [ ] `activity.validation.ts` — Zod schema for activity event payload (event_type, entity_id, entity_type, metadata).
 
 ### SQL
 
-- [ ] Write `sql/001-profiles.sql` — create `profiles` table with trigger to auto-create on `auth.users` insert.
+- [x] Write `sql/001-profiles.sql` — `profiles` table with trigger to auto-create on `auth.users` insert, role/status sync triggers, and RLS.
 - [ ] Write `sql/002-activity-events.sql` — create `activity_events` table with indexes.
 - [ ] Write `sql/003-user-stats.sql` — create `user_stats` table with trigger to auto-create when profile is created.
 
 ### Contracts Package
 
-- [x] `packages/contracts/src/index.ts` — Centralized model definitions (`User`, `Session`, `Profile`, `DashboardStats`, `PaginationParams`, and enums for `Role`, `Difficulty`, etc.).
+- [x] `packages/contracts/src/index.ts` — Centralized model definitions (`User`, `Session`, `Profile`, `DashboardStats`, `PaginationParams`, and enums for `Role`, `Permission`, etc.). Roles simplified to `admin`, `moderator`, `user`.
 
 ---
 
@@ -209,10 +214,10 @@ apps/api/src/
 
 ### Auth
 
-- [ ] `GET /api/v1/auth/me` with valid JWT returns user profile and role.
-- [ ] `GET /api/v1/auth/me` with expired/invalid JWT returns 401.
-- [ ] First call auto-creates a profile row if one doesn't exist.
-- [ ] Role is extracted from JWT claims, inspecting `app_metadata.role` with fallbacks for `user_metadata.role` and `raw_user_meta_data.role`.
+- [x] `GET /api/v1/auth/me` with valid JWT returns user profile and role.
+- [x] `GET /api/v1/auth/me` with expired/invalid JWT returns 401.
+- [x] First call auto-creates a profile row if one doesn't exist (via DB trigger).
+- [x] Role is extracted from JWT claims, inspecting `app_metadata.role` with fallbacks.
 
 ### Profile
 
@@ -239,10 +244,10 @@ apps/api/src/
 
 ### Infrastructure
 
-- [ ] All endpoints return the standard response envelope (`data`/`error` + `meta`).
-- [ ] Request IDs propagate through to error responses.
-- [ ] Pino logs include request ID, method, path, status, and response time.
+- [x] All endpoints return the standard response envelope (`data`/`error` + `meta`).
+- [x] Request IDs propagate through to error responses.
+- [x] Pino logs include request ID, method, path, status, and response time.
 - [ ] Vitest unit tests pass for all service methods.
 - [ ] Vitest integration tests pass for all endpoints (happy path + error cases).
 - [ ] `docker build` succeeds and the container runs the API on the configured port.
-- [ ] `@quild/contracts` builds and is importable from both `apps/web` and `apps/api`.
+- [x] `@quild/contracts` builds and is importable from both `apps/web` and `apps/api`.

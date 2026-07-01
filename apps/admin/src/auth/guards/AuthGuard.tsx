@@ -147,7 +147,7 @@ export function AdminGuard({
   fallback?: React.ReactNode;
 }) {
   const { user, role, loading } = useAuth();
-  const ADMIN_ROLES: Role[] = ["super_admin", "admin", "moderator", "content_manager"];
+  const ADMIN_ROLES: Role[] = ["admin", "moderator"];
 
   if (loading) {
     return (

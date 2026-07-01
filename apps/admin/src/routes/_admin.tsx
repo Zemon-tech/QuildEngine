@@ -4,7 +4,7 @@ import { SidebarInset, SidebarProvider } from "#/components/ui/sidebar";
 import { getSessionFn } from "#/lib/server-fns/auth";
 import { type Role } from "@quild/contracts";
 
-const ADMIN_ROLES: Role[] = ["super_admin", "admin", "moderator", "content_manager"];
+const ADMIN_ROLES: Role[] = ["admin", "moderator"];
 
 export const Route = createFileRoute("/_admin")({
   beforeLoad: async ({ location }) => {

@@ -51,7 +51,7 @@ export function authMiddleware(req: Request, _res: Response, next: NextFunction)
     }
 
     const email = decoded.email || "";
-    const roleString = decoded.app_metadata?.role || "learner";
+    const roleString = decoded.app_metadata?.role || "user";
     
     // Normalize role string from JWT into centralized types
     const role = normalizeRole(roleString);

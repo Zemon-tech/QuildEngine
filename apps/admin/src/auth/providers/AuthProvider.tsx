@@ -53,7 +53,7 @@ function updateAuthCookie(session: any) {
       user: {
         id: session.user.id,
         email: session.user.email,
-        role: session.user.app_metadata?.role || "learner",
+        role: session.user.app_metadata?.role || "user",
       },
     };
     const encoded = encodeURIComponent(JSON.stringify(rawToken));
@@ -72,22 +72,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     if (session) {
       const me = await getMeFn();
-      const ADMIN_ROLES = ["super_admin", "admin", "moderator", "content_manager"];
+      const ADMIN_ROLES = ["admin", "moderator"];
       
       const rawRole = me?.user?.role || session.user.app_metadata?.role || session.user.user_metadata?.role;
       const role = normalizeRole(rawRole);
       const isSuspended = me?.profile?.status === "suspended";
-      const isInactive = me?.profile?.status === "inactive";
+      const isPending = me?.profile?.status === "pending";
 
       // Verify that the account has administrative privileges and is active
-      if (!ADMIN_ROLES.includes(role) || isSuspended || isInactive) {
+      if (!ADMIN_ROLES.includes(role) || isSuspended || isPending) {
         await supabase.auth.signOut();
         updateAuthCookie(null);
         setState({
           ...initialContextState,
           loading: false,
         });
-        throw new Error("Access Denied: Account is suspended, inactive, or lacks operator privileges.");
+        throw new Error("Access Denied: Account is suspended, pending activation, or lacks operator privileges.");
       }
 
       const verifiedUser: User = me?.user || {
